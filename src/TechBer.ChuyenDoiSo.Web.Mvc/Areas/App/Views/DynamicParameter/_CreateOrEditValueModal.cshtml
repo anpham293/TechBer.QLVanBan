@@ -1,0 +1,20 @@
+﻿@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.Common.Modals
+@model TechBer.ChuyenDoiSo.DynamicEntityParameters.Dto.DynamicParameterValueDto
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml",
+    new ModalHeaderViewModel(Model.Id == default ? @L("Add") + " " + @L("DynamicParameterValue") : @L("Edit") + " " + @L("DynamicParameterValue")))
+
+<div class="modal-body">
+    @if (Model.Id != default)
+    {
+        <input type="hidden" name="id" value="@Model.Id" />
+    }
+    <input type="hidden" name="dynamicParameterId" value="@Model.DynamicParameterId" />
+
+    <div class="form-group col-12">
+        <label for="parameterName">@L("Value")</label>
+        <input id="value" type="text" name="dynamicParameterValue" class="form-control" value="@Model.Value">
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

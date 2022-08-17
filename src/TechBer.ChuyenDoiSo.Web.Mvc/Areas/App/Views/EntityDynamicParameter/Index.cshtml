@@ -1,0 +1,49 @@
+﻿@using TechBer.ChuyenDoiSo.Authorization
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Startup
+@{
+    ViewBag.CurrentPageName = AppPageNames.Common.DynamicEntityParameters;
+}
+
+@section Scripts
+{
+    <script abp-src="/view-resources/Areas/App/Views/_Bundles/entity-dynamic-parameters-index.js" asp-append-version="true"></script>
+}
+
+<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+    <div class="kt-subheader kt-grid__item">
+        <div class="@(await GetContainerClass())">
+            <div class="kt-subheader__main">
+                <h3 class="kt-subheader__title">
+                    <span>@L("EntityDynamicParameters")</span>
+                </h3>
+            </div>
+            <div class="kt-subheader__toolbar">
+                <div class="kt-subheader__wrapper">
+                    @if (IsGranted(AppPermissions.Pages_Administration_EntityDynamicParameters_Create))
+                    {
+                    <button id="CreateNewEntityDynamicParameter" class="btn btn-primary"><i class="fa fa-plus"></i> @L("AddNewEntityDynamicParameter")</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="@(await GetContainerClass()) kt-grid__item kt-grid__item--fluid">
+        <div class="kt-portlet kt-portlet--mobile" id="portlet-entity-list">
+            <div class="kt-portlet__body">
+                <div class="align-items-center">
+                    <table id="EntityDynamicParametersTable" class="display table table-striped table-bordered table-hover dt-responsive nowrap">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>@L("EntityFullName")</th>
+                                <th>@L("DynamicParameter")</th>
+                                <th>@L("Actions")</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

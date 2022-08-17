@@ -1,0 +1,36 @@
+﻿@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.Common.Modals
+@model TechBer.ChuyenDoiSo.Web.Areas.App.Models.DynamicParameters.CreateOrEditDynamicParameterViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml",
+    new ModalHeaderViewModel(Model.DynamicParameterDto.Id == default ? @L("Add") + " " + @L("DynamicParameter") : (@L("Edit") + " " + @L("DynamicParameter") + " - " + Model.DynamicParameterDto.ParameterName)))
+
+<div class="modal-body">
+    @if (Model.DynamicParameterDto.Id != default)
+    {
+        <input type="hidden" name="Id" value="@Model.DynamicParameterDto.Id" />
+    }
+
+    <div class="form-group col-12">
+        <label for="parameterName">@L("ParameterName")</label>
+        <input id="parameterName" type="text" name="parameterName" class="form-control" value="@Model.DynamicParameterDto.ParameterName">
+    </div>
+
+    <div class="form-group col-12">
+        <label for="inputType">@L("InputType")</label>
+        @Html.DropDownList("inputType", new SelectList(Model.AllowedInputTypes, Model.DynamicParameterDto.InputType), new { @class = "form-control" })
+    </div>
+
+    <div class="form-group col-12">
+        <label for="permission">@L("Permission")</label>
+        <div class="form-group mb-2">
+            <div class="input-group">
+                <input type="text" class="form-control" name="permission" disabled="disabled" placeholder="@L("SelectAPermission")" value="@Model.DynamicParameterDto.Permission">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button" id="FilterByPermissionsButton"><i class="fa fa-hand-pointer" style="color: white"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

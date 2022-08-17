@@ -1,0 +1,270 @@
+﻿using TechBer.ChuyenDoiSo.QLVB;
+using TechBer.ChuyenDoiSo.QLVB;
+
+
+using System;
+using System.Linq;
+using System.Linq.Dynamic.Core;
+using Abp.Linq.Extensions;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Abp.Domain.Repositories;
+using TechBer.ChuyenDoiSo.QLVB.Exporting;
+using TechBer.ChuyenDoiSo.QLVB.Dtos;
+using TechBer.ChuyenDoiSo.Dto;
+using Abp.Application.Services.Dto;
+using TechBer.ChuyenDoiSo.Authorization;
+using Abp.Extensions;
+using Abp.Authorization;
+using Microsoft.EntityFrameworkCore;
+
+namespace TechBer.ChuyenDoiSo.QLVB
+{
+	[AbpAuthorize(AppPermissions.Pages_VanBanDuAns)]
+    public class VanBanDuAnsAppService : ChuyenDoiSoAppServiceBase, IVanBanDuAnsAppService
+    {
+		 private readonly IRepository<VanBanDuAn> _vanBanDuAnRepository;
+		 private readonly IVanBanDuAnsExcelExporter _vanBanDuAnsExcelExporter;
+		 private readonly IRepository<DuAn,int> _lookup_duAnRepository;
+		 private readonly IRepository<QuyTrinhDuAn,int> _lookup_quyTrinhDuAnRepository;
+		 
+
+		  public VanBanDuAnsAppService(IRepository<VanBanDuAn> vanBanDuAnRepository, IVanBanDuAnsExcelExporter vanBanDuAnsExcelExporter , IRepository<DuAn, int> lookup_duAnRepository, IRepository<QuyTrinhDuAn, int> lookup_quyTrinhDuAnRepository) 
+		  {
+			_vanBanDuAnRepository = vanBanDuAnRepository;
+			_vanBanDuAnsExcelExporter = vanBanDuAnsExcelExporter;
+			_lookup_duAnRepository = lookup_duAnRepository;
+		_lookup_quyTrinhDuAnRepository = lookup_quyTrinhDuAnRepository;
+		
+		  }
+
+		 public async Task<PagedResultDto<GetVanBanDuAnForViewDto>> GetAll(GetAllVanBanDuAnsInput input)
+         {
+			
+			var filteredVanBanDuAns = _vanBanDuAnRepository.GetAll()
+						.Include( e => e.DuAnFk)
+						.Include( e => e.QuyTrinhDuAnFk)
+						.WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false  || e.Name.Contains(input.Filter) || e.KyHieuVanBan.Contains(input.Filter) || e.FileVanBan.Contains(input.Filter))
+						.WhereIf(!string.IsNullOrWhiteSpace(input.NameFilter),  e => e.Name == input.NameFilter)
+						.WhereIf(!string.IsNullOrWhiteSpace(input.KyHieuVanBanFilter),  e => e.KyHieuVanBan == input.KyHieuVanBanFilter)
+						.WhereIf(input.MinNgayBanHanhFilter != null, e => e.NgayBanHanh >= input.MinNgayBanHanhFilter)
+						.WhereIf(input.MaxNgayBanHanhFilter != null, e => e.NgayBanHanh <= input.MaxNgayBanHanhFilter)
+						.WhereIf(!string.IsNullOrWhiteSpace(input.FileVanBanFilter),  e => e.FileVanBan == input.FileVanBanFilter)
+						.WhereIf(!string.IsNullOrWhiteSpace(input.DuAnNameFilter), e => e.DuAnFk != null && e.DuAnFk.Name == input.DuAnNameFilter)
+						.WhereIf(!string.IsNullOrWhiteSpace(input.QuyTrinhDuAnNameFilter), e => e.QuyTrinhDuAnFk != null && e.QuyTrinhDuAnFk.Name == input.QuyTrinhDuAnNameFilter);
+
+			var pagedAndFilteredVanBanDuAns = filteredVanBanDuAns
+                .OrderBy(input.Sorting ?? "id asc")
+                .PageBy(input);
+
+			var vanBanDuAns = from o in pagedAndFilteredVanBanDuAns
+                         join o1 in _lookup_duAnRepository.GetAll() on o.DuAnId equals o1.Id into j1
+                         from s1 in j1.DefaultIfEmpty()
+                         
+                         join o2 in _lookup_quyTrinhDuAnRepository.GetAll() on o.QuyTrinhDuAnId equals o2.Id into j2
+                         from s2 in j2.DefaultIfEmpty()
+                         
+                         select new GetVanBanDuAnForViewDto() {
+							VanBanDuAn = new VanBanDuAnDto
+							{
+                                Name = o.Name,
+                                KyHieuVanBan = o.KyHieuVanBan,
+                                NgayBanHanh = o.NgayBanHanh,
+                                FileVanBan = o.FileVanBan,
+                                Id = o.Id
+							},
+                         	DuAnName = s1 == null || s1.Name == null ? "" : s1.Name.ToString(),
+                         	QuyTrinhDuAnName = s2 == null || s2.Name == null ? "" : s2.Name.ToString()
+						};
+
+            var totalCount = await filteredVanBanDuAns.CountAsync();
+
+            return new PagedResultDto<GetVanBanDuAnForViewDto>(
+                totalCount,
+                await vanBanDuAns.ToListAsync()
+            );
+         }
+		 
+		 public async Task<GetVanBanDuAnForViewDto> GetVanBanDuAnForView(int id)
+         {
+            var vanBanDuAn = await _vanBanDuAnRepository.GetAsync(id);
+
+            var output = new GetVanBanDuAnForViewDto { VanBanDuAn = ObjectMapper.Map<VanBanDuAnDto>(vanBanDuAn) };
+
+		    if (output.VanBanDuAn.DuAnId != null)
+            {
+                var _lookupDuAn = await _lookup_duAnRepository.FirstOrDefaultAsync((int)output.VanBanDuAn.DuAnId);
+                output.DuAnName = _lookupDuAn?.Name?.ToString();
+            }
+
+		    if (output.VanBanDuAn.QuyTrinhDuAnId != null)
+            {
+                var _lookupQuyTrinhDuAn = await _lookup_quyTrinhDuAnRepository.FirstOrDefaultAsync((int)output.VanBanDuAn.QuyTrinhDuAnId);
+                output.QuyTrinhDuAnName = _lookupQuyTrinhDuAn?.Name?.ToString();
+            }
+			
+            return output;
+         }
+		 
+		 [AbpAuthorize(AppPermissions.Pages_VanBanDuAns_Edit)]
+		 public async Task<GetVanBanDuAnForEditOutput> GetVanBanDuAnForEdit(EntityDto input)
+         {
+            var vanBanDuAn = await _vanBanDuAnRepository.FirstOrDefaultAsync(input.Id);
+           
+		    var output = new GetVanBanDuAnForEditOutput {VanBanDuAn = ObjectMapper.Map<CreateOrEditVanBanDuAnDto>(vanBanDuAn)};
+
+		    if (output.VanBanDuAn.DuAnId != null)
+            {
+                var _lookupDuAn = await _lookup_duAnRepository.FirstOrDefaultAsync((int)output.VanBanDuAn.DuAnId);
+                output.DuAnName = _lookupDuAn?.Name?.ToString();
+            }
+
+		    if (output.VanBanDuAn.QuyTrinhDuAnId != null)
+            {
+                var _lookupQuyTrinhDuAn = await _lookup_quyTrinhDuAnRepository.FirstOrDefaultAsync((int)output.VanBanDuAn.QuyTrinhDuAnId);
+                output.QuyTrinhDuAnName = _lookupQuyTrinhDuAn?.Name?.ToString();
+            }
+			
+            return output;
+         }
+
+		 public async Task CreateOrEdit(CreateOrEditVanBanDuAnDto input)
+         {
+            if(input.Id == null){
+				await Create(input);
+			}
+			else{
+				await Update(input);
+			}
+         }
+
+		 [AbpAuthorize(AppPermissions.Pages_VanBanDuAns_Create)]
+		 protected virtual async Task Create(CreateOrEditVanBanDuAnDto input)
+         {
+            var vanBanDuAn = ObjectMapper.Map<VanBanDuAn>(input);
+
+			
+			if (AbpSession.TenantId != null)
+			{
+				vanBanDuAn.TenantId = (int?) AbpSession.TenantId;
+			}
+		
+
+            await _vanBanDuAnRepository.InsertAsync(vanBanDuAn);
+         }
+
+		 [AbpAuthorize(AppPermissions.Pages_VanBanDuAns_Edit)]
+		 protected virtual async Task Update(CreateOrEditVanBanDuAnDto input)
+         {
+            var vanBanDuAn = await _vanBanDuAnRepository.FirstOrDefaultAsync((int)input.Id);
+             ObjectMapper.Map(input, vanBanDuAn);
+         }
+
+		 [AbpAuthorize(AppPermissions.Pages_VanBanDuAns_Delete)]
+         public async Task Delete(EntityDto input)
+         {
+            await _vanBanDuAnRepository.DeleteAsync(input.Id);
+         } 
+
+		public async Task<FileDto> GetVanBanDuAnsToExcel(GetAllVanBanDuAnsForExcelInput input)
+         {
+			
+			var filteredVanBanDuAns = _vanBanDuAnRepository.GetAll()
+						.Include( e => e.DuAnFk)
+						.Include( e => e.QuyTrinhDuAnFk)
+						.WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false  || e.Name.Contains(input.Filter) || e.KyHieuVanBan.Contains(input.Filter) || e.FileVanBan.Contains(input.Filter))
+						.WhereIf(!string.IsNullOrWhiteSpace(input.NameFilter),  e => e.Name == input.NameFilter)
+						.WhereIf(!string.IsNullOrWhiteSpace(input.KyHieuVanBanFilter),  e => e.KyHieuVanBan == input.KyHieuVanBanFilter)
+						.WhereIf(input.MinNgayBanHanhFilter != null, e => e.NgayBanHanh >= input.MinNgayBanHanhFilter)
+						.WhereIf(input.MaxNgayBanHanhFilter != null, e => e.NgayBanHanh <= input.MaxNgayBanHanhFilter)
+						.WhereIf(!string.IsNullOrWhiteSpace(input.FileVanBanFilter),  e => e.FileVanBan == input.FileVanBanFilter)
+						.WhereIf(!string.IsNullOrWhiteSpace(input.DuAnNameFilter), e => e.DuAnFk != null && e.DuAnFk.Name == input.DuAnNameFilter)
+						.WhereIf(!string.IsNullOrWhiteSpace(input.QuyTrinhDuAnNameFilter), e => e.QuyTrinhDuAnFk != null && e.QuyTrinhDuAnFk.Name == input.QuyTrinhDuAnNameFilter);
+
+			var query = (from o in filteredVanBanDuAns
+                         join o1 in _lookup_duAnRepository.GetAll() on o.DuAnId equals o1.Id into j1
+                         from s1 in j1.DefaultIfEmpty()
+                         
+                         join o2 in _lookup_quyTrinhDuAnRepository.GetAll() on o.QuyTrinhDuAnId equals o2.Id into j2
+                         from s2 in j2.DefaultIfEmpty()
+                         
+                         select new GetVanBanDuAnForViewDto() { 
+							VanBanDuAn = new VanBanDuAnDto
+							{
+                                Name = o.Name,
+                                KyHieuVanBan = o.KyHieuVanBan,
+                                NgayBanHanh = o.NgayBanHanh,
+                                FileVanBan = o.FileVanBan,
+                                Id = o.Id
+							},
+                         	DuAnName = s1 == null || s1.Name == null ? "" : s1.Name.ToString(),
+                         	QuyTrinhDuAnName = s2 == null || s2.Name == null ? "" : s2.Name.ToString()
+						 });
+
+
+            var vanBanDuAnListDtos = await query.ToListAsync();
+
+            return _vanBanDuAnsExcelExporter.ExportToFile(vanBanDuAnListDtos);
+         }
+
+
+
+		[AbpAuthorize(AppPermissions.Pages_VanBanDuAns)]
+         public async Task<PagedResultDto<VanBanDuAnDuAnLookupTableDto>> GetAllDuAnForLookupTable(GetAllForLookupTableInput input)
+         {
+             var query = _lookup_duAnRepository.GetAll().WhereIf(
+                    !string.IsNullOrWhiteSpace(input.Filter),
+                   e=> e.Name != null && e.Name.Contains(input.Filter)
+                );
+
+            var totalCount = await query.CountAsync();
+
+            var duAnList = await query
+                .PageBy(input)
+                .ToListAsync();
+
+			var lookupTableDtoList = new List<VanBanDuAnDuAnLookupTableDto>();
+			foreach(var duAn in duAnList){
+				lookupTableDtoList.Add(new VanBanDuAnDuAnLookupTableDto
+				{
+					Id = duAn.Id,
+					DisplayName = duAn.Name?.ToString()
+				});
+			}
+
+            return new PagedResultDto<VanBanDuAnDuAnLookupTableDto>(
+                totalCount,
+                lookupTableDtoList
+            );
+         }
+
+		[AbpAuthorize(AppPermissions.Pages_VanBanDuAns)]
+         public async Task<PagedResultDto<VanBanDuAnQuyTrinhDuAnLookupTableDto>> GetAllQuyTrinhDuAnForLookupTable(GetAllForLookupTableInput input)
+         {
+             var query = _lookup_quyTrinhDuAnRepository.GetAll().WhereIf(
+                    !string.IsNullOrWhiteSpace(input.Filter),
+                   e=> e.Name != null && e.Name.Contains(input.Filter)
+                );
+
+            var totalCount = await query.CountAsync();
+
+            var quyTrinhDuAnList = await query
+                .PageBy(input)
+                .ToListAsync();
+
+			var lookupTableDtoList = new List<VanBanDuAnQuyTrinhDuAnLookupTableDto>();
+			foreach(var quyTrinhDuAn in quyTrinhDuAnList){
+				lookupTableDtoList.Add(new VanBanDuAnQuyTrinhDuAnLookupTableDto
+				{
+					Id = quyTrinhDuAn.Id,
+					DisplayName = quyTrinhDuAn.Name?.ToString()
+				});
+			}
+
+            return new PagedResultDto<VanBanDuAnQuyTrinhDuAnLookupTableDto>(
+                totalCount,
+                lookupTableDtoList
+            );
+         }
+    }
+}

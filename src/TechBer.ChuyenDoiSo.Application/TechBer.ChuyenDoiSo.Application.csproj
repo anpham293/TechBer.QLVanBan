@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props"></Import>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
+    <AssemblyName>TechBer.ChuyenDoiSo.Application</AssemblyName>
+    <PackageId>TechBer.ChuyenDoiSo.Application</PackageId>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <RootNamespace>TechBer.ChuyenDoiSo</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Abp.EntityFrameworkCore.EFPlus" Version="5.7.0" />
+    <PackageReference Include="NPOI" Version="2.4.1" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.2.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TechBer.ChuyenDoiSo.Application.Shared\TechBer.ChuyenDoiSo.Application.Shared.csproj" />
+    <ProjectReference Include="..\TechBer.ChuyenDoiSo.Core\TechBer.ChuyenDoiSo.Core.csproj" />
+    <ProjectReference Include="..\TechBer.ChuyenDoiSo.EntityFrameworkCore\TechBer.ChuyenDoiSo.EntityFrameworkCore.csproj" />
+  </ItemGroup>
+
+</Project>

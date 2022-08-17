@@ -1,0 +1,54 @@
+﻿@using TechBer.ChuyenDoiSo.Authorization
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Startup
+@{
+    ViewBag.CurrentPageName = AppPageNames.Common.DynamicEntityParameters;
+}
+@section Styles
+{
+    <link rel="stylesheet" abp-href="/view-resources/Areas/App/Views/DynamicParameters/Index.css" asp-append-version="true" />
+}
+
+@section Scripts
+{
+    <script abp-src="/view-resources/Areas/App/Views/_Bundles/dynamic-parameters-index.js" asp-append-version="true"></script>
+}
+
+<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+    <div class="kt-subheader kt-grid__item">
+        <div class="@(await GetContainerClass())">
+            <div class="kt-subheader__main">
+                <h3 class="kt-subheader__title">
+                    <span>@L("DynamicParameters")</span>
+                </h3>
+            </div>
+            <div class="kt-subheader__toolbar">
+                <div class="kt-subheader__wrapper">
+                    @if (IsGranted(AppPermissions.Pages_Administration_DynamicParameters_Create))
+                    {
+                        <button id="CreateNewDynamicParameter" class="btn btn-primary"><i class="fa fa-plus"></i> @L("AddNewDynamicParameter")</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="@(await GetContainerClass()) kt-grid__item kt-grid__item--fluid">
+        <div class="kt-portlet kt-portlet--mobile">
+            <div class="kt-portlet__body">
+                <div class="align-items-center">
+                    <table id="DynamicParametersTable" class="display table table-striped table-bordered table-hover dt-responsive nowrap">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th style="width:50px"></th>
+                                <th>@L("ParameterName")</th>
+                                <th>@L("InputType")</th>
+                                <th>@L("Permission")</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

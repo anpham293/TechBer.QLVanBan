@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+ 
+  <ItemGroup>
+    <PackageReference Include="IdentityModel" Version="4.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Abp.Web.Common" Version="5.7.0" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.2.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\TechBer.ChuyenDoiSo.Application.Shared\TechBer.ChuyenDoiSo.Application.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

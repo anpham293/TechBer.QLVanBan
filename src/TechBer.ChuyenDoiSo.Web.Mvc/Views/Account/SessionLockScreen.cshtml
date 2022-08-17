@@ -1,0 +1,72 @@
+﻿@using TechBer.ChuyenDoiSo.Localization
+@{
+    ViewBag.DisableTenantChange = true;
+}
+@section Scripts
+{
+    <script abp-src="/view-resources/Views/Account/SessionLockScreen.js" asp-append-version="true"></script>
+    @if (ViewBag.UseCaptcha)
+    {
+        <recaptcha-script />
+    }
+}
+@section Styles{
+    <link href="/metronic/common/css/login-1@(CultureHelper.IsRtl ? ".rtl":"").css" rel="stylesheet" />
+}
+
+<div class="row justify-content-center align-items-center h-100">
+    <div class="col-lg-5 col-md-7 col-sm-10 col-xs-12 content">
+        <div class="kt-portlet kt-portlet--height-fluid" style="padding: 10px;padding-bottom: 20px">
+            <div class="alert alert-solid-brand alert-bold" role="alert">
+                <div class="alert-text text-bold">@L("YourSessionIsLocked")<i class="fa fa-lock float-right"></i></div>
+            </div>
+            <div class="kt-portlet__body kt-portlet__body--fit-y">
+                <!--begin::Widget -->
+                <div class="kt-widget kt-widget--user-profile-4">
+                    <div class="kt-widget__head">
+                        <div class="kt-widget__media">
+                            <img class="kt-widget__img" id="profilePicture" src="" alt="image">
+                        </div>
+                        <div class="kt-widget__content">
+                            <div class="kt-widget__section">
+                                <span class="kt-widget__username" id="userName">
+                                </span>
+                                <div class="kt-widget__button">
+                                    Tenant: <span class="text-bold" id="tenantName"></span>
+                                </div>
+                                <form class="kt-form login-form" asp-action="Login" method="post">
+                                    <div class="form-group">
+                                        <input type="hidden" name="usernameOrEmailAddress">
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control" type="password" placeholder="@L("Password")*" name="password" autocomplete="new-password">
+                                    </div>
+                                    @if (ViewBag.UseCaptcha)
+                                    {
+                                        <p class="hint margin-top-20">
+                                            @L("Captha_Hint")
+                                        </p>
+                                        <div class="form-group margin-bottom-20">
+                                            <recaptcha />
+                                        </div>
+                                    }
+                                    <div class="">
+                                        <div class="mt-4 float-left">
+                                            <label class="kt-checkbox">
+                                                <input type="checkbox" name="rememberMe" value="true"> @L("RememberMe")
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                        <button type="button" id="kt_login_signin_submit" class="btn btn-primary btn-elevate kt-login__btn-primary float-right mt-2">@L("LogIn")</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--end::Widget -->
+            </div>
+        </div>
+        <a href="@Url.Action("Login", "Account")" class="kt-link kt-login__link-forgot w-100 text-center">@L("GoToLoginPage")</a>
+    </div>
+</div>

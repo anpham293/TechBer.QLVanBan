@@ -1,0 +1,16 @@
+﻿.noi-dung-tieu-chi{
+    width: calc(100% - 160px);
+}
+
+.wrap-noi-dung-tieu-chi{
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.btn-chi-tiet-tieu-chi {
+    width: 150px;
+}
+
+.chieu-rong-modal{
+    max-width: 1200px;
+}

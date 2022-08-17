@@ -1,0 +1,109 @@
+﻿@using TechBer.ChuyenDoiSo.Authorization
+@model TechBer.ChuyenDoiSo.DynamicEntityParameters.Dto.DynamicParameterDto
+
+@section Scripts
+{
+    <script>
+        var dynamicParameterId = @Model.Id;
+        var currentInputType = '@Model.InputType';
+    </script>
+
+    <script abp-src="/view-resources/Areas/App/Views/_Bundles/IInputTypes.js" asp-append-version="true"></script>
+    <script abp-src="/view-resources/Areas/App/Views/_Bundles/dynamic-parameters-detail.js" asp-append-version="true"></script>
+}
+
+<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+    <div class="kt-subheader kt-grid__item">
+        <div class="@(await GetContainerClass())">
+            <div class="kt-subheader__main">
+                <div class="kt-subheader__breadcrumbs">
+                    <a href="@Url.Action("Index","DynamicParameter", new{ Area="App"})" class="kt-subheader__breadcrumbs-home">
+                        <i class="flaticon2-shelter"></i>
+                        @L("DynamicParameterDetail")
+                    </a>
+                    <span class="kt-subheader__breadcrumbs-separator"></span>
+                    <span class="kt-subheader__breadcrumbs-link">
+                        @Model.ParameterName
+                    </span>
+                </div>
+            </div>
+            <div class="kt-subheader__toolbar">
+                <div class="kt-subheader__wrapper">
+                    @if (IsGranted(AppPermissions.Pages_Administration_DynamicParameters_Edit))
+                    {
+                        <button class="btn btn-primary btn-sm" id="dynamic-parameter-edit">
+                            @L("Edit")
+                        </button>
+                    }
+                    @if (IsGranted(AppPermissions.Pages_Administration_DynamicParameters_Delete))
+                    {
+                        <button class="btn btn-danger btn-sm" id="dynamic-parameter-delete">
+                            @L("Delete")
+                        </button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="@(await GetContainerClass()) kt-grid__item kt-grid__item--fluid">
+
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="kt-portlet kt-portlet--mobile" id="portlet-detail">
+                    <div class="kt-portlet__body">
+                        <table class="table border-0 m-0">
+                            <tr>
+                                <td class="font-weight-bold text-right border-0" style="width:300px"> @L("ParameterName"):</td>
+                                <td class="border-0">@Model.ParameterName</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold text-right border-0">@L("InputType"):</td>
+                                <td class="border-0">@Model.InputType</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold text-right border-0">@L("Permission"):</td>
+                                <td class="border-0">@Model.Permission</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="kt-portlet kt-portlet--mobile d-none" id="portlet-dynamic-parameter-values">
+                    <div class="kt-portlet__head">
+                        <div class="kt-portlet__head-label">
+                            <h3 class="kt-portlet__head-title">
+                                @L("DynamicParameterValues")
+                            </h3>
+                        </div>
+                        <div class="kt-portlet__head-toolbar">
+                            <div class="kt-portlet__head-actions">
+                                <button id="refresh-dynamic-parameter-values-btn" class="btn btn-outline-brand btn-sm btn-icon btn-icon-md">
+                                    <i class="flaticon2-refresh"></i>
+                                </button>
+                                @if (IsGranted(AppPermissions.Pages_Administration_DynamicParameterValue_Create))
+                                {
+                                    <button id="add-new-dynamic-parameter-value" class="btn btn-outline-brand btn-sm btn-icon btn-icon-md">
+                                        <i class="flaticon2-plus"></i>
+                                    </button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kt-portlet__body">
+                        <div class="align-items-center">
+                            <table id="DynamicParameterValuesTable" class="display table table-striped table-bordered table-hover dt-responsive nowrap">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th style="text-align: center; width: 60px">@L("Actions")</th>
+                                        <th>@L("Values")</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

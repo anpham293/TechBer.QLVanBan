@@ -1,0 +1,61 @@
+﻿@using TechBer.ChuyenDoiSo.Authorization
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Startup
+@model TechBer.ChuyenDoiSo.Web.Areas.App.Models.EntityDynamicParameterValues.EntityDynamicParameterValueManageAllViewModel
+@{
+    ViewBag.CurrentPageName = AppPageNames.Common.DynamicEntityParameters;
+}
+
+@section Scripts
+{
+    <script abp-src="/view-resources/Areas/App/Views/_Bundles/entity-dynamic-parameter-value-manage-all.js" asp-append-version="true"></script>
+}
+
+<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+    <div class="kt-subheader kt-grid__item">
+        <div class="@(await GetContainerClass())">
+            <div class="kt-subheader__main">
+                <h3 class="kt-subheader__title">
+                    <span>@L("EntityDynamicParameterValues")</span>
+                </h3>
+            </div>
+        </div>
+    </div>
+    @Html.HiddenFor(x => x.EntityId)
+    @Html.HiddenFor(x => x.EntityFullName)
+
+    <div class="@(await GetContainerClass()) kt-grid__item kt-grid__item--fluid">
+        <div class="kt-portlet kt-portlet--mobile">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label w-100" style="justify-content: space-between;">
+                    <div class="float-left"><span class="font-weight-bold ">@L("EntityFullName"):</span> @Model.EntityFullName</div>
+                    <div class="float-right"><span class="font-weight-bold ">@L("EntityRowId"):</span> @Model.EntityId</div>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div class="align-items-center">
+                    <table id="EntityDynamicParameterValuesTable" class="display table table-striped table-bordered table-hover dt-responsive nowrap">
+                        <thead>
+                            <tr>
+                                <th>@L("ParameterName")</th>
+                                <th>@L("Values")</th>
+                                @if (IsGranted(AppPermissions.Pages_Administration_EntityDynamicParameterValue_Delete))
+                                {
+                                    <th style="width: 50px">@L("Actions")</th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="kt-portlet__foot">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <button type="button" id="saveParameters" class="btn btn-success pull-right">@L("Save")</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

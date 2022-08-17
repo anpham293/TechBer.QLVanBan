@@ -1,0 +1,64 @@
+﻿@using System.Globalization
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.Common.Modals
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.CayTieuChi;
+@model CreateTieuChiModalViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel("Thêm mới tiêu chí"))
+
+<div class="modal-body">
+    <form name="CayTieuChiDanhGiaForm" role="form" novalidate class="form-validation">
+        <input type="hidden" name="ParentId" value="@Model.ParentId" />
+        <div class="form-group">
+            <label for="TieuChiDanhGia_Name">@L("Name")</label>
+            <input class="form-control" id="TieuChiDanhGia_Name" value="@Model.Name" type="text" name="name" required />
+        </div>
+
+        <div class="form-group row">
+            <div class="col-lg-6">
+                <label for="TieuChiDanhGia_SoThuTu">@L("SoThuTu")</label>
+                <input class="form-control" id="TieuChiDanhGia_SoThuTu" value="@Model.SoThuTu" type="text" name="soThuTu" required />
+            </div>
+
+            @if (Model.DoSau == 1)
+            {
+                <div class="col-lg-6">
+                    <label for="TieuChiDanhGia_PhanNhom">@L("PhanNhom")</label>
+                    <select name="phanNhomLevel1" id="TieuChiDanhGia_PhanNhom" class="form-control kt-select2" value="@Model.PhanNhomLevel1?.ToString(CultureInfo.InvariantCulture)">
+                    </select>
+                </div>
+            }
+
+        </div>
+
+        <div class="form-group row">
+            <div class="col-lg-6">
+                <label for="TieuChiDanhGia_DiemToiDa">@L("DiemToiDa")</label>
+                <input class="form-control m-input" id="TieuChiDanhGia_DiemToiDa" value="@Model.DiemToiDa.ToString(CultureInfo.InvariantCulture)" type="number" name="diemToiDa" />
+            </div>
+
+            <div class="col-lg-6">
+                <label for="TieuChiDanhGia_SapXep">@L("SapXep")</label>
+                <input class="form-control m-input" id="TieuChiDanhGia_SapXep" value="@Model.SapXep?.ToString(CultureInfo.InvariantCulture)" type="number" name="sapXep" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="TieuChiDanhGia_PhuongThucDanhGia">@L("PhuongThucDanhGia")</label>
+            <textarea class="form-control" id="TieuChiDanhGia_PhuongThucDanhGia" name="phuongThucDanhGia" rows="6">@Model.PhuongThucDanhGia</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="TieuChiDanhGia_TaiLieuGiaiTrinh">@L("TaiLieuGiaiTrinh")</label>
+            <input class="form-control" id="TieuChiDanhGia_TaiLieuGiaiTrinh" value="@Model.TaiLieuGiaiTrinh" type="text" name="taiLieuGiaiTrinh" />
+        </div>
+
+        <div class="form-group">
+            <label for="TieuChiDanhGia_GhiChu">@L("GhiChu")</label>
+            <input class="form-control" id="TieuChiDanhGia_GhiChu" value="@Model.GhiChu" type="text" name="ghiChu" />
+        </div>
+
+        <input value="@Model.LoaiPhuLuc" type="hidden" name="loaiPhuLuc" />
+    </form>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

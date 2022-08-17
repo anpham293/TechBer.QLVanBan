@@ -1,0 +1,32 @@
+﻿
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.Common.Modals
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.QuyTrinhDuAns
+@model QuyTrinhDuAnViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("Details")))
+
+<div class="modal-body">
+    <div id="QuyTrinhDuAnInformationsTab">
+        
+        <div class="row">
+            <div class="col-6 mb-3">
+                <h6>@L("Name") :</h6>
+                @Model.QuyTrinhDuAn.Name
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Descriptions") :</h6>
+                @Model.QuyTrinhDuAn.Descriptions
+            </div>
+
+            <div class="col-6 mb-3">
+                <h6>(@L("LoaiDuAn")) @L("Name") :</h6>
+                @Model.LoaiDuAnName
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithClose.cshtml")
+

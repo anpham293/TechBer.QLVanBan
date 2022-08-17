@@ -1,0 +1,208 @@
+﻿@using TechBer.ChuyenDoiSo.Authorization
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.DoiTuongChuyenDoiSos
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Startup
+@using TechBer.ChuyenDoiSo.QuanLyChuyenDoiSo
+@model TinhDiemModel
+@{
+    ViewBag.CurrentPageName = AppPageNames.Tenant.DoiTuongChuyenDoiSos;
+    var isHienThiMoTaVaFileDinhKem = Model.ChamDiemFlag == DoiTuongChuyenDoiSoConsts.HOI_DONG_THAM_DINH;
+    List<string> TrangThais = new List<string>(new string[] { "Tự đánh giá", "Hội đồng thẩm định" });
+    List<string> Classes = new List<string>(new string[] { "badge-primary", "badge-success" });
+}
+
+@section Styles
+{
+    <link rel="stylesheet" abp-href="/view-resources/Areas/App/Views/DoiTuongChuyenDoiSos/Index.css" asp-append-version="true" />
+}
+
+@section Scripts
+{
+    <script abp-src="/view-resources/Areas/App/Views/DoiTuongChuyenDoiSos/ChamDiem.js" asp-append-version="true"></script>
+}
+
+<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+    <input type="hidden" name="ChamDiemFlag" value="@Model.ChamDiemFlag" id="cham-diem-flag" />
+    <div class="kt-subheader kt-grid__item">
+        <div class="@(await GetContainerClass())">
+            <div class="kt-subheader__main">
+                <h3 class="kt-subheader__title">
+                    <span>@L("DoiTuongChuyenDoiSos")</span>
+                </h3>
+                <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+                <span class="kt-subheader__desc">
+                    Tính điểm chuyển đổi số
+                </span>
+                <span class="badge @Classes[Model.ChamDiemFlag]">@TrangThais[Model.ChamDiemFlag]</span>
+            </div>
+            <div class="kt-subheader__toolbar">
+                <div class="kt-subheader__wrapper">
+                    @*<form name="TrangThaiChamDiemFlagForm" role="form" novalidate class="form-validation" style="display: inline-flex;">
+                        <div class="form-check form-check-inline">
+                            <label class="form-check-label mr-1 font-weight-bold" for="tuDanhGiaFlag">Tự đánh giá</label>
+                            <input class="form-check-input" type="radio" name="chamDiemFlag" id="tuDanhGiaFlag" value="0">
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <label class="form-check-label mr-1 font-weight-bold" for="hoiDongThamDinh">Hội đồng thẩm định</label>
+                            <input class="form-check-input" type="radio" name="chamDiemFlag" id="hoiDongThamDinh" value="1">
+                        </div>
+                    </form>*@
+                    @if (IsGranted(AppPermissions.Pages_DoiTuongChuyenDoiSos_TongHopDiem))
+                    {
+                        <button id="TongHopDiem" class="btn btn-success">Tổng hợp điểm</button>
+                    }
+                    @if (IsGranted(AppPermissions.Pages_DoiTuongChuyenDoiSos_DongBoChiTiet))
+                    {
+                        <button id="DongBoTieuChi" data-target="@Model.IdDoiTuong" class="btn btn-primary blue"><i class="fa fa-recycle"></i>Đồng bộ tiêu chí</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="@(await GetContainerClass()) kt-grid__item kt-grid__item--fluid">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="kt-portlet kt-portlet--mobile">
+                    <div class="" >
+                        <div class="kt-portlet__head">
+                            <div class="kt-portlet__head-label">
+                                <h3 class="kt-portlet__head-title" id="ten-doi-tuong">
+                                </h3>
+                            </div>
+                            <div class="kt-portlet__head-toolbar">
+                                <div>
+                                    <span style="margin-right: 8px; font-weight: bold; font-size: 14px;">
+                                        Tự đánh giá: <b class="badge" style="background-color: #ffee9e;" id="tong-diem-tdg"></b>
+                                    </span>
+                                    <span style="margin-right: 8px; font-weight: bold; font-size: 14px;">
+                                        Hội đồng thẩm định: <b class="badge" style="background-color: #ffb3a1; " id="tong-diem-hdtd"></b>
+                                    </span>
+                                    <span style="font-weight: bold; font-size: 14px;">
+                                        Điểm đạt được: <b class="badge" style="background-color: #9de4cf; " id="tong-diem-dd"></b>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        @*<div class="kt-portlet__body">
+                            <form role="form" id="upload-form-file">
+                                <div class="custom-file form-group">
+                                    <input id="test-1234a" type="file" name="photo" value="" class="form-control custom-file-input" />
+                                    <label class="custom-file-label">Chọn file...</label>
+
+                                    <div id="progress" class="progress">
+                                        <div class="progress-bar progress-bar-success"></div>
+                                    </div>
+                                </div>
+
+                            </form>
+                            <button id="tai-ve" class="btn btn-default">Download</button>
+                        </div>*@
+                        <div class="kt-portlet__body" style="height: calc(100vh - 310px);">
+                            <div class="row mb-2" style="padding-left: 15px; font-size: 13px">
+                                <div class="col-lg-4">
+                                    <span>
+                                        <i class="fa fa-folder" style="color: #a2a5b9"></i> TC chưa chấm điểm
+                                    </span>
+                                </div>
+                                <div class="col-lg-4">
+                                    <span>
+                                        <i class="fa fa-folder" style="color: DarkCyan"></i> TC đang chấm điểm
+                                    </span>
+                                </div>
+                                <div class="col-lg-4">
+                                    <span>
+                                        <i class="fa fa-folder" style="color: Gold"></i> TC đã chấm điểm
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div id="ChiTietTieuChi" data-target="@Model.IdDoiTuong" data-scroll="true" style="padding-right: 24px;" ></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="kt-portlet" id="cap-nhat-panel" style="display: none">
+                    <div class="kt-portlet__head justify-content-between">
+                        <div class="kt-portlet__head-label">
+                            <h3 class="kt-portlet__head-title justify-content-between">
+                                <span id="SoThuTu-Id"></span>
+                            </h3>
+                        </div>
+                        <div class="kt-portlet__head-toolbar">
+                            <button id="cap-nhat-danh-gia" class="btn btn-primary">Cập nhật đánh giá</button>
+                        </div>
+                    </div>
+                    <div class="kt-portlet__body" style="height: calc(100vh - 310px);">
+                        <div id="SettingsTabPanel" class="tabbable-line" data-scroll="true" style="padding-right: 12px;">
+                            <form id="ChiTietDanhGiaForm" name="ChiTietDanhGiaForm" method="POST" role="form" novalidate class="form-validation" action="UploadSoLieuThongKe">
+                                <input id="ChiTietDanhGia_Id" type="hidden" name="id" value="" />
+
+                                <div class="row">
+                                    <div class="col-lg-12 margin-bottom-10">
+                                        <h6 class="text-info"><i class="fa fa-arrow-circle-right text-info" aria-hidden="true"></i> Tiêu chí:</h6>
+                                        <span id="TieuChiName-Id" style="text-indent: 15px; display: inline-block; text-align: justify;"></span>
+                                    </div>
+                                    <br />
+                                    <div class="col-lg-12 margin-bottom-10">
+                                        <h6 class="text-info"><i class="fa fa-arrow-circle-right text-info" aria-hidden="true"></i> Điểm tối đa: <span id="DiemToiDa-Id" class="badge badge-success font-weight-bold"></span> </h6>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <h6 class="text-info"><i class="fa fa-arrow-circle-right text-info" aria-hidden="true"></i> Phương thức đánh giá:</h6>
+                                        <span id="PhuongThucDanhGia-Id" style="text-indent: 15px; display: inline-block; text-align: justify;"></span>
+                                    </div>
+                                    <br />
+                                </div>
+                                <br />
+                                <br />
+                                <div id="chi-tiet-danh-gia-input-group">
+                                    <div class="form-group row">
+                                        <div class="col-lg-4 @(isHienThiMoTaVaFileDinhKem ? "good-day" : "")">
+                                            <label class="font-weight-bold" for="ChiTietDanhGia_DiemTuDanhGia">@L("DiemTuDanhGia")</label>
+                                            <input class="form-control m-input" id="ChiTietDanhGia_DiemTuDanhGia" value="" type="number" name="diemTuDanhGia" />
+                                        </div>
+
+                                        <div class="col-lg-4 @(isHienThiMoTaVaFileDinhKem ? "" : "good-day")">
+                                            <label class="font-weight-bold" for="ChiTietDanhGia_DiemHoiDongThamDinh">@L("DiemHoiDongThamDinh")</label>
+                                            <input class="form-control m-input" id="ChiTietDanhGia_DiemHoiDongThamDinh" value="" type="number" name="diemHoiDongThamDinh" />
+                                        </div>
+                                        <div class="col-lg-4 @(isHienThiMoTaVaFileDinhKem ? "" : "good-day")">
+                                            <label class="font-weight-bold" for="ChiTietDanhGia_DiemDatDuoc">@L("DiemDatDuoc")</label>
+                                            <input class="form-control m-input" id="ChiTietDanhGia_DiemDatDuoc" value="" type="number" name="diemDatDuoc" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group @(isHienThiMoTaVaFileDinhKem ? "good-day" : "")">
+                                        <label class="font-weight-bold" for="ChiTietDanhGia_Description">@L("Description")</label>
+                                        <textarea class="form-control" id="ChiTietDanhGia_Description" name="description" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <div id="SoLieuKeKhaiDinhKem">
+                                <div class="mb-2 d-flex justify-content-between">
+                                    <label class="font-weight-bold mb-0 d-flex align-items-center">@L("SoLieuKeKhai")</label>
+                                    <span id="them-tai-lieu" class="badge badge-success" style="font-size: 12px; cursor: pointer;">Thêm tài liệu</span>
+                                </div>
+                                <div id="upload-table-container">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 10%; text-align: center" scope="col">STT</th>
+                                                <th style="width: 40%; text-align: center" scope="col">Nội dung</th>
+                                                <th style="width: 35%; text-align: center" scope="col">Tài liệu</th>
+                                                <th style="width: 15%; text-align: center" scope="col">Hành động</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

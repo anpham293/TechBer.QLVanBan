@@ -1,0 +1,38 @@
+﻿@using TechBer.ChuyenDoiSo.Authorization
+@model TechBer.ChuyenDoiSo.Web.Areas.App.Models.EntityDynamicParameterValues.EntityDynamicParameterValueManageAllViewModel
+
+
+<div class="modal-body p-0 m-0">
+    @Html.HiddenFor(x => x.EntityId)
+    @Html.HiddenFor(x => x.EntityFullName)
+
+    <div class="kt-portlet kt-portlet--mobile">
+        <div class="kt-portlet__head">
+            <div class="kt-portlet__head-label w-100" style="justify-content: space-between;">
+                <div class="float-left"><span class="font-weight-bold ">@L("EntityFullName"):</span> @Model.EntityFullName</div>
+                <div class="float-right"><span class="font-weight-bold ">@L("EntityId"):</span> @Model.EntityId</div>
+            </div>
+        </div>
+        <div class="kt-portlet__body">
+            <div class="align-items-center">
+                <table id="EntityDynamicParameterValuesTable" class="display table table-striped table-bordered table-hover dt-responsive nowrap">
+                    <thead>
+                        <tr>
+                            <th>@L("ParameterName")</th>
+                            <th>@L("Values")</th>
+                            @if (IsGranted(AppPermissions.Pages_Administration_EntityDynamicParameterValue_Delete))
+                            {
+                                <th style="width: 50px">@L("Actions")</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

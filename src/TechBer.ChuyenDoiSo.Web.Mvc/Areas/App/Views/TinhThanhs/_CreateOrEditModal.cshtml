@@ -1,0 +1,36 @@
+﻿
+@using System.Globalization
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.Common.Modals
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.TinhThanhs
+@model CreateOrEditTinhThanhModalViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditTinhThanh")) : L("CreateNewTinhThanh")))
+
+<div class="modal-body">
+        <div id="TinhThanhInformationsTab">
+            <form name="TinhThanhInformationsForm" role="form" novalidate class="form-validation">
+
+                @if (Model.IsEditMode)
+                {
+                    <input type="hidden" name="id" value="@Model.TinhThanh.Id" />
+                }
+
+				
+
+				
+								<div class="form-group">
+									<label for="TinhThanh_Name">@L("Name")</label>
+									<input class="form-control" id="TinhThanh_Name" value="@Model.TinhThanh.Name" type="text" name="name"  required    />
+								</div>
+					
+								<div class="form-group">
+									<label for="TinhThanh_Ma">@L("Ma")</label>
+									<input class="form-control" id="TinhThanh_Ma" value="@Model.TinhThanh.Ma" type="text" name="ma"  required    />
+								</div>
+					
+
+            </form>
+        </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

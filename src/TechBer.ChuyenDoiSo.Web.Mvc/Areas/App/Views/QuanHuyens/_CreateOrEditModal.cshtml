@@ -1,0 +1,59 @@
+﻿
+@using System.Globalization
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.Common.Modals
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.QuanHuyens
+@model CreateOrEditQuanHuyenModalViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditQuanHuyen")) : L("CreateNewQuanHuyen")))
+
+<div class="modal-body">
+        <div id="QuanHuyenInformationsTab">
+            <form name="QuanHuyenInformationsForm" role="form" novalidate class="form-validation">
+
+                @if (Model.IsEditMode)
+                {
+                    <input type="hidden" name="id" value="@Model.QuanHuyen.Id" />
+                }
+
+				            
+								<div class="form-group m-form__group">
+										<label for="TinhThanhName">@L("TinhThanh")</label>
+									    <div class="input-group">
+											<input class="form-control" id="TinhThanhName" name="tinhThanhName" value="@Model.TinhThanhName" type="text" disabled>
+										<div class="input-group-append">
+											<button class="btn btn-primary blue" id="OpenTinhThanhLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
+										</div> 
+										<div class="input-group-prepend">
+											<button class="btn btn-danger btn-icon" type="button" id="ClearTinhThanhNameButton"><i class="fa fa-times"></i></button>
+										</div>
+									</div>
+								</div>
+
+								@if (Model.IsEditMode)
+								{
+									<input class="form-control" id="QuanHuyen_TinhThanhId" value="@Model.QuanHuyen.TinhThanhId" type="text" name="tinhThanhId" required hidden/>
+								}
+								 else
+								{ 
+									<input class="form-control" id="QuanHuyen_TinhThanhId" value="" type="text" name="tinhThanhId" required hidden/>
+								}
+
+
+
+				
+								<div class="form-group">
+									<label for="QuanHuyen_Name">@L("Name")</label>
+									<input class="form-control" id="QuanHuyen_Name" value="@Model.QuanHuyen.Name" type="text" name="name"  required    />
+								</div>
+					
+								<div class="form-group">
+									<label for="QuanHuyen_Ma">@L("Ma")</label>
+									<input class="form-control" id="QuanHuyen_Ma" value="@Model.QuanHuyen.Ma" type="text" name="ma"  required    />
+								</div>
+					
+
+            </form>
+        </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

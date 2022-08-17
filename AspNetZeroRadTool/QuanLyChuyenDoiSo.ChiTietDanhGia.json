@@ -1,0 +1,144 @@
+{
+  "IsRegenerate": true,
+  "MenuPosition": "main",
+  "RelativeNamespace": "QuanLyChuyenDoiSo",
+  "EntityName": "ChiTietDanhGia",
+  "EntityNamePlural": "ChiTietDanhGias",
+  "TableName": "ChiTietDanhGias",
+  "PrimaryKeyType": "int",
+  "BaseClass": "FullAuditedEntity",
+  "EntityHistory": true,
+  "AutoMigration": true,
+  "UpdateDatabase": false,
+  "CreateUserInterface": false,
+  "CreateViewOnly": false,
+  "CreateExcelExport": false,
+  "IsNonModalCRUDPage": false,
+  "PagePermission": {
+    "Host": false,
+    "Tenant": true
+  },
+  "Properties": [
+    {
+      "Name": "Description",
+      "Type": "string",
+      "MaxLength": -1,
+      "MinLength": -1,
+      "Range": {
+        "IsRangeSet": false,
+        "MinimumValue": 0,
+        "MaximumValue": 0
+      },
+      "Required": false,
+      "Nullable": false,
+      "Regex": "",
+      "UserInterface": {
+        "AdvancedFilter": true,
+        "List": true,
+        "CreateOrUpdate": true
+      }
+    },
+    {
+      "Name": "SoLieuKeKhai",
+      "Type": "string",
+      "MaxLength": -1,
+      "MinLength": -1,
+      "Range": {
+        "IsRangeSet": false,
+        "MinimumValue": 0,
+        "MaximumValue": 0
+      },
+      "Required": false,
+      "Nullable": false,
+      "Regex": "",
+      "UserInterface": {
+        "AdvancedFilter": true,
+        "List": true,
+        "CreateOrUpdate": true
+      }
+    },
+    {
+      "Name": "DiemTuDanhGia",
+      "Type": "double",
+      "MaxLength": -1,
+      "MinLength": -1,
+      "Range": {
+        "IsRangeSet": false,
+        "MinimumValue": 0,
+        "MaximumValue": 0
+      },
+      "Required": false,
+      "Nullable": true,
+      "Regex": "",
+      "UserInterface": {
+        "AdvancedFilter": true,
+        "List": true,
+        "CreateOrUpdate": true
+      }
+    },
+    {
+      "Name": "DiemHoiDongThamDinh",
+      "Type": "double",
+      "MaxLength": -1,
+      "MinLength": -1,
+      "Range": {
+        "IsRangeSet": false,
+        "MinimumValue": 0,
+        "MaximumValue": 0
+      },
+      "Required": false,
+      "Nullable": true,
+      "Regex": "",
+      "UserInterface": {
+        "AdvancedFilter": true,
+        "List": true,
+        "CreateOrUpdate": true
+      }
+    },
+    {
+      "Name": "DiemDatDuoc",
+      "Type": "double",
+      "MaxLength": -1,
+      "MinLength": -1,
+      "Range": {
+        "IsRangeSet": false,
+        "MinimumValue": 0,
+        "MaximumValue": 0
+      },
+      "Required": false,
+      "Nullable": true,
+      "Regex": "",
+      "UserInterface": {
+        "AdvancedFilter": true,
+        "List": true,
+        "CreateOrUpdate": true
+      }
+    }
+  ],
+  "NavigationProperties": [
+    {
+      "Namespace": "TechBer.ChuyenDoiSo.QuanLyChuyenDoiSo",
+      "ForeignEntityName": "TieuChiDanhGia",
+      "IdType": "int",
+      "IsNullable": false,
+      "PropertyName": "TieuChiDanhGiaId",
+      "DisplayPropertyName": "Name",
+      "DuplicationNumber": 0,
+      "RelationType": "single",
+      "ViewType": "LookupTable"
+    },
+    {
+      "Namespace": "TechBer.ChuyenDoiSo.QuanLyChuyenDoiSo",
+      "ForeignEntityName": "DoiTuongChuyenDoiSo",
+      "IdType": "int",
+      "IsNullable": false,
+      "PropertyName": "DoiTuongChuyenDoiSoId",
+      "DisplayPropertyName": "Name",
+      "DuplicationNumber": 0,
+      "RelationType": "single",
+      "ViewType": "LookupTable"
+    }
+  ],
+  "EnumDefinitions": [],
+  "DbContext": null
+}

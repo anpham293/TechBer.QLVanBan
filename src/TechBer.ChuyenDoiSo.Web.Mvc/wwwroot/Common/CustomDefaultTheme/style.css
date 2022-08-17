@@ -1,0 +1,36 @@
+.kt-aside-menu-dark .kt-menu__link .kt-menu__link-icon {
+    color: #fff!important;
+}
+.kt-aside-menu-dark nav {
+    background-color: #1e1e2d!important;
+}
+.kt-aside-menu-dark nav span{
+    color: #fff!important;
+}
+.kt-aside-menu-dark nav .kt-menu__ver-arrow.la.la-angle-right{
+    font-size:16px!important;
+}
+.kt-aside-menu .kt-menu__nav > .kt-menu__item .kt-menu__submenu .kt-menu__item:not(.kt-menu__item--parent):not(.kt-menu__item--open):not(.kt-menu__item--here):not(.kt-menu__item--active):hover 
+{
+    background-color: #00bb7742!important;
+}
+.kt-aside-menu .kt-menu__nav > .kt-menu__item.kt-menu__item--active > .kt-menu__heading, .kt-aside-menu .kt-menu__nav > .kt-menu__item.kt-menu__item--active > .kt-menu__link {
+    background-color: #00bb7742!important;
+}
+.kt-menu__link{
+    background-color: transparent!important;
+}
+.kt-menu__link:hover{
+    background-color: #00bb7742!important;
+}
+body {
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    font-size: 13px;
+    font-weight: 100;
+    font-family: Roboto!important;
+}
+.dataTables_wrapper{
+    font-family: Roboto!important;
+}

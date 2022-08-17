@@ -1,0 +1,76 @@
+{
+  "IsRegenerate": true,
+  "MenuPosition": "main",
+  "RelativeNamespace": "QuanLyChuyenDoiSo",
+  "EntityName": "DoiTuongChuyenDoiSo",
+  "EntityNamePlural": "DoiTuongChuyenDoiSos",
+  "TableName": "DoiTuongChuyenDoiSos",
+  "PrimaryKeyType": "int",
+  "BaseClass": "FullAuditedEntity",
+  "EntityHistory": true,
+  "AutoMigration": true,
+  "UpdateDatabase": false,
+  "CreateUserInterface": true,
+  "CreateViewOnly": true,
+  "CreateExcelExport": true,
+  "IsNonModalCRUDPage": false,
+  "PagePermission": {
+    "Host": false,
+    "Tenant": true
+  },
+  "Properties": [
+    {
+      "Name": "Name",
+      "Type": "string",
+      "MaxLength": -1,
+      "MinLength": -1,
+      "Range": {
+        "IsRangeSet": false,
+        "MinimumValue": 0,
+        "MaximumValue": 0
+      },
+      "Required": true,
+      "Nullable": false,
+      "Regex": "",
+      "UserInterface": {
+        "AdvancedFilter": true,
+        "List": true,
+        "CreateOrUpdate": true
+      }
+    },
+    {
+      "Name": "Type",
+      "Type": "int",
+      "MaxLength": -1,
+      "MinLength": -1,
+      "Range": {
+        "IsRangeSet": false,
+        "MinimumValue": 0,
+        "MaximumValue": 0
+      },
+      "Required": false,
+      "Nullable": false,
+      "Regex": "",
+      "UserInterface": {
+        "AdvancedFilter": true,
+        "List": true,
+        "CreateOrUpdate": true
+      }
+    }
+  ],
+  "NavigationProperties": [
+    {
+      "Namespace": "TechBer.ChuyenDoiSo.Authorization.Users",
+      "ForeignEntityName": "User",
+      "IdType": "long",
+      "IsNullable": true,
+      "PropertyName": "UserId",
+      "DisplayPropertyName": "Name",
+      "DuplicationNumber": 0,
+      "RelationType": "single",
+      "ViewType": "Dropdown"
+    }
+  ],
+  "EnumDefinitions": [],
+  "DbContext": null
+}

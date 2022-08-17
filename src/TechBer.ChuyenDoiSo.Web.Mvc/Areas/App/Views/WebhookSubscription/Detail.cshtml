@@ -1,0 +1,176 @@
+﻿@using TechBer.ChuyenDoiSo.Authorization
+@model Abp.Webhooks.WebhookSubscription
+
+@section Styles
+{
+    <link rel="stylesheet" abp-href="/view-resources/Areas/App/Views/WebhookSubscriptions/Detail.css" asp-append-version="true" />
+}
+
+@section Scripts
+{
+    <script>
+        var subscriptionData = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model, Newtonsoft.Json.Formatting.Indented));
+    </script>
+    <script abp-src="/view-resources/Areas/App/Views/_Bundles/webhook-subscription-detail.js" asp-append-version="true"></script>
+}
+<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+    <div class="kt-subheader kt-grid__item">
+        <div class="@(await GetContainerClass())">
+            <div class="kt-subheader__main">
+                <div class="kt-subheader__breadcrumbs">
+                    <a href="@Url.Action("Index", "WebhookSubscription", new {Area = "App"})" class="kt-subheader__breadcrumbs-home">
+                        <i class="flaticon2-shelter"></i>
+                        @L("WebhookSubscriptions")
+                    </a>
+                    <span class="kt-subheader__breadcrumbs-separator"></span>
+                    <span class="kt-subheader__breadcrumbs-link">
+                        @L("WebhookSubscriptionDetail")
+                    </span>
+                </div>
+            </div>
+            <div class="kt-subheader__toolbar">
+                <div class="kt-subheader__wrapper">
+                    @if (Model.IsActive)
+                    {
+                        <span class="label kt-badge kt-badge--success kt-badge--inline">@L("Active")</span>
+                    }
+                    else
+                    {
+                        <span class="label kt-badge kt-badge--dark kt-badge--inline">@L("Disabled")</span>
+                    }
+
+                    @if (IsGranted(AppPermissions.Pages_Administration_WebhookSubscription_Edit) ||
+                       IsGranted(AppPermissions.Pages_Administration_WebhookSubscription_ChangeActivity))
+                    {
+                        <div class="dropdown dropdown-inline show">
+                            <a href="#" class="btn btn-default btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <i class="flaticon-more-1"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-142px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                <ul class="kt-nav">
+                                    @if (IsGranted(AppPermissions.Pages_Administration_WebhookSubscription_Edit))
+                                    {
+                                        <li class="kt-nav__item">
+                                            <a href="javascript:;" id="subscription-edit-btn" class="kt-nav__link">
+                                                <span class="kt-nav__link-text">@L("EditWebhookSubscription")</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (IsGranted(AppPermissions.Pages_Administration_WebhookSubscription_ChangeActivity))
+                                    {
+                                        <li class="kt-nav__item">
+                                            <a href="javascript:;" id="activity-toggle-btn" class="kt-nav__link">
+
+                                                @if (Model.IsActive)
+                                                {
+                                                    <span class="kt-nav__link-text">@L("Disable")</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="kt-nav__link-text">@L("Enable")</span>
+                                                }
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="@(await GetContainerClass()) kt-grid__item kt-grid__item--fluid">
+
+        <div class="kt-portlet kt-portlet--mobile" id="portlet-detail">
+            <div class="kt-portlet__body">
+
+                <div class="form-group row">
+                    <label class="col-2 col-form-label">@L("WebhookEndpoint")</label>
+                    <div class="col-10 text-break">
+                        @Model.WebhookUri
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-2 col-form-label">@L("WebhookEvents")</label>
+                    <div class="col-10 text-break">
+                        @if (Model.Webhooks != null)
+                        {
+                            @foreach (var webhookEvent in Model.Webhooks)
+                            {
+                                @webhookEvent
+                                <br />
+                            }
+                        }
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-2 col-form-label">@L("AdditionalWebhookHeaders")</label>
+                    <div class="col-10 text-break">
+                        @if (Model.Headers != null)
+                        {
+                            @foreach (var webhookHeader in Model.Headers)
+                            {
+                                @webhookHeader
+                                <br />
+                            }
+                        }
+                    </div>
+                </div>
+
+                <div class="form-group row mb-0">
+                    <label class="col-2 col-form-label">@L("WebhookSecret")</label>
+                    <div class="col-10 position-relative">
+                        <span class="blur" id="secretSpan">@Model.Secret</span>
+                        <div class="btn btn-sm btn-dark btn-elevate btn-elevate-air" id="secret-view-btn">@L("ViewWebhookSecret")</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="kt-portlet  kt-portlet--mobile">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">
+                        @L("WebhookSendAttempts")
+                    </h3>
+                </div>
+                <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-actions">
+                        <button id="refresh-send-attempts-btn" class="btn btn-outline-brand btn-sm btn-icon btn-icon-md">
+                            <i class="flaticon2-refresh"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div class="align-items-center">
+                    <table id="WebHookSendAttemptTable" class="display table table-striped table-bordered table-hover dt-responsive nowrap">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th style="text-align: center;width: 60px">@L("Actions")</th>
+                                <th>@L("WebhookEvent")</th>
+                                <th>@L("WebhookEventId")</th>
+                                <th>@L("CreationTime")</th>
+                                <th>@L("HttpStatusCode")</th>
+                                <th>@L("Response")</th>
+                                <th>@L("Data")</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="SendAttemptDetailModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>

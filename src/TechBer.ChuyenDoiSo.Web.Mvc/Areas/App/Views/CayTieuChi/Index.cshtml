@@ -1,0 +1,84 @@
+﻿@using TechBer.ChuyenDoiSo.Authorization
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Startup
+@{
+    ViewBag.CurrentPageName = AppPageNames.Tenant.CayTieuChi;
+}
+@section Styles
+    {
+    <link rel="stylesheet" abp-href="/view-resources/Areas/App/Views/CayTieuChi/Index.css" asp-append-version="true" />
+}
+@section Scripts
+    {
+    <script abp-src="/view-resources/Areas/App/Views/CayTieuChi/Index.js" asp-append-version="true"></script>
+}
+<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+
+    <div class="kt-subheader kt-grid__item">
+        <div class="@(await GetContainerClass())">
+            <div class="kt-subheader__main">
+                <h3 class="kt-subheader__title">
+                    <span>Cây tiêu chí</span>
+                </h3>
+                <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+                <span class="kt-subheader__desc">
+                    Quản lý tiêu chí theo dạng cây
+                </span>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="@(await GetContainerClass()) kt-grid__item kt-grid__item--fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="kt-portlet">
+                    <div class="kt-portlet__head">
+                        <div class="kt-portlet__head-label">
+                            <h3 class="kt-portlet__head-title">
+                                Phụ lục IA
+                            </h3>
+                        </div>
+                        <div class="kt-portlet__head-toolbar">
+                            <div class="kt-portlet__head-actions">
+                                @if (IsGranted(AppPermissions.Pages_CayTieuChi_ManageTree))
+                                {
+                                    <button type="button" id="AddRootUnitButtonIA" class="btn btn-primary">
+                                        <i class="la la-plus"></i> @L("AddRootUnit")
+                                    </button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kt-portlet__body">
+                        <div id="CayTieuChiIA" loai-phu-luc="1"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="kt-portlet">
+                    <div class="kt-portlet__head">
+                        <div class="kt-portlet__head-label">
+                            <h3 class="kt-portlet__head-title">
+                                Phụ lục IIA
+                            </h3>
+                        </div>
+                        <div class="kt-portlet__head-toolbar">
+                            <div class="kt-portlet__head-actions">
+                                @if (IsGranted(AppPermissions.Pages_CayTieuChi_ManageTree))
+                                {
+                                    <button type="button" id="AddRootUnitButtonIIA" class="btn btn-primary">
+                                        <i class="la la-plus"></i> @L("AddRootUnit")
+                                    </button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kt-portlet__body">
+                        <div id="CayTieuChiIIA" loai-phu-luc="2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

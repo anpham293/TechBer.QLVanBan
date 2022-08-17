@@ -1,0 +1,40 @@
+﻿
+@using System.Globalization
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.Common.Modals
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.DoiTuongChuyenDoiSos
+@model CreateOrEditDoiTuongChuyenDoiSoModalViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditDoiTuongChuyenDoiSo")) : L("CreateNewDoiTuongChuyenDoiSo")))
+
+<div class="modal-body">
+        <div id="DoiTuongChuyenDoiSoInformationsTab">
+            <form name="DoiTuongChuyenDoiSoInformationsForm" role="form" novalidate class="form-validation">
+
+                @if (Model.IsEditMode)
+                {
+                    <input type="hidden" name="id" value="@Model.DoiTuongChuyenDoiSo.Id" />
+                }
+
+				            
+				<div class="form-group">
+					<label for="userId">@L("NguoiPhuTrach")</label>
+					@Html.DropDownList("userId", new SelectList(Model.DoiTuongChuyenDoiSoUserList,"Id","DisplayName", (Model.IsEditMode ? Model.DoiTuongChuyenDoiSo.UserId.ToString() : "")),@L("SelectAUser"), new { @class = "form-control"   })
+				</div>
+				
+				<div class="form-group">
+					<label for="DoiTuongChuyenDoiSo_Name">@L("Name")</label>
+					<input class="form-control" id="DoiTuongChuyenDoiSo_Name" value="@Model.DoiTuongChuyenDoiSo.Name" type="text" name="name"  required    />
+				</div>
+					
+                <div class="form-group">
+                    <label for="DoiTuongChuyenDoiSo_Type">@L("LoaiPhuLuc")</label>
+                    <div>
+                        <select name="type" id="DoiTuongChuyenDoiSo_Type" class="form-control kt-select2" value="@Model.DoiTuongChuyenDoiSo.Type.ToString(CultureInfo.InvariantCulture)">
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

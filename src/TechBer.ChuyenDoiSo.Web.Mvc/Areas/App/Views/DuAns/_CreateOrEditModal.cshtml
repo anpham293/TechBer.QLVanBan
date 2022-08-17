@@ -1,0 +1,36 @@
+﻿
+@using System.Globalization
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.Common.Modals
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.DuAns
+@model CreateOrEditDuAnModalViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditDuAn")) : L("CreateNewDuAn")))
+
+<div class="modal-body">
+        <div id="DuAnInformationsTab">
+            <form name="DuAnInformationsForm" role="form" novalidate class="form-validation">
+
+                @if (Model.IsEditMode)
+                {
+                    <input type="hidden" name="id" value="@Model.DuAn.Id" />
+                }
+
+				
+
+				
+								<div class="form-group">
+									<label for="DuAn_Name">@L("Name")</label>
+									<input class="form-control" id="DuAn_Name" value="@Model.DuAn.Name" type="text" name="name"  required    />
+								</div>
+					
+								<div class="form-group">
+									<label for="DuAn_Descriptions">@L("Descriptions")</label>
+									<input class="form-control" id="DuAn_Descriptions" value="@Model.DuAn.Descriptions" type="text" name="descriptions"     />
+								</div>
+					
+
+            </form>
+        </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")
