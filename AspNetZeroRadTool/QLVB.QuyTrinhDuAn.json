@@ -1,5 +1,5 @@
 {
-  "IsRegenerate": false,
+  "IsRegenerate": true,
   "MenuPosition": "main",
   "RelativeNamespace": "QLVB",
   "EntityName": "QuyTrinhDuAn",
@@ -43,6 +43,25 @@
       "Type": "string",
       "MaxLength": -1,
       "MinLength": -1,
+      "Range": {
+        "IsRangeSet": false,
+        "MinimumValue": 0,
+        "MaximumValue": 0
+      },
+      "Required": false,
+      "Nullable": false,
+      "Regex": "",
+      "UserInterface": {
+        "AdvancedFilter": true,
+        "List": true,
+        "CreateOrUpdate": true
+      }
+    },
+    {
+      "Name": "STT",
+      "Type": "int",
+      "MaxLength": 0,
+      "MinLength": 0,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0,

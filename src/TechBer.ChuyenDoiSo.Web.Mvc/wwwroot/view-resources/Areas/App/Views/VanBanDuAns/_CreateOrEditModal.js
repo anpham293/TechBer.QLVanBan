@@ -5,12 +5,15 @@
 
         var _modalManager;
         var _$vanBanDuAnInformationForm = null;
-
-		        var _VanBanDuAnduAnLookupTableModal = new app.ModalManager({
+        var uploadedFileToken = null;
+        var fileName = "";
+        var contentType = "";
+        var _VanBanDuAnduAnLookupTableModal = new app.ModalManager({
             viewUrl: abp.appPath + 'App/VanBanDuAns/DuAnLookupTableModal',
             scriptUrl: abp.appPath + 'view-resources/Areas/App/Views/VanBanDuAns/_VanBanDuAnDuAnLookupTableModal.js',
             modalClass: 'DuAnLookupTableModal'
-        });        var _VanBanDuAnquyTrinhDuAnLookupTableModal = new app.ModalManager({
+        });
+        var _VanBanDuAnquyTrinhDuAnLookupTableModal = new app.ModalManager({
             viewUrl: abp.appPath + 'App/VanBanDuAns/QuyTrinhDuAnLookupTableModal',
             scriptUrl: abp.appPath + 'view-resources/Areas/App/Views/VanBanDuAns/_VanBanDuAnQuyTrinhDuAnLookupTableModal.js',
             modalClass: 'QuyTrinhDuAnLookupTableModal'
@@ -19,7 +22,7 @@
         this.init = function (modalManager) {
             _modalManager = modalManager;
 
-			var modal = _modalManager.getModal();
+            var modal = _modalManager.getModal();
             modal.find('.date-picker').datetimepicker({
                 locale: abp.localization.currentLanguage.name,
                 format: 'L'
@@ -28,37 +31,93 @@
             _$vanBanDuAnInformationForm = _modalManager.getModal().find('form[name=VanBanDuAnInformationsForm]');
             _$vanBanDuAnInformationForm.validate();
         };
+        $('#VanBanDuAnInformationsForm input[name=fileMau]').change(function (e) {
+            if (e.target.files[0]) {
+                fileName = e.target.files[0].name;
+            } else {
+                fileName = "";
+            }
+            $('#VanBanDuAnInformationsForm').submit();
+        });
 
-		          $('#OpenDuAnLookupTableButton').click(function () {
+        $('#VanBanDuAnInformationsForm').ajaxForm({
+            beforeSubmit: function (formData, jqForm, options) {
+                var $fileInput = $('#VanBanDuAnInformationsForm input[name=fileMau]');
+                console.log($fileInput);
+                var files = $fileInput.get()[0].files;
+
+                if (!files.length) {
+                    uploadedFileToken = null;
+                    contentType = "";
+                    fileName = "";
+                    return false;
+                }
+
+                var file = files[0];
+
+                // File size check
+                if (file.size > 52428800) { //50MB
+                    abp.message.warn(app.localize('FileUpload_Warn_SizeLimit', app.consts.maxFileBytesUserFriendlyValue));
+                    uploadedFileToken = null
+                    contentType = "";
+                    fileName = "";
+                    return false;
+                }
+
+                var mimeType = _.filter(formData, { name: 'fileMau' })[0].value.type;
+                
+                formData.push({ name: 'FileType', value: mimeType });
+                formData.push({ name: 'FileName', value: file.name });
+                formData.push({ name: 'FileToken', value: app.guid() });
+                return true;
+            },
+            success: function (response) {
+                if (response.success) {
+                    uploadedFileToken = response.result.fileToken;
+                    contentType = response.result.fileType;
+                } else {
+                    abp.message.error(response.error.message);
+                }
+
+
+            }
+        });
+        
+        $('#OpenDuAnLookupTableButton').click(function () {
 
             var vanBanDuAn = _$vanBanDuAnInformationForm.serializeFormToObject();
 
-            _VanBanDuAnduAnLookupTableModal.open({ id: vanBanDuAn.duAnId, displayName: vanBanDuAn.duAnName }, function (data) {
-                _$vanBanDuAnInformationForm.find('input[name=duAnName]').val(data.displayName); 
-                _$vanBanDuAnInformationForm.find('input[name=duAnId]').val(data.id); 
+            _VanBanDuAnduAnLookupTableModal.open({
+                id: vanBanDuAn.duAnId,
+                displayName: vanBanDuAn.duAnName
+            }, function (data) {
+                _$vanBanDuAnInformationForm.find('input[name=duAnName]').val(data.displayName);
+                _$vanBanDuAnInformationForm.find('input[name=duAnId]').val(data.id);
             });
         });
-		
-		$('#ClearDuAnNameButton').click(function () {
-                _$vanBanDuAnInformationForm.find('input[name=duAnName]').val(''); 
-                _$vanBanDuAnInformationForm.find('input[name=duAnId]').val(''); 
+
+        $('#ClearDuAnNameButton').click(function () {
+            _$vanBanDuAnInformationForm.find('input[name=duAnName]').val('');
+            _$vanBanDuAnInformationForm.find('input[name=duAnId]').val('');
         });
-		
+
         $('#OpenQuyTrinhDuAnLookupTableButton').click(function () {
 
             var vanBanDuAn = _$vanBanDuAnInformationForm.serializeFormToObject();
 
-            _VanBanDuAnquyTrinhDuAnLookupTableModal.open({ id: vanBanDuAn.quyTrinhDuAnId, displayName: vanBanDuAn.quyTrinhDuAnName }, function (data) {
-                _$vanBanDuAnInformationForm.find('input[name=quyTrinhDuAnName]').val(data.displayName); 
-                _$vanBanDuAnInformationForm.find('input[name=quyTrinhDuAnId]').val(data.id); 
+            _VanBanDuAnquyTrinhDuAnLookupTableModal.open({
+                id: vanBanDuAn.quyTrinhDuAnId,
+                displayName: vanBanDuAn.quyTrinhDuAnName
+            }, function (data) {
+                _$vanBanDuAnInformationForm.find('input[name=quyTrinhDuAnName]').val(data.displayName);
+                _$vanBanDuAnInformationForm.find('input[name=quyTrinhDuAnId]').val(data.id);
             });
         });
-		
-		$('#ClearQuyTrinhDuAnNameButton').click(function () {
-                _$vanBanDuAnInformationForm.find('input[name=quyTrinhDuAnName]').val(''); 
-                _$vanBanDuAnInformationForm.find('input[name=quyTrinhDuAnId]').val(''); 
+
+        $('#ClearQuyTrinhDuAnNameButton').click(function () {
+            _$vanBanDuAnInformationForm.find('input[name=quyTrinhDuAnName]').val('');
+            _$vanBanDuAnInformationForm.find('input[name=quyTrinhDuAnId]').val('');
         });
-		
 
 
         this.save = function () {
@@ -75,17 +134,20 @@
             }
 
             var vanBanDuAn = _$vanBanDuAnInformationForm.serializeFormToObject();
-			
-			 _modalManager.setBusy(true);
-			 _vanBanDuAnsService.createOrEdit(
-				vanBanDuAn
-			 ).done(function () {
-               abp.notify.info(app.localize('SavedSuccessfully'));
-               _modalManager.close();
-               abp.event.trigger('app.createOrEditVanBanDuAnModalSaved');
-			 }).always(function () {
-               _modalManager.setBusy(false);
-			});
+            vanBanDuAn.uploadedFileToken = uploadedFileToken;
+            vanBanDuAn.fileName = fileName;
+            vanBanDuAn.contentType = contentType;
+            
+            _modalManager.setBusy(true);
+            _vanBanDuAnsService.createOrEdit(
+                vanBanDuAn
+            ).done(function () {
+                abp.notify.info(app.localize('SavedSuccessfully'));
+                _modalManager.close();
+                abp.event.trigger('app.createOrEditVanBanDuAnModalSaved');
+            }).always(function () {
+                _modalManager.setBusy(false);
+            });
         };
     };
 })(jQuery);

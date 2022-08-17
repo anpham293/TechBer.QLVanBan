@@ -1,5 +1,4 @@
-﻿
-@using System.Globalization
+﻿@using System.Globalization
 @using TechBer.ChuyenDoiSo.Web.Areas.App.Models.Common.Modals
 @using TechBer.ChuyenDoiSo.Web.Areas.App.Models.VanBanDuAns
 @model CreateOrEditVanBanDuAnModalViewModel
@@ -7,86 +6,47 @@
 @await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditVanBanDuAn")) : L("CreateNewVanBanDuAn")))
 
 <div class="modal-body">
-        <div id="VanBanDuAnInformationsTab">
-            <form name="VanBanDuAnInformationsForm" role="form" novalidate class="form-validation">
+    <div id="VanBanDuAnInformationsTab">
+        <form name="VanBanDuAnInformationsForm" id="VanBanDuAnInformationsForm"  method="POST" role="form" novalidate class="form-validation" action="VanBanDuAns/UploadFileHopDong">
 
-                @if (Model.IsEditMode)
-                {
-                    <input type="hidden" name="id" value="@Model.VanBanDuAn.Id" />
-                }
-
-				            
-								<div class="form-group m-form__group">
-										<label for="DuAnName">@L("DuAn")</label>
-									    <div class="input-group">
-											<input class="form-control" id="DuAnName" name="duAnName" value="@Model.DuAnName" type="text" disabled>
-										<div class="input-group-append">
-											<button class="btn btn-primary blue" id="OpenDuAnLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
-										</div> 
-										<div class="input-group-prepend">
-											<button class="btn btn-danger btn-icon" type="button" id="ClearDuAnNameButton"><i class="fa fa-times"></i></button>
-										</div>
-									</div>
-								</div>
-
-								@if (Model.IsEditMode)
-								{
-									<input class="form-control" id="VanBanDuAn_DuAnId" value="@Model.VanBanDuAn.DuAnId" type="text" name="duAnId"  hidden/>
-								}
-								 else
-								{ 
-									<input class="form-control" id="VanBanDuAn_DuAnId" value="" type="text" name="duAnId"  hidden/>
-								}
-
-            
-								<div class="form-group m-form__group">
-										<label for="QuyTrinhDuAnName">@L("QuyTrinhDuAn")</label>
-									    <div class="input-group">
-											<input class="form-control" id="QuyTrinhDuAnName" name="quyTrinhDuAnName" value="@Model.QuyTrinhDuAnName" type="text" disabled>
-										<div class="input-group-append">
-											<button class="btn btn-primary blue" id="OpenQuyTrinhDuAnLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
-										</div> 
-										<div class="input-group-prepend">
-											<button class="btn btn-danger btn-icon" type="button" id="ClearQuyTrinhDuAnNameButton"><i class="fa fa-times"></i></button>
-										</div>
-									</div>
-								</div>
-
-								@if (Model.IsEditMode)
-								{
-									<input class="form-control" id="VanBanDuAn_QuyTrinhDuAnId" value="@Model.VanBanDuAn.QuyTrinhDuAnId" type="text" name="quyTrinhDuAnId"  hidden/>
-								}
-								 else
-								{ 
-									<input class="form-control" id="VanBanDuAn_QuyTrinhDuAnId" value="" type="text" name="quyTrinhDuAnId"  hidden/>
-								}
+            @if (Model.IsEditMode)
+            {
+                <input type="hidden" name="id" value="@Model.VanBanDuAn.Id"/>
+            }
 
 
+            <input class="form-control" id="VanBanDuAn_DuAnId" value="@Model.VanBanDuAn.DuAnId" type="text" name="duAnId" hidden/>
 
-				
-								<div class="form-group">
-									<label for="VanBanDuAn_Name">@L("Name")</label>
-									<input class="form-control" id="VanBanDuAn_Name" value="@Model.VanBanDuAn.Name" type="text" name="name"  required  maxlength="@TechBer.ChuyenDoiSo.QLVB.VanBanDuAnConsts.MaxNameLength"  minlength="@TechBer.ChuyenDoiSo.QLVB.VanBanDuAnConsts.MinNameLength"  />
-								</div>
-					
-								<div class="form-group">
-									<label for="VanBanDuAn_KyHieuVanBan">@L("KyHieuVanBan")</label>
-									<input class="form-control" id="VanBanDuAn_KyHieuVanBan" value="@Model.VanBanDuAn.KyHieuVanBan" type="text" name="kyHieuVanBan"  required  maxlength="@TechBer.ChuyenDoiSo.QLVB.VanBanDuAnConsts.MaxKyHieuVanBanLength"  minlength="@TechBer.ChuyenDoiSo.QLVB.VanBanDuAnConsts.MinKyHieuVanBanLength"  />
-								</div>
-					
-								<div class="form-group">
-									<label for="VanBanDuAn_NgayBanHanh">@L("NgayBanHanh")</label>
-									<input class="form-control m-input date-picker" id="VanBanDuAn_NgayBanHanh" type="text" name="ngayBanHanh" value="@Model.VanBanDuAn.NgayBanHanh"/>
-								</div>
-					
-								<div class="form-group">
-									<label for="VanBanDuAn_FileVanBan">@L("FileVanBan")</label>
-									<input class="form-control" id="VanBanDuAn_FileVanBan" value="@Model.VanBanDuAn.FileVanBan" type="text" name="fileVanBan"     />
-								</div>
-					
+            <input class="form-control" id="VanBanDuAn_QuyTrinhDuAnId" value="@Model.VanBanDuAn.QuyTrinhDuAnId" type="text" name="quyTrinhDuAnId" hidden/>
 
-            </form>
-        </div>
+
+            <div class="form-group">
+                <label for="VanBanDuAn_Name">@L("Name")</label>
+                <input class="form-control" id="VanBanDuAn_Name" value="@Model.VanBanDuAn.Name" type="text" name="name" required maxlength="@TechBer.ChuyenDoiSo.QLVB.VanBanDuAnConsts.MaxNameLength" minlength="@TechBer.ChuyenDoiSo.QLVB.VanBanDuAnConsts.MinNameLength"/>
+            </div>
+
+            <div class="form-group">
+                <label for="VanBanDuAn_KyHieuVanBan">@L("KyHieuVanBan")</label>
+                <input class="form-control" id="VanBanDuAn_KyHieuVanBan" value="@Model.VanBanDuAn.KyHieuVanBan" type="text" name="kyHieuVanBan" required maxlength="@TechBer.ChuyenDoiSo.QLVB.VanBanDuAnConsts.MaxKyHieuVanBanLength" minlength="@TechBer.ChuyenDoiSo.QLVB.VanBanDuAnConsts.MinKyHieuVanBanLength"/>
+            </div>
+
+            <div class="form-group">
+                <label for="VanBanDuAn_NgayBanHanh">@L("NgayBanHanh")</label>
+                <input class="form-control m-input date-picker" id="VanBanDuAn_NgayBanHanh" type="text" name="ngayBanHanh" value="@Model.VanBanDuAn.NgayBanHanh"/>
+            </div>
+
+            <div class="form-group">
+                <label for="VanBanDuAn_FileVanBan">@L("FileVanBan")</label>
+
+                <div class="custom-file form-group">
+                    <input id="VanBanDuAn_FileVanBan" type="file" name="fileMau" accept="application/pdf" value="" class="form-control custom-file-input mb-4"/>
+                    <label id="custom-select-file" class="custom-file-label">Chọn file...</label>
+                </div>
+            </div>
+
+
+        </form>
+    </div>
 </div>
 
 @await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

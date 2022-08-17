@@ -36,13 +36,15 @@ namespace TechBer.ChuyenDoiSo.QLVB.Exporting
                     AddHeader(
                         sheet,
                         L("Name"),
-                        L("Descriptions")
+                        L("Descriptions"),
+                        (L("LoaiDuAn")) + L("Name")
                         );
 
                     AddObjects(
                         sheet, 2, duAns,
                         _ => _.DuAn.Name,
-                        _ => _.DuAn.Descriptions
+                        _ => _.DuAn.Descriptions,
+                        _ => _.LoaiDuAnName
                         );
 
 					

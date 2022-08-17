@@ -12,6 +12,8 @@ namespace TechBer.ChuyenDoiSo.QLVB.Dtos
 		public string DescriptionsFilter { get; set; }
 
 
+		 public string LoaiDuAnNameFilter { get; set; }
 
+		 
     }
 }

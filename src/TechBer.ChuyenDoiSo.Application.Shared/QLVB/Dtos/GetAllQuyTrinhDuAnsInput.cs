@@ -11,8 +11,11 @@ namespace TechBer.ChuyenDoiSo.QLVB.Dtos
 
 		public string DescriptionsFilter { get; set; }
 
+		public int? MaxSTTFilter { get; set; }
+		public int? MinSTTFilter { get; set; }
 
-		 public string LoaiDuAnNameFilter { get; set; }
+
+		 public int? LoaiDuAnId { get; set; }
 
 		 
     }

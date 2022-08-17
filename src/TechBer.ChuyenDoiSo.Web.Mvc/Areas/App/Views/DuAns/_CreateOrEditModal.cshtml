@@ -15,7 +15,30 @@
                     <input type="hidden" name="id" value="@Model.DuAn.Id" />
                 }
 
-				
+				            
+								<div class="form-group m-form__group">
+										<label for="LoaiDuAnName">@L("LoaiDuAn")</label>
+									    <div class="input-group">
+											<input class="form-control" id="LoaiDuAnName" name="loaiDuAnName" value="@Model.LoaiDuAnName" type="text" disabled>
+										<div class="input-group-append">
+											<button class="btn btn-primary blue" id="OpenLoaiDuAnLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
+										</div> 
+										<div class="input-group-prepend">
+											<button class="btn btn-danger btn-icon" type="button" id="ClearLoaiDuAnNameButton"><i class="fa fa-times"></i></button>
+										</div>
+									</div>
+								</div>
+
+								@if (Model.IsEditMode)
+								{
+									<input class="form-control" id="DuAn_LoaiDuAnId" value="@Model.DuAn.LoaiDuAnId" type="text" name="loaiDuAnId"  hidden/>
+								}
+								 else
+								{ 
+									<input class="form-control" id="DuAn_LoaiDuAnId" value="" type="text" name="loaiDuAnId"  hidden/>
+								}
+
+
 
 				
 								<div class="form-group">

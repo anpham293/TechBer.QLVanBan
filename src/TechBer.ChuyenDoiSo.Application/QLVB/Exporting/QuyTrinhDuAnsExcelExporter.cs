@@ -37,6 +37,7 @@ namespace TechBer.ChuyenDoiSo.QLVB.Exporting
                         sheet,
                         L("Name"),
                         L("Descriptions"),
+                        L("STT"),
                         (L("LoaiDuAn")) + L("Name")
                         );
 
@@ -44,6 +45,7 @@ namespace TechBer.ChuyenDoiSo.QLVB.Exporting
                         sheet, 2, quyTrinhDuAns,
                         _ => _.QuyTrinhDuAn.Name,
                         _ => _.QuyTrinhDuAn.Descriptions,
+                        _ => _.QuyTrinhDuAn.STT,
                         _ => _.LoaiDuAnName
                         );
 

@@ -5,121 +5,147 @@
 @{
     ViewBag.CurrentPageName = AppPageNames.Common.VanBanDuAns;
 }
+
 @section Scripts
 {
     <script abp-src="/view-resources/Areas/App/Views/VanBanDuAns/Index.js" asp-append-version="true"></script>
 }
+
 <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
 
 
-                <div class="kt-subheader kt-grid__item">
-                  <div class="@(await GetContainerClass())">
-                    <div class="kt-subheader__main">
-                        <h3 class="kt-subheader__title">
-                            <span>@L("VanBanDuAns")</span>
-                        </h3>
-                        <span class="kt-subheader__separator kt-subheader__separator--v"></span>
-                        <span class="kt-subheader__desc">
-                            @L("VanBanDuAnsHeaderInfo")
-                        </span>
-                    </div>
-                    <div class="kt-subheader__toolbar">
-                        <div class="kt-subheader__wrapper">
-                            <button id="ExportToExcelButton" class="btn btn-outline-success"><i class="fa fa-file-excel"></i> @L("ExportToExcel")</button>
-            @if (IsGranted(AppPermissions.Pages_VanBanDuAns_Create))
-                            {
-                                <button id="CreateNewVanBanDuAnButton" class="btn btn-primary blue"><i class="fa fa-plus"></i> @L("CreateNewVanBanDuAn")</button>                
-                            }
-                        </div>
-                    </div>
-                  </div>
+    <div class="kt-subheader kt-grid__item">
+        <div class="@(await GetContainerClass())">
+            <div class="kt-subheader__main">
+                <h3 class="kt-subheader__title">
+                    <span>@L("VanBanDuAns")</span>
+                </h3>
+                <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+                <span class="kt-subheader__desc">
+                    @L("VanBanDuAnsHeaderInfo")
+                </span>
+            </div>
+            <div class="kt-subheader__toolbar">
+                <div class="kt-subheader__wrapper">
+                   
                 </div>
-            
-<div class="@(await GetContainerClass()) kt-grid__item kt-grid__item--fluid">   
-    <div class="kt-portlet kt-portlet--mobile">
-        <div class="kt-portlet__body">
-            <div class="kt-form">
-                <div class="row align-items-center mb-4">
-                    <div class="col-xl-12">
-                        <div class="form-group align-items-center">
-                            <div class="input-group">
-                                <input type="text" id="VanBanDuAnsTableFilter" class="form-control m-input" placeholder="@L("SearchWithThreeDot")" value="@Model.FilterText">
-                                <span class="input-group-btn">
-                                    <button id="GetVanBanDuAnsButton" class="btn btn-primary" type="submit"><i class="flaticon-search-1"></i></button>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-			</div>
-                <div id="AdvacedAuditFiltersArea" style="display: none" class="row mb-4">
-                    <div class="col-md-12">
-						<div class="kt-separator kt-separator--border-dashed"></div>
-					</div>
-
-							<div class="col-md-3">
-								<div class="form-group">
-									<label for="NameFilterId">@L("Name")</label>
-									<input type="text" class="form-control" name="nameFilter" id="NameFilterId">
-								</div>
-                            </div>
-							<div class="col-md-3">
-								<div class="form-group">
-									<label for="KyHieuVanBanFilterId">@L("KyHieuVanBan")</label>
-									<input type="text" class="form-control" name="kyHieuVanBanFilter" id="KyHieuVanBanFilterId">
-								</div>
-                            </div>
-                            <div class="col-md-3">
-                                    <div class="form-group">
-										<label for="MinNgayBanHanhFilterId">@L("NgayBanHanhRange")</label>
-										<div class="input-group">
-											<input class="form-control m-input date-picker" type="text" placeholder="@L("MinValue")"  id="MinNgayBanHanhFilterId">
-											<span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
-											<input class="form-control m-input date-picker" type="text" placeholder="@L("MaxValue")"  id="MaxNgayBanHanhFilterId">
-										</div>
-									</div>
-                            </div>
-							<div class="col-md-3">
-								<div class="form-group">
-									<label for="FileVanBanFilterId">@L("FileVanBan")</label>
-									<input type="text" class="form-control" name="fileVanBanFilter" id="FileVanBanFilterId">
-								</div>
-                            </div>
-							<div class="col-md-3">
-								<div class="form-group">
-									<label for="DuAnNameFilterId">(@L("DuAn")) @L("Name")</label>
-									<input type="text" class="form-control" name="duAnNameFilter" id="DuAnNameFilterId">
-								</div>
-                            </div>
-							<div class="col-md-3">
-								<div class="form-group">
-									<label for="QuyTrinhDuAnNameFilterId">(@L("QuyTrinhDuAn")) @L("Name")</label>
-									<input type="text" class="form-control" name="quyTrinhDuAnNameFilter" id="QuyTrinhDuAnNameFilterId">
-								</div>
-                            </div>
-                </div>
-                <div class="row mb-4">
-                    <div class="col-xl-12">
-                        <span id="ShowAdvancedFiltersSpan" class="text-muted clickable-item"><i class="fa fa-angle-down"></i> @L("ShowAdvancedFilters")</span>
-                        <span id="HideAdvancedFiltersSpan" class="text-muted clickable-item" style="display: none"><i class="fa fa-angle-up"></i> @L("HideAdvancedFilters")</span>
-                    </div>
-                </div>
-            <div class="row align-items-center">
-                <table id="VanBanDuAnsTable" class="display table table-striped table-bordered table-hover dt-responsive nowrap">
-                    <thead>
-                        <tr>
-                            <th>@L("Actions")</th>
-								<th>@L("Name")</th>
-								<th>@L("KyHieuVanBan")</th>
-								<th>@L("NgayBanHanh")</th>
-								<th>@L("FileVanBan")</th>
-								<th>@L("DuAnName")</th>
-								<th>@L("QuyTrinhDuAnName")</th>
-                        </tr>
-                    </thead>
-                </table>
             </div>
         </div>
     </div>
-  </div>
+
+    <div class="@(await GetContainerClass()) kt-grid__item kt-grid__item--fluid">
+        <div class="kt-portlet kt-portlet--mobile">
+            <div class="kt-portlet__body">
+                <div class="kt-form">
+                    <div class="row align-items-center mb-4">
+                        <div class="col-xl-12">
+                            <div class="form-group align-items-center">
+                                <div class="input-group">
+                                    <input type="text" id="VanBanDuAnsTableFilter" class="form-control m-input" placeholder="@L("SearchWithThreeDot")" value="@Model.FilterText">
+                                    <span class="input-group-btn">
+                                        <button id="GetVanBanDuAnsButton" class="btn btn-primary" type="submit">
+                                            <i class="flaticon-search-1"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="AdvacedAuditFiltersArea" style="display: none" hidden class="row mb-4">
+                    <input hidden id="loaduanid" value="@Model.DuAnId.LoaiDuAnId">
+                    <div class="col-md-12">
+                        <div class="kt-separator kt-separator--border-dashed"></div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="NameFilterId">@L("Name")</label>
+                            <input type="text" class="form-control" name="nameFilter" id="NameFilterId">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="KyHieuVanBanFilterId">@L("KyHieuVanBan")</label>
+                            <input type="text" class="form-control" name="kyHieuVanBanFilter" id="KyHieuVanBanFilterId">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="MinNgayBanHanhFilterId">@L("NgayBanHanhRange")</label>
+                            <div class="input-group">
+                                <input class="form-control m-input date-picker" type="text" placeholder="@L("MinValue")" id="MinNgayBanHanhFilterId">
+                                <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                <input class="form-control m-input date-picker" type="text" placeholder="@L("MaxValue")" id="MaxNgayBanHanhFilterId">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="FileVanBanFilterId">@L("FileVanBan")</label>
+                            <input type="text" class="form-control" name="fileVanBanFilter" id="FileVanBanFilterId">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="DuAnNameFilterId">(@L("DuAn")) @L("Name")</label>
+                            <select class="form-control" name="duAnNameFilter" id="DuAnNameFilterId">
+                                @foreach (var Variable in Model.ListDuAn)
+                                {
+                                    if (Variable.Id == Model.DuAnId.Id)
+                                    {
+                                        <option value="@Variable.Id" selected>@Variable.Name</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@Variable.Id">@Variable.Name</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="QuyTrinhDuAnNameFilterId">(@L("QuyTrinhDuAn")) @L("Name")</label>
+                            <input type="text" class="form-control" name="quyTrinhDuAnNameFilter" id="QuyTrinhDuAnNameFilterId">
+                        </div>
+                    </div>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <button id="filall" class="btn btn-info">Hiện tất cả</button>
+                    </div>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-md-4 align-self-stretch">
+                        <table id="QuyTrinhDuAnsTable" class="display table table-striped table-bordered table-hover dt-responsive nowrap">
+                            <thead>
+                            <tr>
+                                <th>@L("STT")</th>
+                                <th>@L("Name")</th>
+                                <th>@L("Descriptions")</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="col-md-8 align-self-stretch">
+                        <table id="VanBanDuAnsTable" class="display table table-striped table-bordered table-hover dt-responsive nowrap">
+                            <thead>
+                            <tr>
+                                <th>@L("Actions")</th>
+                                <th>@L("Name")</th>
+                                <th>@L("KyHieuVanBan")</th>
+                                <th>@L("NgayBanHanh")</th>
+                                <th>@L("FileVanBan")</th>
+                                <th>@L("DuAnName")</th>
+                                <th>@L("QuyTrinhDuAnName")</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

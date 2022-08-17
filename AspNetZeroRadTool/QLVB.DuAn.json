@@ -1,5 +1,5 @@
 {
-  "IsRegenerate": false,
+  "IsRegenerate": true,
   "MenuPosition": "main",
   "RelativeNamespace": "QLVB",
   "EntityName": "DuAn",
@@ -58,7 +58,19 @@
       }
     }
   ],
-  "NavigationProperties": [],
+  "NavigationProperties": [
+    {
+      "Namespace": "TechBer.ChuyenDoiSo.QLVB",
+      "ForeignEntityName": "LoaiDuAn",
+      "IdType": "int",
+      "IsNullable": true,
+      "PropertyName": "LoaiDuAnId",
+      "DisplayPropertyName": "Name",
+      "DuplicationNumber": 0,
+      "RelationType": "single",
+      "ViewType": "LookupTable"
+    }
+  ],
   "EnumDefinitions": [],
   "DbContext": null
 }

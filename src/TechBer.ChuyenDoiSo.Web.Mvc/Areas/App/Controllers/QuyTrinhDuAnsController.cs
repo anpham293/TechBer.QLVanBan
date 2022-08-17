@@ -8,6 +8,7 @@ using TechBer.ChuyenDoiSo.Authorization;
 using TechBer.ChuyenDoiSo.QLVB;
 using TechBer.ChuyenDoiSo.QLVB.Dtos;
 using Abp.Application.Services.Dto;
+using Abp.Domain.Repositories;
 using Abp.Extensions;
 
 namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
@@ -17,10 +18,14 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
     public class QuyTrinhDuAnsController : ChuyenDoiSoControllerBase
     {
         private readonly IQuyTrinhDuAnsAppService _quyTrinhDuAnsAppService;
+        private readonly IRepository<QuyTrinhDuAn> _quyTrinhDuAnRepository;
 
-        public QuyTrinhDuAnsController(IQuyTrinhDuAnsAppService quyTrinhDuAnsAppService)
+        public QuyTrinhDuAnsController(IQuyTrinhDuAnsAppService quyTrinhDuAnsAppService,
+	        IRepository<QuyTrinhDuAn> quyTrinhDuAnRepository
+	        )
         {
             _quyTrinhDuAnsAppService = quyTrinhDuAnsAppService;
+            _quyTrinhDuAnRepository = quyTrinhDuAnRepository;
         }
 
         public ActionResult Index()
@@ -43,6 +48,7 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
 					getQuyTrinhDuAnForEditOutput = await _quyTrinhDuAnsAppService.GetQuyTrinhDuAnForEdit(new EntityDto { Id = (int) id });
 				}
 				else {
+					
 					getQuyTrinhDuAnForEditOutput = new GetQuyTrinhDuAnForEditOutput{
 						QuyTrinhDuAn = new CreateOrEditQuyTrinhDuAnDto()
 					};

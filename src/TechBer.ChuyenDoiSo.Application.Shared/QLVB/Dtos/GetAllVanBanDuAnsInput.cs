@@ -17,7 +17,7 @@ namespace TechBer.ChuyenDoiSo.QLVB.Dtos
 		public string FileVanBanFilter { get; set; }
 
 
-		 public string DuAnNameFilter { get; set; }
+		 public int? DuAnNameFilter { get; set; }
 
 		 		 public string QuyTrinhDuAnNameFilter { get; set; }
 

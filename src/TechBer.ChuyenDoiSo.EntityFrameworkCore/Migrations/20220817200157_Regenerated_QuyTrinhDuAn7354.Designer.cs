@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TechBer.ChuyenDoiSo.EntityFrameworkCore;
 
 namespace TechBer.ChuyenDoiSo.Migrations
 {
     [DbContext(typeof(ChuyenDoiSoDbContext))]
-    partial class ChuyenDoiSoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220817200157_Regenerated_QuyTrinhDuAn7354")]
+    partial class Regenerated_QuyTrinhDuAn7354
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1914,9 +1916,6 @@ namespace TechBer.ChuyenDoiSo.Migrations
                     b.Property<string>("Descriptions")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<int?>("LoaiDuAnId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -1925,8 +1924,6 @@ namespace TechBer.ChuyenDoiSo.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("LoaiDuAnId");
 
                     b.HasIndex("TenantId");
 
@@ -2637,13 +2634,6 @@ namespace TechBer.ChuyenDoiSo.Migrations
                     b.HasOne("TechBer.ChuyenDoiSo.Authorization.Users.User", "LastModifierUser")
                         .WithMany()
                         .HasForeignKey("LastModifierUserId");
-                });
-
-            modelBuilder.Entity("TechBer.ChuyenDoiSo.QLVB.DuAn", b =>
-                {
-                    b.HasOne("TechBer.ChuyenDoiSo.QLVB.LoaiDuAn", "LoaiDuAnFk")
-                        .WithMany()
-                        .HasForeignKey("LoaiDuAnId");
                 });
 
             modelBuilder.Entity("TechBer.ChuyenDoiSo.QLVB.QuyTrinhDuAn", b =>

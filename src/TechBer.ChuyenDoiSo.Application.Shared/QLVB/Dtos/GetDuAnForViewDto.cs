@@ -4,6 +4,8 @@
     {
 		public DuAnDto DuAn { get; set; }
 
+		public string LoaiDuAnName { get; set;}
+
 
     }
 }

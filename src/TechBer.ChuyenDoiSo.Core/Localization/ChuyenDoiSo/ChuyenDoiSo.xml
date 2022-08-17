@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
-  <texts>    <text name="QuyTrinhDuAnName">Quy trinh du an name</text>
+  <texts>    <text name="STT">S t t</text>
+    <text name="QuyTrinhDuAnName">Quy trinh du an name</text>
     <text name="PickQuyTrinhDuAn">Pick quy trinh du an</text>
     <text name="VanBanDuAn">Van ban du an</text>
     <text name="TechBer.ChuyenDoiSo.QLVB.VanBanDuAn">VanBanDuAn</text>

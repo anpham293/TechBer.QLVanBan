@@ -14,6 +14,7 @@ using TechBer.ChuyenDoiSo.QuanLyChuyenDoiSo.Dtos;
 using TechBer.ChuyenDoiSo.Storage;
 using TechBer.ChuyenDoiSo.Web.Areas.App.Models.DoiTuongChuyenDoiSos;
 using TechBer.ChuyenDoiSo.Web.Controllers;
+using UploadFileOutput = TechBer.ChuyenDoiSo.Dto.UploadFileOutput;
 
 namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
 {

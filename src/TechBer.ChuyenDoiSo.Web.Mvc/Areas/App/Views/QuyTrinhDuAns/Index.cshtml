@@ -69,6 +69,15 @@
 									<input type="text" class="form-control" name="descriptionsFilter" id="DescriptionsFilterId">
 								</div>
                             </div>
+                            <div class="col-md-3">
+                                 <div class="form-group">
+									<label  for="MinSTTFilterId">@L("MinMax") @L("STT")</label>
+									<div class="input-group">
+										<input type="number" class="form-control m-input" placeholder="@L("MinValue")" name="minSTTFilter" id="MinSTTFilterId"/>
+                                        <input type="number" class="form-control m-input" placeholder="@L("MaxValue")" name="maxSTTFilter"  id="MaxSTTFilterId"/>
+									</div>
+                                </div>
+                            </div>
 							<div class="col-md-3">
 								<div class="form-group">
 									<label for="LoaiDuAnNameFilterId">(@L("LoaiDuAn")) @L("Name")</label>
@@ -89,6 +98,7 @@
                             <th>@L("Actions")</th>
 								<th>@L("Name")</th>
 								<th>@L("Descriptions")</th>
+								<th>@L("STT")</th>
 								<th>@L("LoaiDuAnName")</th>
                         </tr>
                     </thead>

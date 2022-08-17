@@ -18,6 +18,8 @@ namespace TechBer.ChuyenDoiSo.QLVB
 		
 		public virtual string Descriptions { get; set; }
 		
+		public virtual int STT { get; set; }
+		
 
 		public virtual int? LoaiDuAnId { get; set; }
 		

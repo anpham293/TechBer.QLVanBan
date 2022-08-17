@@ -16,6 +16,7 @@ using TechBer.ChuyenDoiSo.Authorization;
 using Abp.Extensions;
 using Abp.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Z.EntityFramework.Plus;
 
 namespace TechBer.ChuyenDoiSo.QLVB
 {
@@ -43,10 +44,12 @@ namespace TechBer.ChuyenDoiSo.QLVB
 						.WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false  || e.Name.Contains(input.Filter) || e.Descriptions.Contains(input.Filter))
 						.WhereIf(!string.IsNullOrWhiteSpace(input.NameFilter),  e => e.Name == input.NameFilter)
 						.WhereIf(!string.IsNullOrWhiteSpace(input.DescriptionsFilter),  e => e.Descriptions == input.DescriptionsFilter)
-						.WhereIf(!string.IsNullOrWhiteSpace(input.LoaiDuAnNameFilter), e => e.LoaiDuAnFk != null && e.LoaiDuAnFk.Name == input.LoaiDuAnNameFilter);
+						.WhereIf(input.MinSTTFilter != null, e => e.STT >= input.MinSTTFilter)
+						.WhereIf(input.MaxSTTFilter != null, e => e.STT <= input.MaxSTTFilter)
+						.WhereIf(input.LoaiDuAnId.HasValue, e => e.LoaiDuAnId==input.LoaiDuAnId);
 
 			var pagedAndFilteredQuyTrinhDuAns = filteredQuyTrinhDuAns
-                .OrderBy(input.Sorting ?? "id asc")
+                .OrderBy("STT asc")
                 .PageBy(input);
 
 			var quyTrinhDuAns = from o in pagedAndFilteredQuyTrinhDuAns
@@ -58,6 +61,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
 							{
                                 Name = o.Name,
                                 Descriptions = o.Descriptions,
+                                STT = o.STT,
                                 Id = o.Id
 							},
                          	LoaiDuAnName = s1 == null || s1.Name == null ? "" : s1.Name.ToString()
@@ -115,15 +119,22 @@ namespace TechBer.ChuyenDoiSo.QLVB
 		 [AbpAuthorize(AppPermissions.Pages_QuyTrinhDuAns_Create)]
 		 protected virtual async Task Create(CreateOrEditQuyTrinhDuAnDto input)
          {
+	         
             var quyTrinhDuAn = ObjectMapper.Map<QuyTrinhDuAn>(input);
-
+			
 			
 			if (AbpSession.TenantId != null)
 			{
 				quyTrinhDuAn.TenantId = (int?) AbpSession.TenantId;
 			}
-		
 
+			await _quyTrinhDuAnRepository.GetAll().WhereIf(true,
+					p => p.LoaiDuAnId == quyTrinhDuAn.LoaiDuAnId && p.STT >= quyTrinhDuAn.STT)
+				.UpdateAsync(d => new QuyTrinhDuAn()
+				{
+					STT = d.STT + 1
+				});
+			
             await _quyTrinhDuAnRepository.InsertAsync(quyTrinhDuAn);
          }
 
@@ -131,6 +142,24 @@ namespace TechBer.ChuyenDoiSo.QLVB
 		 protected virtual async Task Update(CreateOrEditQuyTrinhDuAnDto input)
          {
             var quyTrinhDuAn = await _quyTrinhDuAnRepository.FirstOrDefaultAsync((int)input.Id);
+            if (input.STT < quyTrinhDuAn.STT)
+            {
+	            await _quyTrinhDuAnRepository.GetAll().WhereIf(true,
+			            p => p.LoaiDuAnId == quyTrinhDuAn.LoaiDuAnId && p.STT >= input.STT && p.STT<quyTrinhDuAn.STT)
+		            .UpdateAsync(d => new QuyTrinhDuAn()
+		            {
+			            STT = d.STT + 1
+		            });
+            }
+            else
+            {
+	            await _quyTrinhDuAnRepository.GetAll().WhereIf(true,
+			            p => p.LoaiDuAnId == quyTrinhDuAn.LoaiDuAnId && p.STT <= input.STT && p.STT>quyTrinhDuAn.STT)
+		            .UpdateAsync(d => new QuyTrinhDuAn()
+		            {
+			            STT = d.STT - 1
+		            });
+            }
              ObjectMapper.Map(input, quyTrinhDuAn);
          }
 
@@ -148,6 +177,8 @@ namespace TechBer.ChuyenDoiSo.QLVB
 						.WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false  || e.Name.Contains(input.Filter) || e.Descriptions.Contains(input.Filter))
 						.WhereIf(!string.IsNullOrWhiteSpace(input.NameFilter),  e => e.Name == input.NameFilter)
 						.WhereIf(!string.IsNullOrWhiteSpace(input.DescriptionsFilter),  e => e.Descriptions == input.DescriptionsFilter)
+						.WhereIf(input.MinSTTFilter != null, e => e.STT >= input.MinSTTFilter)
+						.WhereIf(input.MaxSTTFilter != null, e => e.STT <= input.MaxSTTFilter)
 						.WhereIf(!string.IsNullOrWhiteSpace(input.LoaiDuAnNameFilter), e => e.LoaiDuAnFk != null && e.LoaiDuAnFk.Name == input.LoaiDuAnNameFilter);
 
 			var query = (from o in filteredQuyTrinhDuAns
@@ -159,6 +190,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
 							{
                                 Name = o.Name,
                                 Descriptions = o.Descriptions,
+                                STT = o.STT,
                                 Id = o.Id
 							},
                          	LoaiDuAnName = s1 == null || s1.Name == null ? "" : s1.Name.ToString()

@@ -11,7 +11,8 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Startup
 
         public override void SetNavigation(INavigationProviderContext context)
         {
-            var menu = context.Manager.Menus[MenuName] = new MenuDefinition(MenuName, new FixedLocalizableString("Main Menu"));
+            var menu = context.Manager.Menus[MenuName] =
+                new MenuDefinition(MenuName, new FixedLocalizableString("Main Menu"));
 
             menu
                 .AddItem(new MenuItemDefinition(
@@ -19,39 +20,32 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Startup
                         L("Dashboard"),
                         url: "App/HostDashboard",
                         icon: "flaticon-line-graph",
-                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Administration_Host_Dashboard)
+                        permissionDependency: new SimplePermissionDependency(AppPermissions
+                            .Pages_Administration_Host_Dashboard)
                     )
                 )
-.                AddItem(new MenuItemDefinition(
-                        AppPageNames.Common.VanBanDuAns,
-                        L("VanBanDuAns"),
-                        url: "App/VanBanDuAns",
-                        icon: "flaticon-more",
-                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_VanBanDuAns)
-                    )
-                )
-.                AddItem(new MenuItemDefinition(
-                        AppPageNames.Common.DuAns,
-                        L("DuAns"),
-                        url: "App/DuAns",
-                        icon: "flaticon-more",
-                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_DuAns)
-                    )
-                )
-.                AddItem(new MenuItemDefinition(
-                        AppPageNames.Common.QuyTrinhDuAns,
-                        L("QuyTrinhDuAns"),
-                        url: "App/QuyTrinhDuAns",
-                        icon: "flaticon-more",
-                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_QuyTrinhDuAns)
-                    )
-                )
-.                AddItem(new MenuItemDefinition(
+                .AddItem(new MenuItemDefinition(
                         AppPageNames.Common.LoaiDuAns,
                         L("LoaiDuAns"),
                         url: "App/LoaiDuAns",
-                        icon: "flaticon-more",
+                        icon: "flaticon-map",
                         permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_LoaiDuAns)
+                    )
+                )
+                .AddItem(new MenuItemDefinition(
+                        AppPageNames.Common.QuyTrinhDuAns,
+                        L("QuyTrinhDuAns"),
+                        url: "App/QuyTrinhDuAns",
+                        icon: "flaticon-rocket",
+                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_QuyTrinhDuAns)
+                    )
+                )
+                .AddItem(new MenuItemDefinition(
+                        AppPageNames.Common.DuAns,
+                        L("DuAns"),
+                        url: "App/DuAns",
+                        icon: "flaticon-support",
+                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_DuAns)
                     )
                 )
                 .AddItem(new MenuItemDefinition(
@@ -84,63 +78,72 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Startup
                             L("OrganizationUnits"),
                             url: "App/OrganizationUnits",
                             icon: "flaticon-map",
-                            permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Administration_OrganizationUnits)
+                            permissionDependency: new SimplePermissionDependency(AppPermissions
+                                .Pages_Administration_OrganizationUnits)
                         )
                     ).AddItem(new MenuItemDefinition(
                             AppPageNames.Common.Roles,
                             L("Roles"),
                             url: "App/Roles",
                             icon: "flaticon-suitcase",
-                            permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Administration_Roles)
+                            permissionDependency: new SimplePermissionDependency(AppPermissions
+                                .Pages_Administration_Roles)
                         )
                     ).AddItem(new MenuItemDefinition(
                             AppPageNames.Common.Users,
                             L("Users"),
                             url: "App/Users",
                             icon: "flaticon-users",
-                            permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Administration_Users)
+                            permissionDependency: new SimplePermissionDependency(AppPermissions
+                                .Pages_Administration_Users)
                         )
                     ).AddItem(new MenuItemDefinition(
                             AppPageNames.Common.Languages,
                             L("Languages"),
                             url: "App/Languages",
                             icon: "flaticon-tabs",
-                            permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Administration_Languages)
+                            permissionDependency: new SimplePermissionDependency(AppPermissions
+                                .Pages_Administration_Languages)
                         )
                     ).AddItem(new MenuItemDefinition(
                             AppPageNames.Common.AuditLogs,
                             L("AuditLogs"),
                             url: "App/AuditLogs",
                             icon: "flaticon-folder-1",
-                            permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Administration_AuditLogs)
+                            permissionDependency: new SimplePermissionDependency(AppPermissions
+                                .Pages_Administration_AuditLogs)
                         )
                     ).AddItem(new MenuItemDefinition(
                             AppPageNames.Host.Maintenance,
                             L("Maintenance"),
                             url: "App/Maintenance",
                             icon: "flaticon-lock",
-                            permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Administration_Host_Maintenance)
+                            permissionDependency: new SimplePermissionDependency(AppPermissions
+                                .Pages_Administration_Host_Maintenance)
                         )
                     ).AddItem(new MenuItemDefinition(
                             AppPageNames.Tenant.SubscriptionManagement,
                             L("Subscription"),
                             url: "App/SubscriptionManagement",
                             icon: "flaticon-refresh",
-                            permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Administration_Tenant_SubscriptionManagement)
+                            permissionDependency: new SimplePermissionDependency(AppPermissions
+                                .Pages_Administration_Tenant_SubscriptionManagement)
                         )
                     ).AddItem(new MenuItemDefinition(
                             AppPageNames.Common.UiCustomization,
                             L("VisualSettings"),
                             url: "App/UiCustomization",
                             icon: "flaticon-medical",
-                            permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Administration_UiCustomization)
+                            permissionDependency: new SimplePermissionDependency(AppPermissions
+                                .Pages_Administration_UiCustomization)
                         )
                     ).AddItem(new MenuItemDefinition(
                             AppPageNames.Common.WebhookSubscriptions,
                             L("WebhookSubscriptions"),
                             url: "App/WebhookSubscription",
                             icon: "flaticon2-world",
-                            permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Administration_WebhookSubscription)
+                            permissionDependency: new SimplePermissionDependency(AppPermissions
+                                .Pages_Administration_WebhookSubscription)
                         )
                     ).AddItem(new MenuItemDefinition(
                             AppPageNames.Common.DynamicEntityParameters,
@@ -151,7 +154,8 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Startup
                                 L("Definitions"),
                                 url: "App/DynamicParameter",
                                 icon: "flaticon-map",
-                                permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Administration_DynamicParameters)
+                                permissionDependency: new SimplePermissionDependency(AppPermissions
+                                    .Pages_Administration_DynamicParameters)
                             )
                         )
                         .AddItem(new MenuItemDefinition(
@@ -159,7 +163,8 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Startup
                                 L("EntityDynamicParameters"),
                                 url: "App/EntityDynamicParameter",
                                 icon: "flaticon-map",
-                                permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Administration_EntityDynamicParameters)
+                                permissionDependency: new SimplePermissionDependency(AppPermissions
+                                    .Pages_Administration_EntityDynamicParameters)
                             )
                         )
                     ).AddItem(new MenuItemDefinition(
@@ -167,7 +172,8 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Startup
                             L("Settings"),
                             url: "App/HostSettings",
                             icon: "flaticon-settings",
-                            permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Administration_Host_Settings)
+                            permissionDependency: new SimplePermissionDependency(AppPermissions
+                                .Pages_Administration_Host_Settings)
                         )
                     )
                     .AddItem(new MenuItemDefinition(
@@ -175,7 +181,8 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Startup
                             L("Settings"),
                             url: "App/Settings",
                             icon: "flaticon-settings",
-                            permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Administration_Tenant_Settings)
+                            permissionDependency: new SimplePermissionDependency(AppPermissions
+                                .Pages_Administration_Tenant_Settings)
                         )
                     )
                 ).AddItem(new MenuItemDefinition(

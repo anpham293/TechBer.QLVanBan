@@ -47,6 +47,8 @@
 					filter: $('#QuyTrinhDuAnsTableFilter').val(),
 					nameFilter: $('#NameFilterId').val(),
 					descriptionsFilter: $('#DescriptionsFilterId').val(),
+					minSTTFilter: $('#MinSTTFilterId').val(),
+					maxSTTFilter: $('#MaxSTTFilterId').val(),
 					loaiDuAnNameFilter: $('#LoaiDuAnNameFilterId').val()
                     };
                 }
@@ -101,6 +103,11 @@
 					},
 					{
 						targets: 3,
+						 data: "quyTrinhDuAn.stt",
+						 name: "stt"   
+					},
+					{
+						targets: 4,
 						 data: "loaiDuAnName" ,
 						 name: "loaiDuAnFk.name" 
 					}
@@ -150,6 +157,8 @@
 				filter : $('#QuyTrinhDuAnsTableFilter').val(),
 					nameFilter: $('#NameFilterId').val(),
 					descriptionsFilter: $('#DescriptionsFilterId').val(),
+					minSTTFilter: $('#MinSTTFilterId').val(),
+					maxSTTFilter: $('#MaxSTTFilterId').val(),
 					loaiDuAnNameFilter: $('#LoaiDuAnNameFilterId').val()
 				})
                 .done(function (result) {

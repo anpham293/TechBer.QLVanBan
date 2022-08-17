@@ -1,4 +1,5 @@
-﻿using System;
+﻿using TechBer.ChuyenDoiSo.QLVB;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Abp.Domain.Entities.Auditing;
@@ -18,5 +19,10 @@ namespace TechBer.ChuyenDoiSo.QLVB
 		public virtual string Descriptions { get; set; }
 		
 
+		public virtual int? LoaiDuAnId { get; set; }
+		
+        [ForeignKey("LoaiDuAnId")]
+		public LoaiDuAn LoaiDuAnFk { get; set; }
+		
     }
 }

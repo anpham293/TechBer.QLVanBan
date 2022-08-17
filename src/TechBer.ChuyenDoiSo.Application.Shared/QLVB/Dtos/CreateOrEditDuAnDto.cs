@@ -15,6 +15,8 @@ namespace TechBer.ChuyenDoiSo.QLVB.Dtos
 		public string Descriptions { get; set; }
 		
 		
-
+		 public int? LoaiDuAnId { get; set; }
+		 
+		 
     }
 }
