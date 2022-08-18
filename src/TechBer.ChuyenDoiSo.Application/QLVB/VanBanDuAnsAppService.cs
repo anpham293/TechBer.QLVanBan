@@ -248,8 +248,8 @@ namespace TechBer.ChuyenDoiSo.QLVB
                 {
                     await _binaryObjectManager.SaveAsync(storedFile);
                 }
-                vanban.FileVanBan = fileMau;
                 ObjectMapper.Map(input, vanban);
+                vanban.FileVanBan = fileMau;
             }
             else
             {
