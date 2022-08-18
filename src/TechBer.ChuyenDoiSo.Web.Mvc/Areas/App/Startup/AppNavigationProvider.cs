@@ -25,44 +25,52 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Startup
                     )
                 )
                 .AddItem(new MenuItemDefinition(
-                        AppPageNames.Common.LoaiDuAns,
-                        L("LoaiDuAns"),
-                        url: "App/LoaiDuAns",
-                        icon: "flaticon-map",
-                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_LoaiDuAns)
+                        "",
+                        L("DanhMucQuanLy"),
+                        icon: "fas fa-align-justify"
                     )
-                )
-                .AddItem(new MenuItemDefinition(
-                        AppPageNames.Common.QuyTrinhDuAns,
-                        L("QuyTrinhDuAns"),
-                        url: "App/QuyTrinhDuAns",
-                        icon: "flaticon-rocket",
-                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_QuyTrinhDuAns)
+                    .AddItem(new MenuItemDefinition(
+                            AppPageNames.Common.LoaiDuAns,
+                            L("LoaiDuAns"),
+                            url: "App/LoaiDuAns",
+                            icon: "flaticon-map",
+                            permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_LoaiDuAns)
+                        )
+                    )
+                    .AddItem(new MenuItemDefinition(
+                            AppPageNames.Common.QuyTrinhDuAns,
+                            L("QuyTrinhDuAns"),
+                            url: "App/QuyTrinhDuAns",
+                            icon: "flaticon-rocket",
+                            permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_QuyTrinhDuAns)
+                        )
                     )
                 )
                 .AddItem(new MenuItemDefinition(
                         AppPageNames.Common.DuAns,
                         L("DuAns"),
                         url: "App/DuAns",
-                        icon: "flaticon-support",
+                        icon: "fas fa-file-alt",
                         permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_DuAns)
                     )
                 )
+                // .AddItem(new MenuItemDefinition(
+                //         AppPageNames.Host.Tenants,
+                //         L("Tenants"),
+                //         url: "App/Tenants",
+                //         icon: "flaticon-list-3",
+                //         permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Tenants)
+                //     )
+                // )
+                // .AddItem(new MenuItemDefinition(
+                //         AppPageNames.Host.Editions,
+                //         L("Editions"),
+                //         url: "App/Editions",
+                //         icon: "flaticon-app",
+                //         permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Editions)
+                //     )
+                // )
                 .AddItem(new MenuItemDefinition(
-                        AppPageNames.Host.Tenants,
-                        L("Tenants"),
-                        url: "App/Tenants",
-                        icon: "flaticon-list-3",
-                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Tenants)
-                    )
-                ).AddItem(new MenuItemDefinition(
-                        AppPageNames.Host.Editions,
-                        L("Editions"),
-                        url: "App/Editions",
-                        icon: "flaticon-app",
-                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Editions)
-                    )
-                ).AddItem(new MenuItemDefinition(
                         AppPageNames.Tenant.Dashboard,
                         L("Dashboard"),
                         url: "App/TenantDashboard",
@@ -185,14 +193,16 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Startup
                                 .Pages_Administration_Tenant_Settings)
                         )
                     )
-                ).AddItem(new MenuItemDefinition(
-                        AppPageNames.Common.DemoUiComponents,
-                        L("DemoUiComponents"),
-                        url: "App/DemoUiComponents",
-                        icon: "flaticon-shapes",
-                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_DemoUiComponents)
-                    )
-                );
+                )
+                // .AddItem(new MenuItemDefinition(
+                //         AppPageNames.Common.DemoUiComponents,
+                //         L("DemoUiComponents"),
+                //         url: "App/DemoUiComponents",
+                //         icon: "flaticon-shapes",
+                //         permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_DemoUiComponents)
+                //     )
+                // )
+                ;
         }
 
         private static ILocalizableString L(string name)

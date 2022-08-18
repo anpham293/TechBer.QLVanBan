@@ -3,6 +3,6 @@
     Layout = null;
     var theme = await GetTheme();
 }
-
-<img alt="Logo" src="@Model.GetLogoUrl(ApplicationPath, theme.IsTopMenuUsed || theme.IsTabMenuUsed ? theme.BaseSettings.Header.HeaderSkin: theme.BaseSettings.Menu.AsideSkin)" style="width: 100%; max-width: 190px;"
-     class="@(string.IsNullOrEmpty(Model.LogoClassOverride)?"kt-header__brand-logo-default":Model.LogoClassOverride)" />
+<img alt="Logo" src="/Common/Images/logo.png"  width="100%" class="kt-header__brand-logo-default" style="padding: 15px">
+@* <img alt="Logo" src="@Model.GetLogoUrl(ApplicationPath, theme.IsTopMenuUsed || theme.IsTabMenuUsed ? theme.BaseSettings.Header.HeaderSkin: theme.BaseSettings.Menu.AsideSkin)" style="width: 100%; max-width: 190px;" *@
+@*      class="@(string.IsNullOrEmpty(Model.LogoClassOverride)?"kt-header__brand-logo-default":Model.LogoClassOverride)" /> *@
