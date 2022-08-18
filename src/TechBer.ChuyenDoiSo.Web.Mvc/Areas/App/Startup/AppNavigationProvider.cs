@@ -25,6 +25,14 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Startup
                     )
                 )
                 .AddItem(new MenuItemDefinition(
+                        AppPageNames.Common.DuAns,
+                        L("DuAns"),
+                        url: "App/DuAns",
+                        icon: "fas fa-file-alt",
+                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_DuAns)
+                    )
+                )
+                .AddItem(new MenuItemDefinition(
                         "",
                         L("DanhMucQuanLy"),
                         icon: "fas fa-align-justify"
@@ -46,14 +54,7 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Startup
                         )
                     )
                 )
-                .AddItem(new MenuItemDefinition(
-                        AppPageNames.Common.DuAns,
-                        L("DuAns"),
-                        url: "App/DuAns",
-                        icon: "fas fa-file-alt",
-                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_DuAns)
-                    )
-                )
+               
                 // .AddItem(new MenuItemDefinition(
                 //         AppPageNames.Host.Tenants,
                 //         L("Tenants"),
