@@ -71,7 +71,11 @@
         <!-- id parameter is used to prevent caching -->
         <link id="TenantCustomCss" rel="stylesheet" href="@Url.Action("GetCustomCss", "TenantCustomization" , new { area = string.Empty, tenantId = loginInfo?.Tenant?.Id })" asp-append-version="true" />
     }
-
+    <style>
+        *{
+        font-weight: 500
+        }
+    </style>
     <script type="text/javascript">
         @* This is used to get the application's root path from javascript.
         It's useful if you're running application in a virtual directory under IIS. *@
