@@ -10,6 +10,8 @@ namespace TechBer.ChuyenDoiSo.QLVB.Dtos
 		public string NameFilter { get; set; }
 
 
+		 public string OrganizationUnitDisplayNameFilter { get; set; }
 
+		 
     }
 }

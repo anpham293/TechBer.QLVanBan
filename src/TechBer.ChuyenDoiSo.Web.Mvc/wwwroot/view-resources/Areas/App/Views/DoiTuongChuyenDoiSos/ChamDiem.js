@@ -149,8 +149,8 @@
                         var result = {
                             id: item.id,
                             parent: item.parentChiTietId ? item.parentChiTietId : '#',
-                            displayName: item.tenTieuChi,
-                            soThuTu: item.soThuTu,
+                            displayName: item.name,
+                            soThuTu: item.STT,
                             memberCount: 0,
                             roleCount: 0,
                             text: self.generateTextOnTree(item),

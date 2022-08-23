@@ -10,6 +10,8 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Models.QuyTrinhDuAns
 
 	   		public string LoaiDuAnName { get; set;}
 
+		public string QuyTrinhDuAnName { get; set;}
+
 
        
 	   public bool IsEditMode => QuyTrinhDuAn.Id.HasValue;

@@ -21,10 +21,22 @@
                 <h6>@L("STT") :</h6>
                 @Model.QuyTrinhDuAn.STT
             </div>
+            <div class="col-6 mb-3">
+                <h6>@L("MaQuyTrinh") :</h6>
+                @Model.QuyTrinhDuAn.MaQuyTrinh
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("GhiChu") :</h6>
+                @Model.QuyTrinhDuAn.GhiChu
+            </div>
 
             <div class="col-6 mb-3">
-                <h6>@L("LoaiDuAnName") :</h6>
+                <h6>(@L("LoaiDuAn")) @L("Name") :</h6>
                 @Model.LoaiDuAnName
+            </div>
+            <div class="col-6 mb-3">
+                <h6>(@L("QuyTrinhDuAn")) @L("Name") :</h6>
+                @Model.QuyTrinhDuAnName
             </div>
 
         </div>

@@ -10,6 +10,8 @@ namespace TechBer.ChuyenDoiSo.QLVB.Dtos
 
 		public string LoaiDuAnName { get; set;}
 
+		public string QuyTrinhDuAnName { get; set;}
+
 
     }
 }

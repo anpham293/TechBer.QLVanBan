@@ -1,5 +1,5 @@
 {
-  "IsRegenerate": false,
+  "IsRegenerate": true,
   "MenuPosition": "main",
   "RelativeNamespace": "QLVB",
   "EntityName": "LoaiDuAn",
@@ -39,7 +39,19 @@
       }
     }
   ],
-  "NavigationProperties": [],
+  "NavigationProperties": [
+    {
+      "Namespace": "Abp.Organizations",
+      "ForeignEntityName": "OrganizationUnit",
+      "IdType": "long",
+      "IsNullable": true,
+      "PropertyName": "OrganizationUnitId",
+      "DisplayPropertyName": "DisplayName",
+      "DuplicationNumber": 0,
+      "RelationType": "single",
+      "ViewType": "LookupTable"
+    }
+  ],
   "EnumDefinitions": [],
   "DbContext": null
 }

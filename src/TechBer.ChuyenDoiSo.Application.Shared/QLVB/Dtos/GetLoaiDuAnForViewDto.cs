@@ -4,6 +4,8 @@
     {
 		public LoaiDuAnDto LoaiDuAn { get; set; }
 
+		public string OrganizationUnitDisplayName { get; set;}
+
 
     }
 }

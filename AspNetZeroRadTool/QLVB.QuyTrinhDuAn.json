@@ -7,7 +7,7 @@
   "TableName": "QuyTrinhDuAns",
   "PrimaryKeyType": "int",
   "BaseClass": "Entity",
-  "EntityHistory": false,
+  "EntityHistory": true,
   "AutoMigration": true,
   "UpdateDatabase": true,
   "CreateUserInterface": true,
@@ -60,8 +60,46 @@
     {
       "Name": "STT",
       "Type": "int",
-      "MaxLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
+      "Range": {
+        "IsRangeSet": false,
+        "MinimumValue": 0,
+        "MaximumValue": 0
+      },
+      "Required": false,
+      "Nullable": false,
+      "Regex": "",
+      "UserInterface": {
+        "AdvancedFilter": true,
+        "List": true,
+        "CreateOrUpdate": true
+      }
+    },
+    {
+      "Name": "MaQuyTrinh",
+      "Type": "string",
+      "MaxLength": 255,
       "MinLength": 0,
+      "Range": {
+        "IsRangeSet": false,
+        "MinimumValue": 0,
+        "MaximumValue": 0
+      },
+      "Required": false,
+      "Nullable": false,
+      "Regex": "",
+      "UserInterface": {
+        "AdvancedFilter": true,
+        "List": true,
+        "CreateOrUpdate": true
+      }
+    },
+    {
+      "Name": "GhiChu",
+      "Type": "string",
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0,
@@ -84,6 +122,17 @@
       "IdType": "int",
       "IsNullable": true,
       "PropertyName": "LoaiDuAnId",
+      "DisplayPropertyName": "Name",
+      "DuplicationNumber": 0,
+      "RelationType": "single",
+      "ViewType": "LookupTable"
+    },
+    {
+      "Namespace": "TechBer.ChuyenDoiSo.QLVB",
+      "ForeignEntityName": "QuyTrinhDuAn",
+      "IdType": "int",
+      "IsNullable": true,
+      "PropertyName": "ParentId",
       "DisplayPropertyName": "Name",
       "DuplicationNumber": 0,
       "RelationType": "single",

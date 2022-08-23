@@ -12,9 +12,20 @@ namespace TechBer.ChuyenDoiSo.QLVB.Dtos
 
 		public int STT { get; set; }
 
+		public string MaQuyTrinh { get; set; }
+
+		public string GhiChu { get; set; }
+
 
 		 public int? LoaiDuAnId { get; set; }
 
+		 		 public int? ParentId { get; set; }
+
 		 
+    }
+    public class QuyTrinhDuAnHasMemberCountDto : QuyTrinhDuAnDto
+    {
+	    public int MemberCount { get; set; }
+	    public int Mode { get; set; }
     }
 }

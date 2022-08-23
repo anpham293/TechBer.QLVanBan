@@ -16,7 +16,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
 
 		Task<GetQuyTrinhDuAnForEditOutput> GetQuyTrinhDuAnForEdit(EntityDto input);
 
-		Task CreateOrEdit(CreateOrEditQuyTrinhDuAnDto input);
+		Task<GetQuyTrinhDuAnForEditOutput> CreateOrEdit(CreateOrEditQuyTrinhDuAnDto input);
 
 		Task Delete(EntityDto input);
 
@@ -25,5 +25,8 @@ namespace TechBer.ChuyenDoiSo.QLVB
 		
 		Task<PagedResultDto<QuyTrinhDuAnLoaiDuAnLookupTableDto>> GetAllLoaiDuAnForLookupTable(GetAllForLookupTableInput input);
 		
+		Task<PagedResultDto<QuyTrinhDuAnQuyTrinhDuAnLookupTableDto>> GetAllQuyTrinhDuAnForLookupTable(GetAllForLookupTableInput input);
+		Task<int> MoveTieuChi(MoveTreeDto input);
+
     }
 }

@@ -38,7 +38,10 @@ namespace TechBer.ChuyenDoiSo.QLVB.Exporting
                         L("Name"),
                         L("Descriptions"),
                         L("STT"),
-                        (L("LoaiDuAn")) + L("Name")
+                        L("MaQuyTrinh"),
+                        L("GhiChu"),
+                        (L("LoaiDuAn")) + L("Name"),
+                        (L("QuyTrinhDuAn")) + L("Name")
                         );
 
                     AddObjects(
@@ -46,7 +49,10 @@ namespace TechBer.ChuyenDoiSo.QLVB.Exporting
                         _ => _.QuyTrinhDuAn.Name,
                         _ => _.QuyTrinhDuAn.Descriptions,
                         _ => _.QuyTrinhDuAn.STT,
-                        _ => _.LoaiDuAnName
+                        _ => _.QuyTrinhDuAn.MaQuyTrinh,
+                        _ => _.QuyTrinhDuAn.GhiChu,
+                        _ => _.LoaiDuAnName,
+                        _ => _.QuyTrinhDuAnName
                         );
 
 					

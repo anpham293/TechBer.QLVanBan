@@ -23,5 +23,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
 		Task<FileDto> GetLoaiDuAnsToExcel(GetAllLoaiDuAnsForExcelInput input);
 
 		
+		Task<PagedResultDto<LoaiDuAnOrganizationUnitLookupTableDto>> GetAllOrganizationUnitForLookupTable(GetAllForLookupTableInput input);
+		
     }
 }

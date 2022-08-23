@@ -12,6 +12,8 @@ namespace TechBer.ChuyenDoiSo.QLVB.Dtos
 		public string Name { get; set; }
 		
 		
-
+		 public long? OrganizationUnitId { get; set; }
+		 
+		 
     }
 }

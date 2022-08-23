@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Abp.Organizations;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Abp.Domain.Entities.Auditing;
@@ -18,5 +19,10 @@ namespace TechBer.ChuyenDoiSo.QLVB
 		public virtual string Name { get; set; }
 		
 
+		public virtual long? OrganizationUnitId { get; set; }
+		
+        [ForeignKey("OrganizationUnitId")]
+		public OrganizationUnit OrganizationUnitFk { get; set; }
+		
     }
 }

@@ -14,8 +14,14 @@ namespace TechBer.ChuyenDoiSo.QLVB.Dtos
 		public int? MaxSTTFilter { get; set; }
 		public int? MinSTTFilter { get; set; }
 
+		public string MaQuyTrinhFilter { get; set; }
+
+		public string GhiChuFilter { get; set; }
+
 
 		 public string LoaiDuAnNameFilter { get; set; }
+
+		 		 public string QuyTrinhDuAnNameFilter { get; set; }
 
 		 
     }

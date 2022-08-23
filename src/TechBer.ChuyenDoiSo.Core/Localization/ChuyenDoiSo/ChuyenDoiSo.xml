@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
-  <texts>
+  <texts>    <text name="MaQuyTrinh">Ma quy trinh</text>
+    <text name="OrganizationUnitDisplayName">Organization unit display name</text>
+    <text name="PickOrganizationUnit">Pick organization unit</text>
+
     <text name="VanBan">Van Ban</text>
     <text name="DanhMucQuanLy">Danh Muc Quan Ly</text>
     <text name="STT">S t t</text>

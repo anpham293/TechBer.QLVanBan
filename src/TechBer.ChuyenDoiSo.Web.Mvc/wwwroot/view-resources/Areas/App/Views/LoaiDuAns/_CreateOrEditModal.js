@@ -6,7 +6,11 @@
         var _modalManager;
         var _$loaiDuAnInformationForm = null;
 
-		
+		        var _LoaiDuAnorganizationUnitLookupTableModal = new app.ModalManager({
+            viewUrl: abp.appPath + 'App/LoaiDuAns/OrganizationUnitLookupTableModal',
+            scriptUrl: abp.appPath + 'view-resources/Areas/App/Views/LoaiDuAns/_LoaiDuAnOrganizationUnitLookupTableModal.js',
+            modalClass: 'OrganizationUnitLookupTableModal'
+        });
 
         this.init = function (modalManager) {
             _modalManager = modalManager;
@@ -21,10 +25,29 @@
             _$loaiDuAnInformationForm.validate();
         };
 
-		  
+		          $('#OpenOrganizationUnitLookupTableButton').click(function () {
+
+            var loaiDuAn = _$loaiDuAnInformationForm.serializeFormToObject();
+
+            _LoaiDuAnorganizationUnitLookupTableModal.open({ id: loaiDuAn.organizationUnitId, displayName: loaiDuAn.organizationUnitDisplayName }, function (data) {
+                _$loaiDuAnInformationForm.find('input[name=organizationUnitDisplayName]').val(data.displayName); 
+                _$loaiDuAnInformationForm.find('input[name=organizationUnitId]').val(data.id); 
+            });
+        });
+		
+		$('#ClearOrganizationUnitDisplayNameButton').click(function () {
+                _$loaiDuAnInformationForm.find('input[name=organizationUnitDisplayName]').val(''); 
+                _$loaiDuAnInformationForm.find('input[name=organizationUnitId]').val(''); 
+        });
+		
+
 
         this.save = function () {
             if (!_$loaiDuAnInformationForm.valid()) {
+                return;
+            }
+            if ($('#LoaiDuAn_OrganizationUnitId').prop('required') && $('#LoaiDuAn_OrganizationUnitId').val() == '') {
+                abp.message.error(app.localize('{0}IsRequired', app.localize('OrganizationUnit')));
                 return;
             }
 

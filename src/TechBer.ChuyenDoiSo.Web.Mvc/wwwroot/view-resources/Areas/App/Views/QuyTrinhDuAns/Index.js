@@ -3,7 +3,8 @@
 
         var _$quyTrinhDuAnsTable = $('#QuyTrinhDuAnsTable');
         var _quyTrinhDuAnsService = abp.services.app.quyTrinhDuAns;
-		
+		var _entityTypeFullName = 'TechBer.ChuyenDoiSo.QLVB.QuyTrinhDuAn';
+        
         $('.date-picker').datetimepicker({
             locale: abp.localization.currentLanguage.name,
             format: 'L'
@@ -26,8 +27,13 @@
             modalClass: 'ViewQuyTrinhDuAnModal'
         });
 
-		
-		
+		        var _entityTypeHistoryModal = app.modals.EntityTypeHistoryModal.create();
+		        function entityHistoryIsEnabled() {
+            return abp.auth.hasPermission('Pages.Administration.AuditLogs') &&
+                abp.custom.EntityHistory &&
+                abp.custom.EntityHistory.IsEnabled &&
+                _.filter(abp.custom.EntityHistory.EnabledEntities, entityType => entityType === _entityTypeFullName).length === 1;
+        }
 
         var getDateFilter = function (element) {
             if (element.data("DateTimePicker").date() == null) {
@@ -49,7 +55,10 @@
 					descriptionsFilter: $('#DescriptionsFilterId').val(),
 					minSTTFilter: $('#MinSTTFilterId').val(),
 					maxSTTFilter: $('#MaxSTTFilterId').val(),
-					loaiDuAnNameFilter: $('#LoaiDuAnNameFilterId').val()
+					maQuyTrinhFilter: $('#MaQuyTrinhFilterId').val(),
+					ghiChuFilter: $('#GhiChuFilterId').val(),
+					loaiDuAnNameFilter: $('#LoaiDuAnNameFilterId').val(),
+					quyTrinhDuAnNameFilter: $('#QuyTrinhDuAnNameFilterId').val()
                     };
                 }
             },
@@ -79,7 +88,19 @@
                             action: function (data) {
                             _createOrEditModal.open({ id: data.record.quyTrinhDuAn.id });                                
                             }
-                        }, 
+                        },
+                        {
+                            text: app.localize('History'),
+                            visible: function () {
+                                return entityHistoryIsEnabled();
+                            },
+                            action: function (data) {
+                                _entityTypeHistoryModal.open({
+                                    entityTypeFullName: _entityTypeFullName,
+                                    entityId: data.record.quyTrinhDuAn.id
+                                });
+                            }
+						}, 
 						{
                             text: app.localize('Delete'),
                             visible: function () {
@@ -108,8 +129,23 @@
 					},
 					{
 						targets: 4,
+						 data: "quyTrinhDuAn.maQuyTrinh",
+						 name: "maQuyTrinh"   
+					},
+					{
+						targets: 5,
+						 data: "quyTrinhDuAn.ghiChu",
+						 name: "ghiChu"   
+					},
+					{
+						targets: 6,
 						 data: "loaiDuAnName" ,
 						 name: "loaiDuAnFk.name" 
+					},
+					{
+						targets: 7,
+						 data: "quyTrinhDuAnName" ,
+						 name: "parentFk.name" 
 					}
             ]
         });
@@ -159,7 +195,10 @@
 					descriptionsFilter: $('#DescriptionsFilterId').val(),
 					minSTTFilter: $('#MinSTTFilterId').val(),
 					maxSTTFilter: $('#MaxSTTFilterId').val(),
-					loaiDuAnNameFilter: $('#LoaiDuAnNameFilterId').val()
+					maQuyTrinhFilter: $('#MaQuyTrinhFilterId').val(),
+					ghiChuFilter: $('#GhiChuFilterId').val(),
+					loaiDuAnNameFilter: $('#LoaiDuAnNameFilterId').val(),
+					quyTrinhDuAnNameFilter: $('#QuyTrinhDuAnNameFilterId').val()
 				})
                 .done(function (result) {
                     app.downloadTempFile(result);

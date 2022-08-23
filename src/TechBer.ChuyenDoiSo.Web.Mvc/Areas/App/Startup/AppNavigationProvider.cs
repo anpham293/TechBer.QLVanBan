@@ -45,14 +45,7 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Startup
                             permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_LoaiDuAns)
                         )
                     )
-                    .AddItem(new MenuItemDefinition(
-                            AppPageNames.Common.QuyTrinhDuAns,
-                            L("QuyTrinhDuAns"),
-                            url: "App/QuyTrinhDuAns",
-                            icon: "flaticon-rocket",
-                            permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_QuyTrinhDuAns)
-                        )
-                    )
+                
                 )
                
                 // .AddItem(new MenuItemDefinition(

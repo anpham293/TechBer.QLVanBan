@@ -8,6 +8,8 @@ namespace TechBer.ChuyenDoiSo.QLVB.Dtos
     {
 		public CreateOrEditLoaiDuAnDto LoaiDuAn { get; set; }
 
+		public string OrganizationUnitDisplayName { get; set;}
+
 
     }
 }

@@ -50,7 +50,8 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
 
 				var viewModel = new CreateOrEditLoaiDuAnModalViewModel()
 				{
-					LoaiDuAn = getLoaiDuAnForEditOutput.LoaiDuAn,                
+					LoaiDuAn = getLoaiDuAnForEditOutput.LoaiDuAn,
+					OrganizationUnitDisplayName = getLoaiDuAnForEditOutput.OrganizationUnitDisplayName,                
 				};
 
 				return PartialView("_CreateOrEditModal", viewModel);
@@ -64,11 +65,25 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
             var model = new LoaiDuAnViewModel()
             {
                 LoaiDuAn = getLoaiDuAnForViewDto.LoaiDuAn
+                , OrganizationUnitDisplayName = getLoaiDuAnForViewDto.OrganizationUnitDisplayName 
+
             };
 
             return PartialView("_ViewLoaiDuAnModal", model);
         }
 
+        [AbpMvcAuthorize(AppPermissions.Pages_LoaiDuAns_Create, AppPermissions.Pages_LoaiDuAns_Edit)]
+        public PartialViewResult OrganizationUnitLookupTableModal(long? id, string displayName)
+        {
+            var viewModel = new LoaiDuAnOrganizationUnitLookupTableViewModel()
+            {
+                Id = id,
+                DisplayName = displayName,
+                FilterText = ""
+            };
+
+            return PartialView("_LoaiDuAnOrganizationUnitLookupTableModal", viewModel);
+        }
 
     }
 }

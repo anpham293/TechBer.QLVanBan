@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TechBer.ChuyenDoiSo.EntityFrameworkCore;
 
 namespace TechBer.ChuyenDoiSo.Migrations
 {
     [DbContext(typeof(ChuyenDoiSoDbContext))]
-    partial class ChuyenDoiSoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220823075250_Regenerated_LoaiDuAn8505")]
+    partial class Regenerated_LoaiDuAn8505
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1988,22 +1990,12 @@ namespace TechBer.ChuyenDoiSo.Migrations
                     b.Property<string>("Descriptions")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("GhiChu")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
                     b.Property<int?>("LoaiDuAnId")
                         .HasColumnType("int");
-
-                    b.Property<string>("MaQuyTrinh")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4")
-                        .HasMaxLength(255);
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<int?>("ParentId")
-                        .HasColumnType("int");
 
                     b.Property<int>("STT")
                         .HasColumnType("int");
@@ -2014,8 +2006,6 @@ namespace TechBer.ChuyenDoiSo.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("LoaiDuAnId");
-
-                    b.HasIndex("ParentId");
 
                     b.HasIndex("TenantId");
 
@@ -2675,10 +2665,6 @@ namespace TechBer.ChuyenDoiSo.Migrations
                     b.HasOne("TechBer.ChuyenDoiSo.QLVB.LoaiDuAn", "LoaiDuAnFk")
                         .WithMany()
                         .HasForeignKey("LoaiDuAnId");
-
-                    b.HasOne("TechBer.ChuyenDoiSo.QLVB.QuyTrinhDuAn", "ParentFk")
-                        .WithMany()
-                        .HasForeignKey("ParentId");
                 });
 
             modelBuilder.Entity("TechBer.ChuyenDoiSo.QLVB.VanBanDuAn", b =>

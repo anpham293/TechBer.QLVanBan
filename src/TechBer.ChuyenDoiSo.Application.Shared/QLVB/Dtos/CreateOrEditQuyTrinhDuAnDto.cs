@@ -18,7 +18,16 @@ namespace TechBer.ChuyenDoiSo.QLVB.Dtos
 		public int STT { get; set; }
 		
 		
+		[StringLength(QuyTrinhDuAnConsts.MaxMaQuyTrinhLength, MinimumLength = QuyTrinhDuAnConsts.MinMaQuyTrinhLength)]
+		public string MaQuyTrinh { get; set; }
+		
+		
+		public string GhiChu { get; set; }
+		
+		
 		 public int? LoaiDuAnId { get; set; }
+		 
+		 		 public int? ParentId { get; set; }
 		 
 		 
     }
