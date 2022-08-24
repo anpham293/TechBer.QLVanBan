@@ -1,0 +1,56 @@
+﻿
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.Common.Modals
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.QuyTrinhDuAnAssigneds
+@model QuyTrinhDuAnAssignedViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("Details")))
+
+<div class="modal-body">
+    <div id="QuyTrinhDuAnAssignedInformationsTab">
+        
+        <div class="row">
+            <div class="col-6 mb-3">
+                <h6>@L("Name") :</h6>
+                @Model.QuyTrinhDuAnAssigned.Name
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Descriptions") :</h6>
+                @Model.QuyTrinhDuAnAssigned.Descriptions
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("STT") :</h6>
+                @Model.QuyTrinhDuAnAssigned.STT
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("SoVanBanQuyDinh") :</h6>
+                @Model.QuyTrinhDuAnAssigned.SoVanBanQuyDinh
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("MaQuyTrinh") :</h6>
+                @Model.QuyTrinhDuAnAssigned.MaQuyTrinh
+            </div>
+
+            <div class="col-6 mb-3">
+                <h6>(@L("LoaiDuAn")) @L("Name") :</h6>
+                @Model.LoaiDuAnName
+            </div>
+            <div class="col-6 mb-3">
+                <h6>(@L("QuyTrinhDuAn")) @L("Name") :</h6>
+                @Model.QuyTrinhDuAnName
+            </div>
+            <div class="col-6 mb-3">
+                <h6>(@L("QuyTrinhDuAnAssigned")) @L("Name") :</h6>
+                @Model.QuyTrinhDuAnAssignedName
+            </div>
+            <div class="col-6 mb-3">
+                <h6>(@L("DuAn")) @L("Name") :</h6>
+                @Model.DuAnName
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithClose.cshtml")
+

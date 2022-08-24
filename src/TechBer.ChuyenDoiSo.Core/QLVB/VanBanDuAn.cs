@@ -34,10 +34,10 @@ namespace TechBer.ChuyenDoiSo.QLVB
         [ForeignKey("DuAnId")]
 		public DuAn DuAnFk { get; set; }
 		
-		public virtual int? QuyTrinhDuAnId { get; set; }
+		public virtual long? QuyTrinhDuAnAssignedId { get; set; }
 		
-        [ForeignKey("QuyTrinhDuAnId")]
-		public QuyTrinhDuAn QuyTrinhDuAnFk { get; set; }
+        [ForeignKey("QuyTrinhDuAnAssignedId")]
+		public QuyTrinhDuAnAssigned QuyTrinhDuAnAssignedFk { get; set; }
 		
     }
 }

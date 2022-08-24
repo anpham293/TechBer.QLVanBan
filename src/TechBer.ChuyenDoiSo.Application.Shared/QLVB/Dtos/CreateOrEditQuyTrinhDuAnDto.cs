@@ -16,6 +16,7 @@ namespace TechBer.ChuyenDoiSo.QLVB.Dtos
 		
 		
 		public int STT { get; set; }
+		public int SoVanBanQuyDinh { get; set; }
 		
 		
 		[StringLength(QuyTrinhDuAnConsts.MaxMaQuyTrinhLength, MinimumLength = QuyTrinhDuAnConsts.MinMaQuyTrinhLength)]

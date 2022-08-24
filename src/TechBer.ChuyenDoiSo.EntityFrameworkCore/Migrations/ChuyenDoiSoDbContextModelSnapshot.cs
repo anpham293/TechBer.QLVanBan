@@ -1911,8 +1911,29 @@ namespace TechBer.ChuyenDoiSo.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DeleterUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<string>("Descriptions")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
 
                     b.Property<int?>("LoaiDuAnId")
                         .HasColumnType("int");
@@ -1985,11 +2006,29 @@ namespace TechBer.ChuyenDoiSo.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DeleterUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<string>("Descriptions")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("GhiChu")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
 
                     b.Property<int?>("LoaiDuAnId")
                         .HasColumnType("int");
@@ -2008,6 +2047,9 @@ namespace TechBer.ChuyenDoiSo.Migrations
                     b.Property<int>("STT")
                         .HasColumnType("int");
 
+                    b.Property<int>("SoVanBanQuyDinh")
+                        .HasColumnType("int");
+
                     b.Property<int?>("TenantId")
                         .HasColumnType("int");
 
@@ -2020,6 +2062,80 @@ namespace TechBer.ChuyenDoiSo.Migrations
                     b.HasIndex("TenantId");
 
                     b.ToTable("QuyTrinhDuAns");
+                });
+
+            modelBuilder.Entity("TechBer.ChuyenDoiSo.QLVB.QuyTrinhDuAnAssigned", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DeleterUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Descriptions")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<int?>("DuAnId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("LoaiDuAnId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MaQuyTrinh")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<long?>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("QuyTrinhDuAnId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("STT")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SoVanBanQuyDinh")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DuAnId");
+
+                    b.HasIndex("LoaiDuAnId");
+
+                    b.HasIndex("ParentId");
+
+                    b.HasIndex("QuyTrinhDuAnId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("QuyTrinhDuAnAssigneds");
                 });
 
             modelBuilder.Entity("TechBer.ChuyenDoiSo.QLVB.VanBanDuAn", b =>
@@ -2068,8 +2184,8 @@ namespace TechBer.ChuyenDoiSo.Migrations
                     b.Property<DateTime>("NgayBanHanh")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int?>("QuyTrinhDuAnId")
-                        .HasColumnType("int");
+                    b.Property<long?>("QuyTrinhDuAnAssignedId")
+                        .HasColumnType("bigint");
 
                     b.Property<int?>("TenantId")
                         .HasColumnType("int");
@@ -2078,7 +2194,7 @@ namespace TechBer.ChuyenDoiSo.Migrations
 
                     b.HasIndex("DuAnId");
 
-                    b.HasIndex("QuyTrinhDuAnId");
+                    b.HasIndex("QuyTrinhDuAnAssignedId");
 
                     b.HasIndex("TenantId");
 
@@ -2681,15 +2797,34 @@ namespace TechBer.ChuyenDoiSo.Migrations
                         .HasForeignKey("ParentId");
                 });
 
+            modelBuilder.Entity("TechBer.ChuyenDoiSo.QLVB.QuyTrinhDuAnAssigned", b =>
+                {
+                    b.HasOne("TechBer.ChuyenDoiSo.QLVB.DuAn", "DuAnFk")
+                        .WithMany()
+                        .HasForeignKey("DuAnId");
+
+                    b.HasOne("TechBer.ChuyenDoiSo.QLVB.LoaiDuAn", "LoaiDuAnFk")
+                        .WithMany()
+                        .HasForeignKey("LoaiDuAnId");
+
+                    b.HasOne("TechBer.ChuyenDoiSo.QLVB.QuyTrinhDuAnAssigned", "ParentFk")
+                        .WithMany()
+                        .HasForeignKey("ParentId");
+
+                    b.HasOne("TechBer.ChuyenDoiSo.QLVB.QuyTrinhDuAn", "QuyTrinhDuAnFk")
+                        .WithMany()
+                        .HasForeignKey("QuyTrinhDuAnId");
+                });
+
             modelBuilder.Entity("TechBer.ChuyenDoiSo.QLVB.VanBanDuAn", b =>
                 {
                     b.HasOne("TechBer.ChuyenDoiSo.QLVB.DuAn", "DuAnFk")
                         .WithMany()
                         .HasForeignKey("DuAnId");
 
-                    b.HasOne("TechBer.ChuyenDoiSo.QLVB.QuyTrinhDuAn", "QuyTrinhDuAnFk")
+                    b.HasOne("TechBer.ChuyenDoiSo.QLVB.QuyTrinhDuAnAssigned", "QuyTrinhDuAnAssignedFk")
                         .WithMany()
-                        .HasForeignKey("QuyTrinhDuAnId");
+                        .HasForeignKey("QuyTrinhDuAnAssignedId");
                 });
 
             modelBuilder.Entity("TechBer.ChuyenDoiSo.QuanLyChuyenDoiSo.ChiTietDanhGia", b =>

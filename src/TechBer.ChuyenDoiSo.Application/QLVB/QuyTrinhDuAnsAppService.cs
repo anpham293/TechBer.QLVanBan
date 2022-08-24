@@ -47,7 +47,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
                 .Include(e => e.ParentFk)
                 .WhereIf(!string.IsNullOrWhiteSpace(input.Filter),
                     e => false || e.Name.Contains(input.Filter) || e.Descriptions.Contains(input.Filter) ||
-                         e.MaQuyTrinh.Contains(input.Filter) || e.GhiChu.Contains(input.Filter))
+                         e.MaQuyTrinh.Contains(input.Filter) )
                 .WhereIf(!string.IsNullOrWhiteSpace(input.NameFilter), e => e.Name == input.NameFilter)
                 .WhereIf(!string.IsNullOrWhiteSpace(input.DescriptionsFilter),
                     e => e.Descriptions == input.DescriptionsFilter)
@@ -55,7 +55,6 @@ namespace TechBer.ChuyenDoiSo.QLVB
                 .WhereIf(input.MaxSTTFilter != null, e => e.STT <= input.MaxSTTFilter)
                 .WhereIf(!string.IsNullOrWhiteSpace(input.MaQuyTrinhFilter),
                     e => e.MaQuyTrinh == input.MaQuyTrinhFilter)
-                .WhereIf(!string.IsNullOrWhiteSpace(input.GhiChuFilter), e => e.GhiChu == input.GhiChuFilter)
                 .WhereIf(!string.IsNullOrWhiteSpace(input.LoaiDuAnNameFilter),
                     e => e.LoaiDuAnFk != null && e.LoaiDuAnFk.Name == input.LoaiDuAnNameFilter)
                 .WhereIf(!string.IsNullOrWhiteSpace(input.QuyTrinhDuAnNameFilter),
@@ -78,7 +77,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
                         Descriptions = o.Descriptions,
                         STT = o.STT,
                         MaQuyTrinh = o.MaQuyTrinh,
-                        GhiChu = o.GhiChu,
+                        SoVanBanQuyDinh = o.SoVanBanQuyDinh,
                         Id = o.Id
                     },
                     LoaiDuAnName = s1 == null || s1.Name == null ? "" : s1.Name.ToString(),
@@ -190,7 +189,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
             quyTrinhDuAn.Name = input.Name;
             quyTrinhDuAn.Descriptions = input.Descriptions;
             quyTrinhDuAn.STT = input.STT;
-            quyTrinhDuAn.GhiChu = input.GhiChu;
+            quyTrinhDuAn.SoVanBanQuyDinh = input.SoVanBanQuyDinh;
             quyTrinhDuAn.MaQuyTrinh = input.MaQuyTrinh;
             var output = new GetQuyTrinhDuAnForEditOutput
                 {QuyTrinhDuAn = ObjectMapper.Map<CreateOrEditQuyTrinhDuAnDto>(quyTrinhDuAn)};
@@ -210,7 +209,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
                 .Include(e => e.ParentFk)
                 .WhereIf(!string.IsNullOrWhiteSpace(input.Filter),
                     e => false || e.Name.Contains(input.Filter) || e.Descriptions.Contains(input.Filter) ||
-                         e.MaQuyTrinh.Contains(input.Filter) || e.GhiChu.Contains(input.Filter))
+                         e.MaQuyTrinh.Contains(input.Filter))
                 .WhereIf(!string.IsNullOrWhiteSpace(input.NameFilter), e => e.Name == input.NameFilter)
                 .WhereIf(!string.IsNullOrWhiteSpace(input.DescriptionsFilter),
                     e => e.Descriptions == input.DescriptionsFilter)
@@ -218,7 +217,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
                 .WhereIf(input.MaxSTTFilter != null, e => e.STT <= input.MaxSTTFilter)
                 .WhereIf(!string.IsNullOrWhiteSpace(input.MaQuyTrinhFilter),
                     e => e.MaQuyTrinh == input.MaQuyTrinhFilter)
-                .WhereIf(!string.IsNullOrWhiteSpace(input.GhiChuFilter), e => e.GhiChu == input.GhiChuFilter)
+                
                 .WhereIf(!string.IsNullOrWhiteSpace(input.LoaiDuAnNameFilter),
                     e => e.LoaiDuAnFk != null && e.LoaiDuAnFk.Name == input.LoaiDuAnNameFilter)
                 .WhereIf(!string.IsNullOrWhiteSpace(input.QuyTrinhDuAnNameFilter),
@@ -237,7 +236,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
                         Descriptions = o.Descriptions,
                         STT = o.STT,
                         MaQuyTrinh = o.MaQuyTrinh,
-                        GhiChu = o.GhiChu,
+                        SoVanBanQuyDinh = o.SoVanBanQuyDinh,
                         Id = o.Id
                     },
                     LoaiDuAnName = s1 == null || s1.Name == null ? "" : s1.Name.ToString(),
@@ -324,7 +323,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
                     QuyTrinhDuAn = new QuyTrinhDuAnHasMemberCountDto()
                     {
                         Name = o.Name,
-                        GhiChu = o.GhiChu,
+                        SoVanBanQuyDinh = o.SoVanBanQuyDinh,
                         STT = o.STT,
                         Id = o.Id,
                         ParentId = o.ParentId,

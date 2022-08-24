@@ -11,7 +11,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
 {
 	[Table("QuyTrinhDuAns")]
     [Audited]
-    public class QuyTrinhDuAn : Entity , IMayHaveTenant
+    public class QuyTrinhDuAn : FullAuditedEntity  , IMayHaveTenant
     {
 			public int? TenantId { get; set; }
 			
@@ -26,7 +26,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
 		[StringLength(QuyTrinhDuAnConsts.MaxMaQuyTrinhLength, MinimumLength = QuyTrinhDuAnConsts.MinMaQuyTrinhLength)]
 		public virtual string MaQuyTrinh { get; set; }
 		
-		public virtual string GhiChu { get; set; }
+		public virtual int SoVanBanQuyDinh { get; set; }
 		
 
 		public virtual int? LoaiDuAnId { get; set; }

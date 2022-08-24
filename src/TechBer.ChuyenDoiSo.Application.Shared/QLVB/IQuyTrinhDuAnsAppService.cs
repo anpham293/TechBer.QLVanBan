@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Abp.Application.Services;
 using Abp.Application.Services.Dto;
@@ -27,6 +28,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
 		
 		Task<PagedResultDto<QuyTrinhDuAnQuyTrinhDuAnLookupTableDto>> GetAllQuyTrinhDuAnForLookupTable(GetAllForLookupTableInput input);
 		Task<int> MoveTieuChi(MoveTreeDto input);
+		Task<List<GetQuyTrinhDuAnForView2Dto>> GetDataForTree(int loaiId);
 
     }
 }

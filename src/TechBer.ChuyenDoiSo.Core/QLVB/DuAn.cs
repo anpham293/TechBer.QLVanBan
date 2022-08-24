@@ -8,7 +8,7 @@ using Abp.Domain.Entities;
 namespace TechBer.ChuyenDoiSo.QLVB
 {
 	[Table("DuAns")]
-    public class DuAn : Entity , IMayHaveTenant
+    public class DuAn : FullAuditedEntity , IMayHaveTenant
     {
 			public int? TenantId { get; set; }
 			

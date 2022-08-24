@@ -4,7 +4,7 @@ namespace TechBer.ChuyenDoiSo.QLVB.Dtos
 {
     public class VanBanDuAnQuyTrinhDuAnLookupTableDto
     {
-		public int Id { get; set; }
+		public long Id { get; set; }
 
 		public string DisplayName { get; set; }
     }

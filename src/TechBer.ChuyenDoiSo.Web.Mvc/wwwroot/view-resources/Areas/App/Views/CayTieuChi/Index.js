@@ -248,7 +248,7 @@
                                         },
 
                                         addSubUnit: {
-                                            label: 'Thêm tiêu chí phụ',
+                                            label: 'Thêm quy trình con',
                                             icon: 'la la-plus',
                                             _disabled: !_permissions.manageCayTieuChi,
                                             action: function () {

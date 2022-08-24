@@ -30,6 +30,13 @@ namespace TechBer.ChuyenDoiSo.Authorization
 
             var pages = context.GetPermissionOrNull(AppPermissions.Pages) ?? context.CreatePermission(AppPermissions.Pages, L("Pages"));
 
+            var quyTrinhDuAnAssigneds = pages.CreateChildPermission(AppPermissions.Pages_QuyTrinhDuAnAssigneds, L("QuyTrinhDuAnAssigneds"));
+            quyTrinhDuAnAssigneds.CreateChildPermission(AppPermissions.Pages_QuyTrinhDuAnAssigneds_Create, L("CreateNewQuyTrinhDuAnAssigned"));
+            quyTrinhDuAnAssigneds.CreateChildPermission(AppPermissions.Pages_QuyTrinhDuAnAssigneds_Edit, L("EditQuyTrinhDuAnAssigned"));
+            quyTrinhDuAnAssigneds.CreateChildPermission(AppPermissions.Pages_QuyTrinhDuAnAssigneds_Delete, L("DeleteQuyTrinhDuAnAssigned"));
+
+
+
             var vanBanDuAns = pages.CreateChildPermission(AppPermissions.Pages_VanBanDuAns, L("VanBanDuAns"));
             vanBanDuAns.CreateChildPermission(AppPermissions.Pages_VanBanDuAns_Create, L("CreateNewVanBanDuAn"));
             vanBanDuAns.CreateChildPermission(AppPermissions.Pages_VanBanDuAns_Edit, L("EditVanBanDuAn"));

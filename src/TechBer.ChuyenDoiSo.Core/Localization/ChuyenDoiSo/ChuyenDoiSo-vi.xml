@@ -322,7 +322,7 @@
     <text name="SelectAUser">Chọn người dùng</text>
     <text name="Select">Lựa chọn</text>
     <text name="UserIsAlreadyInTheOrganizationUnit">Người dùng này đã có trong Cơ cấu Tổ chức!</text>
-    <text name="AddRootUnit">Thêm đơn vị gốc</text>
+    <text name="AddRootUnit">Thêm quy trình gốc</text>
     <text name="AddUser">Thêm người dùng</text>
     <text name="NoOrganizationUnitDefinedYet">Chưa có Cơ cấu Tổ chức nào được xác định.</text>
     <text name="OrganizationUnitMoveConfirmMessage">Vui lòng xác nhận để di chuyển {0} đến dưới {1}.</text>

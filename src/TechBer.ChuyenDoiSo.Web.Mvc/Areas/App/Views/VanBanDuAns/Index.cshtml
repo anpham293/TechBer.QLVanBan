@@ -11,6 +11,13 @@
     <script abp-src="/view-resources/Areas/App/Views/VanBanDuAns/Index.js" asp-append-version="true"></script>
 }
 
+<style>
+    #tree a {
+        white-space: normal !important;
+        height: auto;
+        padding: 1px 2px;
+    }
+</style>
 <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
 
 
@@ -27,7 +34,7 @@
             </div>
             <div class="kt-subheader__toolbar">
                 <div class="kt-subheader__wrapper">
-                   
+
                 </div>
             </div>
         </div>
@@ -111,25 +118,52 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="row align-items-center">
-                    <div class="col-md-12">
-                        <button id="filall" class="btn btn-info">Hiện tất cả</button>
+                    <div class="col-md-5 align-self-stretch">
+                        <div class="kt-container kt-container--fluid">
+                            <div class="kt-subheader__main">
+                                <h3 class="kt-subheader__title">
+                                    <span>Danh sách quy trình</span>
+                                </h3>
+                                <div class="kt-portlet__head-toolbar" id="find">
+                                    <div class="kt-portlet__head-actions">
+                                        <button type="button" id="Collapse" class="btn btn-danger"><i class="fa fa-minus"></i> Thu hẹp</button>
+                                        <button type="button" id="Expand" class="btn btn-success" hidden><i class="fa fa-plus"></i> Mở rộng</button>
+
+                                        @if (IsGranted(AppPermissions.Pages_QuyTrinhDuAns_Create))
+                                        {
+                                            <button type="button" id="AddRootUnitButtonIA" class="btn btn-primary">
+                                                <i class="la la-plus"></i> @L("AddRootUnit")
+                                            </button>
+                                        }
+                                        <button type="button" class="btn btn-default" id="reload-tree">
+                                            <i class="fa fa-sync"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-success" id="filall">
+                                            <i class="fa fa-sync"></i> Hiện tất cả
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="kt-portlet__body" style="position:relative;height:calc(100vh - 300px); overflow-y: scroll">
+                                <div id="tree"></div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="row align-items-center">
-                    <div class="col-md-4 align-self-stretch">
-                        <table id="QuyTrinhDuAnsTable" class="display table table-striped table-bordered table-hover dt-responsive nowrap">
-                            <thead>
-                            <tr>
-                                <th>@L("STT")</th>
-                                <th>@L("Name")</th>
-                                <th>@L("Descriptions")</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                        </table>
-                    </div>
-                    <div class="col-md-8 align-self-stretch">
+                    <div class="col-md-7 align-self-stretch">
+                        <div class="kt-subheader__main">
+                            <div class="kt-portlet__head-toolbar" id="find">
+                                <div class="kt-portlet__head-actions">
+                                    @if (IsGranted(AppPermissions.Pages_VanBanDuAns_Create))
+                                    {
+                                        <button type="button" id="CreateVanBan" class="btn btn-primary">
+                                            <i class="la la-plus"></i> Thêm mới văn bản
+                                        </button>
+                                    }
+                                </div>
+                            </div>
+                        </div>
                         <table id="VanBanDuAnsTable" class="display table table-striped table-bordered table-hover dt-responsive nowrap">
                             <thead>
                             <tr>

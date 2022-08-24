@@ -29,14 +29,14 @@ namespace TechBer.ChuyenDoiSo.QLVB
         private readonly IRepository<VanBanDuAn> _vanBanDuAnRepository;
         private readonly IVanBanDuAnsExcelExporter _vanBanDuAnsExcelExporter;
         private readonly IRepository<DuAn, int> _lookup_duAnRepository;
-        private readonly IRepository<QuyTrinhDuAn, int> _lookup_quyTrinhDuAnRepository;
+        private readonly IRepository<QuyTrinhDuAnAssigned, long> _lookup_quyTrinhDuAnRepository;
         private readonly ITempFileCacheManager _tempFileCacheManager;
         private readonly IBinaryObjectManager _binaryObjectManager;
 
 
         public VanBanDuAnsAppService(IRepository<VanBanDuAn> vanBanDuAnRepository,
             IVanBanDuAnsExcelExporter vanBanDuAnsExcelExporter, IRepository<DuAn, int> lookup_duAnRepository,
-            IRepository<QuyTrinhDuAn, int> lookup_quyTrinhDuAnRepository,
+            IRepository<QuyTrinhDuAnAssigned, long> lookup_quyTrinhDuAnRepository,
             ITempFileCacheManager tempFileCacheManager,
             IBinaryObjectManager binaryObjectManager)
         {
@@ -52,7 +52,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
         {
             var filteredVanBanDuAns = _vanBanDuAnRepository.GetAll()
                 .Include(e => e.DuAnFk)
-                .Include(e => e.QuyTrinhDuAnFk)
+                .Include(e => e.QuyTrinhDuAnAssignedFk)
                 .WhereIf(!string.IsNullOrWhiteSpace(input.Filter),
                     e => false || e.Name.Contains(input.Filter) || e.KyHieuVanBan.Contains(input.Filter) ||
                          e.FileVanBan.Contains(input.Filter))
@@ -65,7 +65,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
                     e => e.FileVanBan == input.FileVanBanFilter)
                 .WhereIf(input.DuAnNameFilter.HasValue, e => e.DuAnId == input.DuAnNameFilter)
                 .WhereIf(!string.IsNullOrWhiteSpace(input.QuyTrinhDuAnNameFilter),
-                    e => e.QuyTrinhDuAnId == Int32.Parse(input.QuyTrinhDuAnNameFilter));
+                    e => e.QuyTrinhDuAnAssignedId == Int32.Parse(input.QuyTrinhDuAnNameFilter));
 
             var pagedAndFilteredVanBanDuAns = filteredVanBanDuAns
                 .OrderBy(input.Sorting ?? "id asc")
@@ -74,7 +74,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
             var vanBanDuAns = from o in pagedAndFilteredVanBanDuAns
                 join o1 in _lookup_duAnRepository.GetAll() on o.DuAnId equals o1.Id into j1
                 from s1 in j1.DefaultIfEmpty()
-                join o2 in _lookup_quyTrinhDuAnRepository.GetAll() on o.QuyTrinhDuAnId equals o2.Id into j2
+                join o2 in _lookup_quyTrinhDuAnRepository.GetAll() on o.QuyTrinhDuAnAssignedId equals o2.Id into j2
                 from s2 in j2.DefaultIfEmpty()
                 select new GetVanBanDuAnForViewDto()
                 {
@@ -161,7 +161,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
         {
             var vanBanDuAn = ObjectMapper.Map<VanBanDuAn>(input);
 
-
+            vanBanDuAn.QuyTrinhDuAnAssignedId = input.QuyTrinhDuAnId;
             if (AbpSession.TenantId != null)
             {
                 vanBanDuAn.TenantId = (int?) AbpSession.TenantId;
@@ -268,7 +268,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
         {
             var filteredVanBanDuAns = _vanBanDuAnRepository.GetAll()
                 .Include(e => e.DuAnFk)
-                .Include(e => e.QuyTrinhDuAnFk)
+                .Include(e => e.QuyTrinhDuAnAssignedFk)
                 .WhereIf(!string.IsNullOrWhiteSpace(input.Filter),
                     e => false || e.Name.Contains(input.Filter) || e.KyHieuVanBan.Contains(input.Filter) ||
                          e.FileVanBan.Contains(input.Filter))
@@ -282,12 +282,12 @@ namespace TechBer.ChuyenDoiSo.QLVB
                 .WhereIf(!string.IsNullOrWhiteSpace(input.DuAnNameFilter),
                     e => e.DuAnFk != null && e.DuAnFk.Name == input.DuAnNameFilter)
                 .WhereIf(!string.IsNullOrWhiteSpace(input.QuyTrinhDuAnNameFilter),
-                    e => e.QuyTrinhDuAnFk != null && e.QuyTrinhDuAnFk.Name == input.QuyTrinhDuAnNameFilter);
+                    e => e.QuyTrinhDuAnAssignedFk != null && e.QuyTrinhDuAnAssignedFk.Name == input.QuyTrinhDuAnNameFilter);
 
             var query = (from o in filteredVanBanDuAns
                 join o1 in _lookup_duAnRepository.GetAll() on o.DuAnId equals o1.Id into j1
                 from s1 in j1.DefaultIfEmpty()
-                join o2 in _lookup_quyTrinhDuAnRepository.GetAll() on o.QuyTrinhDuAnId equals o2.Id into j2
+                join o2 in _lookup_quyTrinhDuAnRepository.GetAll() on o.QuyTrinhDuAnAssignedId equals o2.Id into j2
                 from s2 in j2.DefaultIfEmpty()
                 select new GetVanBanDuAnForViewDto()
                 {

@@ -20,6 +20,8 @@ namespace TechBer.ChuyenDoiSo.EntityFrameworkCore
 {
     public class ChuyenDoiSoDbContext : AbpZeroDbContext<Tenant, Role, User, ChuyenDoiSoDbContext>, IAbpPersistedGrantDbContext
     {
+        public virtual DbSet<QuyTrinhDuAnAssigned> QuyTrinhDuAnAssigneds { get; set; }
+
         public virtual DbSet<VanBanDuAn> VanBanDuAns { get; set; }
 
         public virtual DbSet<DuAn> DuAns { get; set; }
@@ -75,7 +77,12 @@ namespace TechBer.ChuyenDoiSo.EntityFrameworkCore
            
            
            
-            modelBuilder.Entity<VanBanDuAn>(v =>
+           
+            modelBuilder.Entity<QuyTrinhDuAnAssigned>(q =>
+            {
+                q.HasIndex(e => new { e.TenantId });
+            });
+ modelBuilder.Entity<VanBanDuAn>(v =>
             {
                 v.HasIndex(e => new { e.TenantId });
             });

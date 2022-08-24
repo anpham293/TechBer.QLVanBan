@@ -1,0 +1,143 @@
+﻿
+@using System.Globalization
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.Common.Modals
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.QuyTrinhDuAnAssigneds
+@model CreateOrEditQuyTrinhDuAnAssignedModalViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditQuyTrinhDuAnAssigned")) : L("CreateNewQuyTrinhDuAnAssigned")))
+
+<div class="modal-body">
+        <div id="QuyTrinhDuAnAssignedInformationsTab">
+            <form name="QuyTrinhDuAnAssignedInformationsForm" role="form" novalidate class="form-validation">
+
+                @if (Model.IsEditMode)
+                {
+                    <input type="hidden" name="id" value="@Model.QuyTrinhDuAnAssigned.Id" />
+                }
+
+				            
+								<div class="form-group m-form__group">
+										<label for="LoaiDuAnName">@L("LoaiDuAn")</label>
+									    <div class="input-group">
+											<input class="form-control" id="LoaiDuAnName" name="loaiDuAnName" value="@Model.LoaiDuAnName" type="text" disabled>
+										<div class="input-group-append">
+											<button class="btn btn-primary blue" id="OpenLoaiDuAnLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
+										</div> 
+										<div class="input-group-prepend">
+											<button class="btn btn-danger btn-icon" type="button" id="ClearLoaiDuAnNameButton"><i class="fa fa-times"></i></button>
+										</div>
+									</div>
+								</div>
+
+								@if (Model.IsEditMode)
+								{
+									<input class="form-control" id="QuyTrinhDuAnAssigned_LoaiDuAnId" value="@Model.QuyTrinhDuAnAssigned.LoaiDuAnId" type="text" name="loaiDuAnId"  hidden/>
+								}
+								 else
+								{ 
+									<input class="form-control" id="QuyTrinhDuAnAssigned_LoaiDuAnId" value="" type="text" name="loaiDuAnId"  hidden/>
+								}
+
+            
+								<div class="form-group m-form__group">
+										<label for="QuyTrinhDuAnName">@L("QuyTrinhDuAn")</label>
+									    <div class="input-group">
+											<input class="form-control" id="QuyTrinhDuAnName" name="quyTrinhDuAnName" value="@Model.QuyTrinhDuAnName" type="text" disabled>
+										<div class="input-group-append">
+											<button class="btn btn-primary blue" id="OpenQuyTrinhDuAnLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
+										</div> 
+										<div class="input-group-prepend">
+											<button class="btn btn-danger btn-icon" type="button" id="ClearQuyTrinhDuAnNameButton"><i class="fa fa-times"></i></button>
+										</div>
+									</div>
+								</div>
+
+								@if (Model.IsEditMode)
+								{
+									<input class="form-control" id="QuyTrinhDuAnAssigned_QuyTrinhDuAnId" value="@Model.QuyTrinhDuAnAssigned.QuyTrinhDuAnId" type="text" name="quyTrinhDuAnId"  hidden/>
+								}
+								 else
+								{ 
+									<input class="form-control" id="QuyTrinhDuAnAssigned_QuyTrinhDuAnId" value="" type="text" name="quyTrinhDuAnId"  hidden/>
+								}
+
+            
+								<div class="form-group m-form__group">
+										<label for="QuyTrinhDuAnAssignedName">@L("QuyTrinhDuAnAssigned")</label>
+									    <div class="input-group">
+											<input class="form-control" id="QuyTrinhDuAnAssignedName" name="quyTrinhDuAnAssignedName" value="@Model.QuyTrinhDuAnAssignedName" type="text" disabled>
+										<div class="input-group-append">
+											<button class="btn btn-primary blue" id="OpenQuyTrinhDuAnAssignedLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
+										</div> 
+										<div class="input-group-prepend">
+											<button class="btn btn-danger btn-icon" type="button" id="ClearQuyTrinhDuAnAssignedNameButton"><i class="fa fa-times"></i></button>
+										</div>
+									</div>
+								</div>
+
+								@if (Model.IsEditMode)
+								{
+									<input class="form-control" id="QuyTrinhDuAnAssigned_ParentId" value="@Model.QuyTrinhDuAnAssigned.ParentId" type="text" name="parentId"  hidden/>
+								}
+								 else
+								{ 
+									<input class="form-control" id="QuyTrinhDuAnAssigned_ParentId" value="" type="text" name="parentId"  hidden/>
+								}
+
+            
+								<div class="form-group m-form__group">
+										<label for="DuAnName">@L("DuAn")</label>
+									    <div class="input-group">
+											<input class="form-control" id="DuAnName" name="duAnName" value="@Model.DuAnName" type="text" disabled>
+										<div class="input-group-append">
+											<button class="btn btn-primary blue" id="OpenDuAnLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
+										</div> 
+										<div class="input-group-prepend">
+											<button class="btn btn-danger btn-icon" type="button" id="ClearDuAnNameButton"><i class="fa fa-times"></i></button>
+										</div>
+									</div>
+								</div>
+
+								@if (Model.IsEditMode)
+								{
+									<input class="form-control" id="QuyTrinhDuAnAssigned_DuAnId" value="@Model.QuyTrinhDuAnAssigned.DuAnId" type="text" name="duAnId"  hidden/>
+								}
+								 else
+								{ 
+									<input class="form-control" id="QuyTrinhDuAnAssigned_DuAnId" value="" type="text" name="duAnId"  hidden/>
+								}
+
+
+
+				
+								<div class="form-group">
+									<label for="QuyTrinhDuAnAssigned_Name">@L("Name")</label>
+									<input class="form-control" id="QuyTrinhDuAnAssigned_Name" value="@Model.QuyTrinhDuAnAssigned.Name" type="text" name="name"  required    />
+								</div>
+					
+								<div class="form-group">
+									<label for="QuyTrinhDuAnAssigned_Descriptions">@L("Descriptions")</label>
+									<input class="form-control" id="QuyTrinhDuAnAssigned_Descriptions" value="@Model.QuyTrinhDuAnAssigned.Descriptions" type="text" name="descriptions"     />
+								</div>
+					
+								<div class="form-group">
+									<label for="QuyTrinhDuAnAssigned_STT">@L("STT")</label>
+									<input class="form-control m-input" id="QuyTrinhDuAnAssigned_STT" value="@Model.QuyTrinhDuAnAssigned.STT.ToString(CultureInfo.InvariantCulture)" type="number" name="stt"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="QuyTrinhDuAnAssigned_SoVanBanQuyDinh">@L("SoVanBanQuyDinh")</label>
+									<input class="form-control m-input" id="QuyTrinhDuAnAssigned_SoVanBanQuyDinh" value="@Model.QuyTrinhDuAnAssigned.SoVanBanQuyDinh.ToString(CultureInfo.InvariantCulture)" type="number" name="soVanBanQuyDinh"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="QuyTrinhDuAnAssigned_MaQuyTrinh">@L("MaQuyTrinh")</label>
+									<input class="form-control" id="QuyTrinhDuAnAssigned_MaQuyTrinh" value="@Model.QuyTrinhDuAnAssigned.MaQuyTrinh" type="text" name="maQuyTrinh"   maxlength="@TechBer.ChuyenDoiSo.QLVB.QuyTrinhDuAnAssignedConsts.MaxMaQuyTrinhLength"  minlength="@TechBer.ChuyenDoiSo.QLVB.QuyTrinhDuAnAssignedConsts.MinMaQuyTrinhLength"  />
+								</div>
+					
+
+            </form>
+        </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

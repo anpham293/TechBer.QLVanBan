@@ -4,6 +4,7 @@
     {
         public static class Common
         {
+            public const string QuyTrinhDuAnAssigneds = "QLVB.QuyTrinhDuAnAssigneds";
             public const string VanBanDuAns = "QLVB.VanBanDuAns";
             public const string DuAns = "QLVB.DuAns";
             public const string QuyTrinhDuAns = "QLVB.QuyTrinhDuAns";

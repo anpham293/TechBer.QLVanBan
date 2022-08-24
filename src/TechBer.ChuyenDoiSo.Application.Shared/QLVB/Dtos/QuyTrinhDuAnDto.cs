@@ -11,6 +11,7 @@ namespace TechBer.ChuyenDoiSo.QLVB.Dtos
 		public string Descriptions { get; set; }
 
 		public int STT { get; set; }
+		public int SoVanBanQuyDinh { get; set; }
 
 		public string MaQuyTrinh { get; set; }
 
