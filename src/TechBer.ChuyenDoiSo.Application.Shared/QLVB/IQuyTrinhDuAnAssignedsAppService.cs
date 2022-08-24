@@ -33,6 +33,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
 		Task<PagedResultDto<QuyTrinhDuAnAssignedDuAnLookupTableDto>> GetAllDuAnForLookupTable(GetAllForLookupTableInput input);
 
 		Task<List<GetQuyTrinhDuAnAssignedForView2Dto>> GetDataForTree(int duanid);
+		Task<int> XoaTieuChi(long id);
 		Task<int> MoveTieuChi(MoveTreeDto input);
     }
 }

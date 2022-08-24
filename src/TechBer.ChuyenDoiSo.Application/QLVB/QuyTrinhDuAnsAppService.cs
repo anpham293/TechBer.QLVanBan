@@ -16,6 +16,7 @@ using Abp.Extensions;
 using Abp.Authorization;
 using Castle.Core.Internal;
 using Microsoft.EntityFrameworkCore;
+using TechBer.ChuyenDoiSo.QuanLyChuyenDoiSo;
 using Z.EntityFramework.Plus;
 
 namespace TechBer.ChuyenDoiSo.QLVB
@@ -341,7 +342,27 @@ namespace TechBer.ChuyenDoiSo.QLVB
 
             return t;
         }
+        [AbpAuthorize(AppPermissions.Pages_QuyTrinhDuAns_Delete)]
+        public async Task<int> XoaTieuChi(int id)
+        {
+            try
+            {
+                var query = _quyTrinhDuAnRepository.GetAll().Where(p => p.ParentId == id);
 
+                if(await query.CountAsync() > 0)
+                {
+                    return (int)XoaTieuChiState.CHUA_XOA_HET_CON;
+                }
+
+                await _quyTrinhDuAnRepository.DeleteAsync(id);
+
+                return (int)XoaTieuChiState.XOA_THANH_CONG;
+            }
+            catch (Exception ex)
+            {
+                return (int)XoaTieuChiState.LOI_KHAC;
+            }
+        }
         public async Task<int> MoveTieuChi(MoveTreeDto input)
         {
             try
