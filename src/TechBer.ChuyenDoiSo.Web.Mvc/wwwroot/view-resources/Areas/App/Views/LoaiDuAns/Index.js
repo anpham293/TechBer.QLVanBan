@@ -375,7 +375,7 @@
                                                     app.localize('AreYouSure'),
                                                     function (isConfirmed) {
                                                         if (isConfirmed) {
-                                                            _quyTrinhDuAnsAppService.xoaTieuChi(node.id).done(function (result) {
+                                                            _quyTrinhDuAnsService.xoaTieuChi(node.id).done(function (result) {
                                                                 if (result == self.XOA_STATE.XOA_THANH_CONG) {
                                                                     abp.notify.success(app.localize('SuccessfullyDeleted'));
                                                                     instance.delete_node(node);
