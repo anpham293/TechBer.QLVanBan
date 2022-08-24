@@ -105,7 +105,7 @@
                 {
                     targets: 4,
                     render: function (displayName, type, row, meta) {
-                        return "<a class='btn btn-info' href='/App/VanBanDuAns?duanid=" + row.duAn.id + "' style='color:white'>Danh sách văn bản >></a>";
+                        return "<a class='btn btn-info' href='/App/VanBanDuAns?duanid=" + row.duAn.id + "' style='color:white'>Danh sách hồ sơ dự án >></a>";
                     }
                 }
             ]
