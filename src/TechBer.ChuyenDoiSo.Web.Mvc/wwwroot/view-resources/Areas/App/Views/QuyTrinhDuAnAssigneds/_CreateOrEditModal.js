@@ -125,8 +125,9 @@
 			 _modalManager.setBusy(true);
 			 _quyTrinhDuAnAssignedsService.createOrEdit(
 				quyTrinhDuAnAssigned
-			 ).done(function () {
+			 ).done(function (result) {
                abp.notify.info(app.localize('SavedSuccessfully'));
+                 _modalManager.setResult(result);
                _modalManager.close();
                abp.event.trigger('app.createOrEditQuyTrinhDuAnAssignedModalSaved');
 			 }).always(function () {

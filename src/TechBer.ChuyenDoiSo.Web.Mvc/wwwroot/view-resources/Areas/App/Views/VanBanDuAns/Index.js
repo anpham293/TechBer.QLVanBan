@@ -16,13 +16,21 @@
         var _permissions = {
             create: abp.auth.hasPermission('Pages.VanBanDuAns.Create'),
             edit: abp.auth.hasPermission('Pages.VanBanDuAns.Edit'),
-            'delete': abp.auth.hasPermission('Pages.VanBanDuAns.Delete')
+            'delete': abp.auth.hasPermission('Pages.VanBanDuAns.Delete'),
+            createQuyTrinhDuAn: abp.auth.hasPermission('Pages.QuyTrinhDuAnAssigneds.Create'),
+            editQuyTrinhDuAn: abp.auth.hasPermission('Pages.QuyTrinhDuAnAssigneds.Edit'),
+            deleteQuyTrinhDuAn: abp.auth.hasPermission('Pages.QuyTrinhDuAnAssigneds.Delete'),
         };
 
         var _createOrEditModal = new app.ModalManager({
             viewUrl: abp.appPath + 'App/VanBanDuAns/CreateOrEditModal',
             scriptUrl: abp.appPath + 'view-resources/Areas/App/Views/VanBanDuAns/_CreateOrEditModal.js',
             modalClass: 'CreateOrEditVanBanDuAnModal'
+        });
+        var _createOrEditQuyTrinhDuAnAssignedsModal = new app.ModalManager({
+            viewUrl: abp.appPath + 'App/QuyTrinhDuAnAssigneds/CreateOrEditModal',
+            scriptUrl: abp.appPath + 'view-resources/Areas/App/Views/QuyTrinhDuAnAssigneds/_CreateOrEditModal.js',
+            modalClass: 'CreateOrEditQuyTrinhDuAnAssignedModal'
         });
 
         var _viewVanBanDuAnModal = new app.ModalManager({
@@ -284,20 +292,20 @@
 
                 var instance = $.jstree.reference(self.$tree);
 
-                _createOrEditQuyTrinhModal.open({
+                _createOrEditQuyTrinhDuAnAssignedsModal.open({
                     parentId: parentId,
                     loaiDuAn: self.loaiDuAn
                 }, function (newOu) {
                     instance.create_node(
                         parentId ? instance.get_node(parentId) : '#',
                         {
-                            id: newOu.quyTrinhDuAn.id,
-                            parent: newOu.quyTrinhDuAn.parentId ? newOu.quyTrinhDuAn.parentId : '#',
-                            code: newOu.quyTrinhDuAn.maQuyTrinh,
-                            displayName: newOu.quyTrinhDuAn.displayName,
+                            id: newOu.quyTrinhDuAnAssigned.id,
+                            parent: newOu.quyTrinhDuAnAssigned.parentId ? newOu.quyTrinhDuAnAssigned.parentId : '#',
+                            code: newOu.quyTrinhDuAnAssigned.maQuyTrinh,
+                            displayName: newOu.quyTrinhDuAnAssigned.displayName,
                             memberCount: 0,
                             roleCount: 0,
-                            text: self.generateTextOnTree(newOu.quyTrinhDuAn),
+                            text: self.generateTextOnTree(newOu.quyTrinhDuAnAssigned),
                             state: {
                                 opened: true
                             }
