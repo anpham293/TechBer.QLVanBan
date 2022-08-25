@@ -439,8 +439,10 @@
                         });
                     find_group.removeAttr("hidden");
                     self.$rootBtn.click(function (e) {
+                        self.$rootBtn.off("click");
                         e.preventDefault();
                         self.addUnit();
+                        self.$rootBtn.off("click");
                     });
 
                    

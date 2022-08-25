@@ -544,8 +544,10 @@
                             ]
                         });
                     self.$rootBtn.click(function (e) {
+                        self.$rootBtn.off("click");
                         e.preventDefault();
                         self.addUnit();
+                        self.$rootBtn.off("click");
                     });
 
                     self.$tree.on("select_node.jstree", function (e, data) {
