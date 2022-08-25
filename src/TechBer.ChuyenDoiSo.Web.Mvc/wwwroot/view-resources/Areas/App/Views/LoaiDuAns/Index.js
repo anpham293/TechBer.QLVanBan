@@ -222,12 +222,11 @@
 
             generateTextOnTree(ou) {
                 var itemClass = ' ou-text-has-members';
-                
-                return '<span title="' + ou.name + '" class="ou-text text-dark' + itemClass + '" data-ou-id="' + ou.id + '"><b>' + ou.maQuyTrinh + '</b> ' +
+                return '<span class="ou-text text-dark tooltipss' + itemClass + '" data-ou-id="' + ou.id + '"><b>' + ou.maQuyTrinh + '</b> ' +
                     app.htmlUtils.htmlEncodeText(ou.name) +
                     ' <i class="fa fa-caret-down text-muted"></i> ' +
                     ' <span style="font-size: .82em; opacity: .5;">' +
-                    '</span></span>';
+                    '</span>'+((ou.descriptions!=="")?'<div class="tooltipsstext">'+ou.descriptions+'</div>':"")+'</span>';
             }
 
             incrementMemberCount(ouId, incrementAmount) {
@@ -344,7 +343,7 @@
                                             action: function (data) {
                                                 var instance = $.jstree.reference(data.reference);
                                                 console.log(node);
-                                                _createOrEditQuyTrinhModal.open({id: parseInt(node.id), parentId: parseInt(node.parent),
+                                                _createOrEditQuyTrinhModal.open({id: node.id, parentId: (node.parent==="#")?null:node.parent,
                                                     loaiDuAn: self.loaiDuAn}, function (updatedOu) {
                                                     self.reload();
                                                     //console.log(node)
