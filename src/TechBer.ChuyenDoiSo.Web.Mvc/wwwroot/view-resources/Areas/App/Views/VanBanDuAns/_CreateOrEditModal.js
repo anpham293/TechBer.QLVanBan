@@ -56,7 +56,7 @@
                 var file = files[0];
 
                 // File size check
-                if (file.size > 52428800) { //50MB
+                if (file.size > 524288000) { //500MB
                     abp.message.warn(app.localize('FileUpload_Warn_SizeLimit', app.consts.maxFileBytesUserFriendlyValue));
                     uploadedFileToken = null
                     contentType = "";

@@ -26,7 +26,7 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
     [AbpMvcAuthorize(AppPermissions.Pages_VanBanDuAns)]
     public class VanBanDuAnsController : ChuyenDoiSoControllerBase
     {
-        private const int MaxFileSize = 52428800; //5MB
+        private const int MaxFileSize = 524288000; //500MB
         private readonly IVanBanDuAnsAppService _vanBanDuAnsAppService;
         private readonly IRepository<DuAn> _duAnRepository;
         private readonly ITempFileCacheManager _tempFileCacheManager;
