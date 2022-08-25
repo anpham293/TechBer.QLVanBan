@@ -26,12 +26,14 @@ namespace TechBer.ChuyenDoiSo.QLVB
         private readonly IRepository<LoaiDuAn, int> _lookup_loaiDuAnRepository;
         private readonly IRepository<QuyTrinhDuAnAssigned, long> _quyTrinhDuAnAssignedRepository;
         private readonly IRepository<QuyTrinhDuAn, int> _quyTrinhDuAnRepository;
+        private readonly IRepository<VanBanDuAn, int> _vanBanRepository;
 
 
         public DuAnsAppService(IRepository<DuAn> duAnRepository, IDuAnsExcelExporter duAnsExcelExporter,
             IRepository<LoaiDuAn, int> lookup_loaiDuAnRepository,
             IRepository<QuyTrinhDuAnAssigned, long> quyTrinhDuAnAssignedRepository,
-            IRepository<QuyTrinhDuAn, int> quyTrinhDuAnRepository
+            IRepository<QuyTrinhDuAn, int> quyTrinhDuAnRepository,
+            IRepository<VanBanDuAn, int> vanBanRepository
         )
         {
             _duAnRepository = duAnRepository;
@@ -39,6 +41,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
             _lookup_loaiDuAnRepository = lookup_loaiDuAnRepository;
             _quyTrinhDuAnAssignedRepository = quyTrinhDuAnAssignedRepository;
             _quyTrinhDuAnRepository = quyTrinhDuAnRepository;
+            _vanBanRepository = vanBanRepository;
         }
 
         public async Task<PagedResultDto<GetDuAnForViewDto>> GetAll(GetAllDuAnsInput input)
@@ -204,6 +207,10 @@ namespace TechBer.ChuyenDoiSo.QLVB
         [AbpAuthorize(AppPermissions.Pages_DuAns_Delete)]
         public async Task Delete(EntityDto input)
         {
+            List<long> idlist = await _quyTrinhDuAnAssignedRepository.GetAll().WhereIf(true, p => p.DuAnId == input.Id)
+                .Select(p => p.Id).ToListAsync();
+            await _vanBanRepository.DeleteAsync(p => idlist.Contains(p.QuyTrinhDuAnAssignedId.Value));
+            await _quyTrinhDuAnAssignedRepository.DeleteAsync(p => idlist.Contains(p.Id));
             await _duAnRepository.DeleteAsync(input.Id);
         }
 
