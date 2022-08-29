@@ -254,7 +254,10 @@ namespace TechBer.ChuyenDoiSo.QLVB
             else
             {
                 var vanBanDuAn = await _vanBanDuAnRepository.FirstOrDefaultAsync((int) input.Id);
-                ObjectMapper.Map(input, vanBanDuAn);
+                vanBanDuAn.Name = input.Name;
+                vanBanDuAn.KyHieuVanBan = input.KyHieuVanBan;
+                vanBanDuAn.NgayBanHanh = input.NgayBanHanh;
+                await _vanBanDuAnRepository.UpdateAsync(vanBanDuAn);
             }
         }
 
