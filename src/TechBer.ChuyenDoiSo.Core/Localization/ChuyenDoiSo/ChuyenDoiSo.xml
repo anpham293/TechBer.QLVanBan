@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
-  <texts>    <text name="QuyTrinhDuAnAssignedName">Quy trinh du an assigned name</text>
+  <texts>
+    <text name="QuyTrinhDuAnAssignedName">Quy trinh du an assigned name</text>
     <text name="PickQuyTrinhDuAnAssigned">Pick quy trinh du an assigned</text>
     <text name="QuyTrinhDuAnAssigned">Quy trinh du an assigned</text>
     <text name="TechBer.ChuyenDoiSo.QLVB.QuyTrinhDuAnAssigned">QuyTrinhDuAnAssigned</text>
@@ -14,6 +15,12 @@
     <text name="OrganizationUnitDisplayName">Organization unit display name</text>
     <text name="PickOrganizationUnit">Pick organization unit</text>
 
+    <text name="ThemHoSoDuAn">Them Ho So Du An</text>
+    <text name="ChinhSuaHoSoDuAn">Chinh Sua Ho So Du An</text>
+    <text name="FileHoSo">File Ho So</text>
+    <text name="TenHoSo">Ten Ho So</text>
+    <text name="TenDuAn">Ten Du An</text>
+    <text name="MaDuAn">Ma Du An</text>
     <text name="VanBan">Van Ban</text>
     <text name="DanhMucQuanLy">Danh Muc Quan Ly</text>
     <text name="STT">S t t</text>
