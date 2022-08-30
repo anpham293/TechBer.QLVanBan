@@ -15,6 +15,7 @@
     <text name="OrganizationUnitDisplayName">Organization unit display name</text>
     <text name="PickOrganizationUnit">Pick organization unit</text>
 
+    <text name="HoSo">Ho So</text>
     <text name="ThemHoSoDuAn">Them Ho So Du An</text>
     <text name="ChinhSuaHoSoDuAn">Chinh Sua Ho So Du An</text>
     <text name="FileHoSo">File Ho So</text>
