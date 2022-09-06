@@ -25,7 +25,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
     [AbpAuthorize(AppPermissions.Pages_VanBanDuAns)]
     public class VanBanDuAnsAppService : ChuyenDoiSoAppServiceBase, IVanBanDuAnsAppService
     {
-        private const int MaxFileBytes = 52428800; //50MB
+        private const int MaxFileBytes = 524288000; //500MB
         private readonly IRepository<VanBanDuAn> _vanBanDuAnRepository;
         private readonly IVanBanDuAnsExcelExporter _vanBanDuAnsExcelExporter;
         private readonly IRepository<DuAn, int> _lookup_duAnRepository;
@@ -83,7 +83,9 @@ namespace TechBer.ChuyenDoiSo.QLVB
                         Name = o.Name,
                         KyHieuVanBan = o.KyHieuVanBan,
                         NgayBanHanh = o.NgayBanHanh,
-                        FileVanBan = (o.FileVanBan.IsNullOrEmpty()?o.FileVanBan: JsonConvert.DeserializeObject<FileMauSerializeObj>(o.FileVanBan).FileName),
+                        FileVanBan = (o.FileVanBan.IsNullOrEmpty()
+                            ? o.FileVanBan
+                            : JsonConvert.DeserializeObject<FileMauSerializeObj>(o.FileVanBan).FileName),
                         Id = o.Id
                     },
                     DuAnName = s1 == null || s1.Name == null ? "" : s1.Name.ToString(),
@@ -146,13 +148,21 @@ namespace TechBer.ChuyenDoiSo.QLVB
 
         public async Task CreateOrEdit(CreateOrEditVanBanDuAnDto input)
         {
-            if (input.Id == null)
+            try
             {
-                await Create(input);
+                if (input.Id == null)
+                {
+                    await Create(input);
+                }
+                else
+                {
+                    await Update(input);
+                }
             }
-            else
+            catch (Exception e)
             {
-                await Update(input);
+                Console.WriteLine(e);
+                throw;
             }
         }
 
@@ -207,57 +217,66 @@ namespace TechBer.ChuyenDoiSo.QLVB
         [AbpAuthorize(AppPermissions.Pages_VanBanDuAns_Edit)]
         protected virtual async Task Update(CreateOrEditVanBanDuAnDto input)
         {
-            if (!string.IsNullOrEmpty(input.UploadedFileToken))
+            try
             {
-                byte[] byteArray;
-                var fileBytes = _tempFileCacheManager.GetFile(input.UploadedFileToken);
-
-                if (fileBytes == null)
+                if (!string.IsNullOrEmpty(input.UploadedFileToken))
                 {
-                    return;
-                }
+                    byte[] byteArray;
+                    var fileBytes = _tempFileCacheManager.GetFile(input.UploadedFileToken);
 
-                using (var stream = new MemoryStream(fileBytes))
-                {
-                    byteArray = stream.ToArray();
-                }
+                    if (fileBytes == null)
+                    {
+                        return;
+                    }
 
-                if (byteArray.Length > MaxFileBytes)
-                {
-                    return;
-                }
+                    using (var stream = new MemoryStream(fileBytes))
+                    {
+                        byteArray = stream.ToArray();
+                    }
 
-                var storedFile = new BinaryObject(AbpSession.TenantId, byteArray);
-                var fileMauObj = new FileMauSerializeObj
-                {
-                    FileName = input.FileName,
-                    Guid = storedFile.Id.ToString(),
-                    ContentType = input.ContentType
-                };
+                    if (byteArray.Length > MaxFileBytes)
+                    {
+                        return;
+                    }
 
-                
-                var fileMau = JsonConvert.SerializeObject(fileMauObj);
-                var vanban = await _vanBanDuAnRepository.FirstOrDefaultAsync((int)input.Id);
-                if (!string.IsNullOrWhiteSpace(vanban.FileVanBan))
-                {
-                    var oldFileMau = JsonConvert.DeserializeObject<FileMauSerializeObj>(vanban.FileVanBan);
-                    await _binaryObjectManager.DeleteAsync(Guid.Parse(oldFileMau.Guid));
-                    await _binaryObjectManager.SaveAsync(storedFile);
+                    var storedFile = new BinaryObject(AbpSession.TenantId, byteArray);
+                    var fileMauObj = new FileMauSerializeObj
+                    {
+                        FileName = input.FileName,
+                        Guid = storedFile.Id.ToString(),
+                        ContentType = input.ContentType
+                    };
+
+
+                    var fileMau = JsonConvert.SerializeObject(fileMauObj);
+                    var vanban = await _vanBanDuAnRepository.FirstOrDefaultAsync((int) input.Id);
+                    if (!string.IsNullOrWhiteSpace(vanban.FileVanBan))
+                    {
+                        var oldFileMau = JsonConvert.DeserializeObject<FileMauSerializeObj>(vanban.FileVanBan);
+                        await _binaryObjectManager.DeleteAsync(Guid.Parse(oldFileMau.Guid));
+                        await _binaryObjectManager.SaveAsync(storedFile);
+                    }
+                    else
+                    {
+                        await _binaryObjectManager.SaveAsync(storedFile);
+                    }
+
+                    ObjectMapper.Map(input, vanban);
+                    vanban.FileVanBan = fileMau;
                 }
                 else
                 {
-                    await _binaryObjectManager.SaveAsync(storedFile);
+                    var vanBanDuAn = await _vanBanDuAnRepository.FirstOrDefaultAsync((int) input.Id);
+                    vanBanDuAn.Name = input.Name;
+                    vanBanDuAn.KyHieuVanBan = input.KyHieuVanBan;
+                    vanBanDuAn.NgayBanHanh = input.NgayBanHanh;
+                    await _vanBanDuAnRepository.UpdateAsync(vanBanDuAn);
                 }
-                ObjectMapper.Map(input, vanban);
-                vanban.FileVanBan = fileMau;
             }
-            else
+            catch (Exception e)
             {
-                var vanBanDuAn = await _vanBanDuAnRepository.FirstOrDefaultAsync((int) input.Id);
-                vanBanDuAn.Name = input.Name;
-                vanBanDuAn.KyHieuVanBan = input.KyHieuVanBan;
-                vanBanDuAn.NgayBanHanh = input.NgayBanHanh;
-                await _vanBanDuAnRepository.UpdateAsync(vanBanDuAn);
+                Console.WriteLine(e);
+                throw;
             }
         }
 
@@ -285,7 +304,8 @@ namespace TechBer.ChuyenDoiSo.QLVB
                 .WhereIf(!string.IsNullOrWhiteSpace(input.DuAnNameFilter),
                     e => e.DuAnFk != null && e.DuAnFk.Name == input.DuAnNameFilter)
                 .WhereIf(!string.IsNullOrWhiteSpace(input.QuyTrinhDuAnNameFilter),
-                    e => e.QuyTrinhDuAnAssignedFk != null && e.QuyTrinhDuAnAssignedFk.Name == input.QuyTrinhDuAnNameFilter);
+                    e => e.QuyTrinhDuAnAssignedFk != null &&
+                         e.QuyTrinhDuAnAssignedFk.Name == input.QuyTrinhDuAnNameFilter);
 
             var query = (from o in filteredVanBanDuAns
                 join o1 in _lookup_duAnRepository.GetAll() on o.DuAnId equals o1.Id into j1

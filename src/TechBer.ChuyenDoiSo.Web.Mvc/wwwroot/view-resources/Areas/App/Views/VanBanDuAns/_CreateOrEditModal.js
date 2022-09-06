@@ -57,8 +57,9 @@
 
                 // File size check
                 if (file.size > 524288000) { //500MB
-                    abp.message.warn(app.localize('FileUpload_Warn_SizeLimit', app.consts.maxFileBytesUserFriendlyValue));
-                    uploadedFileToken = null
+                    console.log('file>500')
+                    abp.message.warn(app.localize('FileUpload_Warn_SizeLimit', app.constsSoHoa.maxFileBytesUserFriendlyValue));
+                    uploadedFileToken = null;
                     contentType = "";
                     fileName = "";
                     return false;
@@ -73,6 +74,7 @@
             },
             success: function (response) {
                 if (response.success) {
+                    console.log(response);
                     uploadedFileToken = response.result.fileToken;
                     contentType = response.result.fileType;
                 } else {
@@ -138,6 +140,9 @@
             vanBanDuAn.fileName = fileName;
             vanBanDuAn.contentType = contentType;
             
+            console.log(uploadedFileToken);
+            console.log("vanbanduan:");
+            console.log(vanBanDuAn);
             _modalManager.setBusy(true);
             _vanBanDuAnsService.createOrEdit(
                 vanBanDuAn
