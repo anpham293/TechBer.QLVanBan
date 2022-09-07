@@ -42,7 +42,7 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
                     throw new UserFriendlyException(L("File_Empty_Error"));
                 }
 
-                if (file.Length > 1048576) //1MB
+                if (file.Length > 104857600) //1MB
                 {
                     throw new UserFriendlyException(L("File_SizeLimit_Error"));
                 }

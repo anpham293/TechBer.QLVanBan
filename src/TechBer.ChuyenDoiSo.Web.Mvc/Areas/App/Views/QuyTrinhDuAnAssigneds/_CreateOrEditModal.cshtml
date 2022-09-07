@@ -8,7 +8,7 @@
 <div class="modal-body">
     <div id="QuyTrinhDuAnAssignedInformationsTab">
         <form name="QuyTrinhDuAnAssignedInformationsForm" role="form" novalidate class="form-validation">
-
+            
             @if (Model.IsEditMode)
             {
                 <input type="hidden" name="id" value="@Model.QuyTrinhDuAnAssigned.Id"/>
@@ -19,19 +19,23 @@
                 <label for="LoaiDuAnName">@L("LoaiDuAn")</label>
                 <div class="input-group">
                     <input class="form-control" id="LoaiDuAnName" name="loaiDuAnName" value="@Model.LoaiDuAnName" type="text" disabled>
-
                 </div>
             </div>
 
-
+            <div class="form-group m-form__group">
+                <label for="DuAnName">@L("DuAn")</label>
+                <div class="input-group">
+                    <input class="form-control" id="DuAnName" name="duAnName" value="@Model.DuAnName" type="text" disabled>
+                </div>
+            </div>
+            
             <input class="form-control" id="QuyTrinhDuAnAssigned_LoaiDuAnId" value="@Model.QuyTrinhDuAnAssigned.LoaiDuAnId" type="text" name="loaiDuAnId" hidden/>
 
 
             <div class="form-group m-form__group">
-                <label for="QuyTrinhDuAnAssignedName">@L("Parent")</label>
+                <label for="QuyTrinhDuAnAssignedName">@L("BoSungTuQuyTrinh")</label>
                 <div class="input-group">
                     <input class="form-control" id="QuyTrinhDuAnAssignedName" name="quyTrinhDuAnAssignedName" value="@Model.QuyTrinhDuAnAssignedName" type="text" disabled>
-
                 </div>
             </div>
 
@@ -39,13 +43,7 @@
             <input class="form-control" id="QuyTrinhDuAnAssigned_ParentId" value="@Model.QuyTrinhDuAnAssigned.ParentId" type="text" name="parentId" hidden/>
 
 
-            <div class="form-group m-form__group">
-                <label for="DuAnName">@L("DuAn")</label>
-                <div class="input-group">
-                    <input class="form-control" id="DuAnName" name="duAnName" value="@Model.DuAnName" type="text" disabled>
-
-                </div>
-            </div>
+           
 
 
             <input class="form-control" id="QuyTrinhDuAnAssigned_DuAnId" value="@Model.QuyTrinhDuAnAssigned.DuAnId" type="text" name="duAnId" hidden/>

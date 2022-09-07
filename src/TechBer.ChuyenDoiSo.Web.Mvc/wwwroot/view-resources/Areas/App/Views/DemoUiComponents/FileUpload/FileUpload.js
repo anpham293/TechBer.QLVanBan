@@ -5,7 +5,7 @@
     $('#fileupload').fileupload({
         url: url,
         dataType: 'json',
-        maxFileSize: 999000,
+        maxFileSize: 99900000,
         dropZone: $('#fileuploadForm'),
         done: function (e, response) {
 
