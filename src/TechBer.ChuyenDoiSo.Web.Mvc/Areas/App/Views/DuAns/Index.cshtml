@@ -5,97 +5,103 @@
 @{
     ViewBag.CurrentPageName = AppPageNames.Common.DuAns;
 }
+
 @section Scripts
 {
     <script abp-src="/view-resources/Areas/App/Views/DuAns/Index.js" asp-append-version="true"></script>
 }
+
 <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-
-
-                <div class="kt-subheader kt-grid__item">
-                  <div class="@(await GetContainerClass())">
-                    <div class="kt-subheader__main">
-                        <h3 class="kt-subheader__title">
-                            <span>@L("DuAns")</span>
-                        </h3>
-                        <span class="kt-subheader__separator kt-subheader__separator--v"></span>
-                        <span class="kt-subheader__desc">
-                            @L("DuAnsHeaderInfo")
-                        </span>
-                    </div>
-                    <div class="kt-subheader__toolbar">
-                        <div class="kt-subheader__wrapper">
-                            <button id="ExportToExcelButton" class="btn btn-outline-success"><i class="fa fa-file-excel"></i> @L("ExportToExcel")</button>
-            @if (IsGranted(AppPermissions.Pages_DuAns_Create))
-                            {
-                                <button id="CreateNewDuAnButton" class="btn btn-primary blue"><i class="fa fa-plus"></i> @L("CreateNewDuAn")</button>                
-                            }
-                        </div>
-                    </div>
-                  </div>
+    <div class="kt-subheader kt-grid__item">
+        <div class="@(await GetContainerClass())">
+            <div class="kt-subheader__main">
+                <h3 class="kt-subheader__title">
+                    <span>@L("DuAns")</span>
+                </h3>
+                <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+                <span class="kt-subheader__desc">
+                    @L("DuAnsHeaderInfo")
+                </span>
+            </div>
+            <div class="kt-subheader__toolbar">
+                <div class="kt-subheader__wrapper">
+                    <button id="ExportToExcelButton" class="btn btn-outline-success">
+                        <i class="fa fa-file-excel"></i> @L("ExportToExcel")</button>
+                    @if (IsGranted(AppPermissions.Pages_DuAns_Create))
+                    {
+                        <button id="CreateNewDuAnButton" class="btn btn-primary blue">
+                            <i class="fa fa-plus"></i> @L("CreateNewDuAn")</button>
+                    }
                 </div>
-            
-<div class="@(await GetContainerClass()) kt-grid__item kt-grid__item--fluid">   
-    <div class="kt-portlet kt-portlet--mobile">
-        <div class="kt-portlet__body">
-            <div class="kt-form">
-                <div class="row align-items-center mb-4">
-                    <div class="col-xl-12">
-                        <div class="form-group align-items-center">
-                            <div class="input-group">
-                                <input type="text" id="DuAnsTableFilter" class="form-control m-input" placeholder="@L("SearchWithThreeDot")" value="@Model.FilterText">
-                                <span class="input-group-btn">
-                                    <button id="GetDuAnsButton" class="btn btn-primary" type="submit"><i class="flaticon-search-1"></i></button>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-			</div>
-                <div id="AdvacedAuditFiltersArea" style="display: none" class="row mb-4">
-                    <div class="col-md-12">
-						<div class="kt-separator kt-separator--border-dashed"></div>
-					</div>
-
-							<div class="col-md-3">
-								<div class="form-group">
-									<label for="NameFilterId">@L("Name")</label>
-									<input type="text" class="form-control" name="nameFilter" id="NameFilterId">
-								</div>
-                            </div>
-							<div class="col-md-3">
-								<div class="form-group">
-									<label for="DescriptionsFilterId">@L("Descriptions")</label>
-									<input type="text" class="form-control" name="descriptionsFilter" id="DescriptionsFilterId">
-								</div>
-                            </div>
-							<div class="col-md-3">
-								<div class="form-group">
-									<label for="LoaiDuAnNameFilterId">@L("LoaiDuAn")</label>
-									<input type="text" class="form-control" name="loaiDuAnNameFilter" id="LoaiDuAnNameFilterId">
-								</div>
-                            </div>
-                </div>
-                <div class="row mb-4">
-                    <div class="col-xl-12">
-                        <span id="ShowAdvancedFiltersSpan" class="text-muted clickable-item"><i class="fa fa-angle-down"></i> @L("ShowAdvancedFilters")</span>
-                        <span id="HideAdvancedFiltersSpan" class="text-muted clickable-item" style="display: none"><i class="fa fa-angle-up"></i> @L("HideAdvancedFilters")</span>
-                    </div>
-                </div>
-            <div class="row align-items-center">
-                <table id="DuAnsTable" class="display table table-striped table-bordered table-hover dt-responsive nowrap">
-                    <thead>
-                        <tr>
-                            <th>@L("Actions")</th>
-								<th>@L("Name")</th>
-								<th>@L("Descriptions")</th>
-								<th>@L("LoaiDuAnName")</th>
-								<th>@L("HoSoDuAn")</th>
-                        </tr>
-                    </thead>
-                </table>
             </div>
         </div>
     </div>
-  </div>
+
+    <div class="@(await GetContainerClass()) kt-grid__item kt-grid__item--fluid">
+        <div class="kt-portlet kt-portlet--mobile">
+            <div class="kt-portlet__body">
+                <div class="kt-form">
+                    <div class="row align-items-center mb-4">
+                        <div class="col-xl-12">
+                            <div class="form-group align-items-center">
+                                <div class="input-group">
+                                    <input type="text" id="DuAnsTableFilter" class="form-control m-input" placeholder="@L("SearchWithThreeDot")" value="@Model.FilterText">
+                                    <span class="input-group-btn">
+                                        <button id="GetDuAnsButton" class="btn btn-primary" type="submit">
+                                            <i class="flaticon-search-1"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="AdvacedAuditFiltersArea" style="display: none" class="row mb-4">
+                    <div class="col-md-12">
+                        <div class="kt-separator kt-separator--border-dashed"></div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="NameFilterId">@L("Name")</label>
+                            <input type="text" class="form-control" name="nameFilter" id="NameFilterId">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="DescriptionsFilterId">@L("MaDuAn")</label>
+                            <input type="text" class="form-control" name="descriptionsFilter" id="DescriptionsFilterId">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="LoaiDuAnNameFilterId">@L("LoaiDuAn")</label>
+                            <input type="text" class="form-control" name="loaiDuAnNameFilter" id="LoaiDuAnNameFilterId">
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-xl-12">
+                        <span id="ShowAdvancedFiltersSpan" class="text-muted clickable-item">
+                            <i class="fa fa-angle-down"></i> @L("ShowAdvancedFilters")</span>
+                        <span id="HideAdvancedFiltersSpan" class="text-muted clickable-item" style="display: none">
+                            <i class="fa fa-angle-up"></i> @L("HideAdvancedFilters")</span>
+                    </div>
+                </div>
+                <div class="row align-items-center">
+                    <table id="DuAnsTable" class="display table table-striped table-bordered table-hover dt-responsive nowrap">
+                        <thead>
+                        <tr>
+                            <th>@L("Actions")</th>
+                            <th>@L("Name")</th>
+                            <th>@L("MaDuAn")</th>
+                            <th>@L("LoaiDuAnName")</th>
+                            <th>@L("HoSoDuAn")</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

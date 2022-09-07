@@ -42,6 +42,7 @@
 
         $('#VanBanDuAnInformationsForm').ajaxForm({
             beforeSubmit: function (formData, jqForm, options) {
+                abp.ui.setBusy('.modal-content');
                 var $fileInput = $('#VanBanDuAnInformationsForm input[name=fileMau]');
                 console.log($fileInput);
                 var files = $fileInput.get()[0].files;
@@ -74,13 +75,12 @@
             },
             success: function (response) {
                 if (response.success) {
-                    console.log(response);
                     uploadedFileToken = response.result.fileToken;
                     contentType = response.result.fileType;
                 } else {
                     abp.message.error(response.error.message);
                 }
-
+                abp.ui.clearBusy('.modal-content');
 
             }
         });

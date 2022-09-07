@@ -144,6 +144,7 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
             return PartialView("_VanBanDuAnQuyTrinhDuAnLookupTableModal", viewModel);
         }
 
+        [DisableRequestSizeLimit]
         public UploadFileOutput UploadFileHopDong(FileDto input)
         {
             try

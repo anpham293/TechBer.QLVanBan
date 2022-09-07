@@ -188,14 +188,14 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Startup
                         )
                     )
                 )
-                // .AddItem(new MenuItemDefinition(
-                //         AppPageNames.Common.DemoUiComponents,
-                //         L("DemoUiComponents"),
-                //         url: "App/DemoUiComponents",
-                //         icon: "flaticon-shapes",
-                //         permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_DemoUiComponents)
-                //     )
-                // )
+                .AddItem(new MenuItemDefinition(
+                        AppPageNames.Common.DemoUiComponents,
+                        L("DemoUiComponents"),
+                        url: "App/DemoUiComponents",
+                        icon: "flaticon-shapes",
+                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_DemoUiComponents)
+                    )
+                )
                 ;
         }
 
