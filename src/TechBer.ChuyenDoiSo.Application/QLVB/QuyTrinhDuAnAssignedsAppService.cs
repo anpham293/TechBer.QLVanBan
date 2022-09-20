@@ -251,7 +251,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
             var quyTrinhDuAnAssigned = await _quyTrinhDuAnRepository.FirstOrDefaultAsync((int) input.Id);
             quyTrinhDuAnAssigned.Name = input.Name;
             quyTrinhDuAnAssigned.Descriptions = input.Descriptions;
-            quyTrinhDuAnAssigned.STT = input.STT;
+            // quyTrinhDuAnAssigned.STT = input.STT;
             quyTrinhDuAnAssigned.SoVanBanQuyDinh = input.SoVanBanQuyDinh;
             quyTrinhDuAnAssigned.MaQuyTrinh = input.MaQuyTrinh;
             var output = new GetQuyTrinhDuAnAssignedForEditOutput

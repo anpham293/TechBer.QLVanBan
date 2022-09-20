@@ -5,6 +5,7 @@
         var _vanBanDuAnsService = abp.services.app.vanBanDuAns;
         var _entityTypeFullName = 'TechBer.ChuyenDoiSo.QLVB.VanBanDuAn';
         var _$quyTrinhDuAnsTable = $('#QuyTrinhDuAnsTable');
+        
         var _duAnSelectObject = $("#DuAnNameFilterId");
         var _quyTrinhDuAnsService = abp.services.app.quyTrinhDuAnAssigneds;
         var trees=$("#tree");
@@ -439,7 +440,7 @@
                                             action: function (data) {
                                                 var instance = $.jstree.reference(data.reference);
                                                 console.log(node);
-                                                _createOrEditQuyTrinhModal.open({id: node.id, parentId: (node.parent==="#")?null:node.parent,
+                                                _createOrEditQuyTrinhDuAnAssignedsModal.open({id: node.id, parentId: (node.parent==="#")?null:node.parent,
                                                     loaiDuAn: self.loaiDuAn}, function (updatedOu) {
                                                     self.reload();
                                                     //console.log(node)
