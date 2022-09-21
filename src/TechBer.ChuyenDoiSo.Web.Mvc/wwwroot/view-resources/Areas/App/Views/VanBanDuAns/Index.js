@@ -81,7 +81,7 @@
                     targets: 0,
                     data: null,
                     orderable: false,
-                    autoWidth: false,
+                    fixedColumns: true,
                     defaultContent: '',
                     rowAction: {
                         cssClass: 'btn btn-brand dropdown-toggle',
@@ -164,6 +164,11 @@
                     targets: 6,
                     data: "quyTrinhDuAnName",
                     name: "quyTrinhDuAnFk.name"
+                },
+                {
+                    targets: 7,
+                    data: "vanBanDuAn.viTriLuuTru",
+                    name: "viTriLuuTru",
                 }
             ]
         });

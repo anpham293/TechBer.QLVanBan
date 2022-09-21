@@ -86,7 +86,8 @@ namespace TechBer.ChuyenDoiSo.QLVB
                         FileVanBan = (o.FileVanBan.IsNullOrEmpty()
                             ? o.FileVanBan
                             : JsonConvert.DeserializeObject<FileMauSerializeObj>(o.FileVanBan).FileName),
-                        Id = o.Id
+                        Id = o.Id,
+                        ViTriLuuTru = o.ViTriLuuTru
                     },
                     DuAnName = s1 == null || s1.Name == null ? "" : s1.Name.ToString(),
                     QuyTrinhDuAnName = s2 == null || s2.Name == null ? "" : s2.Name.ToString()
@@ -270,6 +271,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
                     vanBanDuAn.Name = input.Name;
                     vanBanDuAn.KyHieuVanBan = input.KyHieuVanBan;
                     vanBanDuAn.NgayBanHanh = input.NgayBanHanh;
+                    vanBanDuAn.ViTriLuuTru = input.ViTriLuuTru;
                     await _vanBanDuAnRepository.UpdateAsync(vanBanDuAn);
                 }
             }

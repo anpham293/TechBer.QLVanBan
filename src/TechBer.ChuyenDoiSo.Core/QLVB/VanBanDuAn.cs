@@ -39,5 +39,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
         [ForeignKey("QuyTrinhDuAnAssignedId")]
 		public QuyTrinhDuAnAssigned QuyTrinhDuAnAssignedFk { get; set; }
 		
+		public virtual string ViTriLuuTru { get; set; }
+		
     }
 }
