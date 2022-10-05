@@ -126,9 +126,13 @@
                     }
                 },
                 {
+                    width: '250px',
                     targets: 1,
                     data: "vanBanDuAn.name",
-                    name: "name"
+                    name: "name",
+                    render: function (name) {
+                        return '<a style="white-space: normal">'+name+'</a>';
+                    }
                 },
                 {
                     targets: 2,
@@ -170,7 +174,8 @@
                     data: "vanBanDuAn.viTriLuuTru",
                     name: "viTriLuuTru",
                 }
-            ]
+            ],
+            // initComplete
         });
 
         function getVanBanDuAns() {
