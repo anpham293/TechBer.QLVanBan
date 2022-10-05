@@ -1,5 +1,6 @@
 .kt-login.kt-login--v1 .kt-login__aside {
-  width: 605px;
+  /*width: 605px;*/
+  width: 45%;
   padding: 3rem 3.5rem;
   background-repeat: no-repeat;
   background-size: cover; }
