@@ -33,6 +33,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
         private readonly IRepository<QuyTrinhDuAn, int> _lookup_quyTrinhDuAnRepository;
         private readonly IRepository<QuyTrinhDuAnAssigned, long> _quyTrinhDuAnRepository;
         private readonly IRepository<DuAn, int> _lookup_duAnRepository;
+        private readonly IRepository<VanBanDuAn> _vanBanDuAnRepository;
 
 
         public QuyTrinhDuAnAssignedsAppService(IRepository<QuyTrinhDuAnAssigned, long> quyTrinhDuAnAssignedRepository,
@@ -40,7 +41,9 @@ namespace TechBer.ChuyenDoiSo.QLVB
             IRepository<LoaiDuAn, int> lookup_loaiDuAnRepository,
             IRepository<QuyTrinhDuAn, int> lookup_quyTrinhDuAnRepository,
             IRepository<QuyTrinhDuAnAssigned, long> lookup_quyTrinhDuAnAssignedRepository,
-            IRepository<DuAn, int> lookup_duAnRepository)
+            IRepository<DuAn, int> lookup_duAnRepository,
+            IRepository<VanBanDuAn> vanBanDuAnRepository
+            )
         {
             _quyTrinhDuAnAssignedRepository = quyTrinhDuAnAssignedRepository;
             _quyTrinhDuAnAssignedsExcelExporter = quyTrinhDuAnAssignedsExcelExporter;
@@ -48,6 +51,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
             _lookup_quyTrinhDuAnRepository = lookup_quyTrinhDuAnRepository;
             _quyTrinhDuAnRepository = lookup_quyTrinhDuAnAssignedRepository;
             _lookup_duAnRepository = lookup_duAnRepository;
+            _vanBanDuAnRepository = vanBanDuAnRepository;
         }
 
         public async Task<PagedResultDto<GetQuyTrinhDuAnAssignedForViewDto>> GetAll(
@@ -485,6 +489,10 @@ namespace TechBer.ChuyenDoiSo.QLVB
             {
                 VARIABLE.QuyTrinhDuAn.MemberCount =
                     await _quyTrinhDuAnRepository.CountAsync(p => p.ParentId == VARIABLE.QuyTrinhDuAn.Id);
+                VARIABLE.QuyTrinhDuAn.TongSoHoSo =
+                    await _vanBanDuAnRepository.CountAsync(p => p.QuyTrinhDuAnAssignedId == VARIABLE.QuyTrinhDuAn.Id);
+                VARIABLE.QuyTrinhDuAn.TongSoHoSoDaCoFile = 
+                    await _vanBanDuAnRepository.CountAsync(p => p.QuyTrinhDuAnAssignedId == VARIABLE.QuyTrinhDuAn.Id && p.FileVanBan!="");
             }
 
             return t;

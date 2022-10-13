@@ -21,7 +21,5 @@
 	    public string TieuChiDanhGiaName { get; set;}
 
 	    public string DoiTuongQLDLNongNghiepName { get; set;}
-
-
     }
 }

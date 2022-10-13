@@ -57,6 +57,8 @@
         }
 
         var dataTable = _$vanBanDuAnsTable.DataTable({
+            // scrollY: '70vh',
+            // scrollX: true,
             paging: true,
             serverSide: true,
             processing: true,
@@ -128,16 +130,45 @@
                 {
                     width: '250px',
                     targets: 1,
-                    data: "vanBanDuAn.name",
+                    data: "vanBanDuAn",
                     name: "name",
-                    render: function (name) {
-                        return '<a style="white-space: normal">'+name+'</a>';
+                    render: function (vanBanDuAn) {
+
+                        if(vanBanDuAn.fileVanBan != '')
+                            return '<a style="white-space: normal">'+vanBanDuAn.name+'</a>';
+                        if(vanBanDuAn.fileVanBan == '')
+                        {
+                            // if(vanBanDuAn.ngayBanHanh)
+                            let NgayBanHanh = moment(moment(vanBanDuAn.ngayBanHanh).format("MM/DD/YYYY HH:mm:ss"));
+                            let NgayHienTai = moment(moment().format("MM/DD/YYYY HH:mm:ss"));
+                            let ThoiGianGioiHan = NgayHienTai.diff(NgayBanHanh, 'days');
+                            if(ThoiGianGioiHan > 5) //Vượt quá 5 ngày không cập nhật file
+                                return '<a style="white-space: normal; color:red">'+vanBanDuAn.name+'</a>';
+                            if(ThoiGianGioiHan <= 5)
+                                return '<a style="white-space: normal">'+vanBanDuAn.name+'</a>';
+                        }
                     }
                 },
                 {
                     targets: 2,
                     data: "vanBanDuAn.kyHieuVanBan",
-                    name: "kyHieuVanBan"
+                    name: "kyHieuVanBan",
+                    // render: function (vanBanDuAn) {
+                    //
+                    //     if(vanBanDuAn.fileVanBan != '')
+                    //         return '<a style="white-space: normal">'+vanBanDuAn.kyHieuVanBan+'</a>';
+                    //     if(vanBanDuAn.fileVanBan == '')
+                    //     {
+                    //         // if(vanBanDuAn.ngayBanHanh)
+                    //         let NgayBanHanh = moment(moment(vanBanDuAn.ngayBanHanh).format("MM/DD/YYYY HH:mm:ss"));
+                    //         let NgayHienTai = moment(moment().format("MM/DD/YYYY HH:mm:ss"));
+                    //         let ThoiGianGioiHan = NgayHienTai.diff(NgayBanHanh, 'days');
+                    //         if(ThoiGianGioiHan > 5) //Vượt quá 5 ngày không cập nhật file
+                    //             return '<a style="white-space: normal; color:red">'+vanBanDuAn.kyHieuVanBan+'</a>';
+                    //         if(ThoiGianGioiHan <= 5)
+                    //             return '<a style="white-space: normal">'+vanBanDuAn.kyHieuVanBan+'</a>';
+                    //     }
+                    // }
                 },
                 {
                     targets: 3,
@@ -148,8 +179,28 @@
                             return moment(ngayBanHanh).format('L');
                         }
                         return "";
-                    }
-
+                    } // render: function (ngayBanHanh) {
+                                        //     if (ngayBanHanh) {
+                                        //         return moment(ngayBanHanh).format('L');
+                                        //     }
+                                        //     return "";
+                                        // }
+                    // render: function (vanBanDuAn) {
+                    //
+                    //     if(vanBanDuAn.fileVanBan != '')
+                    //         return '<a style="white-space: normal">'+moment(vanBanDuAn.ngayBanHanh).format('L')+'</a>';
+                    //     if(vanBanDuAn.fileVanBan == '')
+                    //     {
+                    //         // if(vanBanDuAn.ngayBanHanh)
+                    //         let NgayBanHanh = moment(moment(vanBanDuAn.ngayBanHanh).format("MM/DD/YYYY HH:mm:ss"));
+                    //         let NgayHienTai = moment(moment().format("MM/DD/YYYY HH:mm:ss"));
+                    //         let ThoiGianGioiHan = NgayHienTai.diff(NgayBanHanh, 'days');
+                    //         if(ThoiGianGioiHan > 5) //Vượt quá 5 ngày không cập nhật file
+                    //             return '<a style="white-space: normal; color:red">'+moment(vanBanDuAn.ngayBanHanh).format('L')+'</a>';
+                    //         if(ThoiGianGioiHan <= 5)
+                    //             return '<a style="white-space: normal">'+moment(vanBanDuAn.ngayBanHanh).format('L')+'</a>';
+                    //     }
+                    // }
                 },
                 {
                     targets: 4,
@@ -328,9 +379,27 @@
 
             generateTextOnTree(ou) {
                 var itemClass = ' ou-text-has-members';
-
-                return '<span class="ou-text text-dark tooltipss' + itemClass + '" data-ou-id="' + ou.id + '"><b>' + ou.maQuyTrinh + '</b> ' +
-                    app.htmlUtils.htmlEncodeText(ou.name) +
+                var tenHienThi = '';
+                var mauHienThi = '';
+                var chuHienThi = '';
+                if(ou.tongSoHoSo == 0){
+                    tenHienThi = ou.name;
+                    mauHienThi = '#a2a5b9';
+                }
+                else{
+                    tenHienThi = ou.name + ' (' + ou.tongSoHoSoDaCoFile + '/' + ou.tongSoHoSo + ') ';
+                    if(ou.tongSoHoSoDaCoFile == ou.tongSoHoSo){
+                        mauHienThi = 'green';
+                        chuHienThi = 'green';
+                    }
+                    else{
+                        mauHienThi = 'red';
+                        chuHienThi = 'red';
+                    } 
+                }
+                return '<i class="fa fa-folder" style="color:'+ mauHienThi+'"></i> '+
+                    '<span class="ou-text text-dark tooltipss' + itemClass + '" data-ou-id="' + ou.id + '"><b>' + ou.maQuyTrinh + '</b> ' +
+                    '<span style="color:'+ chuHienThi+'">'+tenHienThi +'</span>' +
                     ' <i class="fa fa-caret-down text-muted"></i> ' +
                     ' <span style="font-size: .82em; opacity: .5;">' +
                     '</span>'+((ou.descriptions!=="")?'<div class="tooltipsstext">'+ou.descriptions+'</div>':"")+'</span>';
@@ -352,8 +421,8 @@
                 let self = this;
                 _quyTrinhDuAnsService.getDataForTree(loai_id).done(function (result) {
                     var treeData = _.map(result, function (item) {
-
-                        return {
+                       
+                        var ketQua = {
                             id: item.quyTrinhDuAn.id,
                             parent: item.quyTrinhDuAn.parentId ? item.quyTrinhDuAn.parentId : '#',
                             code: '0001',
@@ -364,8 +433,11 @@
                             sapXep: item.quyTrinhDuAn.stt ?? 0,
                             state: {
                                 // opened: true
+                                opened: false,
+                                checkbox_disabled: true
                             }
                         };
+                        return ketQua
                     });
 
                     callback(treeData);
@@ -434,10 +506,10 @@
                             },
                             types: {
                                 "default": {
-                                    "icon": "fa fa-folder kt--font-warning"
+                                    "icon": "fa fa-folder kt--font-warning d-none"
                                 },
                                 "file": {
-                                    "icon": "fa fa-file  kt--font-warning"
+                                    "icon": "fa fa-file  kt--font-warning d-none"
                                 }
                             },
                             contextmenu: {
@@ -545,13 +617,20 @@
                                 }
                                 return -1;
                             },
+                            checkbox: {
+                                //"keep_selected_style": false,
+                                "whole_node": false,
+                                "three_state": true,
+                                "tie_selection": false
+                            },
                             plugins: [
                                 'types',
                                 'contextmenu',
                                 'wholerow',
                                 'sort',
                                 'state',
-                                'dnd'
+                                'dnd',
+                                'checkbox'
                             ]
                         });
                     self.$rootBtn.click(function (e) {
