@@ -24,5 +24,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
         [ForeignKey("LoaiDuAnId")]
 		public LoaiDuAn LoaiDuAnFk { get; set; }
 		
+		public virtual int TrangThai { get; set; }
+		
     }
 }
