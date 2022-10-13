@@ -125,7 +125,10 @@
                 {
                     targets: 2,
                     data: "organizationUnitDisplayName",
-                    name: "organizationUnitFk.displayName"
+                    name: "organizationUnitFk.displayName",
+                    render: function (displayName, type, row, meta) {
+                        return '<a style="white-space: normal">'+ row.organizationUnitDisplayName+'</a>';
+                    }
                 }
             ]
         });

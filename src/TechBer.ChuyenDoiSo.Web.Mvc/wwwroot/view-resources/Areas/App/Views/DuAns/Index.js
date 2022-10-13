@@ -89,8 +89,11 @@
                 },
                 {
                     targets: 1,
-                    data: "duAn.name",
-                    name: "name"
+                    data: "duAn",
+                    name: "name",
+                    render: function (duAn) {
+                        return '<a style="white-space: normal">'+ duAn.name +'</a>';
+                    }
                 },
                 {
                     targets: 2,

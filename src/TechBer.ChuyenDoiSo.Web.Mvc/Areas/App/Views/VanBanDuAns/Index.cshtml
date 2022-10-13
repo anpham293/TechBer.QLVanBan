@@ -5,10 +5,14 @@
 @{
     ViewBag.CurrentPageName = AppPageNames.Common.VanBanDuAns;
 }
-
+@section Styles
+{
+    <link rel="stylesheet" abp-href="/view-resources/Areas/App/Views/VanBanDuAns/Index.css" asp-append-version="true" />
+}
 @section Scripts
 {
-    <script abp-src="/view-resources/Areas/App/Views/VanBanDuAns/Index.js" asp-append-version="true"></script>
+<script abp-src="/view-resources/Areas/App/Views/VanBanDuAns/Index.js" asp-append-version="true"
+        xmlns="http://www.w3.org/1999/html"></script>
 }
 
 <style>
@@ -167,6 +171,25 @@
                                             <i class="fa fa-sync"></i> Hiện tất cả
                                         </button>
                                     </div>
+                                    <br>
+                                    <div class="row kt-portlet__head-actions">
+                                        <div class="col-lg-4">
+                                            <span>
+                                                <i class="fa fa-folder" style="color: #a2a5b9"></i> Q.Trình không hồ sơ
+                                            </span>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <span>
+                                                <i class="fa fa-folder" style="color: red"></i> Q.Trình cần cập nhật hồ sơ
+                                            </span>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <span>
+                                                <i class="fa fa-folder" style="color: green"></i> Q.Trình đã đủ hồ sơ
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <br/>
                                 </div>
                             </div>
                             <div class="kt-portlet__body" style="position:relative;height:calc(100vh - 300px); overflow-y: scroll">
@@ -194,7 +217,7 @@
                                 <th>@L("TenHoSo")</th>
                                 <th>@L("KyHieuVanBan")</th>
                                 <th>@L("NgayBanHanh")</th>
-                                <th>@L("FileVanBan")</th>
+                                <th>@L("FileHoSo")</th>
                                 <th>@L("DuAnName")</th>
                                 <th>@L("QuyTrinhDuAnName")</th>
                                 <th>@L("ViTriLuuTru")</th>
