@@ -27,6 +27,8 @@
             viewUrl: abp.appPath + 'App/VanBanDuAns/CreateOrEditModal',
             scriptUrl: abp.appPath + 'view-resources/Areas/App/Views/VanBanDuAns/_CreateOrEditModal.js',
             modalClass: 'CreateOrEditVanBanDuAnModal'
+        }, function () {
+            CayPhuLucIA.loadlai();
         });
         var _createOrEditQuyTrinhDuAnAssignedsModal = new app.ModalManager({
             viewUrl: abp.appPath + 'App/QuyTrinhDuAnAssigneds/CreateOrEditModal',
@@ -244,6 +246,7 @@
                         }).done(function () {
                             getVanBanDuAns(true);
                             abp.notify.success(app.localize('SuccessfullyDeleted'));
+                            document.getElementById('reload-tree').click();
                         });
                     }
                 }
@@ -285,6 +288,8 @@
 
         abp.event.on('app.createOrEditVanBanDuAnModalSaved', function () {
             getVanBanDuAns();
+            document.getElementById('reload-tree').click();
+            
         });
 
         $('#GetVanBanDuAnsButton').click(function (e) {
@@ -451,7 +456,7 @@
                 this.loaiDuAn = loai_id;
 
 
-                this.getTreeDataFromServer(loai_id,function (treeData) {
+                this.getTreeDataFromServer(loai_id, function (treeData) {
 
                     self.setUnitCount(treeData.length)
                     self.$tree.on('changed.jstree', function (e, data) {
@@ -522,8 +527,10 @@
                                             action: function (data) {
                                                 var instance = $.jstree.reference(data.reference);
                                                 console.log(node);
-                                                _createOrEditQuyTrinhDuAnAssignedsModal.open({id: node.id, parentId: (node.parent==="#")?null:node.parent,
-                                                    loaiDuAn: self.loaiDuAn}, function (updatedOu) {
+                                                _createOrEditQuyTrinhDuAnAssignedsModal.open({
+                                                    id: node.id, parentId: (node.parent === "#") ? null : node.parent,
+                                                    loaiDuAn: self.loaiDuAn
+                                                }, function (updatedOu) {
                                                     self.reload();
                                                     //console.log(node)
                                                     //node.original.sapXep = updatedOu.displayName;
@@ -641,11 +648,11 @@
                     });
 
                     self.$tree.on("select_node.jstree", function (e, data) {
-                        var elementId = self.$tree.jstree("get_selected",true)[0]["a_attr"]['id'];
+                        var elementId = self.$tree.jstree("get_selected", true)[0]["a_attr"]['id'];
                         var value = data.node.id;
                         $(".text-danger").removeClass("text-danger").addClass("text-info");
                         $('#QuyTrinhDuAnNameFilterId').val(value);
-                        $("#"+elementId).removeClass("text-info").addClass("text-danger");
+                        $("#" + elementId).removeClass("text-info").addClass("text-danger");
                         getVanBanDuAns();
                     });
                     self.$tree.on('click', '.ou-text .fa-caret-down', function (e) {
@@ -660,25 +667,31 @@
                         e.preventDefault();
                         self.$tree.jstree('save_state');
                     });
-                    $("#Collapse").on("click",function (){
+                    $("#Collapse").on("click", function () {
                         var bt = $(this);
                         self.$tree.jstree('close_all');
                         $("#Expand").removeAttr("hidden");
-                        bt.attr("hidden","hidden");
+                        bt.attr("hidden", "hidden");
                         self.$tree.jstree('save_state');
                     });
-                    $("#Expand").on("click",function (){
+                    $("#Expand").on("click", function () {
                         var bt = $(this);
                         self.$tree.jstree('open_all');
                         $("#Collapse").removeAttr("hidden");
-                        bt.attr("hidden","hidden");
+                        bt.attr("hidden", "hidden");
                         self.$tree.jstree('save_state');
                     });
-                    $("#reload-tree").on("click",function (){
+                     $("#reload-tree").on("click", function () {
                         self.$tree.jstree('save_state');
                         self.reload();
                     });
                 });
+            }
+            
+            loadlai(){
+                let self = this;
+                self.$tree.jstree('save_state');
+                self.reload();
             }
 
             reload() {
@@ -763,6 +776,7 @@
 
         abp.event.on('app.createOrEditQuyTrinhDuAnModalSaved', function () {
             getQuyTrinhDuAns();
+            
         });
 
         $('#GetQuyTrinhDuAnsButton').click(function (e) {
