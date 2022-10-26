@@ -20,6 +20,8 @@
         public const string Pages_DuAns_Create = "Pages.DuAns.Create";
         public const string Pages_DuAns_Edit = "Pages.DuAns.Edit";
         public const string Pages_DuAns_Delete = "Pages.DuAns.Delete";
+        
+        public const string Pages_DuyetHoSo = "Pages.DuyetHoSo";
 
         public const string Pages_QuyTrinhDuAns = "Pages.QuyTrinhDuAns";
         public const string Pages_QuyTrinhDuAns_Create = "Pages.QuyTrinhDuAns.Create";

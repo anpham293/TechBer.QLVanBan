@@ -49,7 +49,7 @@ namespace TechBer.ChuyenDoiSo.Authorization
             duAns.CreateChildPermission(AppPermissions.Pages_DuAns_Edit, L("EditDuAn"));
             duAns.CreateChildPermission(AppPermissions.Pages_DuAns_Delete, L("DeleteDuAn"));
 
-
+            var duyethoso = pages.CreateChildPermission(AppPermissions.Pages_DuyetHoSo, L("DuyetHoSo"));
 
             var quyTrinhDuAns = pages.CreateChildPermission(AppPermissions.Pages_QuyTrinhDuAns, L("QuyTrinhDuAns"));
             quyTrinhDuAns.CreateChildPermission(AppPermissions.Pages_QuyTrinhDuAns_Create, L("CreateNewQuyTrinhDuAn"));
