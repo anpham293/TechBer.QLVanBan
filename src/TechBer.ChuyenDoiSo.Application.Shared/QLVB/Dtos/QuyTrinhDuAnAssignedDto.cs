@@ -23,6 +23,14 @@ namespace TechBer.ChuyenDoiSo.QLVB.Dtos
         public long? ParentId { get; set; }
 
         public int? DuAnId { get; set; }
+        
+        public int TrangThai { get; set; }
+        public long? NguoiGuiId { get; set; }
+        public DateTime? NgayGui { get; set; }
+        public long? NguoiDuyetId { get; set; }
+        public DateTime? NgayDuyet { get; set; }
+        public long? KeToanTiepNhanId { get; set; }
+        public string XuLyCuaLanhDao { get; set; }
     }
 
     public class QuyTrinhDuAnAssignedHasMemberCountDto : QuyTrinhDuAnAssignedDto
@@ -33,4 +41,16 @@ namespace TechBer.ChuyenDoiSo.QLVB.Dtos
         public int TongSoHoSoDaCoFile { get; set; }
     }
 
+    public class ChuyenDuyetHoSoDto
+    {
+        public DuAnDto DuAn { get; set; }
+        public QuyTrinhDuAnAssignedDto QuyTrinhDuAnAssigned { get; set; }
+    }
+    
+    public class CommonLookupTableDto
+    {
+        public int Id { get; set; }
+
+        public string DisplayName { get; set; }
+    }
 }

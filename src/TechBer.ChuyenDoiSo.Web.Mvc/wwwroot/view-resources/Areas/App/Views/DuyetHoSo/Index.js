@@ -1,8 +1,9 @@
 ﻿(function () {
     $(function () {
 
-        var _$duAnsTable = $('#DuAnsTable');
-        var _duAnsService = abp.services.app.duAns;
+        var _$quyTrinhDuAnAssignedsTable = $('#QuyTrinhDuAnAssignedsTable');
+        var _quyTrinhDuAnAssignedsService = abp.services.app.quyTrinhDuAnAssigneds;
+        var _entityTypeFullName = 'TechBer.ChuyenDoiSo.QLVB.QuyTrinhDuAnAssigned';
 
         $('.date-picker').datetimepicker({
             locale: abp.localization.currentLanguage.name,
@@ -10,22 +11,35 @@
         });
 
         var _permissions = {
-            create: abp.auth.hasPermission('Pages.DuAns.Create'),
-            edit: abp.auth.hasPermission('Pages.DuAns.Edit'),
-            'delete': abp.auth.hasPermission('Pages.DuAns.Delete')
+            create: abp.auth.hasPermission('Pages.QuyTrinhDuAnAssigneds.Create'),
+            edit: abp.auth.hasPermission('Pages.QuyTrinhDuAnAssigneds.Edit'),
+            'delete': abp.auth.hasPermission('Pages.QuyTrinhDuAnAssigneds.Delete')
         };
 
+        var _chuyenDuyetHoSoModal = new app.ModalManager({
+            viewUrl: abp.appPath + 'App/QuyTrinhDuAnAssigneds/ChuyenDuyetHoSoModal',
+            scriptUrl: abp.appPath + 'view-resources/Areas/App/Views/QuyTrinhDuAnAssigneds/_ChuyenDuyetHoSoModal.js',
+            modalClass: 'ChuyenDuyetHoSoModal'
+        });
+        
         var _createOrEditModal = new app.ModalManager({
-            viewUrl: abp.appPath + 'App/DuAns/CreateOrEditModal',
-            scriptUrl: abp.appPath + 'view-resources/Areas/App/Views/DuAns/_CreateOrEditModal.js',
-            modalClass: 'CreateOrEditDuAnModal'
+            viewUrl: abp.appPath + 'App/QuyTrinhDuAnAssigneds/CreateOrEditModal',
+            scriptUrl: abp.appPath + 'view-resources/Areas/App/Views/QuyTrinhDuAnAssigneds/_CreateOrEditModal.js',
+            modalClass: 'CreateOrEditQuyTrinhDuAnAssignedModal'
         });
 
-        var _viewDuAnModal = new app.ModalManager({
-            viewUrl: abp.appPath + 'App/DuAns/ViewduAnModal',
-            modalClass: 'ViewDuAnModal'
+        var _viewQuyTrinhDuAnAssignedModal = new app.ModalManager({
+            viewUrl: abp.appPath + 'App/QuyTrinhDuAnAssigneds/ViewquyTrinhDuAnAssignedModal',
+            modalClass: 'ViewQuyTrinhDuAnAssignedModal'
         });
 
+        var _entityTypeHistoryModal = app.modals.EntityTypeHistoryModal.create();
+        function entityHistoryIsEnabled() {
+            return abp.auth.hasPermission('Pages.Administration.AuditLogs') &&
+                abp.custom.EntityHistory &&
+                abp.custom.EntityHistory.IsEnabled &&
+                _.filter(abp.custom.EntityHistory.EnabledEntities, entityType => entityType === _entityTypeFullName).length === 1;
+        }
 
         var getDateFilter = function (element) {
             if (element.data("DateTimePicker").date() == null) {
@@ -34,18 +48,26 @@
             return element.data("DateTimePicker").date().format("YYYY-MM-DDT00:00:00Z");
         }
 
-        var dataTable = _$duAnsTable.DataTable({
+        var dataTable = _$quyTrinhDuAnAssignedsTable.DataTable({
             paging: true,
             serverSide: true,
             processing: true,
             listAction: {
-                ajaxFunction: _duAnsService.getAll,
+                ajaxFunction: _quyTrinhDuAnAssignedsService.getAllHoSoCanDuyet,
                 inputFilter: function () {
                     return {
-                        filter: $('#DuAnsTableFilter').val(),
+                        filter: $('#QuyTrinhDuAnAssignedsTableFilter').val(),
                         nameFilter: $('#NameFilterId').val(),
                         descriptionsFilter: $('#DescriptionsFilterId').val(),
-                        loaiDuAnNameFilter: $('#LoaiDuAnNameFilterId').val()
+                        minSTTFilter: $('#MinSTTFilterId').val(),
+                        maxSTTFilter: $('#MaxSTTFilterId').val(),
+                        minSoVanBanQuyDinhFilter: $('#MinSoVanBanQuyDinhFilterId').val(),
+                        maxSoVanBanQuyDinhFilter: $('#MaxSoVanBanQuyDinhFilterId').val(),
+                        maQuyTrinhFilter: $('#MaQuyTrinhFilterId').val(),
+                        loaiDuAnNameFilter: $('#LoaiDuAnNameFilterId').val(),
+                        quyTrinhDuAnNameFilter: $('#QuyTrinhDuAnNameFilterId').val(),
+                        quyTrinhDuAnAssignedNameFilter: $('#QuyTrinhDuAnAssignedNameFilterId').val(),
+                        duAnNameFilter: $('#DuAnNameFilterId').val()
                     };
                 }
             },
@@ -62,9 +84,22 @@
                         text: '<i class="fa fa-cog"></i> ' + app.localize('Actions') + ' <span class="caret"></span>',
                         items: [
                             {
+                                text: app.localize('DuyetHoSo'),
+                                visible: function () {
+                                    return _permissions.edit;
+                                },
+                                action: function (data) {
+                                    _chuyenDuyetHoSoModal.open({
+                                        quyTrinhDuAnAssignedId: data.record.quyTrinhDuAnAssigned.id,
+                                        typeDuyetHoSo : app.typeDuyetHoSoConst.chanhVanPhongDuyet
+                                        // type = 1: quản lý, 2: chánh vp
+                                    });
+                                }
+                            },
+                            {
                                 text: app.localize('View'),
                                 action: function (data) {
-                                    _viewDuAnModal.open({id: data.record.duAn.id});
+                                    _viewQuyTrinhDuAnAssignedModal.open({ id: data.record.quyTrinhDuAnAssigned.id });
                                 }
                             },
                             {
@@ -73,7 +108,19 @@
                                     return _permissions.edit;
                                 },
                                 action: function (data) {
-                                    _createOrEditModal.open({id: data.record.duAn.id});
+                                    _createOrEditModal.open({ id: data.record.quyTrinhDuAnAssigned.id });
+                                }
+                            },
+                            {
+                                text: app.localize('History'),
+                                visible: function () {
+                                    return entityHistoryIsEnabled();
+                                },
+                                action: function (data) {
+                                    _entityTypeHistoryModal.open({
+                                        entityTypeFullName: _entityTypeFullName,
+                                        entityId: data.record.quyTrinhDuAnAssigned.id
+                                    });
                                 }
                             },
                             {
@@ -82,52 +129,57 @@
                                     return _permissions.delete;
                                 },
                                 action: function (data) {
-                                    deleteDuAn(data.record.duAn);
+                                    deleteQuyTrinhDuAnAssigned(data.record.quyTrinhDuAnAssigned);
                                 }
                             }]
                     }
                 },
                 {
                     targets: 1,
-                    data: "duAn",
+                    data: "duAnName",
                     name: "name",
-                    render: function (duAn) {
-                        return '<a style="white-space: normal">'+ duAn.name +'</a>';
+                    render(duAnName){
+                        return '<a style="white-space: normal">'+ duAnName +'</a>';
                     }
                 },
                 {
                     targets: 2,
-                    data: "duAn.descriptions",
-                    name: "descriptions"
+                    data: "quyTrinhDuAnAssigned",
+                    name: "name",
+                    render(quyTrinhDuAnAssigned){
+                        return '<a style="white-space: normal">'+ quyTrinhDuAnAssigned.name +'</a>';
+                    }
                 },
                 {
                     targets: 3,
-                    data: "loaiDuAnName",
-                    name: "loaiDuAnFk.name"
-                },
-                {
-                    targets: 4,
-                    render: function (displayName, type, row, meta) {
-                        return "<a class='btn btn-info' href='/App/VanBanDuAns?duanid=" + row.duAn.id + "' style='color:white'>Danh sách hồ sơ dự án >></a>";
+                    data: "quyTrinhDuAnAssigned",
+                    name: "name",
+                    render(quyTrinhDuAnAssigned){
+                        if(quyTrinhDuAnAssigned.trangThai == app.trangThaiDuyetHoSoConst.dangChoDuyet){
+                            return '<button class="btn btn-warning" >Đang chờ duyệt</button>';
+                        }
+                        if(quyTrinhDuAnAssigned.trangThai == app.trangThaiDuyetHoSoConst.daDuyet){
+                            return '<button class="btn btn-success" >Đã duyệt</button>';
+                        }
                     }
                 }
             ]
         });
 
-        function getDuAns() {
+        function getQuyTrinhDuAnAssigneds() {
             dataTable.ajax.reload();
         }
 
-        function deleteDuAn(duAn) {
+        function deleteQuyTrinhDuAnAssigned(quyTrinhDuAnAssigned) {
             abp.message.confirm(
                 '',
                 app.localize('AreYouSure'),
                 function (isConfirmed) {
                     if (isConfirmed) {
-                        _duAnsService.delete({
-                            id: duAn.id
+                        _quyTrinhDuAnAssignedsService.delete({
+                            id: quyTrinhDuAnAssigned.id
                         }).done(function () {
-                            getDuAns(true);
+                            getQuyTrinhDuAnAssigneds(true);
                             abp.notify.success(app.localize('SuccessfullyDeleted'));
                         });
                     }
@@ -147,35 +199,43 @@
             $('#AdvacedAuditFiltersArea').slideUp();
         });
 
-        $('#CreateNewDuAnButton').click(function () {
+        $('#CreateNewQuyTrinhDuAnAssignedButton').click(function () {
             _createOrEditModal.open();
         });
 
         $('#ExportToExcelButton').click(function () {
-            _duAnsService
-                .getDuAnsToExcel({
-                    filter: $('#DuAnsTableFilter').val(),
+            _quyTrinhDuAnAssignedsService
+                .getQuyTrinhDuAnAssignedsToExcel({
+                    filter : $('#QuyTrinhDuAnAssignedsTableFilter').val(),
                     nameFilter: $('#NameFilterId').val(),
                     descriptionsFilter: $('#DescriptionsFilterId').val(),
-                    loaiDuAnNameFilter: $('#LoaiDuAnNameFilterId').val()
+                    minSTTFilter: $('#MinSTTFilterId').val(),
+                    maxSTTFilter: $('#MaxSTTFilterId').val(),
+                    minSoVanBanQuyDinhFilter: $('#MinSoVanBanQuyDinhFilterId').val(),
+                    maxSoVanBanQuyDinhFilter: $('#MaxSoVanBanQuyDinhFilterId').val(),
+                    maQuyTrinhFilter: $('#MaQuyTrinhFilterId').val(),
+                    loaiDuAnNameFilter: $('#LoaiDuAnNameFilterId').val(),
+                    quyTrinhDuAnNameFilter: $('#QuyTrinhDuAnNameFilterId').val(),
+                    quyTrinhDuAnAssignedNameFilter: $('#QuyTrinhDuAnAssignedNameFilterId').val(),
+                    duAnNameFilter: $('#DuAnNameFilterId').val()
                 })
                 .done(function (result) {
                     app.downloadTempFile(result);
                 });
         });
 
-        abp.event.on('app.createOrEditDuAnModalSaved', function () {
-            getDuAns();
+        abp.event.on('app.createOrEditQuyTrinhDuAnAssignedModalSaved', function () {
+            getQuyTrinhDuAnAssigneds();
         });
 
-        $('#GetDuAnsButton').click(function (e) {
+        $('#GetQuyTrinhDuAnAssignedsButton').click(function (e) {
             e.preventDefault();
-            getDuAns();
+            getQuyTrinhDuAnAssigneds();
         });
 
-        $(document).keypress(function (e) {
-            if (e.which === 13) {
-                getDuAns();
+        $(document).keypress(function(e) {
+            if(e.which === 13) {
+                getQuyTrinhDuAnAssigneds();
             }
         });
     });

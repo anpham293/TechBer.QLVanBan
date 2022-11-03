@@ -1,11 +1,15 @@
 ﻿@using TechBer.ChuyenDoiSo.Authorization
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.QuyTrinhDuAnAssigneds
 @using TechBer.ChuyenDoiSo.Web.Areas.App.Startup
+
 @section Scripts
 {
     <script abp-src="/view-resources/Areas/App/Views/DuyetHoSo/Index.js" asp-append-version="true"></script>
 }
 
 <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+
+
     <div class="kt-subheader kt-grid__item">
         <div class="@(await GetContainerClass())">
             <div class="kt-subheader__main">
@@ -14,8 +18,11 @@
                 </h3>
                 <span class="kt-subheader__separator kt-subheader__separator--v"></span>
                 <span class="kt-subheader__desc">
-                    @L("DanhSachHoSoCanDuyet")
+                    @L("DuyetHoSoHeaderInfo")
                 </span>
+            </div>
+            <div class="kt-subheader__toolbar">
+               
             </div>
         </div>
     </div>
@@ -28,9 +35,9 @@
                         <div class="col-xl-12">
                             <div class="form-group align-items-center">
                                 <div class="input-group">
-                                    <input type="text" id="DuAnsTableFilter" class="form-control m-input" placeholder="@L("SearchWithThreeDot")" value="@Model.FilterText">
+                                    <input type="text" id="QuyTrinhDuAnAssignedsTableFilter" class="form-control m-input" placeholder="@L("SearchWithThreeDot")" value="@Model.FilterText">
                                     <span class="input-group-btn">
-                                        <button id="GetDuAnsButton" class="btn btn-primary" type="submit">
+                                        <button id="GetQuyTrinhDuAnAssignedsButton" class="btn btn-primary" type="submit">
                                             <i class="flaticon-search-1"></i>
                                         </button>
                                     </span>
@@ -52,14 +59,56 @@
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="DescriptionsFilterId">@L("MaDuAn")</label>
+                            <label for="DescriptionsFilterId">@L("Descriptions")</label>
                             <input type="text" class="form-control" name="descriptionsFilter" id="DescriptionsFilterId">
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="LoaiDuAnNameFilterId">@L("LoaiDuAn")</label>
+                            <label for="MinSTTFilterId">@L("MinMax") @L("STT")</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control m-input" placeholder="@L("MinValue")" name="minSTTFilter" id="MinSTTFilterId"/>
+                                <input type="number" class="form-control m-input" placeholder="@L("MaxValue")" name="maxSTTFilter" id="MaxSTTFilterId"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="MinSoVanBanQuyDinhFilterId">@L("MinMax") @L("SoVanBanQuyDinh")</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control m-input" placeholder="@L("MinValue")" name="minSoVanBanQuyDinhFilter" id="MinSoVanBanQuyDinhFilterId"/>
+                                <input type="number" class="form-control m-input" placeholder="@L("MaxValue")" name="maxSoVanBanQuyDinhFilter" id="MaxSoVanBanQuyDinhFilterId"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="MaQuyTrinhFilterId">@L("MaQuyTrinh")</label>
+                            <input type="text" class="form-control" name="maQuyTrinhFilter" id="MaQuyTrinhFilterId">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="LoaiDuAnNameFilterId">(@L("LoaiDuAn")) @L("Name")</label>
                             <input type="text" class="form-control" name="loaiDuAnNameFilter" id="LoaiDuAnNameFilterId">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="QuyTrinhDuAnNameFilterId">(@L("QuyTrinhDuAn")) @L("Name")</label>
+                            <input type="text" class="form-control" name="quyTrinhDuAnNameFilter" id="QuyTrinhDuAnNameFilterId">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="QuyTrinhDuAnAssignedNameFilterId">(@L("QuyTrinhDuAnAssigned")) @L("Name")</label>
+                            <input type="text" class="form-control" name="quyTrinhDuAnAssignedNameFilter" id="QuyTrinhDuAnAssignedNameFilterId">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="DuAnNameFilterId">(@L("DuAn")) @L("Name")</label>
+                            <input type="text" class="form-control" name="duAnNameFilter" id="DuAnNameFilterId">
                         </div>
                     </div>
                 </div>
@@ -72,14 +121,13 @@
                     </div>
                 </div>
                 <div class="row align-items-center">
-                    <table id="DuAnsTable" class="display table table-striped table-bordered table-hover dt-responsive nowrap">
+                    <table id="QuyTrinhDuAnAssignedsTable" class="display table table-striped table-bordered table-hover dt-responsive nowrap">
                         <thead>
                         <tr>
                             <th>@L("Actions")</th>
-                            <th>@L("Name")</th>
-                            <th>@L("MaDuAn")</th>
-                            <th>@L("LoaiDuAnName")</th>
-                            <th>@L("HoSoDuAn")</th>
+                            <th>@L("TenDuAn")</th>
+                            <th>@L("QuyTrinhCanDuyet")</th>
+                            <th>@L("TrangThai")</th>
                         </tr>
                         </thead>
                     </table>

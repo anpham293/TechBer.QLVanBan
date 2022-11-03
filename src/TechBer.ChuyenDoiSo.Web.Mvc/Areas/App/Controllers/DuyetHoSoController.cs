@@ -16,10 +16,6 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
     [AbpMvcAuthorize(AppPermissions.Pages_DuyetHoSo)]
     public class DuyetHoSoController : ChuyenDoiSoControllerBase
     {
-        public DuyetHoSoController()
-        {
-
-        }
 
         public ActionResult Index()
         {

@@ -1,6 +1,8 @@
 ﻿(function () {
     $(function () {
-
+        var togglePage = true;
+        
+        
         var _$vanBanDuAnsTable = $('#VanBanDuAnsTable');
         var _vanBanDuAnsService = abp.services.app.vanBanDuAns;
         var _entityTypeFullName = 'TechBer.ChuyenDoiSo.QLVB.VanBanDuAn';
@@ -36,6 +38,12 @@
             modalClass: 'CreateOrEditQuyTrinhDuAnAssignedModal'
         });
 
+        var _chuyenDuyetHoSoModal = new app.ModalManager({
+            viewUrl: abp.appPath + 'App/QuyTrinhDuAnAssigneds/ChuyenDuyetHoSoModal',
+            scriptUrl: abp.appPath + 'view-resources/Areas/App/Views/QuyTrinhDuAnAssigneds/_ChuyenDuyetHoSoModal.js',
+            modalClass: 'ChuyenDuyetHoSoModal'
+        });
+        
         var _viewVanBanDuAnModal = new app.ModalManager({
             viewUrl: abp.appPath + 'App/VanBanDuAns/ViewvanBanDuAnModal',
             modalClass: 'ViewVanBanDuAnModal',
@@ -383,10 +391,18 @@
             }
 
             generateTextOnTree(ou) {
+                console.log(ou);
                 var itemClass = ' ou-text-has-members';
                 var tenHienThi = '';
                 var mauHienThi = '';
                 var chuHienThi = '';
+                var trangThai = '';
+                if(ou.trangThai == app.trangThaiDuyetHoSoConst.dangChoDuyet){
+                    trangThai = " (Đang chờ duyệt)"
+                }
+                if(ou.trangThai == app.trangThaiDuyetHoSoConst.daDuyet){
+                    trangThai = " (Đã duyệt)"
+                }
                 if(ou.tongSoHoSo == 0){
                     tenHienThi = ou.name;
                     mauHienThi = '#a2a5b9';
@@ -404,7 +420,7 @@
                 }
                 return '<i class="fa fa-folder" style="color:'+ mauHienThi+'"></i> '+
                     '<span class="ou-text text-dark tooltipss' + itemClass + '" data-ou-id="' + ou.id + '"><b>' + ou.maQuyTrinh + '</b> ' +
-                    '<span style="color:'+ chuHienThi+'">'+tenHienThi +'</span>' +
+                    '<span style="color:'+ chuHienThi+'">'+tenHienThi + trangThai +'</span>' +
                     ' <i class="fa fa-caret-down text-muted"></i> ' +
                     ' <span style="font-size: .82em; opacity: .5;">' +
                     '</span>'+((ou.descriptions!=="")?'<div class="tooltipsstext">'+ou.descriptions+'</div>':"")+'</span>';
@@ -440,7 +456,8 @@
                                 // opened: true
                                 opened: false,
                                 checkbox_disabled: true
-                            }
+                            },
+                            trangThai: item.quyTrinhDuAn.trangThai
                         };
                         return ketQua
                     });
@@ -520,6 +537,23 @@
                             contextmenu: {
                                 items: function (node) {
                                     var items = {
+                                        chuyenDuyetHoSoUint: {
+                                            label: app.localize('ChuyenDuyetHoSo'),
+                                            _disabled: !_permissions.edit || node.original.trangThai == 1,
+                                            action: function (data) {
+                                                var instance = $.jstree.reference(data.reference);
+                                                console.log(node.original.trangThai);
+                                                togglePage = false;
+                                                _chuyenDuyetHoSoModal.open({
+                                                    quyTrinhDuAnAssignedId: node.id,
+                                                    typeDuyetHoSo : app.typeDuyetHoSoConst.quanLyDuyet
+                                                    // type = 1: quản lý, 2: chánh vp
+                                                }, function (updatedOu) {
+                                                    self.reload();
+                                                    togglePage = true;
+                                                });
+                                            }
+                                        },
                                         editUnit: {
                                             label: app.localize('Edit'),
                                             icon: 'la la-pencil',
@@ -785,7 +819,7 @@
         });
 
         $(document).keypress(function (e) {
-            if (e.which === 13) {
+            if (e.which === 13 && togglePage == true) {
                 getVanBanDuAns();
 
             }
