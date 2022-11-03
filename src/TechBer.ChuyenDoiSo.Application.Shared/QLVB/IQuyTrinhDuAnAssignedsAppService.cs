@@ -35,5 +35,9 @@ namespace TechBer.ChuyenDoiSo.QLVB
 		Task<List<GetQuyTrinhDuAnAssignedForView2Dto>> GetDataForTree(int duanid);
 		Task<int> XoaTieuChi(long id);
 		Task<int> MoveTieuChi(MoveTreeDto input);
+		Task XuLyHoSo(XuLyHoSoInputDto input);
+
+		Task<PagedResultDto<GetQuyTrinhDuAnAssignedForViewDto>> GetAllHoSoCanDuyet(
+			GetAllHoSoCanDuyetInput input);
     }
 }

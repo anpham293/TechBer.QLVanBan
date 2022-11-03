@@ -33,6 +33,14 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Startup
                     )
                 )
                 .AddItem(new MenuItemDefinition(
+                        AppPageNames.Common.DuyetHoSo,
+                        L("DuyetHoSo"),
+                        url: "App/DuyetHoSo",
+                        icon: "fas fa-file-alt",
+                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_DuyetHoSo)
+                    )
+                )
+                .AddItem(new MenuItemDefinition(
                         "",
                         L("DanhMucQuanLy"),
                         icon: "fas fa-align-justify"

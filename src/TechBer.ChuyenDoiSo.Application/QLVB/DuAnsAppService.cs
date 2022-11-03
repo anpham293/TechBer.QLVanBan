@@ -13,8 +13,12 @@ using Abp.Application.Services.Dto;
 using TechBer.ChuyenDoiSo.Authorization;
 using Abp.Extensions;
 using Abp.Authorization;
+using Abp.Authorization.Users;
+using Abp.Collections.Extensions;
 using Abp.Domain.Entities;
+using Castle.Core.Internal;
 using Microsoft.EntityFrameworkCore;
+using TechBer.ChuyenDoiSo.Authorization.Users;
 
 namespace TechBer.ChuyenDoiSo.QLVB
 {
@@ -27,13 +31,15 @@ namespace TechBer.ChuyenDoiSo.QLVB
         private readonly IRepository<QuyTrinhDuAnAssigned, long> _quyTrinhDuAnAssignedRepository;
         private readonly IRepository<QuyTrinhDuAn, int> _quyTrinhDuAnRepository;
         private readonly IRepository<VanBanDuAn, int> _vanBanRepository;
+        private readonly IRepository<UserOrganizationUnit, long> _userOrganizationUnitRepository;
 
 
         public DuAnsAppService(IRepository<DuAn> duAnRepository, IDuAnsExcelExporter duAnsExcelExporter,
             IRepository<LoaiDuAn, int> lookup_loaiDuAnRepository,
             IRepository<QuyTrinhDuAnAssigned, long> quyTrinhDuAnAssignedRepository,
             IRepository<QuyTrinhDuAn, int> quyTrinhDuAnRepository,
-            IRepository<VanBanDuAn, int> vanBanRepository
+            IRepository<VanBanDuAn, int> vanBanRepository,
+            IRepository<UserOrganizationUnit, long> userOrganizationUnitRepository
         )
         {
             _duAnRepository = duAnRepository;
@@ -41,26 +47,26 @@ namespace TechBer.ChuyenDoiSo.QLVB
             _lookup_loaiDuAnRepository = lookup_loaiDuAnRepository;
             _quyTrinhDuAnAssignedRepository = quyTrinhDuAnAssignedRepository;
             _quyTrinhDuAnRepository = quyTrinhDuAnRepository;
-            _vanBanRepository = vanBanRepository;
+            _userOrganizationUnitRepository = userOrganizationUnitRepository;
         }
 
         public async Task<PagedResultDto<GetDuAnForViewDto>> GetAll(GetAllDuAnsInput input)
         {
+            var userId = AbpSession.UserId;
+            var listUserOrganizationUnit =  _userOrganizationUnitRepository.GetAll()
+                .WhereIf(true, p => p.UserId == userId)
+                .Select(uou => uou.OrganizationUnitId);
             var filteredDuAns = _duAnRepository.GetAll()
-                .Include(e => e.LoaiDuAnFk)
-                .WhereIf(!string.IsNullOrWhiteSpace(input.Filter),
-                    e => false || e.Name.Contains(input.Filter) || e.Descriptions.Contains(input.Filter))
-                .WhereIf(!string.IsNullOrWhiteSpace(input.NameFilter), e => e.Name == input.NameFilter)
-                .WhereIf(!string.IsNullOrWhiteSpace(input.DescriptionsFilter),
-                    e => e.Descriptions == input.DescriptionsFilter)
-                .WhereIf(!string.IsNullOrWhiteSpace(input.LoaiDuAnNameFilter),
-                    e => e.LoaiDuAnFk != null && e.LoaiDuAnFk.Name == input.LoaiDuAnNameFilter);
-
-            var pagedAndFilteredDuAns = filteredDuAns
-                .OrderBy(input.Sorting ?? "id asc")
-                .PageBy(input);
-
-            var duAns = from o in pagedAndFilteredDuAns
+                    .Include(e => e.LoaiDuAnFk)
+                    .WhereIf(!string.IsNullOrWhiteSpace(input.Filter),
+                        e => false || e.Name.Contains(input.Filter) || e.Descriptions.Contains(input.Filter))
+                    .WhereIf(!string.IsNullOrWhiteSpace(input.NameFilter), e => e.Name == input.NameFilter)
+                    .WhereIf(!string.IsNullOrWhiteSpace(input.DescriptionsFilter),
+                        e => e.Descriptions == input.DescriptionsFilter)
+                    .WhereIf(!string.IsNullOrWhiteSpace(input.LoaiDuAnNameFilter),
+                        e => e.LoaiDuAnFk != null && e.LoaiDuAnFk.Name == input.LoaiDuAnNameFilter)
+                ;
+            var listDuAnLoaiDuAnOrganizationUnit = await (from o in filteredDuAns
                 join o1 in _lookup_loaiDuAnRepository.GetAll() on o.LoaiDuAnId equals o1.Id into j1
                 from s1 in j1.DefaultIfEmpty()
                 select new GetDuAnForViewDto()
@@ -71,14 +77,57 @@ namespace TechBer.ChuyenDoiSo.QLVB
                         Descriptions = o.Descriptions,
                         Id = o.Id
                     },
-                    LoaiDuAnName = s1 == null || s1.Name == null ? "" : s1.Name.ToString()
-                };
+                    LoaiDuAnName = s1 == null || s1.Name == null ? "" : s1.Name.ToString(),
+                    LoaiDuAn = new LoaiDuAnDto()
+                    {
+                        Id = s1.Id,
+                        Name = s1.Name,
+                        OrganizationUnitId = s1.OrganizationUnitId
+                    }
+                }).ToListAsync();
+            // foreach (var VARIABLE in listUserOrganizationUnit)
+            // {
+            //     foreach (var VARIABLE1 in listDuAnLoaiDuAnOrganizationUnit)
+            //     {
+            //         if (VARIABLE1.LoaiDuAn.OrganizationUnitId == VARIABLE.OrganizationUnitId)
+            //         {
+            //             VARIABLE1.UserId = (long)userId;
+            //         }
+            //     }
+            // }
+
+            
+
+
+
+            
+
+            // var pagedAndFilteredDuAns = filteredDuAns
+            //     .OrderBy(input.Sorting ?? "id asc")
+            //     .PageBy(input);
+
+            // var duAns = from o in pagedAndFilteredDuAns
+            //     join o1 in _lookup_loaiDuAnRepository.GetAll() on o.LoaiDuAnId equals o1.Id into j1
+            //     from s1 in j1.DefaultIfEmpty()
+            //     select new GetDuAnForViewDto()
+            //     {
+            //         DuAn = new DuAnDto
+            //         {
+            //             Name = o.Name,
+            //             Descriptions = o.Descriptions,
+            //             Id = o.Id
+            //         },
+            //         LoaiDuAnName = s1 == null || s1.Name == null ? "" : s1.Name.ToString()
+            //     };
+
+            
+            var duAns =  listDuAnLoaiDuAnOrganizationUnit.WhereIf(true, e => listUserOrganizationUnit.Contains((long)e.LoaiDuAn.OrganizationUnitId));
 
             var totalCount = await filteredDuAns.CountAsync();
 
             return new PagedResultDto<GetDuAnForViewDto>(
                 totalCount,
-                await duAns.ToListAsync()
+                 duAns.ToList()
             );
         }
 

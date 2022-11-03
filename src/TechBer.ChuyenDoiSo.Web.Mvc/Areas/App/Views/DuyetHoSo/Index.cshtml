@@ -1,14 +1,10 @@
 ﻿@using TechBer.ChuyenDoiSo.Authorization
 @using TechBer.ChuyenDoiSo.Web.Areas.App.Models.QuyTrinhDuAnAssigneds
 @using TechBer.ChuyenDoiSo.Web.Areas.App.Startup
-@model QuyTrinhDuAnAssignedsViewModel
-@{
-    ViewBag.CurrentPageName = AppPageNames.Common.QuyTrinhDuAnAssigneds;
-}
 
 @section Scripts
 {
-    <script abp-src="/view-resources/Areas/App/Views/QuyTrinhDuAnAssigneds/Index.js" asp-append-version="true"></script>
+    <script abp-src="/view-resources/Areas/App/Views/DuyetHoSo/Index.js" asp-append-version="true"></script>
 }
 
 <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
@@ -18,23 +14,15 @@
         <div class="@(await GetContainerClass())">
             <div class="kt-subheader__main">
                 <h3 class="kt-subheader__title">
-                    <span>@L("QuyTrinhDuAnAssigneds")</span>
+                    <span>@L("DuyetHoSo")</span>
                 </h3>
                 <span class="kt-subheader__separator kt-subheader__separator--v"></span>
                 <span class="kt-subheader__desc">
-                    @L("QuyTrinhDuAnAssignedsHeaderInfo")
+                    @L("DuyetHoSoHeaderInfo")
                 </span>
             </div>
             <div class="kt-subheader__toolbar">
-                <div class="kt-subheader__wrapper">
-                    <button id="ExportToExcelButton" class="btn btn-outline-success">
-                        <i class="fa fa-file-excel"></i> @L("ExportToExcel")</button>
-                    @if (IsGranted(AppPermissions.Pages_QuyTrinhDuAnAssigneds_Create))
-                    {
-                        <button id="CreateNewQuyTrinhDuAnAssignedButton" class="btn btn-primary blue">
-                            <i class="fa fa-plus"></i> @L("CreateNewQuyTrinhDuAnAssigned")</button>
-                    }
-                </div>
+               
             </div>
         </div>
     </div>
@@ -137,15 +125,9 @@
                         <thead>
                         <tr>
                             <th>@L("Actions")</th>
-                            <th>@L("Name")</th>
-                            <th>@L("Descriptions")</th>
-                            <th>@L("STT")</th>
-                            <th>@L("SoVanBanQuyDinh")</th>
-                            <th>@L("MaQuyTrinh")</th>
-                            <th>@L("LoaiDuAnName")</th>
-                            <th>@L("QuyTrinhDuAnName")</th>
-                            <th>@L("QuyTrinhDuAnAssignedName")</th>
-                            <th>@L("DuAnName")</th>
+                            <th>@L("TenDuAn")</th>
+                            <th>@L("QuyTrinhCanDuyet")</th>
+                            <th>@L("TrangThai")</th>
                         </tr>
                         </thead>
                     </table>

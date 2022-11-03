@@ -67,7 +67,7 @@
                 }
 
                 var mimeType = _.filter(formData, { name: 'fileMau' })[0].value.type;
-                
+                console.log(mimeType);
                 formData.push({ name: 'FileType', value: mimeType });
                 formData.push({ name: 'FileName', value: file.name });
                 formData.push({ name: 'FileToken', value: app.guid() });

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Abp.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,9 @@ using Abp.Application.Services.Dto;
 using Abp.Domain.Repositories;
 using Abp.Extensions;
 using Abp.UI;
+using System.Linq;
+using Abp.Linq.Extensions;
+using TechBer.ChuyenDoiSo.Authorization.Users;
 
 namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
 {
@@ -22,11 +26,15 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
         private readonly IRepository<QuyTrinhDuAnAssigned, long> _quyTrinhDuAnAssignedsRepository;
         private readonly IRepository<DuAn> _duAnRepository;
         private readonly IRepository<LoaiDuAn> _loaiDuAnRepository;
+        private readonly IRepository<VanBanDuAn> _vanBanDuRepository;
+        private readonly IRepository<User,long> _userRepository;
 
         public QuyTrinhDuAnAssignedsController(IQuyTrinhDuAnAssignedsAppService quyTrinhDuAnAssignedsAppService,
             IRepository<QuyTrinhDuAnAssigned, long> quyTrinhDuAnAssignedsRepository,
             IRepository<DuAn> duAnRepository,
-            IRepository<LoaiDuAn> loaiDuAnRepository
+            IRepository<LoaiDuAn> loaiDuAnRepository,
+            IRepository<VanBanDuAn> vanBanDuRepository,
+            IRepository<User,long> userRepository
         )
         {
             _quyTrinhDuAnAssignedsAppService = quyTrinhDuAnAssignedsAppService;
@@ -34,6 +42,8 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
             _duAnRepository = duAnRepository;
             _duAnRepository = duAnRepository;
             _loaiDuAnRepository = loaiDuAnRepository;
+            _vanBanDuRepository = vanBanDuRepository;
+            _userRepository = userRepository;
         }
 
         public ActionResult Index()
@@ -192,6 +202,66 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
             };
 
             return PartialView("_QuyTrinhDuAnAssignedDuAnLookupTableModal", viewModel);
+        }
+        
+        [AbpMvcAuthorize(AppPermissions.Pages_QuyTrinhDuAnAssigneds_Edit)]
+        public PartialViewResult ChuyenDuyetHoSoModal(ChuyenDuyetHoSoModalInput input)
+        {
+            var tenNguoiGiao = "";
+            long nguoiGiaoId = -1;
+            var ngayGuiPhieu = "";
+            var quyTrinhDuAnAssigned = _quyTrinhDuAnAssignedsRepository.FirstOrDefault(input.QuyTrinhDuAnAssignedId);
+            var duAn = _duAnRepository.FirstOrDefault((int)quyTrinhDuAnAssigned.DuAnId);
+            var vanBanDuAn = _vanBanDuRepository.GetAll().WhereIf(true, p => p.QuyTrinhDuAnAssignedId == quyTrinhDuAnAssigned.Id);
+            
+            List<CommonLookupTableDto> listKeToanPhuTrach = new List<CommonLookupTableDto>();
+            foreach (var VARIABLE in _userRepository.GetAll())
+            {
+                listKeToanPhuTrach.Add(new CommonLookupTableDto()
+                {
+                    Id = (int)VARIABLE.Id,
+                    DisplayName = VARIABLE.Surname + " " + VARIABLE.Name
+                });
+            }
+
+           
+
+            if (quyTrinhDuAnAssigned.NgayGui.HasValue)
+            {
+                ngayGuiPhieu = (quyTrinhDuAnAssigned.NgayGui).ToString();
+            }
+            else
+            {
+                ngayGuiPhieu = DateTime.Now.ToString("dd/MM/yyyy");
+            }
+
+            if (quyTrinhDuAnAssigned.NguoiGuiId.HasValue)
+            {
+                var nguoiGiao = _userRepository.FirstOrDefault((long)quyTrinhDuAnAssigned.NguoiGuiId);
+                tenNguoiGiao = nguoiGiao.Surname + " " + nguoiGiao.Name;
+                nguoiGiaoId = nguoiGiao.Id;
+            
+            }
+            else
+            {
+                var nguoiGiao = _userRepository.FirstOrDefault((long)AbpSession.UserId);
+                tenNguoiGiao = nguoiGiao.Surname + " " + nguoiGiao.Name;
+                nguoiGiaoId = nguoiGiao.Id;
+            }
+            var keToanId = quyTrinhDuAnAssigned.KeToanTiepNhanId;
+            var viewModel = new ChuyenDuyetHoSoModalViewModel()
+            {
+                QuyTrinhDuAnAssigned = ObjectMapper.Map<QuyTrinhDuAnAssignedDto>(quyTrinhDuAnAssigned),
+                DuAn = ObjectMapper.Map<DuAnDto>(duAn),
+                SoLuongVanBan = vanBanDuAn.Count(),
+                ListKeToanTiepNhan = listKeToanPhuTrach,
+                TenNguoiGiao = tenNguoiGiao,
+                NgayGuiPhieu = ngayGuiPhieu,
+                KeToanTiepNhanId = keToanId,
+                NguoiGuiId = nguoiGiaoId,
+                TypeDuyetHoSo = input.TypeDuyetHoSo
+            };
+            return PartialView("_ChuyenDuyetHoSoModal", viewModel);
         }
     }
 }

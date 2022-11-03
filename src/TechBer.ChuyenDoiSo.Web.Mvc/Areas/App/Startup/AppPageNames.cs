@@ -7,6 +7,7 @@
             public const string QuyTrinhDuAnAssigneds = "QLVB.QuyTrinhDuAnAssigneds";
             public const string VanBanDuAns = "QLVB.VanBanDuAns";
             public const string DuAns = "QLVB.DuAns";
+            public const string DuyetHoSo = "QLVB.DuyetHoSo";
             public const string QuyTrinhDuAns = "QLVB.QuyTrinhDuAns";
             public const string LoaiDuAns = "QLVB.LoaiDuAns";
             public const string Administration = "Administration";

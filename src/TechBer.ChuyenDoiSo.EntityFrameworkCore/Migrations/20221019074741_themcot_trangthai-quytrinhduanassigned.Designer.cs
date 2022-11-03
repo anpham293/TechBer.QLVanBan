@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TechBer.ChuyenDoiSo.EntityFrameworkCore;
 
 namespace TechBer.ChuyenDoiSo.Migrations
 {
     [DbContext(typeof(ChuyenDoiSoDbContext))]
-    partial class ChuyenDoiSoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221019074741_themcot_trangthai-quytrinhduanassigned")]
+    partial class themcot_trangthaiquytrinhduanassigned
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2094,9 +2096,6 @@ namespace TechBer.ChuyenDoiSo.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<long?>("KeToanTiepNhanId")
-                        .HasColumnType("bigint");
-
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("datetime(6)");
 
@@ -2113,18 +2112,6 @@ namespace TechBer.ChuyenDoiSo.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<DateTime?>("NgayDuyet")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<DateTime?>("NgayGui")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<long?>("NguoiDuyetId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("NguoiGuiId")
-                        .HasColumnType("bigint");
 
                     b.Property<long?>("ParentId")
                         .HasColumnType("bigint");
@@ -2143,9 +2130,6 @@ namespace TechBer.ChuyenDoiSo.Migrations
 
                     b.Property<int>("TrangThai")
                         .HasColumnType("int");
-
-                    b.Property<string>("XuLyCuaLanhDao")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
 

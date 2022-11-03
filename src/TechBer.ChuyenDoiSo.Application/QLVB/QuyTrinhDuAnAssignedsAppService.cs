@@ -62,28 +62,29 @@ namespace TechBer.ChuyenDoiSo.QLVB
                 .Include(e => e.QuyTrinhDuAnFk)
                 .Include(e => e.ParentFk)
                 .Include(e => e.DuAnFk)
-                .WhereIf(!string.IsNullOrWhiteSpace(input.Filter),
-                    e => false || e.Name.Contains(input.Filter) || e.Descriptions.Contains(input.Filter) ||
-                         e.MaQuyTrinh.Contains(input.Filter))
-                .WhereIf(!string.IsNullOrWhiteSpace(input.NameFilter), e => e.Name == input.NameFilter)
-                .WhereIf(!string.IsNullOrWhiteSpace(input.DescriptionsFilter),
-                    e => e.Descriptions == input.DescriptionsFilter)
-                .WhereIf(input.MinSTTFilter != null, e => e.STT >= input.MinSTTFilter)
-                .WhereIf(input.MaxSTTFilter != null, e => e.STT <= input.MaxSTTFilter)
-                .WhereIf(input.MinSoVanBanQuyDinhFilter != null,
-                    e => e.SoVanBanQuyDinh >= input.MinSoVanBanQuyDinhFilter)
-                .WhereIf(input.MaxSoVanBanQuyDinhFilter != null,
-                    e => e.SoVanBanQuyDinh <= input.MaxSoVanBanQuyDinhFilter)
-                .WhereIf(!string.IsNullOrWhiteSpace(input.MaQuyTrinhFilter),
-                    e => e.MaQuyTrinh == input.MaQuyTrinhFilter)
-                .WhereIf(!string.IsNullOrWhiteSpace(input.LoaiDuAnNameFilter),
-                    e => e.LoaiDuAnFk != null && e.LoaiDuAnFk.Name == input.LoaiDuAnNameFilter)
-                .WhereIf(!string.IsNullOrWhiteSpace(input.QuyTrinhDuAnNameFilter),
-                    e => e.QuyTrinhDuAnFk != null && e.QuyTrinhDuAnFk.Name == input.QuyTrinhDuAnNameFilter)
-                .WhereIf(!string.IsNullOrWhiteSpace(input.QuyTrinhDuAnAssignedNameFilter),
-                    e => e.ParentFk != null && e.ParentFk.Name == input.QuyTrinhDuAnAssignedNameFilter)
-                .WhereIf(!string.IsNullOrWhiteSpace(input.DuAnNameFilter),
-                    e => e.DuAnFk != null && e.DuAnFk.Name == input.DuAnNameFilter);
+                // .WhereIf(!string.IsNullOrWhiteSpace(input.Filter),
+                //     e => false || e.Name.Contains(input.Filter) || e.Descriptions.Contains(input.Filter) ||
+                //          e.MaQuyTrinh.Contains(input.Filter))
+                // .WhereIf(!string.IsNullOrWhiteSpace(input.NameFilter), e => e.Name == input.NameFilter)
+                // .WhereIf(!string.IsNullOrWhiteSpace(input.DescriptionsFilter),
+                //     e => e.Descriptions == input.DescriptionsFilter)
+                // .WhereIf(input.MinSTTFilter != null, e => e.STT >= input.MinSTTFilter)
+                // .WhereIf(input.MaxSTTFilter != null, e => e.STT <= input.MaxSTTFilter)
+                // .WhereIf(input.MinSoVanBanQuyDinhFilter != null,
+                //     e => e.SoVanBanQuyDinh >= input.MinSoVanBanQuyDinhFilter)
+                // .WhereIf(input.MaxSoVanBanQuyDinhFilter != null,
+                //     e => e.SoVanBanQuyDinh <= input.MaxSoVanBanQuyDinhFilter)
+                // .WhereIf(!string.IsNullOrWhiteSpace(input.MaQuyTrinhFilter),
+                //     e => e.MaQuyTrinh == input.MaQuyTrinhFilter)
+                // .WhereIf(!string.IsNullOrWhiteSpace(input.LoaiDuAnNameFilter),
+                //     e => e.LoaiDuAnFk != null && e.LoaiDuAnFk.Name == input.LoaiDuAnNameFilter)
+                // .WhereIf(!string.IsNullOrWhiteSpace(input.QuyTrinhDuAnNameFilter),
+                //     e => e.QuyTrinhDuAnFk != null && e.QuyTrinhDuAnFk.Name == input.QuyTrinhDuAnNameFilter)
+                // .WhereIf(!string.IsNullOrWhiteSpace(input.QuyTrinhDuAnAssignedNameFilter),
+                //     e => e.ParentFk != null && e.ParentFk.Name == input.QuyTrinhDuAnAssignedNameFilter)
+                // .WhereIf(!string.IsNullOrWhiteSpace(input.DuAnNameFilter),
+                //     e => e.DuAnFk != null && e.DuAnFk.Name == input.DuAnNameFilter)
+                ;
 
             var pagedAndFilteredQuyTrinhDuAnAssigneds = filteredQuyTrinhDuAnAssigneds
                 .OrderBy(input.Sorting ?? "id asc")
@@ -481,7 +482,8 @@ namespace TechBer.ChuyenDoiSo.QLVB
                         MaQuyTrinh = o.MaQuyTrinh,
                         LoaiDuAnId = o.LoaiDuAnId,
                         DuAnId = o.DuAnId,
-                        QuyTrinhDuAnId = o.QuyTrinhDuAnId
+                        QuyTrinhDuAnId = o.QuyTrinhDuAnId,
+                        TrangThai = o.TrangThai
                     },
                 };
             var t = await query.ToListAsync();
@@ -586,6 +588,79 @@ namespace TechBer.ChuyenDoiSo.QLVB
             {
                 return (int) DiChuyenTreeState.DI_CHUYEN_THAT_BAI;
             }
+        }
+
+        public async Task XuLyHoSo(XuLyHoSoInputDto input)
+        {
+            var quyTrinhDuAnAssigned = await _quyTrinhDuAnRepository.FirstOrDefaultAsync(input.quyTrinhDuAnAssignedId);
+            
+            if (input.TypeDuyetHoSo == ChuyenDuyetHoSoConst.QUAN_LY_DUYET)
+            {
+                quyTrinhDuAnAssigned.KeToanTiepNhanId = input.keToanTiepNhanId;
+                quyTrinhDuAnAssigned.NgayGui = DateTime.Now;
+                quyTrinhDuAnAssigned.NguoiGuiId = input.NguoiGuiId;
+                quyTrinhDuAnAssigned.TrangThai = TrangThaiDuyetHoSoCont.DANG_CHO_DUYET;
+                _quyTrinhDuAnRepository.Update(quyTrinhDuAnAssigned);
+            }
+
+            if (input.TypeDuyetHoSo == ChuyenDuyetHoSoConst.CHANH_VAN_PHONG_DUYET)
+            {
+                quyTrinhDuAnAssigned.NguoiDuyetId = AbpSession.UserId;
+                quyTrinhDuAnAssigned.NgayDuyet = DateTime.Now;
+                quyTrinhDuAnAssigned.XuLyCuaLanhDao = input.XuLyCuaLanhDao;
+                quyTrinhDuAnAssigned.TrangThai = TrangThaiDuyetHoSoCont.DA_DUYET;
+                _quyTrinhDuAnRepository.Update(quyTrinhDuAnAssigned);
+            }
+            
+        }
+
+        public async Task<PagedResultDto<GetQuyTrinhDuAnAssignedForViewDto>> GetAllHoSoCanDuyet(
+                                                               GetAllHoSoCanDuyetInput input)
+        {
+            var filteredQuyTrinhDuAnAssigneds = _quyTrinhDuAnAssignedRepository.GetAll()
+                .Include(e => e.LoaiDuAnFk)
+                .Include(e => e.QuyTrinhDuAnFk)
+                .Include(e => e.ParentFk)
+                .Include(e => e.DuAnFk)
+                .WhereIf(true, e => e.TrangThai == TrangThaiDuyetHoSoCont.DANG_CHO_DUYET || e.TrangThai == TrangThaiDuyetHoSoCont.DA_DUYET);
+
+            var pagedAndFilteredQuyTrinhDuAnAssigneds = filteredQuyTrinhDuAnAssigneds
+                .OrderBy(input.Sorting ?? "id asc")
+                .PageBy(input);
+
+            var quyTrinhDuAnAssigneds = from o in pagedAndFilteredQuyTrinhDuAnAssigneds
+                join o1 in _lookup_loaiDuAnRepository.GetAll() on o.LoaiDuAnId equals o1.Id into j1
+                from s1 in j1.DefaultIfEmpty()
+                join o2 in _lookup_quyTrinhDuAnRepository.GetAll() on o.QuyTrinhDuAnId equals o2.Id into j2
+                from s2 in j2.DefaultIfEmpty()
+                join o3 in _quyTrinhDuAnRepository.GetAll() on o.ParentId equals o3.Id into j3
+                from s3 in j3.DefaultIfEmpty()
+                join o4 in _lookup_duAnRepository.GetAll() on o.DuAnId equals o4.Id into j4
+                from s4 in j4.DefaultIfEmpty()
+                select new GetQuyTrinhDuAnAssignedForViewDto()
+                {
+                    QuyTrinhDuAnAssigned = new QuyTrinhDuAnAssignedDto
+                    {
+                        Name = o.Name,
+                        Descriptions = o.Descriptions,
+                        STT = o.STT,
+                        SoVanBanQuyDinh = o.SoVanBanQuyDinh,
+                        MaQuyTrinh = o.MaQuyTrinh,
+                        Id = o.Id,
+                        TrangThai = o.TrangThai
+                    },
+                    LoaiDuAnName = s1 == null || s1.Name == null ? "" : s1.Name.ToString(),
+                    QuyTrinhDuAnName = s2 == null || s2.Name == null ? "" : s2.Name.ToString(),
+                    QuyTrinhDuAnAssignedName = s3 == null || s3.Name == null ? "" : s3.Name.ToString(),
+                    DuAnName = s4 == null || s4.Name == null ? "" : s4.Name.ToString()
+                };
+
+            var totalCount = await filteredQuyTrinhDuAnAssigneds.CountAsync();
+
+            return new PagedResultDto<GetQuyTrinhDuAnAssignedForViewDto>(
+                totalCount,
+                await quyTrinhDuAnAssigneds.ToListAsync()
+            );
         }
     }
 }

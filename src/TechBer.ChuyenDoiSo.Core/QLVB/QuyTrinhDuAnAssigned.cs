@@ -51,5 +51,12 @@ namespace TechBer.ChuyenDoiSo.QLVB
         [ForeignKey("DuAnId")]
 		public DuAn DuAnFk { get; set; }
 		
+		public virtual int TrangThai { get; set; }
+		public virtual long? NguoiGuiId { get; set; }
+		public virtual DateTime? NgayGui { get; set; }
+		public virtual long? NguoiDuyetId { get; set; }
+		public virtual DateTime? NgayDuyet { get; set; }
+		public virtual long? KeToanTiepNhanId { get; set; }
+		public virtual string XuLyCuaLanhDao { get; set; }
     }
 }

@@ -68,6 +68,14 @@
                 ],
             }
         },
+        typeDuyetHoSoConst:{
+            quanLyDuyet: 1,
+            chanhVanPhongDuyet: 2
+        },
+        trangThaiDuyetHoSoConst:{
+            dangChoDuyet:1,
+            daDuyet:2
+        }
     });
 
 })();
