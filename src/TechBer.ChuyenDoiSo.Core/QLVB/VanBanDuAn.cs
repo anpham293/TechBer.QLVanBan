@@ -9,37 +9,36 @@ using Abp.Auditing;
 
 namespace TechBer.ChuyenDoiSo.QLVB
 {
-	[Table("VanBanDuAns")]
+    [Table("VanBanDuAns")]
     [Audited]
-    public class VanBanDuAn : FullAuditedEntity , IMayHaveTenant
+    public class VanBanDuAn : FullAuditedEntity, IMayHaveTenant
     {
-			public int? TenantId { get; set; }
-			
+        public int? TenantId { get; set; }
 
-		[Required]
-		[StringLength(VanBanDuAnConsts.MaxNameLength, MinimumLength = VanBanDuAnConsts.MinNameLength)]
-		public virtual string Name { get; set; }
-		
-		[Required]
-		[StringLength(VanBanDuAnConsts.MaxKyHieuVanBanLength, MinimumLength = VanBanDuAnConsts.MinKyHieuVanBanLength)]
-		public virtual string KyHieuVanBan { get; set; }
-		
-		public virtual DateTime NgayBanHanh { get; set; }
-		
-		public virtual string FileVanBan { get; set; }
-		
 
-		public virtual int? DuAnId { get; set; }
-		
-        [ForeignKey("DuAnId")]
-		public DuAn DuAnFk { get; set; }
-		
-		public virtual long? QuyTrinhDuAnAssignedId { get; set; }
-		
-        [ForeignKey("QuyTrinhDuAnAssignedId")]
-		public QuyTrinhDuAnAssigned QuyTrinhDuAnAssignedFk { get; set; }
-		
-		public virtual string ViTriLuuTru { get; set; }
-		
+        [Required]
+        [StringLength(VanBanDuAnConsts.MaxNameLength, MinimumLength = VanBanDuAnConsts.MinNameLength)]
+        public virtual string Name { get; set; }
+
+        [Required]
+        [StringLength(VanBanDuAnConsts.MaxKyHieuVanBanLength, MinimumLength = VanBanDuAnConsts.MinKyHieuVanBanLength)]
+        public virtual string KyHieuVanBan { get; set; }
+
+        public virtual DateTime NgayBanHanh { get; set; }
+
+        public virtual string FileVanBan { get; set; }
+
+
+        public virtual int? DuAnId { get; set; }
+
+        [ForeignKey("DuAnId")] public DuAn DuAnFk { get; set; }
+
+        public virtual long? QuyTrinhDuAnAssignedId { get; set; }
+
+        [ForeignKey("QuyTrinhDuAnAssignedId")] public QuyTrinhDuAnAssigned QuyTrinhDuAnAssignedFk { get; set; }
+
+        public virtual string ViTriLuuTru { get; set; }
+        public virtual DateTime? LastFileVanBanTime { get; set; }
+        public virtual long? NguoiNopHoSoId { get; set; }
     }
 }

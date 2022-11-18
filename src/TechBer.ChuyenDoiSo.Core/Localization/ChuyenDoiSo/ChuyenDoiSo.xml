@@ -15,6 +15,9 @@
     <text name="OrganizationUnitDisplayName">Organization unit display name</text>
     <text name="PickOrganizationUnit">Pick organization unit</text>
 
+    <text name="BaoCaoHoSoNopTrongThang">Bao cao ho so nop trong thang</text>
+    <text name="BaoCaoHoSo">Bao cao ho so</text>
+    <text name="QuyetDinh">Quyet dinh</text>
     <text name="PhieuXuLyHoSo">Phieu xu ly ho so</text>
     <text name="ChuyenDuyetHoSo">Chuyen duyet ho so</text>
     <text name="QuyTrinhCanDuyet">Quy trinh can duyet</text>

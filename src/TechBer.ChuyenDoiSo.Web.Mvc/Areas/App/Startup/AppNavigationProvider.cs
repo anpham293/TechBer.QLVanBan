@@ -53,7 +53,14 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Startup
                             permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_LoaiDuAns)
                         )
                     )
-                
+                    .AddItem(new MenuItemDefinition(
+                            AppPageNames.Common.LoaiDuAns,
+                            L("BaoCaoHoSo"),
+                            url: "App/QuyTrinhDuAnAssigneds/BaoCaoNopHoSoTrongThangTheoDuAn",
+                            icon: "flaticon-map",
+                            permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_LoaiDuAns)
+                        )
+                    )
                 )
                
                 // .AddItem(new MenuItemDefinition(

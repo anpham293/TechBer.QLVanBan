@@ -212,6 +212,11 @@ namespace TechBer.ChuyenDoiSo.QLVB
             }
 
             vanBanDuAn.FileVanBan = fileMau;
+            if (!fileMau.IsNullOrEmpty())
+            {
+                vanBanDuAn.LastFileVanBanTime = DateTime.Now;
+                vanBanDuAn.NguoiNopHoSoId = AbpSession.UserId;
+            }
             await _vanBanDuAnRepository.InsertAsync(vanBanDuAn);
         }
 
@@ -264,6 +269,8 @@ namespace TechBer.ChuyenDoiSo.QLVB
 
                     ObjectMapper.Map(input, vanban);
                     vanban.FileVanBan = fileMau;
+                    vanban.LastFileVanBanTime = DateTime.Now;
+                    vanban.NguoiNopHoSoId = AbpSession.UserId;
                 }
                 else
                 {

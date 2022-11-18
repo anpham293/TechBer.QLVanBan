@@ -1,0 +1,98 @@
+﻿@using TechBer.ChuyenDoiSo.Authorization
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.QuyTrinhDuAnAssigneds
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Startup
+
+@section Scripts
+{
+    <script abp-src="/view-resources/Areas/App/Views/QuyTrinhDuAnAssigneds/BaoCaoNopHoSoTrongThangTheoDuAn.js" asp-append-version="true"></script>
+}
+<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+
+
+    <div class="kt-subheader kt-grid__item">
+        <div class="@(await GetContainerClass())">
+            <div class="kt-subheader__main">
+                <h3 class="kt-subheader__title">
+                    <span>@L("BaoCaoHoSo")</span>
+                </h3>
+                <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+                <span class="kt-subheader__desc">
+                    @L("BaoCaoHoSoNopTrongThang")
+                </span>
+            </div>
+            <div class="kt-subheader__toolbar">
+                <div class="kt-subheader__wrapper">
+                    <button id="btn-xuatexcel" class="btn btn-outline-success">
+                        <i class="fa fa-file-excel"></i> @L("ExportToExcel")</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="@(await GetContainerClass()) kt-grid__item kt-grid__item--fluid">
+        <div class="kt-portlet kt-portlet--mobile">
+            <div class="kt-portlet__body">
+                <div class="row">
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <label for="thang">@L("Month")</label>
+                            <input type="number" class="form-control" value="@DateTime.Now.Month" name="thang" id="thang">
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <label for="nam">@L("Year")</label>
+                            <input type="number" class="form-control" value="@DateTime.Now.Year" name="nam" id="nam">
+                        </div>
+                    </div>
+
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <div>
+                                <button id="btn-xuatbc" class="btn btn-success">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div><!-- Tìm kiếm-->
+                    
+                </div>
+                
+                <div class="row align-items-center" id="table-result" style="margin-top:20px"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    #table-result td, #table-result th{
+    
+        overflow: hidden;
+        -o-text-overflow: ellipsis;
+        text-overflow: ellipsis;
+        padding: 0 6px;
+        line-height: 26px;
+        white-space: nowrap;    
+       
+      min-width: 80px;
+    }
+    #table-result tbody tr td div,#table-result thead tr th div {
+      display: inline-block;
+      white-space: nowrap;
+      position: relative;
+      /* must be relative */
+      width: 100%;
+      float: left;
+      /* fit to table cell width */
+      margin-right: -1000px;
+      /* technically this is a less than zero width object */
+      overflow: hidden;
+      -o-text-overflow: ellipsis;
+      text-overflow: ellipsis;
+    }
+    table th div{font-weight: bolder;}
+    
+    
+</style>

@@ -14,7 +14,12 @@ using Abp.Extensions;
 using Abp.UI;
 using System.Linq;
 using Abp.Linq.Extensions;
+using Newtonsoft.Json;
+using NPOI.POIFS.FileSystem;
+using Org.BouncyCastle.Crypto.Agreement.JPake;
 using TechBer.ChuyenDoiSo.Authorization.Users;
+using TechBer.ChuyenDoiSo.Dto;
+using TechBer.ChuyenDoiSo.QuanLyDanhMuc.Dtos;
 
 namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
 {
@@ -26,7 +31,7 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
         private readonly IRepository<QuyTrinhDuAnAssigned, long> _quyTrinhDuAnAssignedsRepository;
         private readonly IRepository<DuAn> _duAnRepository;
         private readonly IRepository<LoaiDuAn> _loaiDuAnRepository;
-        private readonly IRepository<VanBanDuAn> _vanBanDuRepository;
+        private readonly IRepository<VanBanDuAn> _vanBanDuAnRepository;
         private readonly IRepository<User,long> _userRepository;
 
         public QuyTrinhDuAnAssignedsController(IQuyTrinhDuAnAssignedsAppService quyTrinhDuAnAssignedsAppService,
@@ -42,7 +47,7 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
             _duAnRepository = duAnRepository;
             _duAnRepository = duAnRepository;
             _loaiDuAnRepository = loaiDuAnRepository;
-            _vanBanDuRepository = vanBanDuRepository;
+            _vanBanDuAnRepository = vanBanDuRepository;
             _userRepository = userRepository;
         }
 
@@ -212,7 +217,7 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
             var ngayGuiPhieu = "";
             var quyTrinhDuAnAssigned = _quyTrinhDuAnAssignedsRepository.FirstOrDefault(input.QuyTrinhDuAnAssignedId);
             var duAn = _duAnRepository.FirstOrDefault((int)quyTrinhDuAnAssigned.DuAnId);
-            var vanBanDuAn = _vanBanDuRepository.GetAll().WhereIf(true, p => p.QuyTrinhDuAnAssignedId == quyTrinhDuAnAssigned.Id);
+            var vanBanDuAn = _vanBanDuAnRepository.GetAll().WhereIf(true, p => p.QuyTrinhDuAnAssignedId == quyTrinhDuAnAssigned.Id);
             
             List<CommonLookupTableDto> listKeToanPhuTrach = new List<CommonLookupTableDto>();
             foreach (var VARIABLE in _userRepository.GetAll())
@@ -262,6 +267,68 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
                 TypeDuyetHoSo = input.TypeDuyetHoSo
             };
             return PartialView("_ChuyenDuyetHoSoModal", viewModel);
+        }
+
+        public ActionResult BaoCaoNopHoSoTrongThangTheoDuAn()
+        {
+            return View("BaoCaoNopHoSoTrongThangTheoDuAnView");
+        }
+
+        [HttpPost]
+        public async Task<PartialViewResult> BaoCaoNopHoSoTrongThangTheoDuAn(BaoCaoNopHoSoTrongThangTheoDuAnFilterDto input)
+        {
+            BaoCaoNopHoSoTrongThangTheoDuAnViewModel model = new BaoCaoNopHoSoTrongThangTheoDuAnViewModel();
+            model.BaoCaoNopHoSoTrongThangTheoDuAn = new List<BaoCaoNopHoSoTrongThangTheoDuAnDto>();
+            
+            var vanBanDuAnFilter = _vanBanDuAnRepository.GetAll()
+                .WhereIf(true, e => e.LastFileVanBanTime != null 
+                                    && e.LastFileVanBanTime.Value.Month == input.Thang 
+                                    && e.LastFileVanBanTime.Value.Year == input.Nam)
+                .WhereIf(true, e => e.QuyTrinhDuAnAssignedFk.IsDeleted == false)
+                ;
+
+            var hoSoNopTrongThangTheoDuAn = from o in vanBanDuAnFilter
+                join o1 in _quyTrinhDuAnAssignedsRepository.GetAll() on o.QuyTrinhDuAnAssignedId equals o1.Id into j1
+                from s1 in j1.DefaultIfEmpty()
+                join o2 in _duAnRepository.GetAll() on s1.DuAnId equals o2.Id into j2
+                from s2 in j2.DefaultIfEmpty()
+                join o3 in _loaiDuAnRepository.GetAll() on s2.LoaiDuAnId equals o3.Id into j3
+                from s3 in j3.DefaultIfEmpty()
+                join o4 in _userRepository.GetAll() on o.NguoiNopHoSoId equals o4.Id into j4
+                from s4 in j4.DefaultIfEmpty() 
+                orderby s3.Id descending
+                select new BaoCaoNopHoSoTrongThangTheoDuAnDto()
+                {
+                    LoaiDuAn = new LoaiDuAnDto()
+                    {
+                        Id = s3.Id,
+                        Name = s3.Name
+                    },
+                    DuAn = new DuAnDto()
+                    {
+                        Id = s2.Id,
+                        Name = s2.Name
+                    },
+                    QuyTrinhDuAnAssigned = new QuyTrinhDuAnAssignedDto()
+                    {
+                        Id = s1.Id,
+                        Name = s1.Name
+                    },
+                    VanBanDuAn = new VanBanDuAnDto()
+                    {
+                        Name = o.Name,
+                        FileVanBan = (o.FileVanBan.IsNullOrEmpty()
+                            ? o.FileVanBan
+                            : JsonConvert.DeserializeObject<FileMauSerializeObj>(o.FileVanBan).FileName),
+                        NgayBanHanh = o.NgayBanHanh,
+                        LastFileVanBanTime = o.LastFileVanBanTime,
+                        NguoiNopHoSoId = o.NguoiNopHoSoId
+                    },
+                    TenNguoiNop = o.NguoiNopHoSoId == null ? "" : s4.Surname + " " +s4.Name
+                };
+            model.BaoCaoNopHoSoTrongThangTheoDuAn.AddRange(hoSoNopTrongThangTheoDuAn.ToList());
+            var a = hoSoNopTrongThangTheoDuAn.ToList();
+            return PartialView("_BaoCaoNopHoSoTrongThangTheoDuAn", model);
         }
     }
 }
