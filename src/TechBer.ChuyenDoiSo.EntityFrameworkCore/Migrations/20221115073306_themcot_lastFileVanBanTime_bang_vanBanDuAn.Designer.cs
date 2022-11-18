@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TechBer.ChuyenDoiSo.EntityFrameworkCore;
 
 namespace TechBer.ChuyenDoiSo.Migrations
 {
     [DbContext(typeof(ChuyenDoiSoDbContext))]
-    partial class ChuyenDoiSoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221115073306_themcot_lastFileVanBanTime_bang_vanBanDuAn")]
+    partial class themcot_lastFileVanBanTime_bang_vanBanDuAn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2210,9 +2212,6 @@ namespace TechBer.ChuyenDoiSo.Migrations
 
                     b.Property<DateTime>("NgayBanHanh")
                         .HasColumnType("datetime(6)");
-
-                    b.Property<long?>("NguoiNopHoSoId")
-                        .HasColumnType("bigint");
 
                     b.Property<long?>("QuyTrinhDuAnAssignedId")
                         .HasColumnType("bigint");
