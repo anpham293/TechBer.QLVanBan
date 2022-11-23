@@ -31,5 +31,6 @@
          public string ContentType { get; set; }
          
          public string ViTriLuuTru { get; set; }
+         public decimal SoTienThanhToan { get; set; }
      }
  }

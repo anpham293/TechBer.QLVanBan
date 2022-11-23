@@ -26,7 +26,7 @@
             </div>
 
             <div class="form-group">
-                <label for="VanBanDuAn_KyHieuVanBan">@L("KyHieuVanBan")</label>
+                <label for="VanBanDuAn_KyHieuVanBan">@L("QuyetDinh")</label>
                 <input class="form-control" id="VanBanDuAn_KyHieuVanBan" value="@Model.VanBanDuAn.KyHieuVanBan" type="text" name="kyHieuVanBan" required maxlength="@TechBer.ChuyenDoiSo.QLVB.VanBanDuAnConsts.MaxKyHieuVanBanLength" minlength="@TechBer.ChuyenDoiSo.QLVB.VanBanDuAnConsts.MinKyHieuVanBanLength"/>
             </div>
 
@@ -49,6 +49,10 @@
                <input class="form-control" id="VanBanDuAn_ViTriLuuTru" value="@Model.VanBanDuAn.ViTriLuuTru" type="text" name="viTriLuuTru" />
             </div>
 
+            <div class="form-group">
+                <label for="VanBanDuAn_SoTienThanhToan">@L("SoTienThanhToan")</label>
+                <input class="form-control" id="VanBanDuAn_SoTienThanhToan" value="" type="number" name="soTienThanhToan"/>
+            </div>
         </form>
     </div>
 </div>

@@ -622,7 +622,10 @@ namespace TechBer.ChuyenDoiSo.QLVB
                 .Include(e => e.QuyTrinhDuAnFk)
                 .Include(e => e.ParentFk)
                 .Include(e => e.DuAnFk)
-                .WhereIf(true, e => e.TrangThai == TrangThaiDuyetHoSoCont.DANG_CHO_DUYET || e.TrangThai == TrangThaiDuyetHoSoCont.DA_DUYET);
+                .WhereIf(input.TrangThaiDuyetFilter!=null , e => e.TrangThai == input.TrangThaiDuyetFilter)
+                .WhereIf(true , e => e.TrangThai != TrangThaiDuyetHoSoCont.CHUA_DUYET)
+                .WhereIf(!string.IsNullOrWhiteSpace(input.DuAnNameFilter), e => e.DuAnFk.Name.Contains(input.DuAnNameFilter))
+                ;
 
             var pagedAndFilteredQuyTrinhDuAnAssigneds = filteredQuyTrinhDuAnAssigneds
                 .OrderBy(input.Sorting ?? "id asc")

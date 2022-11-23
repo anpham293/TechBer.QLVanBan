@@ -56,18 +56,9 @@
                 ajaxFunction: _quyTrinhDuAnAssignedsService.getAllHoSoCanDuyet,
                 inputFilter: function () {
                     return {
-                        filter: $('#QuyTrinhDuAnAssignedsTableFilter').val(),
-                        nameFilter: $('#NameFilterId').val(),
-                        descriptionsFilter: $('#DescriptionsFilterId').val(),
-                        minSTTFilter: $('#MinSTTFilterId').val(),
-                        maxSTTFilter: $('#MaxSTTFilterId').val(),
-                        minSoVanBanQuyDinhFilter: $('#MinSoVanBanQuyDinhFilterId').val(),
-                        maxSoVanBanQuyDinhFilter: $('#MaxSoVanBanQuyDinhFilterId').val(),
-                        maQuyTrinhFilter: $('#MaQuyTrinhFilterId').val(),
-                        loaiDuAnNameFilter: $('#LoaiDuAnNameFilterId').val(),
-                        quyTrinhDuAnNameFilter: $('#QuyTrinhDuAnNameFilterId').val(),
-                        quyTrinhDuAnAssignedNameFilter: $('#QuyTrinhDuAnAssignedNameFilterId').val(),
-                        duAnNameFilter: $('#DuAnNameFilterId').val()
+                        textFilter: $('#TextFilter').val(),
+                        duAnNameFilter: $('#DuAnNameFilter').val(),
+                        trangThaiDuyetFilter: $('#TrangThaiDuyetFilter').val()
                     };
                 }
             },
