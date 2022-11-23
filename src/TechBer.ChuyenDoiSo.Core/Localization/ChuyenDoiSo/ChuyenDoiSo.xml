@@ -15,6 +15,11 @@
     <text name="OrganizationUnitDisplayName">Organization unit display name</text>
     <text name="PickOrganizationUnit">Pick organization unit</text>
 
+    <text name="TatCa">Tat ca</text>
+    <text name="TrangThaiDuyet">Trang thai duyet</text>
+    <text name="Year">Year</text>
+    <text name="Month">Month</text>
+    <text name="SoTienThanhToan">So tien thanh toan</text>
     <text name="BaoCaoHoSoNopTrongThang">Bao cao ho so nop trong thang</text>
     <text name="BaoCaoHoSo">Bao cao ho so</text>
     <text name="QuyetDinh">Quyet dinh</text>

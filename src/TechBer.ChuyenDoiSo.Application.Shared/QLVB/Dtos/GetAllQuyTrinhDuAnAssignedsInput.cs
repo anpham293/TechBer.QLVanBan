@@ -30,6 +30,8 @@ namespace TechBer.ChuyenDoiSo.QLVB.Dtos
     }
     public class GetAllHoSoCanDuyetInput : PagedAndSortedResultRequestDto
     {
-        
+        public string TextFilter { get; set; }
+        public string DuAnNameFilter { get; set; }
+        public int? TrangThaiDuyetFilter { get; set; }
     }
 }
