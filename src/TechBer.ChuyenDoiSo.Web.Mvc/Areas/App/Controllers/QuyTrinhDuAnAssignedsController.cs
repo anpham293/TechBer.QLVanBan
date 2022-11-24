@@ -269,7 +269,7 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
             return PartialView("_ChuyenDuyetHoSoModal", viewModel);
         }
 
-        public ActionResult BaoCaoNopHoSoTrongThangTheoDuAn()
+        public ActionResult BaoCaoNopHoSoTrongThangTheoDuAnView()
         {
             return View("BaoCaoNopHoSoTrongThangTheoDuAnView");
         }
@@ -285,6 +285,7 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
                                     && e.LastFileVanBanTime.Value.Month == input.Thang 
                                     && e.LastFileVanBanTime.Value.Year == input.Nam)
                 .WhereIf(true, e => e.QuyTrinhDuAnAssignedFk.IsDeleted == false)
+                .WhereIf(true, e => e.DuAnFk.IsDeleted == false)
                 ;
 
             var hoSoNopTrongThangTheoDuAn = from o in vanBanDuAnFilter
@@ -329,6 +330,66 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
             model.BaoCaoNopHoSoTrongThangTheoDuAn.AddRange(hoSoNopTrongThangTheoDuAn.ToList());
             var a = hoSoNopTrongThangTheoDuAn.ToList();
             return PartialView("_BaoCaoNopHoSoTrongThangTheoDuAn", model);
+        }
+        
+        public ActionResult BaoCaoHoSoTheoDuAnView()
+        {
+            return View("BaoCaoHoSoTheoDuAnView");
+        }
+        [HttpPost]
+        public async Task<PartialViewResult> BaoCaoHoSoTheoDuAn(BaoCaoHoSoTheoDuAnFilterDto input)
+        {
+            BaoCaoHoSoTheoDuAnViewModel model = new BaoCaoHoSoTheoDuAnViewModel();
+            model.BaoCaoHoSoTheoDuAn = new List<BaoCaoHoSoDuAnDto>();
+            
+            var vanBanDuAnFilter = _vanBanDuAnRepository.GetAll()
+                .WhereIf(!input.MaDuAn.IsNullOrWhiteSpace(), e => e.DuAnFk.Descriptions.Equals(input.MaDuAn))
+                .WhereIf(true, e => e.QuyTrinhDuAnAssignedFk.IsDeleted == false)
+                .WhereIf(true, e => e.DuAnFk.IsDeleted == false)
+                ;
+
+            var hoSoNopTrongThangTheoDuAn = from o in vanBanDuAnFilter
+                join o1 in _quyTrinhDuAnAssignedsRepository.GetAll() on o.QuyTrinhDuAnAssignedId equals o1.Id into j1
+                from s1 in j1.DefaultIfEmpty()
+                join o2 in _duAnRepository.GetAll() on s1.DuAnId equals o2.Id into j2
+                from s2 in j2.DefaultIfEmpty()
+                join o3 in _loaiDuAnRepository.GetAll() on s2.LoaiDuAnId equals o3.Id into j3
+                from s3 in j3.DefaultIfEmpty()
+                join o4 in _userRepository.GetAll() on o.NguoiNopHoSoId equals o4.Id into j4
+                from s4 in j4.DefaultIfEmpty() 
+                orderby s3.Id descending
+                select new BaoCaoHoSoDuAnDto()
+                {
+                    LoaiDuAn = new LoaiDuAnDto()
+                    {
+                        Id = s3.Id,
+                        Name = s3.Name
+                    },
+                    DuAn = new DuAnDto()
+                    {
+                        Id = s2.Id,
+                        Name = s2.Name
+                    },
+                    QuyTrinhDuAnAssigned = new QuyTrinhDuAnAssignedDto()
+                    {
+                        Id = s1.Id,
+                        Name = s1.Name
+                    },
+                    VanBanDuAn = new VanBanDuAnDto()
+                    {
+                        Name = o.Name,
+                        FileVanBan = (o.FileVanBan.IsNullOrEmpty()
+                            ? o.FileVanBan
+                            : JsonConvert.DeserializeObject<FileMauSerializeObj>(o.FileVanBan).FileName),
+                        NgayBanHanh = o.NgayBanHanh,
+                        LastFileVanBanTime = o.LastFileVanBanTime,
+                        NguoiNopHoSoId = o.NguoiNopHoSoId
+                    },
+                    TenNguoiNop = o.NguoiNopHoSoId == null ? "" : s4.Surname + " " +s4.Name
+                };
+            model.BaoCaoHoSoTheoDuAn.AddRange(hoSoNopTrongThangTheoDuAn.ToList());
+            var a = hoSoNopTrongThangTheoDuAn.ToList();
+            return PartialView("_BaoCaoHoSoTheoDuAn", model);
         }
     }
 }

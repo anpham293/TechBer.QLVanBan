@@ -45,56 +45,60 @@
             var sttSub2 = 0;
         }
         @foreach (var VARIABLE in Model.BaoCaoNopHoSoTrongThangTheoDuAn)
-        {
-            @if (loaiDuAnTemp != VARIABLE.LoaiDuAn.Id)
-            {
-                sttChinh = 0;
-                <tr>
-                    <td colspan="9" style="font-weight: bold">@VARIABLE.LoaiDuAn.Name</td>
-                </tr>
-                loaiDuAnTemp = VARIABLE.LoaiDuAn.Id;
-            }
-            @if (duAnTemp != VARIABLE.DuAn.Id)
-            {
-                sttSub = 0;
-                sttChinh++;
-                <tr>
-                    <td style="text-align: center">@sttChinh</td>
-                    <td colspan="8">@VARIABLE.DuAn.Name</td>
-                </tr>
-                duAnTemp = VARIABLE.DuAn.Id;
-                
-            }
-            @if (quyTrinhAssignedsTemp != VARIABLE.QuyTrinhDuAnAssigned.Id)
-            {
-                sttSub2 = 0;
-                sttSub++;
-                <tr>
-                    <td></td>
-                    <td style="text-align: center">@sttChinh.@sttSub</td>
-                    <td colspan="7">@VARIABLE.QuyTrinhDuAnAssigned.Name</td>
-                </tr>
-                quyTrinhAssignedsTemp = VARIABLE.QuyTrinhDuAnAssigned.Id;
-                
-            }
-            sttSub2++;
-            <tr>
-                <td></td>
-                <td></td>
-                <td style="text-align: center">@sttChinh.@sttSub.@sttSub2</td>
-                <td>@VARIABLE.VanBanDuAn.Name</td>
-                <td>@VARIABLE.VanBanDuAn.FileVanBan</td>
-                <td style="text-align: center">@VARIABLE.VanBanDuAn.NgayBanHanh.ToString("dd/MM/yyyy")</td>
-                <td style="text-align: center">@(VARIABLE.VanBanDuAn.LastFileVanBanTime == null ? "" : ((DateTime)VARIABLE.VanBanDuAn.LastFileVanBanTime).ToString("dd/MM/yyyy"))</td>
-                @{
-                    TimeSpan ghiChu = new TimeSpan();
-                    ghiChu = ((DateTime) VARIABLE.VanBanDuAn.LastFileVanBanTime).Subtract(VARIABLE.VanBanDuAn.NgayBanHanh);
+                {
+                    @if (loaiDuAnTemp != VARIABLE.LoaiDuAn.Id)
+                    {
+                        sttChinh = 0;
+                        <tr>
+                            <td colspan="9" style="font-weight: bold">@VARIABLE.LoaiDuAn.Name</td>
+                        </tr>
+                        loaiDuAnTemp = VARIABLE.LoaiDuAn.Id;
+                    }
+                    @if (duAnTemp != VARIABLE.DuAn.Id)
+                    {
+                        sttSub = 0;
+                        sttChinh++;
+                        <tr>
+                            <td style="text-align: center">@sttChinh</td>
+                            <td colspan="8">@VARIABLE.DuAn.Name</td>
+                        </tr>
+                        duAnTemp = VARIABLE.DuAn.Id;
+                        
+                    }
+                    @if (quyTrinhAssignedsTemp != VARIABLE.QuyTrinhDuAnAssigned.Id)
+                    {
+                        sttSub2 = 0;
+                        sttSub++;
+                        <tr>
+                            <td></td>
+                            <td style="text-align: center">@sttChinh.@sttSub</td>
+                            <td colspan="7" style="white-space: normal;">@VARIABLE.QuyTrinhDuAnAssigned.Name</td>
+                        </tr>
+                        quyTrinhAssignedsTemp = VARIABLE.QuyTrinhDuAnAssigned.Id;
+                        
+                    }
+                    sttSub2++;
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td style="text-align: center">@sttChinh.@sttSub.@sttSub2</td>
+                        <td style="white-space: normal;">@VARIABLE.VanBanDuAn.Name</td>
+                        <td>@VARIABLE.VanBanDuAn.FileVanBan</td>
+                        <td style="text-align: center">@VARIABLE.VanBanDuAn.NgayBanHanh.ToString("dd/MM/yyyy")</td>
+                        <td style="text-align: center">@(VARIABLE.VanBanDuAn.LastFileVanBanTime == null ? "" : ((DateTime)VARIABLE.VanBanDuAn.LastFileVanBanTime).ToString("dd/MM/yyyy"))</td>
+                         @{
+                             TimeSpan ghiChu = new TimeSpan();
+                             if (VARIABLE.VanBanDuAn.LastFileVanBanTime.HasValue)
+                             {
+                                 ghiChu = ((DateTime) VARIABLE.VanBanDuAn.LastFileVanBanTime).Subtract(VARIABLE.VanBanDuAn.NgayBanHanh);
+                             }
+                             
+                         }
+                         <td>@VARIABLE.TenNguoiNop</td>
+                         <td>@(ghiChu.Days > 5 ? "Nộp chậm "+ ghiChu.Days + " ngày" : "") </td>
+                        
+                    </tr>
                 }
-                <td>@VARIABLE.TenNguoiNop</td>
-                <td>@(ghiChu.Days > 5 ? "Nộp chậm "+ ghiChu.Days + " ngày" : "") </td>
-                
-            </tr>
-        }
         </tbody>
     </table>
 </div>

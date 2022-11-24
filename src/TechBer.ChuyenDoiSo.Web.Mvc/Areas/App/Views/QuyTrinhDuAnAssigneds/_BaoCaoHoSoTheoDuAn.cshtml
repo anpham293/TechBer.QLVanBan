@@ -1,0 +1,116 @@
+﻿@using Abp.Collections.Extensions
+@using TechBer.ChuyenDoiSo.Common
+@using NPOI.SS.Formula.Functions
+@using NUglify.Helpers
+@model TechBer.ChuyenDoiSo.Web.Areas.App.Models.QuyTrinhDuAnAssigneds.BaoCaoHoSoTheoDuAnViewModel
+<style>
+    
+    .result-baocao{
+        width: 100%;
+    }
+   .result-baocao th{
+    font-weight: bolder;
+   }
+    .result-baocao tr:first-child >th,.result-baocao tr:nth-child(2)> th{
+       text-align: center;
+       vertical-align: middle;
+      }
+      
+</style>
+
+<div class="result-baocao sticky-table sticky-headers sticky-rtl-cells">
+    <h3 class="text-center">HỒ SƠ NỘP THEO DỰ ÁN</h3>
+    @* <div class="text-center padding-tb-20">Kỳ thu tháng : @Model.BaoCaoNopHoSoTrongThangTheoDuAn.DuAn.Name</div> *@
+    <table id='table-r' data-resizable-columns-id="BangKeHoaDonThangTheoNhanVienViewModels-table" class="table table-hover table-bordered table-striped">
+        <thead>
+        <tr class="sticky-row">
+            <th data-resizable-column-id="BangKeHoaDonThangTheoNhanVienViewModels_a">STT</th>
+            <th data-resizable-column-id="BangKeHoaDonThangTheoNhanVienViewModels_b">Tên Dự án</th>
+            <th data-resizable-column-id="BangKeHoaDonThangTheoNhanVienViewModels_b">Tên Q.Trình</th>
+            <th data-resizable-column-id="BangKeHoaDonThangTheoNhanVienViewModels_c">Tên hồ sơ</th>
+            <th data-resizable-column-id="BangKeHoaDonThangTheoNhanVienViewModels_d">File hồ sơ</th>
+            <th data-resizable-column-id="BangKeHoaDonThangTheoNhanVienViewModels_e">Ngày ban hành</th>
+            <th data-resizable-column-id="BangKeHoaDonThangTheoNhanVienViewModels_f">Thời gian nộp</th>
+            <th data-resizable-column-id="BangKeHoaDonThangTheoNhanVienViewModels_f">Người nộp</th>
+            <th data-resizable-column-id="BangKeHoaDonThangTheoNhanVienViewModels_g">Ghi chú</th>
+        </tr>
+        </thead>
+        <tbody>
+        @{
+            int loaiDuAnTemp = -1;
+            int duAnTemp = -1;
+            long quyTrinhAssignedsTemp = -1;
+            int sttChinh = 0;
+            int sttSub = 0;
+            var sttSub2 = 0;
+        }
+        @foreach (var VARIABLE in Model.BaoCaoHoSoTheoDuAn)
+        {
+            @if (loaiDuAnTemp != VARIABLE.LoaiDuAn.Id)
+            {
+                sttChinh = 0;
+                <tr>
+                    <td colspan="9" style="font-weight: bold">@VARIABLE.LoaiDuAn.Name</td>
+                </tr>
+                loaiDuAnTemp = VARIABLE.LoaiDuAn.Id;
+            }
+            @if (duAnTemp != VARIABLE.DuAn.Id)
+            {
+                sttSub = 0;
+                sttChinh++;
+                <tr>
+                    <td style="text-align: center">@sttChinh</td>
+                    <td colspan="8">@VARIABLE.DuAn.Name</td>
+                </tr>
+                duAnTemp = VARIABLE.DuAn.Id;
+                
+            }
+            @if (quyTrinhAssignedsTemp != VARIABLE.QuyTrinhDuAnAssigned.Id)
+            {
+                sttSub2 = 0;
+                sttSub++;
+                <tr>
+                    <td></td>
+                    <td style="text-align: center">@sttChinh.@sttSub</td>
+                    <td colspan="7" style="white-space: normal;">@VARIABLE.QuyTrinhDuAnAssigned.Name</td>
+                </tr>
+                quyTrinhAssignedsTemp = VARIABLE.QuyTrinhDuAnAssigned.Id;
+                
+            }
+            sttSub2++;
+            <tr>
+                <td></td>
+                <td></td>
+                <td style="text-align: center">@sttChinh.@sttSub.@sttSub2</td>
+                <td style="white-space: normal;">@VARIABLE.VanBanDuAn.Name</td>
+                <td>@VARIABLE.VanBanDuAn.FileVanBan</td>
+                <td style="text-align: center">@VARIABLE.VanBanDuAn.NgayBanHanh.ToString("dd/MM/yyyy")</td>
+                <td style="text-align: center">@(VARIABLE.VanBanDuAn.LastFileVanBanTime == null ? "" : ((DateTime)VARIABLE.VanBanDuAn.LastFileVanBanTime).ToString("dd/MM/yyyy"))</td>
+                 @{
+                     TimeSpan ghiChu = new TimeSpan();
+                     if (VARIABLE.VanBanDuAn.LastFileVanBanTime.HasValue)
+                     {
+                         ghiChu = ((DateTime) VARIABLE.VanBanDuAn.LastFileVanBanTime).Subtract(VARIABLE.VanBanDuAn.NgayBanHanh);
+                     }
+                     
+                 }
+                 <td>@VARIABLE.TenNguoiNop</td>
+                 <td>@(ghiChu.Days > 5 ? "Nộp chậm "+ ghiChu.Days + " ngày" : "") </td>
+                
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+
+
+<script>
+    
+    $(document).ready(function() {
+        $("#table-r").resizableColumns({
+              store: store
+         });
+        
+               
+    })
+</script>
