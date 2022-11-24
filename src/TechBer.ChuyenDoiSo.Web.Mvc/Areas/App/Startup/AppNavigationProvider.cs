@@ -28,7 +28,7 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Startup
                         AppPageNames.Common.DuAns,
                         L("DuAns"),
                         url: "App/DuAns",
-                        icon: "fas fa-file-alt",
+                        icon: "fas fa-layer-group",
                         permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_DuAns)
                     )
                 )
@@ -38,6 +38,28 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Startup
                         url: "App/DuyetHoSo",
                         icon: "fas fa-file-alt",
                         permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_DuyetHoSo)
+                    )
+                )
+                .AddItem(new MenuItemDefinition(
+                        "",
+                        L("BaoCaoHoSo"),
+                        icon: "fas fa-file-excel"
+                    )
+                    .AddItem(new MenuItemDefinition(
+                            AppPageNames.Common.LoaiDuAns,
+                            L("BaoCaoHoSoNopTrongThang"),
+                            url: "App/QuyTrinhDuAnAssigneds/BaoCaoNopHoSoTrongThangTheoDuAnView",
+                            icon: "",
+                            permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_LoaiDuAns)
+                        )
+                    )
+                    .AddItem(new MenuItemDefinition(
+                            AppPageNames.Common.LoaiDuAns,
+                            L("BaoCaoHoSoTheoDuAn"),
+                            url: "App/QuyTrinhDuAnAssigneds/BaoCaoHoSoTheoDuAnView",
+                            icon: "",
+                            permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_LoaiDuAns)
+                        )
                     )
                 )
                 .AddItem(new MenuItemDefinition(
@@ -53,15 +75,8 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Startup
                             permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_LoaiDuAns)
                         )
                     )
-                    .AddItem(new MenuItemDefinition(
-                            AppPageNames.Common.LoaiDuAns,
-                            L("BaoCaoHoSo"),
-                            url: "App/QuyTrinhDuAnAssigneds/BaoCaoNopHoSoTrongThangTheoDuAn",
-                            icon: "flaticon-map",
-                            permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_LoaiDuAns)
-                        )
-                    )
                 )
+                
                
                 // .AddItem(new MenuItemDefinition(
                 //         AppPageNames.Host.Tenants,
