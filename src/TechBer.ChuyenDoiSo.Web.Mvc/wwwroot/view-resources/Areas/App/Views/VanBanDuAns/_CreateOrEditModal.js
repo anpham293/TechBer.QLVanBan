@@ -120,7 +120,8 @@
             _$vanBanDuAnInformationForm.find('input[name=quyTrinhDuAnName]').val('');
             _$vanBanDuAnInformationForm.find('input[name=quyTrinhDuAnId]').val('');
         });
-
+        
+        $('#VanBanDuAn_SoTienThanhToan').inputmask();
 
         this.save = function () {
             if (!_$vanBanDuAnInformationForm.valid()) {
@@ -139,9 +140,10 @@
             vanBanDuAn.uploadedFileToken = uploadedFileToken;
             vanBanDuAn.fileName = fileName;
             vanBanDuAn.contentType = contentType;
+            vanBanDuAn.soTienThanhToan = $('#VanBanDuAn_SoTienThanhToan').inputmask('unmaskedvalue');
             
-            console.log(uploadedFileToken);
-            console.log("vanbanduan:");
+            //console.log(uploadedFileToken);
+            //console.log("vanbanduan:");
             console.log(vanBanDuAn);
             _modalManager.setBusy(true);
             _vanBanDuAnsService.createOrEdit(

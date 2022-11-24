@@ -40,8 +40,6 @@
                 _$duAnInformationForm.find('input[name=loaiDuAnId]').val(''); 
         });
 		
-
-
         this.save = function () {
             if (!_$duAnInformationForm.valid()) {
                 return;

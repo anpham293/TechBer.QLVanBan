@@ -43,7 +43,7 @@
     "flot": "^0.8.0-alpha",
     "gmaps": "^0.4.24",
     "gridstack": "0.2.6",
-    "inputmask": "^4.0.6",
+    "inputmask": "^4.0.9",
     "ion-rangeslider": "^2.3.0",
     "jquery": "^3.3.1",
     "jquery-form": "^4.2.2",

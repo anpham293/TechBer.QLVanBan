@@ -68,7 +68,8 @@
       "output": "view-resources/Areas/App/Views/_Bundles/app-common-scripts.min.js",
       "input": [
         "wwwroot/view-resources/Areas/App/Views/Common/Modals/_LookupModal.js",
-        "wwwroot/view-resources/Areas/App/Views/Common/Modals/_EntityTypeHistoryModal.js"
+        "wwwroot/view-resources/Areas/App/Views/Common/Modals/_EntityTypeHistoryModal.js",
+        "node_modules/inputmask/dist/jquery.inputmask.bundle.js"
       ]
     },
     {

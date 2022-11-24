@@ -15,7 +15,7 @@
             locale: abp.localization.currentLanguage.name,
             format: 'L'
         });
-
+        
         var _permissions = {
             create: abp.auth.hasPermission('Pages.VanBanDuAns.Create'),
             edit: abp.auth.hasPermission('Pages.VanBanDuAns.Edit'),
