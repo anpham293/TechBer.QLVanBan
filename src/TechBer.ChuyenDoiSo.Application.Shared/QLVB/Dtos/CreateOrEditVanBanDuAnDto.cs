@@ -6,8 +6,6 @@
  {
      public class CreateOrEditVanBanDuAnDto : EntityDto<int?>
      {
-         [Required]
-         [StringLength(VanBanDuAnConsts.MaxNameLength, MinimumLength = VanBanDuAnConsts.MinNameLength)]
          public string Name { get; set; }
  
  

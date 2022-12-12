@@ -9,7 +9,6 @@
 <div class="modal-body">
     <div id="VanBanDuAnInformationsTab">
         <form name="VanBanDuAnInformationsForm" id="VanBanDuAnInformationsForm"  method="POST" role="form" novalidate class="form-validation" action="VanBanDuAns/UploadFileHopDong">
-
             @if (Model.IsEditMode)
             {
                 <input type="hidden" name="id" value="@Model.VanBanDuAn.Id"/>
@@ -23,7 +22,7 @@
 
             <div class="form-group">
                 <label for="VanBanDuAn_Name">@L("TenHoSo")</label>
-                <input class="form-control" id="VanBanDuAn_Name" value="@Model.VanBanDuAn.Name" type="text" name="name" required maxlength="@TechBer.ChuyenDoiSo.QLVB.VanBanDuAnConsts.MaxNameLength" minlength="@TechBer.ChuyenDoiSo.QLVB.VanBanDuAnConsts.MinNameLength"/>
+                <input class="form-control" id="VanBanDuAn_Name" value="@Model.VanBanDuAn.Name" type="text" name="name"/>
             </div>
 
             <div class="form-group">

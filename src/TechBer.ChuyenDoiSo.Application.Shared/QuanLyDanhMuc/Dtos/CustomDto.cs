@@ -11,6 +11,9 @@ namespace TechBer.ChuyenDoiSo.QuanLyDanhMuc.Dtos
     public class BaoCaoHoSoTheoDuAnFilterDto
     {
         public string MaDuAn { get; set; }
+        public string TenDuAn { get; set; }
+        public string TenHoSo { get; set; }
+        public string NgayQuyetDinh { get; set; }
     }
     
     public class BaoCaoNopHoSoTrongThangTheoDuAnDto
