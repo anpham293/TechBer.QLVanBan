@@ -45,7 +45,10 @@
                     type: "post",
                     dataType: "html",
                     data: {
-                        maDuAn: $("#MaDuAn").val()
+                        maDuAn: $("#MaDuAn").val(),
+                        tenDuAn: $("#TenDuAn").val(),
+                        tenHoSo: $("#TenHoSo").val(),
+                        ngayQuyetDinh: $("#NgayQuyetDinh").val()
                     },
                     beforeSend: function () {
                         $("#table-result").html("");

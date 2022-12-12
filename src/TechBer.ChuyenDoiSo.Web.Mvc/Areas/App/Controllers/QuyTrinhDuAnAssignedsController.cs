@@ -13,6 +13,7 @@ using Abp.Domain.Repositories;
 using Abp.Extensions;
 using Abp.UI;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Abp.Linq.Extensions;
 using Newtonsoft.Json;
 using NPOI.POIFS.FileSystem;
@@ -341,11 +342,18 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
         {
             BaoCaoHoSoTheoDuAnViewModel model = new BaoCaoHoSoTheoDuAnViewModel();
             model.BaoCaoHoSoTheoDuAn = new List<BaoCaoHoSoDuAnDto>();
+            var pattern = @"\s+";
+            string[] ngayQuyetDinh = Regex.Split(input.NgayQuyetDinh.Trim(), pattern);
+            var quyetDinhTuNgay = DateTime.Parse(ngayQuyetDinh[0]);
+            var quyetDinhDenNgay = DateTime.Parse(ngayQuyetDinh[2]);
             
             var vanBanDuAnFilter = _vanBanDuAnRepository.GetAll()
                 .WhereIf(!input.MaDuAn.IsNullOrWhiteSpace(), e => e.DuAnFk.Descriptions.Equals(input.MaDuAn))
                 .WhereIf(true, e => e.QuyTrinhDuAnAssignedFk.IsDeleted == false)
                 .WhereIf(true, e => e.DuAnFk.IsDeleted == false)
+                .WhereIf(!input.TenDuAn.IsNullOrWhiteSpace(), e => e.DuAnFk.Name.Contains(input.TenDuAn))
+                .WhereIf(!input.TenHoSo.IsNullOrWhiteSpace(), e => e.Name.Contains(input.TenHoSo))
+                .WhereIf(true, e => e.NgayBanHanh <= quyetDinhDenNgay && e.NgayBanHanh >= quyetDinhTuNgay)
                 ;
 
             var hoSoNopTrongThangTheoDuAn = from o in vanBanDuAnFilter

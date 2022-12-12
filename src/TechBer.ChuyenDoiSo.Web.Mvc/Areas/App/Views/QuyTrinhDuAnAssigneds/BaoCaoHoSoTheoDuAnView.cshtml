@@ -34,13 +34,36 @@
         <div class="kt-portlet kt-portlet--mobile">
             <div class="kt-portlet__body">
                 <div class="row">
-                    <div class="col-md-1">
+                    <div class="col-md-2">
                         <div class="form-group">
                             <label for="MaDuAn">@L("MaDuAn")</label>
                             <input type="text" class="form-control" value="" name="maDuAn" id="MaDuAn">
                         </div>
-                    </div>                   
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="TenDuAn">@L("TenDuAn")</label>
+                            <input type="text" class="form-control" value="" name="tenDuAn" id="TenDuAn">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="TenHoSo">@L("TenHoSo")</label>
+                            <input type="text" class="form-control" value="" name="tenHoSo" id="TenHoSo">
+                        </div>
+                    </div>
 
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="SampleDateRangePicker">Ngày giao quyết định</label>
+                            <div id="SampleDateRangePicker" class="input-group">
+                                <input type="datetime" name="SampleDateRangePicker" class="form-control daterange-picker" id="NgayQuyetDinh">
+                                @* <span class="input-group-btn"> *@
+                                @*     <button class="btn btn-primary" id="ngayQuyetDinh" type="button">@L("Submit")</button> *@
+                                @* </span> *@
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-md-1">
                         <div class="form-group">
                             <label>&nbsp;</label>
@@ -52,9 +75,8 @@
 
                         </div>
                     </div><!-- Tìm kiếm-->
-                    
-                </div>
-                
+
+                    </div>
                 <div class="row align-items-center" id="table-result" style="margin-top:20px"></div>
             </div>
         </div>

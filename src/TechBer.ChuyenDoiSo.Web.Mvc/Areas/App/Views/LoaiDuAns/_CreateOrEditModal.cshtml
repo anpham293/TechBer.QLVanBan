@@ -1,5 +1,4 @@
-﻿
-@using System.Globalization
+﻿@using System.Globalization
 @using TechBer.ChuyenDoiSo.Web.Areas.App.Models.Common.Modals
 @using TechBer.ChuyenDoiSo.Web.Areas.App.Models.LoaiDuAns
 @model CreateOrEditLoaiDuAnModalViewModel
@@ -7,48 +6,49 @@
 @await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditLoaiDuAn")) : L("CreateNewLoaiDuAn")))
 
 <div class="modal-body">
-        <div id="LoaiDuAnInformationsTab">
-            <form name="LoaiDuAnInformationsForm" role="form" novalidate class="form-validation">
+    <div id="LoaiDuAnInformationsTab">
+        <form name="LoaiDuAnInformationsForm" role="form" novalidate class="form-validation">
 
-                @if (Model.IsEditMode)
-                {
-                    <input type="hidden" name="id" value="@Model.LoaiDuAn.Id" />
-                }
-
-				            
-								<div class="form-group m-form__group">
-										<label for="OrganizationUnitDisplayName">@L("OrganizationUnit")</label>
-									    <div class="input-group">
-											<input class="form-control" id="OrganizationUnitDisplayName" name="organizationUnitDisplayName" value="@Model.OrganizationUnitDisplayName" type="text" disabled>
-										<div class="input-group-append">
-											<button class="btn btn-primary blue" id="OpenOrganizationUnitLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
-										</div> 
-										<div class="input-group-prepend">
-											<button class="btn btn-danger btn-icon" type="button" id="ClearOrganizationUnitDisplayNameButton"><i class="fa fa-times"></i></button>
-										</div>
-									</div>
-								</div>
-
-								@if (Model.IsEditMode)
-								{
-									<input class="form-control" id="LoaiDuAn_OrganizationUnitId" value="@Model.LoaiDuAn.OrganizationUnitId" type="text" name="organizationUnitId"  hidden/>
-								}
-								 else
-								{ 
-									<input class="form-control" id="LoaiDuAn_OrganizationUnitId" value="" type="text" name="organizationUnitId"  hidden/>
-								}
+            @if (Model.IsEditMode)
+            {
+                <input type="hidden" name="id" value="@Model.LoaiDuAn.Id"/>
+            }
 
 
+            <div class="form-group m-form__group">
+                <label for="OrganizationUnitDisplayName">@L("PhongPhuTrach")</label>
+                <div class="input-group">
+                    <input class="form-control" id="OrganizationUnitDisplayName" name="organizationUnitDisplayName" value="@Model.OrganizationUnitDisplayName" type="text" disabled>
+                    <div class="input-group-append">
+                        <button class="btn btn-primary blue" id="OpenOrganizationUnitLookupTableButton" type="button">
+                            <i class="fa fa-search"></i> @L("Pick")</button>
+                    </div>
+                    <div class="input-group-prepend">
+                        <button class="btn btn-danger btn-icon" type="button" id="ClearOrganizationUnitDisplayNameButton">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
 
-				
-								<div class="form-group">
-									<label for="LoaiDuAn_Name">@L("Name")</label>
-									<input class="form-control" id="LoaiDuAn_Name" value="@Model.LoaiDuAn.Name" type="text" name="name"  required    />
-								</div>
-					
+            @if (Model.IsEditMode)
+            {
+                <input class="form-control" id="LoaiDuAn_OrganizationUnitId" value="@Model.LoaiDuAn.OrganizationUnitId" type="text" name="organizationUnitId" hidden/>
+            }
+            else
+            {
+                <input class="form-control" id="LoaiDuAn_OrganizationUnitId" value="" type="text" name="organizationUnitId" hidden/>
+            }
 
-            </form>
-        </div>
+
+            <div class="form-group">
+                <label for="LoaiDuAn_Name">@L("Name")</label>
+                <input class="form-control" id="LoaiDuAn_Name" value="@Model.LoaiDuAn.Name" type="text" name="name" required/>
+            </div>
+
+
+        </form>
+    </div>
 </div>
 
 @await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")
