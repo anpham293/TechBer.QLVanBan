@@ -4,6 +4,8 @@ using Abp.Application.Services;
 using Abp.Application.Services.Dto;
 using TechBer.ChuyenDoiSo.QLVB.Dtos;
 using TechBer.ChuyenDoiSo.Dto;
+using TechBer.ChuyenDoiSo.QuanLyDanhMuc.Dtos;
+using GetAllForLookupTableInput = TechBer.ChuyenDoiSo.QLVB.Dtos.GetAllForLookupTableInput;
 
 
 namespace TechBer.ChuyenDoiSo.QLVB
@@ -26,6 +28,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
 		Task<PagedResultDto<VanBanDuAnDuAnLookupTableDto>> GetAllDuAnForLookupTable(GetAllForLookupTableInput input);
 		
 		Task<PagedResultDto<VanBanDuAnQuyTrinhDuAnLookupTableDto>> GetAllQuyTrinhDuAnForLookupTable(GetAllForLookupTableInput input);
-		
+
+		Task<int> NhanHoSoGiay(NhanHoSoGiayDto input);
     }
 }

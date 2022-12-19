@@ -41,5 +41,8 @@ namespace TechBer.ChuyenDoiSo.QLVB
         public virtual DateTime? LastFileVanBanTime { get; set; }
         public virtual long? NguoiNopHoSoId { get; set; }
         public virtual decimal SoTienThanhToan { get; set; }
+        public virtual int TrangThaiNhanHoSoGiay { get; set; }
+        public virtual string TenNguoiGiaoHoSo { get; set; }
+        public virtual DateTime? ThoiGianNhanHoSoGiay { get; set; }
     }
 }

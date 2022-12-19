@@ -23,6 +23,8 @@ namespace TechBer.ChuyenDoiSo.QLVB.Dtos
         public DateTime? LastFileVanBanTime { get; set; }
         
         public long? NguoiNopHoSoId { get; set; }
-        
+        public int TrangThaiNhanHoSoGiay { get; set; }
+        public string TenNguoiGiaoHoSo { get; set; }
+        public DateTime? ThoiGianNhanHoSoGiay { get; set; }
     }
 }
