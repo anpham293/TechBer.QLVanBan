@@ -15,6 +15,7 @@
     <text name="OrganizationUnitDisplayName">Organization unit display name</text>
     <text name="PickOrganizationUnit">Pick organization unit</text>
 
+    <text name="SoQuyenHoSo">So quyen ho so</text>
     <text name="NhanHoSoGiay">Nhan ho so giay</text>
     <text name="NhapTenNguoiNopHoSo">Nhap ten nguoi nop ho so</text>
     <text name="BaoCaoHoSoTheoDuAn">Bao cao ho so theo du an</text>
