@@ -100,6 +100,44 @@
                         text: '<i class="fa fa-cog"></i> ' + app.localize('Actions') + ' <span class="caret"></span>',
                         items: [
                             {
+                                text: app.localize('NhanHoSoGiay'),
+                                visible: function (data) {
+                                    console.log(data);
+                                    return _permissions.edit && data.record.vanBanDuAn.trangThaiNhanHoSoGiay == 0;
+                                },
+                                action: function (data) {
+                                    // _createOrEditModal.open({id: data.record.vanBanDuAn.id});
+                                    sweetAlert({
+                                        text: app.localize("NhapTenNguoiNopHoSo"),
+                                        content:{
+                                            element: "input",
+                                            attributes:{
+                                                placeholder: "Nhập tên người nộp hồ sơ",
+                                                type: "text",
+                                            }
+                                        },
+                                        button:{
+                                            Text: app.localize("OK"),
+                                            closeModal: true
+                                        }
+                                    }).then(tenNguoiNopHoSo => {
+                                        if(tenNguoiNopHoSo != null){
+                                            _vanBanDuAnsService.nhanHoSoGiay({
+                                                id: data.record.vanBanDuAn.id,
+                                                tenNguoiNopHoSo: tenNguoiNopHoSo
+                                            }).then(result => {
+                                                if (result == 200){
+                                                    getVanBanDuAns();
+                                                }
+                                                else {
+                                                    swal(app.localize("Warning"), app.localize("CoLoiXayRa"), "warning");
+                                                }
+                                            })
+                                        }
+                                    })
+                                }
+                            },
+                            {
                                 text: app.localize('View'),
                                 action: function (data) {
                                     _viewVanBanDuAnModal.open({id: data.record.vanBanDuAn.id});
@@ -391,7 +429,7 @@
             }
 
             generateTextOnTree(ou) {
-                console.log(ou);
+                //console.log(ou);
                 var itemClass = ' ou-text-has-members';
                 var tenHienThi = '';
                 var mauHienThi = '';
@@ -542,7 +580,7 @@
                                             _disabled: !_permissions.edit || node.original.trangThai == 1,
                                             action: function (data) {
                                                 var instance = $.jstree.reference(data.reference);
-                                                console.log(node.original.trangThai);
+                                                //console.log(node.original.trangThai);
                                                 togglePage = false;
                                                 _chuyenDuyetHoSoModal.open({
                                                     quyTrinhDuAnAssignedId: node.id,
@@ -560,7 +598,7 @@
                                             _disabled: !_permissions.edit,
                                             action: function (data) {
                                                 var instance = $.jstree.reference(data.reference);
-                                                console.log(node);
+                                                //console.log(node);
                                                 _createOrEditQuyTrinhDuAnAssignedsModal.open({
                                                     id: node.id, parentId: (node.parent === "#") ? null : node.parent,
                                                     loaiDuAn: self.loaiDuAn

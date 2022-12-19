@@ -6,6 +6,7 @@ using System.Linq.Dynamic.Core;
 using Abp.Linq.Extensions;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Threading.Tasks;
 using Abp.Domain.Repositories;
 using TechBer.ChuyenDoiSo.QLVB.Exporting;
@@ -19,6 +20,8 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using TechBer.ChuyenDoiSo.Storage;
 using TechBer.ChuyenDoiSo.Dto;
+using TechBer.ChuyenDoiSo.QuanLyDanhMuc.Dtos;
+using GetAllForLookupTableInput = TechBer.ChuyenDoiSo.QLVB.Dtos.GetAllForLookupTableInput;
 
 namespace TechBer.ChuyenDoiSo.QLVB
 {
@@ -87,7 +90,10 @@ namespace TechBer.ChuyenDoiSo.QLVB
                             ? o.FileVanBan
                             : JsonConvert.DeserializeObject<FileMauSerializeObj>(o.FileVanBan).FileName),
                         Id = o.Id,
-                        ViTriLuuTru = o.ViTriLuuTru
+                        ViTriLuuTru = o.ViTriLuuTru,
+                        TrangThaiNhanHoSoGiay = o.TrangThaiNhanHoSoGiay,
+                        ThoiGianNhanHoSoGiay = o.ThoiGianNhanHoSoGiay,
+                        TenNguoiGiaoHoSo = o.TenNguoiGiaoHoSo
                     },
                     DuAnName = s1 == null || s1.Name == null ? "" : s1.Name.ToString(),
                     QuyTrinhDuAnName = s2 == null || s2.Name == null ? "" : s2.Name.ToString()
@@ -403,6 +409,31 @@ namespace TechBer.ChuyenDoiSo.QLVB
                 totalCount,
                 lookupTableDtoList
             );
+        }
+
+        public async Task<int> NhanHoSoGiay(NhanHoSoGiayDto input)
+        {
+            try
+            {
+                var vanBanDuAn = await _vanBanDuAnRepository.FirstOrDefaultAsync(input.Id);
+                if (vanBanDuAn != null)
+                {
+                    vanBanDuAn.TrangThaiNhanHoSoGiay = 1;
+                    vanBanDuAn.ThoiGianNhanHoSoGiay = DateTime.Now;
+                    vanBanDuAn.TenNguoiGiaoHoSo = input.TenNguoiNopHoSo;
+                }
+                else
+                {
+                    return (int)HttpStatusCode.InternalServerError;   
+                }
+
+                await _vanBanDuAnRepository.UpdateAsync(vanBanDuAn);
+                return (int)HttpStatusCode.OK;
+            }
+            catch (Exception ex)
+            {
+                return (int)HttpStatusCode.InternalServerError;
+            }
         }
     }
 }

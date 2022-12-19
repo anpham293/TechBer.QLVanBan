@@ -34,5 +34,10 @@ namespace TechBer.ChuyenDoiSo.QuanLyDanhMuc.Dtos
         
         public string TenNguoiNop { get; set; }
     }
-    
+
+    public class NhanHoSoGiayDto
+    {
+        public int Id { get; set; }
+        public string TenNguoiNopHoSo { get; set; }
+    }
 }
