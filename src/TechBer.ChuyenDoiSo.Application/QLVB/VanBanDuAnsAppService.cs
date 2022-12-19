@@ -284,7 +284,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
                     vanBanDuAn.Name = input.Name;
                     vanBanDuAn.KyHieuVanBan = input.KyHieuVanBan;
                     vanBanDuAn.NgayBanHanh = input.NgayBanHanh;
-                    vanBanDuAn.ViTriLuuTru = input.ViTriLuuTru;
+                    vanBanDuAn.SoLuongVanBanGiay = input.SoLuongVanBanGiay;
                     vanBanDuAn.SoTienThanhToan = input.SoTienThanhToan;
                     await _vanBanDuAnRepository.UpdateAsync(vanBanDuAn);
                 }

@@ -36,17 +36,16 @@
             </div>
 
             <div class="form-group">
+                <label for="VanBanDuAn_SoLuongVanBanGiay">@L("SoQuyenHoSo")</label>
+                <input class="form-control" id="VanBanDuAn_SoLuongVanBanGiay" type="number" name="soLuongVanBanGiay" value="@Model.VanBanDuAn.SoLuongVanBanGiay"/>
+            </div>
+            
+            <div class="form-group">
                 <label for="VanBanDuAn_FileVanBan">@L("FileHoSo")</label>
-
                 <div class="custom-file form-group">
                     <input id="VanBanDuAn_FileVanBan" type="file" name="fileMau" accept="application/pdf" value="" class="form-control custom-file-input mb-4"/>
                     <label id="custom-select-file" class="custom-file-label">Chọn file...</label>
                 </div>
-            </div>
-
-            <div class="form-group">
-                <label for="VanBanDuAn_ViTriLuuTru">@L("ViTriLuuTru")</label>
-               <input class="form-control" id="VanBanDuAn_ViTriLuuTru" value="@Model.VanBanDuAn.ViTriLuuTru" type="text" name="viTriLuuTru" />
             </div>
 
             <div class="form-group">    

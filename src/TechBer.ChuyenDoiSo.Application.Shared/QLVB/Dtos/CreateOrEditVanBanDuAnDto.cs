@@ -28,7 +28,8 @@
          public string FileName { get; set; }
          public string ContentType { get; set; }
          
-         public string ViTriLuuTru { get; set; }
          public decimal SoTienThanhToan { get; set; }
+         
+         public int SoLuongVanBanGiay { get; set; }
      }
  }

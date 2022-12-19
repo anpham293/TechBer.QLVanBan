@@ -44,5 +44,6 @@ namespace TechBer.ChuyenDoiSo.QLVB
         public virtual int TrangThaiNhanHoSoGiay { get; set; }
         public virtual string TenNguoiGiaoHoSo { get; set; }
         public virtual DateTime? ThoiGianNhanHoSoGiay { get; set; }
+        public virtual int SoLuongVanBanGiay { get; set; }
     }
 }
