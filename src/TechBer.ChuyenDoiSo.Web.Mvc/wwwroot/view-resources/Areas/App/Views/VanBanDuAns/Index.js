@@ -138,6 +138,19 @@
                                 }
                             },
                             {
+                                text: app.localize('ChuyenDuyetHoSo'),
+                                visible: function (data) {
+                                    return _permissions.edit && data.record.vanBanDuAn.trangThaiChuyenDuyetHoSo == 0;
+                                },
+                                action: function (data) {
+                                    _chuyenDuyetHoSoModal.open({
+                                        vanBanDuAnId: data.record.vanBanDuAn.id,
+                                        typeDuyetHoSo: app.typeDuyetHoSoConst.quanLyDuyet
+                                        // type = 1: quản lý, 2: chánh vp
+                                    })
+                                }
+                            },
+                            {
                                 text: app.localize('View'),
                                 action: function (data) {
                                     _viewVanBanDuAnModal.open({id: data.record.vanBanDuAn.id});
@@ -260,20 +273,35 @@
                 },
                 {
                     targets: 5,
-                    data: "duAnName",
-                    name: "duAnFk.name"
+                    data: "vanBanDuAn",
+                    name: "duAnFk.name",
+                    render: function (displayName, type, row, meta) {
+                        if(row.vanBanDuAn.trangThaiChuyenDuyetHoSo == app.trangThaiDuyetHoSoConst.chuaGuiDuyet){
+                            return "<label class='badge badge-danger'>Chưa gửi duyệt</label>"
+                        }
+                        if(row.vanBanDuAn.trangThaiChuyenDuyetHoSo == app.trangThaiDuyetHoSoConst.dangChoDuyet){
+                            return "<labe class='badge badge-info'>Đang gửi duyệt <br>T.gian gửi: "+ moment(row.vanBanDuAn.ngayGui).format('DD/MM/YYYY HH:mm:ss') +"</label>"
+                        }
+                        if(row.vanBanDuAn.trangThaiChuyenDuyetHoSo == app.trangThaiDuyetHoSoConst.daDuyet){
+                            return "<label class='badge badge-success'>Đã duyệt <br>T.gian duyệt: "+ moment(row.vanBanDuAn.ngayDuyet).format('DD/MM/YYYY HH:mm:ss') +" </label>"
+                        }
+                    }
                 },
                 {
                     targets: 6,
-                    data: "quyTrinhDuAnName",
-                    name: "quyTrinhDuAnFk.name"
-                },
-                {
-                    targets: 7,
-                    data: "vanBanDuAn.viTriLuuTru",
-                    name: "viTriLuuTru",
+                    data: "vanBanDuAn",
+                    name: "duAnFk.name",
+                    render: function (displayName, type, row, meta) {
+                        console.log(row);
+                        if(row.vanBanDuAn.trangThaiNhanHoSoGiay == app.trangThaiNhanHoSoGiay.chuaNopHoSoGiay){
+                            return "<label class='badge badge-danger'>Chưa giao hồ sơ giấy</label>"
+                        }
+                        if(row.vanBanDuAn.trangThaiNhanHoSoGiay == app.trangThaiNhanHoSoGiay.daNopHoSoGiay){
+                            return "<labe class='badge badge-success'>N.giao: "+row.vanBanDuAn.tenNguoiGiaoHoSo +"<br>T.gian giao: "+ moment(row.vanBanDuAn.thoiGianNhanHoSoGiay).format('DD/MM/YYYY HH:mm:ss') +"</label>"
+                        }
+                    }
                 }
-            ],
+            ],  
             // initComplete
         });
 
@@ -575,23 +603,23 @@
                             contextmenu: {
                                 items: function (node) {
                                     var items = {
-                                        chuyenDuyetHoSoUint: {
-                                            label: app.localize('ChuyenDuyetHoSo'),
-                                            _disabled: !_permissions.edit || node.original.trangThai == 1,
-                                            action: function (data) {
-                                                var instance = $.jstree.reference(data.reference);
-                                                //console.log(node.original.trangThai);
-                                                togglePage = false;
-                                                _chuyenDuyetHoSoModal.open({
-                                                    quyTrinhDuAnAssignedId: node.id,
-                                                    typeDuyetHoSo : app.typeDuyetHoSoConst.quanLyDuyet
-                                                    // type = 1: quản lý, 2: chánh vp
-                                                }, function (updatedOu) {
-                                                    self.reload();
-                                                    togglePage = true;
-                                                });
-                                            }
-                                        },
+                                        // chuyenDuyetHoSoUint: {
+                                        //     label: app.localize('ChuyenDuyetHoSo'),
+                                        //     _disabled: !_permissions.edit || node.original.trangThai == 1,
+                                        //     action: function (data) {
+                                        //         var instance = $.jstree.reference(data.reference);
+                                        //         //console.log(node.original.trangThai);
+                                        //         togglePage = false;
+                                        //         _chuyenDuyetHoSoModal.open({
+                                        //             quyTrinhDuAnAssignedId: node.id,
+                                        //             typeDuyetHoSo : app.typeDuyetHoSoConst.quanLyDuyet
+                                        //             // type = 1: quản lý, 2: chánh vp
+                                        //         }, function (updatedOu) {
+                                        //             self.reload();
+                                        //             togglePage = true;
+                                        //         });
+                                        //     }
+                                        // },
                                         editUnit: {
                                             label: app.localize('Edit'),
                                             icon: 'la la-pencil',

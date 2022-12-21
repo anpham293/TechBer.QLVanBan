@@ -73,8 +73,13 @@
             chanhVanPhongDuyet: 2
         },
         trangThaiDuyetHoSoConst:{
+            chuaGuiDuyet: 0,
             dangChoDuyet:1,
             daDuyet:2
+        },
+        trangThaiNhanHoSoGiay:{
+            chuaNopHoSoGiay: 0,
+            daNopHoSoGiay: 1
         }
     });
 

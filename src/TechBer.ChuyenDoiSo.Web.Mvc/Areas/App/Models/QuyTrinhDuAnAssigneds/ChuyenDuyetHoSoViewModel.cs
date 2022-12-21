@@ -7,7 +7,7 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Models.QuyTrinhDuAnAssigneds
 {
     public class ChuyenDuyetHoSoModalViewModel
     {
-        public QuyTrinhDuAnAssignedDto QuyTrinhDuAnAssigned { get; set; }
+        public VanBanDuAnDto VanBanDuAn { get; set; }
         public DuAnDto DuAn { get; set; }
         public int SoLuongVanBan { get; set; }
         public List<CommonLookupTableDto> ListKeToanTiepNhan { get; set; }
@@ -20,7 +20,7 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Models.QuyTrinhDuAnAssigneds
 
     public class ChuyenDuyetHoSoModalInput
     {
-        public int QuyTrinhDuAnAssignedId { get; set; }
+        public int VanBanDuAnId { get; set; }
         public int TypeDuyetHoSo { get; set; }
     }
 

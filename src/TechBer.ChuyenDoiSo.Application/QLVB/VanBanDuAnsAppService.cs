@@ -93,7 +93,14 @@ namespace TechBer.ChuyenDoiSo.QLVB
                         ViTriLuuTru = o.ViTriLuuTru,
                         TrangThaiNhanHoSoGiay = o.TrangThaiNhanHoSoGiay,
                         ThoiGianNhanHoSoGiay = o.ThoiGianNhanHoSoGiay,
-                        TenNguoiGiaoHoSo = o.TenNguoiGiaoHoSo
+                        TenNguoiGiaoHoSo = o.TenNguoiGiaoHoSo,
+                        TrangThaiChuyenDuyetHoSo = o.TrangThaiChuyenDuyetHoSo,
+                        NguoiGuiId = o.NguoiGuiId,
+                        NgayGui = o.NgayGui,
+                        NguoiDuyetId = o.NguoiDuyetId,
+                        NgayDuyet = o.NgayDuyet,
+                        KeToanTiepNhanId = o.KeToanTiepNhanId,
+                        XuLyCuaLanhDao = o.XuLyCuaLanhDao
                     },
                     DuAnName = s1 == null || s1.Name == null ? "" : s1.Name.ToString(),
                     QuyTrinhDuAnName = s2 == null || s2.Name == null ? "" : s2.Name.ToString()
@@ -434,6 +441,64 @@ namespace TechBer.ChuyenDoiSo.QLVB
             {
                 return (int)HttpStatusCode.InternalServerError;
             }
+        }
+        public async Task XuLyHoSo(XuLyHoSoInputDto input)
+        {
+            var vanBanDuAn = await _vanBanDuAnRepository.FirstOrDefaultAsync(input.vanBanDuAnId);
+            
+            if (input.TypeDuyetHoSo == ChuyenDuyetHoSoConst.QUAN_LY_DUYET)
+            {
+                vanBanDuAn.KeToanTiepNhanId = input.keToanTiepNhanId;
+                vanBanDuAn.NgayGui = DateTime.Now;
+                vanBanDuAn.NguoiGuiId = input.NguoiGuiId;
+                vanBanDuAn.TrangThaiChuyenDuyetHoSo = TrangThaiDuyetHoSoCont.DANG_CHO_DUYET;
+                vanBanDuAn.XuLyCuaLanhDao = input.XuLyCuaLanhDao;
+                _vanBanDuAnRepository.Update(vanBanDuAn);
+            }
+
+            if (input.TypeDuyetHoSo == ChuyenDuyetHoSoConst.CHANH_VAN_PHONG_DUYET)
+            {
+                vanBanDuAn.NguoiDuyetId = AbpSession.UserId;
+                vanBanDuAn.NgayDuyet = DateTime.Now;
+                vanBanDuAn.XuLyCuaLanhDao = input.XuLyCuaLanhDao;
+                vanBanDuAn.TrangThaiChuyenDuyetHoSo = TrangThaiDuyetHoSoCont.DA_DUYET;
+                _vanBanDuAnRepository.Update(vanBanDuAn);
+            }
+            
+        }
+        public async Task<PagedResultDto<GetVanBanDuAnForViewDto>> GetAllHoSoCanDuyet(
+                                                               GetAllHoSoCanDuyetInput input)
+        {
+            var filteredQuyTrinhDuAnAssigneds = _vanBanDuAnRepository.GetAll()
+                .Include(e => e.QuyTrinhDuAnAssignedFk)
+                .Include(e => e.DuAnFk)
+                .WhereIf(input.TrangThaiDuyetFilter!=null , e => e.TrangThaiChuyenDuyetHoSo == input.TrangThaiDuyetFilter)
+                .WhereIf(true , e => e.TrangThaiChuyenDuyetHoSo != TrangThaiDuyetHoSoCont.CHUA_DUYET)
+                .WhereIf(!string.IsNullOrWhiteSpace(input.DuAnNameFilter), e => e.DuAnFk.Name.Contains(input.DuAnNameFilter))
+                ;
+
+            var pagedAndFilteredQuyTrinhDuAnAssigneds = filteredQuyTrinhDuAnAssigneds
+                .OrderBy(input.Sorting ?? "id asc")
+                .PageBy(input);
+
+            var quyTrinhDuAnAssigneds = from o in pagedAndFilteredQuyTrinhDuAnAssigneds
+                select new GetVanBanDuAnForViewDto()
+                {
+                    VanBanDuAn = new VanBanDuAnDto()
+                    {
+                        Name = o.Name,
+                        SoLuongVanBanGiay = o.SoLuongVanBanGiay,
+                        Id = o.Id,
+                        TrangThaiChuyenDuyetHoSo = o.TrangThaiChuyenDuyetHoSo
+                    }
+                };
+
+            var totalCount = await filteredQuyTrinhDuAnAssigneds.CountAsync();
+
+            return new PagedResultDto<GetVanBanDuAnForViewDto>(
+                totalCount,
+                await quyTrinhDuAnAssigneds.ToListAsync()
+            );
         }
     }
 }

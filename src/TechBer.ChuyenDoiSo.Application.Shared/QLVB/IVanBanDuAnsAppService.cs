@@ -30,5 +30,10 @@ namespace TechBer.ChuyenDoiSo.QLVB
 		Task<PagedResultDto<VanBanDuAnQuyTrinhDuAnLookupTableDto>> GetAllQuyTrinhDuAnForLookupTable(GetAllForLookupTableInput input);
 
 		Task<int> NhanHoSoGiay(NhanHoSoGiayDto input);
+
+		Task XuLyHoSo(XuLyHoSoInputDto input);
+
+		Task<PagedResultDto<GetVanBanDuAnForViewDto>> GetAllHoSoCanDuyet(
+			GetAllHoSoCanDuyetInput input);
     }
 }

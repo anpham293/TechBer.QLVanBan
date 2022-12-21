@@ -216,10 +216,11 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
             var tenNguoiGiao = "";
             long nguoiGiaoId = -1;
             var ngayGuiPhieu = "";
-            var quyTrinhDuAnAssigned = _quyTrinhDuAnAssignedsRepository.FirstOrDefault(input.QuyTrinhDuAnAssignedId);
-            var duAn = _duAnRepository.FirstOrDefault((int)quyTrinhDuAnAssigned.DuAnId);
-            var vanBanDuAn = _vanBanDuAnRepository.GetAll().WhereIf(true, p => p.QuyTrinhDuAnAssignedId == quyTrinhDuAnAssigned.Id);
-            
+            var vanBanDuAn = _vanBanDuAnRepository.FirstOrDefault(input.VanBanDuAnId);
+            // var quyTrinhDuAnAssigned =
+            //     _quyTrinhDuAnAssignedsRepository.FirstOrDefaultAsync((long)vanBanDuAn.QuyTrinhDuAnAssignedId);
+            var duAn = _duAnRepository.FirstOrDefault((int)vanBanDuAn.DuAnId);
+
             List<CommonLookupTableDto> listKeToanPhuTrach = new List<CommonLookupTableDto>();
             foreach (var VARIABLE in _userRepository.GetAll())
             {
@@ -229,21 +230,18 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
                     DisplayName = VARIABLE.Surname + " " + VARIABLE.Name
                 });
             }
-
-           
-
-            if (quyTrinhDuAnAssigned.NgayGui.HasValue)
+            if (vanBanDuAn.NgayGui.HasValue)
             {
-                ngayGuiPhieu = (quyTrinhDuAnAssigned.NgayGui).ToString();
+                ngayGuiPhieu = (vanBanDuAn.NgayGui).ToString();
             }
             else
             {
                 ngayGuiPhieu = DateTime.Now.ToString("dd/MM/yyyy");
             }
 
-            if (quyTrinhDuAnAssigned.NguoiGuiId.HasValue)
+            if (vanBanDuAn.NguoiGuiId.HasValue)
             {
-                var nguoiGiao = _userRepository.FirstOrDefault((long)quyTrinhDuAnAssigned.NguoiGuiId);
+                var nguoiGiao = _userRepository.FirstOrDefault((long)vanBanDuAn.NguoiGuiId);
                 tenNguoiGiao = nguoiGiao.Surname + " " + nguoiGiao.Name;
                 nguoiGiaoId = nguoiGiao.Id;
             
@@ -254,12 +252,12 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
                 tenNguoiGiao = nguoiGiao.Surname + " " + nguoiGiao.Name;
                 nguoiGiaoId = nguoiGiao.Id;
             }
-            var keToanId = quyTrinhDuAnAssigned.KeToanTiepNhanId;
+            var keToanId = vanBanDuAn.KeToanTiepNhanId;
             var viewModel = new ChuyenDuyetHoSoModalViewModel()
             {
-                QuyTrinhDuAnAssigned = ObjectMapper.Map<QuyTrinhDuAnAssignedDto>(quyTrinhDuAnAssigned),
+                VanBanDuAn = ObjectMapper.Map<VanBanDuAnDto>(vanBanDuAn),
                 DuAn = ObjectMapper.Map<DuAnDto>(duAn),
-                SoLuongVanBan = vanBanDuAn.Count(),
+                SoLuongVanBan = vanBanDuAn.SoLuongVanBanGiay,
                 ListKeToanTiepNhan = listKeToanPhuTrach,
                 TenNguoiGiao = tenNguoiGiao,
                 NgayGuiPhieu = ngayGuiPhieu,

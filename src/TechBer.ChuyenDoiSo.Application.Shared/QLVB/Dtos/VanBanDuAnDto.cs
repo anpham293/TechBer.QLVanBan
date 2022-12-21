@@ -26,5 +26,13 @@ namespace TechBer.ChuyenDoiSo.QLVB.Dtos
         public int TrangThaiNhanHoSoGiay { get; set; }
         public string TenNguoiGiaoHoSo { get; set; }
         public DateTime? ThoiGianNhanHoSoGiay { get; set; }
+        public int TrangThaiChuyenDuyetHoSo { get; set; }
+        public long? NguoiGuiId { get; set; }
+        public DateTime? NgayGui { get; set; }
+        public long? NguoiDuyetId { get; set; }
+        public DateTime? NgayDuyet { get; set; }
+        public long? KeToanTiepNhanId { get; set; }
+        public string XuLyCuaLanhDao { get; set; }
+        public int SoLuongVanBanGiay { get; set; }
     }
 }
