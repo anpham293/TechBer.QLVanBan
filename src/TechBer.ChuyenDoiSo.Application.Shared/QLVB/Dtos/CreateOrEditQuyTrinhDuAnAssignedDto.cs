@@ -39,6 +39,6 @@ namespace TechBer.ChuyenDoiSo.QLVB.Dtos
         public long NguoiGuiId { get; set; }
         public long keToanTiepNhanId { get; set; }
         public long NguoiDuyetId { get; set; }
-        public int quyTrinhDuAnAssignedId { get; set; }
+        public int vanBanDuAnId { get; set; }
     }
 }

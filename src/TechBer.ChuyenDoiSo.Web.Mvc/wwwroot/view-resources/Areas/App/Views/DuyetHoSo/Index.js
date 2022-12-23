@@ -3,6 +3,7 @@
 
         var _$quyTrinhDuAnAssignedsTable = $('#QuyTrinhDuAnAssignedsTable');
         var _quyTrinhDuAnAssignedsService = abp.services.app.quyTrinhDuAnAssigneds;
+        var _vanBanDuAns = abp.services.app.vanBanDuAns;
         var _entityTypeFullName = 'TechBer.ChuyenDoiSo.QLVB.QuyTrinhDuAnAssigned';
 
         $('.date-picker').datetimepicker({
@@ -48,12 +49,17 @@
             return element.data("DateTimePicker").date().format("YYYY-MM-DDT00:00:00Z");
         }
 
+        var _viewVanBanDuAnModal = new app.ModalManager({
+            viewUrl: abp.appPath + 'App/VanBanDuAns/ViewvanBanDuAnModal',
+            modalClass: 'ViewVanBanDuAnModal',
+            modalSize: "modal-xl"
+        });
         var dataTable = _$quyTrinhDuAnAssignedsTable.DataTable({
             paging: true,
             serverSide: true,
             processing: true,
             listAction: {
-                ajaxFunction: _quyTrinhDuAnAssignedsService.getAllHoSoCanDuyet,
+                ajaxFunction: _vanBanDuAns.getAllHoSoCanDuyet,
                 inputFilter: function () {
                     return {
                         textFilter: $('#TextFilter').val(),
@@ -81,7 +87,7 @@
                                 },
                                 action: function (data) {
                                     _chuyenDuyetHoSoModal.open({
-                                        quyTrinhDuAnAssignedId: data.record.quyTrinhDuAnAssigned.id,
+                                        vanBanDuAnId: data.record.vanBanDuAn.id,
                                         typeDuyetHoSo : app.typeDuyetHoSoConst.chanhVanPhongDuyet
                                         // type = 1: quản lý, 2: chánh vp
                                     });
@@ -90,67 +96,38 @@
                             {
                                 text: app.localize('View'),
                                 action: function (data) {
-                                    _viewQuyTrinhDuAnAssignedModal.open({ id: data.record.quyTrinhDuAnAssigned.id });
+                                    _viewVanBanDuAnModal.open({id: data.record.vanBanDuAn.id});
                                 }
                             },
-                            {
-                                text: app.localize('Edit'),
-                                visible: function () {
-                                    return _permissions.edit;
-                                },
-                                action: function (data) {
-                                    _createOrEditModal.open({ id: data.record.quyTrinhDuAnAssigned.id });
-                                }
-                            },
-                            {
-                                text: app.localize('History'),
-                                visible: function () {
-                                    return entityHistoryIsEnabled();
-                                },
-                                action: function (data) {
-                                    _entityTypeHistoryModal.open({
-                                        entityTypeFullName: _entityTypeFullName,
-                                        entityId: data.record.quyTrinhDuAnAssigned.id
-                                    });
-                                }
-                            },
-                            {
-                                text: app.localize('Delete'),
-                                visible: function () {
-                                    return _permissions.delete;
-                                },
-                                action: function (data) {
-                                    deleteQuyTrinhDuAnAssigned(data.record.quyTrinhDuAnAssigned);
-                                }
-                            }]
+                        ]
                     }
                 },
                 {
                     targets: 1,
-                    data: "duAnName",
+                    data: "vanBanDuAn",
                     name: "name",
-                    render(duAnName){
-                        return '<a style="white-space: normal">'+ duAnName +'</a>';
+                    render(vanBanDuAn){
+                        return '<a style="white-space: normal">'+ vanBanDuAn.name +'</a>';
                     }
                 },
                 {
                     targets: 2,
-                    data: "quyTrinhDuAnAssigned",
+                    data: "vanBanDuAn",
                     name: "name",
-                    render(quyTrinhDuAnAssigned){
-                        return '<a style="white-space: normal">'+ quyTrinhDuAnAssigned.name +'</a>';
+                    render(vanBanDuAn){
+                        return '<a style="white-space: normal">'+ vanBanDuAn.soLuongVanBanGiay +'</a>';
                     }
                 },
                 {
                     targets: 3,
-                    data: "quyTrinhDuAnAssigned",
+                    data: "vanBanDuAn",
                     name: "name",
-                    render(quyTrinhDuAnAssigned){
-                        if(quyTrinhDuAnAssigned.trangThai == app.trangThaiDuyetHoSoConst.dangChoDuyet){
-                            return '<button class="btn btn-warning" >Đang chờ duyệt</button>';
+                    render(vanBanDuAn){
+                        if(vanBanDuAn.trangThaiChuyenDuyetHoSo == app.trangThaiDuyetHoSoConst.dangChoDuyet){
+                            return '<label class="badge badge-danger" >Đang chờ duyệt</label>';
                         }
-                        if(quyTrinhDuAnAssigned.trangThai == app.trangThaiDuyetHoSoConst.daDuyet){
-                            return '<button class="btn btn-success" >Đã duyệt</button>';
+                        if(vanBanDuAn.trangThaiChuyenDuyetHoSo == app.trangThaiDuyetHoSoConst.daDuyet){
+                            return '<label class="badge badge-success" >Đã duyệt</label>';
                         }
                     }
                 }

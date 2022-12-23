@@ -1,6 +1,7 @@
 ﻿(function ($) {
     app.modals.ChuyenDuyetHoSoModal = function () {
         var _quyTrinhDuAnAssignedsService = abp.services.app.quyTrinhDuAnAssigneds;
+        var _vanBanDuAnsService = abp.services.app.vanBanDuAns;
 
         var _modalManager;
         var _$quyTrinhDuAnAssignedInformationForm = null;
@@ -9,6 +10,13 @@
             placeholder: 'Chưa chọn kế toán phụ trách',
             allowClear: true
         }).trigger("change");
+        
+        $('#keToanTiepNhanId').change(function() {
+            var xuLy='';
+            let soLuongVanBan = parseInt($('#SoLuongVanBan').attr("data-value")) - 1;
+            xuLy = 'Giao cho đồng chí ' + $('#nguoiGiaoId').attr("tenNguoiGiao") + ' 1 bộ. Đồng chí ' + $('#select2-keToanTiepNhanId-container').attr('title')+ ' '+ soLuongVanBan + ' bộ'; 
+            $('#XuLyCuaLanhDao').val(xuLy);
+        });
         
         this.init = function (modalManager) {
             _modalManager = modalManager;
@@ -32,7 +40,7 @@
 
             console.log(chuyenDuyetHoSo);
             _modalManager.setBusy(true);
-            _quyTrinhDuAnAssignedsService.xuLyHoSo(
+            _vanBanDuAnsService.xuLyHoSo(
                 chuyenDuyetHoSo
             ).done(function (result) {
                 abp.notify.info(app.localize('SavedSuccessfully'));

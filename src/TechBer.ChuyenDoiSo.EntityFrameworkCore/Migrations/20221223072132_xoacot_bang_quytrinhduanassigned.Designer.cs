@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TechBer.ChuyenDoiSo.EntityFrameworkCore;
 
 namespace TechBer.ChuyenDoiSo.Migrations
 {
     [DbContext(typeof(ChuyenDoiSoDbContext))]
-    partial class ChuyenDoiSoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221223072132_xoacot_bang_quytrinhduanassigned")]
+    partial class xoacot_bang_quytrinhduanassigned
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
