@@ -25,12 +25,6 @@ namespace TechBer.ChuyenDoiSo.QLVB.Dtos
         public int? DuAnId { get; set; }
         
         public int TrangThai { get; set; }
-        public long? NguoiGuiId { get; set; }
-        public DateTime? NgayGui { get; set; }
-        public long? NguoiDuyetId { get; set; }
-        public DateTime? NgayDuyet { get; set; }
-        public long? KeToanTiepNhanId { get; set; }
-        public string XuLyCuaLanhDao { get; set; }
     }
 
     public class QuyTrinhDuAnAssignedHasMemberCountDto : QuyTrinhDuAnAssignedDto

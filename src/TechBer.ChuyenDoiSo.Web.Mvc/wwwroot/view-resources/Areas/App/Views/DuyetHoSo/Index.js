@@ -124,10 +124,10 @@
                     name: "name",
                     render(vanBanDuAn){
                         if(vanBanDuAn.trangThaiChuyenDuyetHoSo == app.trangThaiDuyetHoSoConst.dangChoDuyet){
-                            return '<button class="btn btn-warning" >Đang chờ duyệt</button>';
+                            return '<label class="badge badge-danger" >Đang chờ duyệt</label>';
                         }
                         if(vanBanDuAn.trangThaiChuyenDuyetHoSo == app.trangThaiDuyetHoSoConst.daDuyet){
-                            return '<button class="btn btn-success" >Đã duyệt</button>';
+                            return '<label class="badge badge-success" >Đã duyệt</label>';
                         }
                     }
                 }

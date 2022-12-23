@@ -13,7 +13,8 @@ namespace TechBer.ChuyenDoiSo.QLVB
 {
 	[Table("QuyTrinhDuAnAssigneds")]
     [Audited]
-    public class QuyTrinhDuAnAssigned : FullAuditedEntity<long> , IMayHaveTenant
+    public class 
+	    QuyTrinhDuAnAssigned : FullAuditedEntity<long> , IMayHaveTenant
     {
 			public int? TenantId { get; set; }
 			
@@ -52,11 +53,5 @@ namespace TechBer.ChuyenDoiSo.QLVB
 		public DuAn DuAnFk { get; set; }
 		
 		public virtual int TrangThai { get; set; }
-		public virtual long? NguoiGuiId { get; set; }
-		public virtual DateTime? NgayGui { get; set; }
-		public virtual long? NguoiDuyetId { get; set; }
-		public virtual DateTime? NgayDuyet { get; set; }
-		public virtual long? KeToanTiepNhanId { get; set; }
-		public virtual string XuLyCuaLanhDao { get; set; }
     }
 }
