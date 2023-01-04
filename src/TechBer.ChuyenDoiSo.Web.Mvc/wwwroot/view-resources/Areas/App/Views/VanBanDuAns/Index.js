@@ -213,23 +213,7 @@
                 {
                     targets: 2,
                     data: "vanBanDuAn.kyHieuVanBan",
-                    name: "kyHieuVanBan",
-                    // render: function (vanBanDuAn) {
-                    //
-                    //     if(vanBanDuAn.fileVanBan != '')
-                    //         return '<a style="white-space: normal">'+vanBanDuAn.kyHieuVanBan+'</a>';
-                    //     if(vanBanDuAn.fileVanBan == '')
-                    //     {
-                    //         // if(vanBanDuAn.ngayBanHanh)
-                    //         let NgayBanHanh = moment(moment(vanBanDuAn.ngayBanHanh).format("MM/DD/YYYY HH:mm:ss"));
-                    //         let NgayHienTai = moment(moment().format("MM/DD/YYYY HH:mm:ss"));
-                    //         let ThoiGianGioiHan = NgayHienTai.diff(NgayBanHanh, 'days');
-                    //         if(ThoiGianGioiHan > 5) //Vượt quá 5 ngày không cập nhật file
-                    //             return '<a style="white-space: normal; color:red">'+vanBanDuAn.kyHieuVanBan+'</a>';
-                    //         if(ThoiGianGioiHan <= 5)
-                    //             return '<a style="white-space: normal">'+vanBanDuAn.kyHieuVanBan+'</a>';
-                    //     }
-                    // }
+                    name: "kyHieuVanBan"
                 },
                 {
                     targets: 3,
@@ -240,35 +224,14 @@
                             return moment(ngayBanHanh).format('L');
                         }
                         return "";
-                    } // render: function (ngayBanHanh) {
-                                        //     if (ngayBanHanh) {
-                                        //         return moment(ngayBanHanh).format('L');
-                                        //     }
-                                        //     return "";
-                                        // }
-                    // render: function (vanBanDuAn) {
-                    //
-                    //     if(vanBanDuAn.fileVanBan != '')
-                    //         return '<a style="white-space: normal">'+moment(vanBanDuAn.ngayBanHanh).format('L')+'</a>';
-                    //     if(vanBanDuAn.fileVanBan == '')
-                    //     {
-                    //         // if(vanBanDuAn.ngayBanHanh)
-                    //         let NgayBanHanh = moment(moment(vanBanDuAn.ngayBanHanh).format("MM/DD/YYYY HH:mm:ss"));
-                    //         let NgayHienTai = moment(moment().format("MM/DD/YYYY HH:mm:ss"));
-                    //         let ThoiGianGioiHan = NgayHienTai.diff(NgayBanHanh, 'days');
-                    //         if(ThoiGianGioiHan > 5) //Vượt quá 5 ngày không cập nhật file
-                    //             return '<a style="white-space: normal; color:red">'+moment(vanBanDuAn.ngayBanHanh).format('L')+'</a>';
-                    //         if(ThoiGianGioiHan <= 5)
-                    //             return '<a style="white-space: normal">'+moment(vanBanDuAn.ngayBanHanh).format('L')+'</a>';
-                    //     }
-                    // }
+                    }
                 },
                 {
                     targets: 4,
                     data: "vanBanDuAn.fileVanBan",
                     name: "fileVanBan",
                     render: function (displayName, type, row, meta) {
-                        return "<a class='text-info text-bold link-view' data-target='" + row.vanBanDuAn.id + "' style='cursor: pointer;color:whitesmoke'>" + row.vanBanDuAn.fileVanBan + "</a>";
+                        return "<a class='text-info text-bold link-view' data-target='" + row.vanBanDuAn.id + "' style='cursor: pointer;color:whitesmoke; white-space: normal'>" + row.vanBanDuAn.fileVanBan + "</a>";
                     }
                 },
                 {
