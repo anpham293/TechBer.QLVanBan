@@ -1,6 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
-  <texts>    <text name="Chuong">Chuong</text>
+  <texts>    <text name="LoaiKhoan">Loai khoan</text>
+    <text name="TechBer.ChuyenDoiSo.QuanLyDanhMuc.LoaiKhoan">LoaiKhoan</text>
+    <text name="LoaiKhoansHeaderInfo">Loai khoans header info</text>
+    <text name="CreateNewLoaiKhoan">Create new loai khoan</text>
+    <text name="EditLoaiKhoan">Edit loai khoan</text>
+    <text name="DeleteLoaiKhoan">Delete loai khoan</text>
+    <text name="LoaiKhoans">Loai khoans</text>
+    <text name="Chuong">Chuong</text>
     <text name="TechBer.ChuyenDoiSo.QuanLyDanhMuc.Chuong">Chuong</text>
     <text name="MaSo">Ma so</text>
     <text name="ChuongsHeaderInfo">Chuongs header info</text>

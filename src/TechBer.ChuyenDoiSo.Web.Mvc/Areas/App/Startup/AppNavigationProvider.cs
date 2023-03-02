@@ -92,6 +92,15 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Startup
                         permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Chuongs)
                     )
                 )
+                    .AddItem(new MenuItemDefinition(
+                        AppPageNames.Common.LoaiKhoans,
+                        L("LoaiKhoans"),
+                        url: "App/LoaiKhoans",
+                        icon: "flaticon-more",
+                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_LoaiKhoans)
+                    )
+                )
+
                 )
 
 
