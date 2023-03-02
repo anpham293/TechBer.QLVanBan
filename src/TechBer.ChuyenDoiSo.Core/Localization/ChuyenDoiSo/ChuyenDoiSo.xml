@@ -1,6 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
-  <texts>    <text name="CapQuanLy">Cap quan ly</text>
+  <texts>    <text name="Chuong">Chuong</text>
+    <text name="TechBer.ChuyenDoiSo.QuanLyDanhMuc.Chuong">Chuong</text>
+    <text name="MaSo">Ma so</text>
+    <text name="ChuongsHeaderInfo">Chuongs header info</text>
+    <text name="CreateNewChuong">Create new chuong</text>
+    <text name="EditChuong">Edit chuong</text>
+    <text name="DeleteChuong">Delete chuong</text>
+    <text name="Chuongs">Chuongs</text>
+    <text name="CapQuanLyTen">Cap quan ly ten</text>
+    <text name="PickCapQuanLy">Pick cap quan ly</text>
+    <text name="CapQuanLy">Cap quan ly</text>
     <text name="TechBer.ChuyenDoiSo.QuanLyDanhMuc.CapQuanLy">CapQuanLy</text>
     <text name="Ten">Ten</text>
     <text name="CapQuanLiesHeaderInfo">Cap quan lies header info</text>

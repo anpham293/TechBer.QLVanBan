@@ -53,6 +53,8 @@ namespace TechBer.ChuyenDoiSo
     {
         public static void CreateMappings(IMapperConfigurationExpression configuration)
         {
+            configuration.CreateMap<CreateOrEditChuongDto, Chuong>().ReverseMap();
+            configuration.CreateMap<ChuongDto, Chuong>().ReverseMap();
             configuration.CreateMap<CreateOrEditCapQuanLyDto, CapQuanLy>().ReverseMap();
             configuration.CreateMap<CapQuanLyDto, CapQuanLy>().ReverseMap();
             configuration.CreateMap<CreateOrEditQuyTrinhDuAnAssignedDto, QuyTrinhDuAnAssigned>().ReverseMap();

@@ -1,5 +1,4 @@
-﻿
-using Abp.Application.Navigation;
+﻿using Abp.Application.Navigation;
 using Abp.Authorization;
 using Abp.Localization;
 using TechBer.ChuyenDoiSo.Authorization;
@@ -83,10 +82,19 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Startup
                         icon: "flaticon-more",
                         permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_CapQuanLies)
                     )
+
+                )
+                    .AddItem(new MenuItemDefinition(
+                        AppPageNames.Common.Chuongs,
+                        L("Chuongs"),
+                        url: "App/Chuongs",
+                        icon: "flaticon-more",
+                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Chuongs)
+                    )
                 )
                 )
-                
-               
+
+
                 // .AddItem(new MenuItemDefinition(
                 //         AppPageNames.Host.Tenants,
                 //         L("Tenants"),
