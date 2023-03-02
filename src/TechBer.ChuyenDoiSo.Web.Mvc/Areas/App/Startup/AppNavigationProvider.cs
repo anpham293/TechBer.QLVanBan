@@ -1,4 +1,5 @@
-﻿using Abp.Application.Navigation;
+﻿
+using Abp.Application.Navigation;
 using Abp.Authorization;
 using Abp.Localization;
 using TechBer.ChuyenDoiSo.Authorization;
@@ -75,6 +76,14 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Startup
                             permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_LoaiDuAns)
                         )
                     )
+                    .AddItem(new MenuItemDefinition(
+                        AppPageNames.Common.CapQuanLies,
+                        L("CapQuanLies"),
+                        url: "App/CapQuanLies",
+                        icon: "flaticon-more",
+                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_CapQuanLies)
+                    )
+                )
                 )
                 
                

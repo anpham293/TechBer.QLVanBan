@@ -1,6 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
-  <texts>
+  <texts>    <text name="CapQuanLy">Cap quan ly</text>
+    <text name="TechBer.ChuyenDoiSo.QuanLyDanhMuc.CapQuanLy">CapQuanLy</text>
+    <text name="Ten">Ten</text>
+    <text name="CapQuanLiesHeaderInfo">Cap quan lies header info</text>
+    <text name="CreateNewCapQuanLy">Create new cap quan ly</text>
+    <text name="EditCapQuanLy">Edit cap quan ly</text>
+    <text name="DeleteCapQuanLy">Delete cap quan ly</text>
+    <text name="CapQuanLies">Cap quan lies</text>
+
     <text name="QuyTrinhDuAnAssignedName">Quy trinh du an assigned name</text>
     <text name="PickQuyTrinhDuAnAssigned">Pick quy trinh du an assigned</text>
     <text name="QuyTrinhDuAnAssigned">Quy trinh du an assigned</text>
