@@ -30,6 +30,13 @@ namespace TechBer.ChuyenDoiSo.Authorization
 
             var pages = context.GetPermissionOrNull(AppPermissions.Pages) ?? context.CreatePermission(AppPermissions.Pages, L("Pages"));
 
+            var chuongs = pages.CreateChildPermission(AppPermissions.Pages_Chuongs, L("Chuongs"));
+            chuongs.CreateChildPermission(AppPermissions.Pages_Chuongs_Create, L("CreateNewChuong"));
+            chuongs.CreateChildPermission(AppPermissions.Pages_Chuongs_Edit, L("EditChuong"));
+            chuongs.CreateChildPermission(AppPermissions.Pages_Chuongs_Delete, L("DeleteChuong"));
+
+
+
             var capQuanLies = pages.CreateChildPermission(AppPermissions.Pages_CapQuanLies, L("CapQuanLies"));
             capQuanLies.CreateChildPermission(AppPermissions.Pages_CapQuanLies_Create, L("CreateNewCapQuanLy"));
             capQuanLies.CreateChildPermission(AppPermissions.Pages_CapQuanLies_Edit, L("EditCapQuanLy"));

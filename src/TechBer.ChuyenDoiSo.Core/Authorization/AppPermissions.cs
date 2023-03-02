@@ -6,6 +6,11 @@
     /// </summary>
     public static class AppPermissions
     {
+        public const string Pages_Chuongs = "Pages.Chuongs";
+        public const string Pages_Chuongs_Create = "Pages.Chuongs.Create";
+        public const string Pages_Chuongs_Edit = "Pages.Chuongs.Edit";
+        public const string Pages_Chuongs_Delete = "Pages.Chuongs.Delete";
+
         public const string Pages_CapQuanLies = "Pages.CapQuanLies";
         public const string Pages_CapQuanLies_Create = "Pages.CapQuanLies.Create";
         public const string Pages_CapQuanLies_Edit = "Pages.CapQuanLies.Edit";

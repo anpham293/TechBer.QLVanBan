@@ -1,0 +1,59 @@
+﻿
+@using System.Globalization
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.Common.Modals
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.Chuongs
+@model CreateOrEditChuongModalViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditChuong")) : L("CreateNewChuong")))
+
+<div class="modal-body">
+        <div id="ChuongInformationsTab">
+            <form name="ChuongInformationsForm" role="form" novalidate class="form-validation">
+
+                @if (Model.IsEditMode)
+                {
+                    <input type="hidden" name="id" value="@Model.Chuong.Id" />
+                }
+
+				            
+								<div class="form-group m-form__group">
+										<label for="CapQuanLyTen">@L("CapQuanLy")</label>
+									    <div class="input-group">
+											<input class="form-control" id="CapQuanLyTen" name="capQuanLyTen" value="@Model.CapQuanLyTen" type="text" disabled>
+										<div class="input-group-append">
+											<button class="btn btn-primary blue" id="OpenCapQuanLyLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
+										</div> 
+										<div class="input-group-prepend">
+											<button class="btn btn-danger btn-icon" type="button" id="ClearCapQuanLyTenButton"><i class="fa fa-times"></i></button>
+										</div>
+									</div>
+								</div>
+
+								@if (Model.IsEditMode)
+								{
+									<input class="form-control" id="Chuong_CapQuanLyId" value="@Model.Chuong.CapQuanLyId" type="text" name="capQuanLyId"  hidden/>
+								}
+								 else
+								{ 
+									<input class="form-control" id="Chuong_CapQuanLyId" value="" type="text" name="capQuanLyId"  hidden/>
+								}
+
+
+
+				
+								<div class="form-group">
+									<label for="Chuong_MaSo">@L("MaSo")</label>
+									<input class="form-control" id="Chuong_MaSo" value="@Model.Chuong.MaSo" type="text" name="maSo"     />
+								</div>
+					
+								<div class="form-group">
+									<label for="Chuong_Ten">@L("Ten")</label>
+									<input class="form-control" id="Chuong_Ten" value="@Model.Chuong.Ten" type="text" name="ten"     />
+								</div>
+					
+
+            </form>
+        </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")
