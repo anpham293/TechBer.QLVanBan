@@ -1,0 +1,31 @@
+﻿
+@using System.Globalization
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.Common.Modals
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.CapQuanLies
+@model CreateOrEditCapQuanLyModalViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditCapQuanLy")) : L("CreateNewCapQuanLy")))
+
+<div class="modal-body">
+        <div id="CapQuanLyInformationsTab">
+            <form name="CapQuanLyInformationsForm" role="form" novalidate class="form-validation">
+
+                @if (Model.IsEditMode)
+                {
+                    <input type="hidden" name="id" value="@Model.CapQuanLy.Id" />
+                }
+
+				
+
+				
+								<div class="form-group">
+									<label for="CapQuanLy_Ten">@L("Ten")</label>
+									<input class="form-control" id="CapQuanLy_Ten" value="@Model.CapQuanLy.Ten" type="text" name="ten"     />
+								</div>
+					
+
+            </form>
+        </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")
