@@ -1,0 +1,50 @@
+﻿@using TechBer.ChuyenDoiSo.Authorization
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.DuAns
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Startup
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.Common.Modals
+@model DuAnLoaiKhoanLookupTableViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("PickLoaiKhoan")))
+
+
+
+<div class="@(await GetContainerClass()) kt-grid__item kt-grid__item--fluid">
+    <div class="kt-portlet kt-portlet--mobile">
+        <div class="kt-portlet__body">
+            <div class="kt-form">
+                <div class="row align-items-center mb-4">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="LoaiKhoanTableFilter">@L("TimKiemTatCa")</label>
+                            <input type="text" id="LoaiKhoanTableFilter" class="form-control m-input" placeholder="@L("SearchWithThreeDot")" value="@Model.FilterText">
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <div>
+                                <button id="GetLoaiDuAnButton" class="btn btn-primary" type="submit">
+                                    <i class="flaticon-search-1"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row align-items-center">
+                <table id="LoaiKhoanTable" class="display table table-striped table-bordered table-hover dt-responsive nowrap">
+                    <thead>
+                        <tr>
+                            <th>@L("Actions")</th>
+                            <th>@L("MaSo")</th>
+                            <th>@L("Ten")</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithClose.cshtml")

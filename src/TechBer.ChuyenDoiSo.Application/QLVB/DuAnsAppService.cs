@@ -30,6 +30,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
         private readonly IDuAnsExcelExporter _duAnsExcelExporter;
         private readonly IRepository<LoaiDuAn, int> _lookup_loaiDuAnRepository;
         private readonly IRepository<Chuong, int> _lookup_chuongRepository;
+        private readonly IRepository<LoaiKhoan, int> _lookup_loaiKhoanRepository;
         private readonly IRepository<QuyTrinhDuAnAssigned, long> _quyTrinhDuAnAssignedRepository;
         private readonly IRepository<QuyTrinhDuAn, int> _quyTrinhDuAnRepository;
         private readonly IRepository<VanBanDuAn, int> _vanBanRepository;
@@ -39,6 +40,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
         public DuAnsAppService(IRepository<DuAn> duAnRepository, IDuAnsExcelExporter duAnsExcelExporter,
             IRepository<LoaiDuAn, int> lookup_loaiDuAnRepository,
             IRepository<Chuong, int> lookup_chuongRepository,
+            IRepository<LoaiKhoan, int> lookup_loaiKhoanRepository,
             IRepository<QuyTrinhDuAnAssigned, long> quyTrinhDuAnAssignedRepository,
             IRepository<QuyTrinhDuAn, int> quyTrinhDuAnRepository,
             IRepository<VanBanDuAn, int> vanBanRepository,
@@ -49,6 +51,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
             _duAnsExcelExporter = duAnsExcelExporter;
             _lookup_loaiDuAnRepository = lookup_loaiDuAnRepository;
             _lookup_chuongRepository = lookup_chuongRepository;
+            _lookup_loaiKhoanRepository = lookup_loaiKhoanRepository;
             _quyTrinhDuAnAssignedRepository = quyTrinhDuAnAssignedRepository;
             _quyTrinhDuAnRepository = quyTrinhDuAnRepository;
             _userOrganizationUnitRepository = userOrganizationUnitRepository;
@@ -170,6 +173,12 @@ namespace TechBer.ChuyenDoiSo.QLVB
                     await _lookup_chuongRepository.FirstOrDefaultAsync((int) output.DuAn.ChuongId);
                     output.ChuongName = _lookupChuong?.MaSo + " - " + _lookupChuong?.Ten;
             }
+            if (output.DuAn.LoaiKhoanId != null)
+            {
+                var _lookupLoaiKhoan =
+                    await _lookup_loaiKhoanRepository.FirstOrDefaultAsync((int) output.DuAn.LoaiKhoanId);
+                output.LoaiKhoanName = _lookupLoaiKhoan?.MaSo + " - " + _lookupLoaiKhoan?.Ten;
+            }
             return output;
         }
 
@@ -260,6 +269,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
             duAn.Descriptions = input.Descriptions;
             duAn.Name = input.Name;
             duAn.ChuongId = input.ChuongId;
+            duAn.LoaiKhoanId = input.LoaiKhoanId;
             await _duAnRepository.UpdateAsync(duAn);
         }
 
@@ -366,6 +376,37 @@ namespace TechBer.ChuyenDoiSo.QLVB
             }
 
             return new PagedResultDto<DuAnChuongLookupTableDto>(
+                totalCount,
+                lookupTableDtoList
+            );
+        }
+        [AbpAuthorize(AppPermissions.Pages_DuAns)]
+        public async Task<PagedResultDto<DuAnLoaiKhoanLookupTableDto>> GetAllLoaiKhoanForLookupTable(
+            LoaiKhoanLookupTableInput input)
+        {
+            var query = _lookup_loaiKhoanRepository.GetAll()
+                    .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => e.Ten != null && e.Ten.Contains(input.Filter)
+                                                                            || e.MaSo != null && e.MaSo.Contains(input.Filter))
+                ;
+
+            var totalCount = await query.CountAsync();
+
+            var loaiKhoanList = await query
+                .PageBy(input)
+                .ToListAsync();
+
+            var lookupTableDtoList = new List<DuAnLoaiKhoanLookupTableDto>();
+            foreach (var loaiKhoan in loaiKhoanList)
+            {
+                lookupTableDtoList.Add(new DuAnLoaiKhoanLookupTableDto
+                {
+                    Id = loaiKhoan.Id,
+                    MaSo = loaiKhoan.MaSo,
+                    Ten = loaiKhoan.Ten
+                });
+            }
+
+            return new PagedResultDto<DuAnLoaiKhoanLookupTableDto>(
                 totalCount,
                 lookupTableDtoList
             );

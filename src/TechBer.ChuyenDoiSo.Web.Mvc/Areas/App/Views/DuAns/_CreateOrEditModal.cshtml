@@ -76,6 +76,31 @@
                     {
                         <input class="form-control" id="DuAn_ChuongId" value="" type="text" name="chuongId" hidden/>
                     }
+                    <div class="form-group m-form__group">
+                        <label for="LoaiKhoanName">@L("LoaiKhoans")</label>
+                        <div class="input-group">
+                            <input class="form-control" id="LoaiKhoanName" name="loaiKhoanName" value="@Model.LoaiKhoanName" type="text" disabled>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" id="OpenLoaiKhoanLookupTableButton" type="button">
+                                    <i class="fa fa-search"></i> @L("Pick")</button>
+                            </div>
+                            <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" id="ClearLoaiKhoanNameButton">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (Model.IsEditMode)
+                    {
+                        <input class="form-control" id="DuAn_LoaiKhoanId" value="@Model.DuAn.LoaiKhoanId" type="text" name="loaiKhoanId" hidden/>
+                    }
+                    else
+                    {
+                        <input class="form-control" id="DuAn_LoaiKhoanId" value="" type="text" name="loaiKhoanId" hidden/>
+                    }
+                    
                 </div>
             </div>
             

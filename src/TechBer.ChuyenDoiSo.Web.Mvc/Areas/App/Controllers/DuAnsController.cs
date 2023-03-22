@@ -61,6 +61,7 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
 					DuAn = getDuAnForEditOutput.DuAn,
 					LoaiDuAnName = getDuAnForEditOutput.LoaiDuAnName,           
 					ChuongName = getDuAnForEditOutput.ChuongName,           
+					LoaiKhoanName = getDuAnForEditOutput.LoaiKhoanName,           
 				};
 
 				return PartialView("_CreateOrEditModal", viewModel);
@@ -104,9 +105,18 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
 		        FilterText = "",
 		        ListCapQuanLy = ObjectMapper.Map<List<CapQuanLyDto>>(_capQuanLyRepository.GetAllList())
 	        };
-
-	        var a = viewModel.ListCapQuanLy;
 	        return PartialView("_DuAnChuongLookupTableModal", viewModel);
+        }
+        [AbpMvcAuthorize(AppPermissions.Pages_DuAns_Create, AppPermissions.Pages_DuAns_Edit)]
+        public PartialViewResult LoaiKhoanLookupTableModal(int? id, string displayName)
+        {
+	        var viewModel = new DuAnLoaiKhoanLookupTableViewModel()
+	        {
+		        Id = id,
+		        DisplayName = displayName,
+		        FilterText = ""
+	        };
+	        return PartialView("_DuAnLoaiKhoanLookupTableModal", viewModel);
         }
     }
 }

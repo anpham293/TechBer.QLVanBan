@@ -9,6 +9,7 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Models.DuAns
 
         public string LoaiDuAnName { get; set; }
         public string ChuongName { get; set; }
+        public string LoaiKhoanName { get; set; }
 
 
         public bool IsEditMode => DuAn.Id.HasValue;

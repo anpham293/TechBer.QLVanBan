@@ -28,5 +28,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
 		Task<PagedResultDto<DuAnChuongLookupTableDto>> GetAllChuongForLookupTable(
 			ChuongLookupTableInput input);
 
+		Task<PagedResultDto<DuAnLoaiKhoanLookupTableDto>> GetAllLoaiKhoanForLookupTable(
+			LoaiKhoanLookupTableInput input);
     }
 }

@@ -18,6 +18,6 @@ namespace TechBer.ChuyenDoiSo.QLVB.Dtos
 		 public int? LoaiDuAnId { get; set; }
 		 public int? ChuongId { get; set; }
 		 
-		 
+		 public int? LoaiKhoanId { get; set; }
     }
 }

@@ -19,6 +19,13 @@
             modalSize: "modal-xl"
         });
 
+        var _DuAnLoaiKhoanLookupTableModal = new app.ModalManager({
+            viewUrl: abp.appPath + 'App/DuAns/LoaiKhoanLookupTableModal',
+            scriptUrl: abp.appPath + 'view-resources/Areas/App/Views/DuAns/_DuAnLoaiKhoanLookupTableModal.js',
+            modalClass: 'LoaiKhoanLookupTableModal',
+            modalSize: "modal-xl"
+        });
+        
         this.init = function (modalManager) {
             _modalManager = modalManager;
 
@@ -52,7 +59,6 @@
             var duAn = _$duAnInformationForm.serializeFormToObject();
 
             _DuAnChuongLookupTableModal.open({id: duAn.chuongId, displayName: duAn.chuongName}, function (data) {
-                console.log(data);
                 _$duAnInformationForm.find('input[name=chuongName]').val(data.maSo + ' - '+ data.ten);
                 _$duAnInformationForm.find('input[name=chuongId]').val(data.id);
             });
@@ -61,6 +67,21 @@
         $('#ClearChuongNameButton').click(function () {
             _$duAnInformationForm.find('input[name=chuongName]').val('');
             _$duAnInformationForm.find('input[name=chuongId]').val('');
+        });
+
+        $('#OpenLoaiKhoanLookupTableButton').click(function () {
+
+            var duAn = _$duAnInformationForm.serializeFormToObject();
+
+            _DuAnLoaiKhoanLookupTableModal.open({id: duAn.loaiKhoanId, displayName: duAn.loaiKhoanName}, function (data) {
+                _$duAnInformationForm.find('input[name=loaiKhoanName]').val(data.maSo + ' - '+ data.ten);
+                _$duAnInformationForm.find('input[name=loaiKhoanId]').val(data.id);
+            });
+        });
+
+        $('#ClearLoaiKhoanNameButton').click(function () {
+            _$duAnInformationForm.find('input[name=loaiKhoanName]').val('');
+            _$duAnInformationForm.find('input[name=loaiKhoanId]').val('');
         });
 
         this.save = function () {
