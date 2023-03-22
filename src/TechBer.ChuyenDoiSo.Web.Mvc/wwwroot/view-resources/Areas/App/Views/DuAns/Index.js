@@ -18,7 +18,8 @@
         var _createOrEditModal = new app.ModalManager({
             viewUrl: abp.appPath + 'App/DuAns/CreateOrEditModal',
             scriptUrl: abp.appPath + 'view-resources/Areas/App/Views/DuAns/_CreateOrEditModal.js',
-            modalClass: 'CreateOrEditDuAnModal'
+            modalClass: 'CreateOrEditDuAnModal',
+            modalSize: "modal-xl"
         });
 
         var _viewDuAnModal = new app.ModalManager({

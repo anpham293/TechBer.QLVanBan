@@ -13,40 +13,73 @@
             {
                 <input type="hidden" name="id" value="@Model.DuAn.Id"/>
             }
-
-
-            <div class="form-group m-form__group">
-                <label for="LoaiDuAnName">@L("LoaiDuAn")</label>
-                <div class="input-group">
-                    <input class="form-control" id="LoaiDuAnName" name="loaiDuAnName" value="@Model.LoaiDuAnName" type="text" disabled>
-                    <div class="input-group-append">
-                        <button class="btn btn-primary blue" id="OpenLoaiDuAnLookupTableButton" type="button">
-                            <i class="fa fa-search"></i> @L("Pick")</button>
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group m-form__group">
+                        <label for="LoaiDuAnName">@L("LoaiDuAn")</label>
+                        <div class="input-group">
+                            <input class="form-control" id="LoaiDuAnName" name="loaiDuAnName" value="@Model.LoaiDuAnName" type="text" disabled>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" id="OpenLoaiDuAnLookupTableButton" type="button">
+                                    <i class="fa fa-search"></i> @L("Pick")</button>
+                            </div>
+                            <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" id="ClearLoaiDuAnNameButton">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="input-group-prepend">
-                        <button class="btn btn-danger btn-icon" type="button" id="ClearLoaiDuAnNameButton">
-                            <i class="fa fa-times"></i>
-                        </button>
+
+                    @if (Model.IsEditMode)
+                    {
+                        <input class="form-control" id="DuAn_LoaiDuAnId" value="@Model.DuAn.LoaiDuAnId" type="text" name="loaiDuAnId" hidden/>
+                    }
+                    else
+                    {
+                        <input class="form-control" id="DuAn_LoaiDuAnId" value="" type="text" name="loaiDuAnId" hidden/>
+                    }
+
+                    <div class="form-group">
+                        <label for="DuAn_Name">@L("TenDuAn")</label>
+                        <input class="form-control" id="DuAn_Name" value="@Model.DuAn.Name" type="text" name="name" required/>
                     </div>
+                    
+                    <div class="form-group">
+                        <label for="DuAn_Descriptions">@L("MaDuAn")</label>
+                        <input class="form-control" id="DuAn_Descriptions" value="@Model.DuAn.Descriptions" type="text" name="descriptions"/>
+                    </div>
+                    
+                </div>
+                <div class="col-6">
+                    <div class="form-group m-form__group">
+                        <label for="ChuongName">@L("Chuongs")</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ChuongName" name="chuongName" value="@Model.ChuongName" type="text" disabled>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" id="OpenChuongLookupTableButton" type="button">
+                                    <i class="fa fa-search"></i> @L("Pick")</button>
+                            </div>
+                            <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" id="ClearChuongNameButton">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (Model.IsEditMode)
+                    {
+                        <input class="form-control" id="DuAn_ChuongId" value="@Model.DuAn.ChuongId" type="text" name="chuongId" hidden/>
+                    }
+                    else
+                    {
+                        <input class="form-control" id="DuAn_ChuongId" value="" type="text" name="chuongId" hidden/>
+                    }
                 </div>
             </div>
-
-            @if (Model.IsEditMode)
-            {
-                <input class="form-control" id="DuAn_LoaiDuAnId" value="@Model.DuAn.LoaiDuAnId" type="text" name="loaiDuAnId" hidden/>
-            }
-            else
-            {
-                <input class="form-control" id="DuAn_LoaiDuAnId" value="" type="text" name="loaiDuAnId" hidden/>
-            }
-            <div class="form-group">
-                <label for="DuAn_Name">@L("TenDuAn")</label>
-                <input class="form-control" id="DuAn_Name" value="@Model.DuAn.Name" type="text" name="name" required/>
-            </div>
-            <div class="form-group">
-                <label for="DuAn_Descriptions">@L("MaDuAn")</label>
-                <input class="form-control" id="DuAn_Descriptions" value="@Model.DuAn.Descriptions" type="text" name="descriptions"/>
-            </div>
+            
+            
 
 
         </form>
