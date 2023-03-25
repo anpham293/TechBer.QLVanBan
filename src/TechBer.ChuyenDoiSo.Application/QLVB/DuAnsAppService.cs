@@ -63,6 +63,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
             var listUserOrganizationUnit =  _userOrganizationUnitRepository.GetAll()
                 .WhereIf(true, p => p.UserId == userId)
                 .Select(uou => uou.OrganizationUnitId);
+            
             var filteredDuAns = _duAnRepository.GetAll()
                     .Include(e => e.LoaiDuAnFk)
                     .WhereIf(!string.IsNullOrWhiteSpace(input.Filter),
@@ -82,7 +83,13 @@ namespace TechBer.ChuyenDoiSo.QLVB
                     {
                         Name = o.Name,
                         Descriptions = o.Descriptions,
-                        Id = o.Id
+                        Id = o.Id,
+                        TrangThai = o.TrangThai,
+                        ChuongId = o.ChuongId,
+                        LoaiKhoanId = o.LoaiKhoanId,
+                        MaDVQHNS = o.MaDVQHNS,
+                        NgayBatDau = o.NgayBatDau,
+                        NgayKetThuc = o.NgayKetThuc
                     },
                     LoaiDuAnName = s1 == null || s1.Name == null ? "" : s1.Name.ToString(),
                     LoaiDuAn = new LoaiDuAnDto()

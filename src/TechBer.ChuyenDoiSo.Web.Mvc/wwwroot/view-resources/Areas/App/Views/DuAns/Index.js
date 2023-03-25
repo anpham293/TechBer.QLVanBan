@@ -108,8 +108,19 @@
                 },
                 {
                     targets: 4,
-                    render: function (displayName, type, row, meta) {
-                        return "<a class='btn btn-info' href='/App/VanBanDuAns?duanid=" + row.duAn.id + "' style='color:white'>Danh sách hồ sơ dự án >></a>";
+                    data: "duAn.trangThai",
+                    render: function (trangThai, type, row, meta) {
+                        let linkHoSo = "<a href='/App/VanBanDuAns?duanid=" + row.duAn.id + "' style=\"cursor:pointer;font-size:25px; font-weight: bolder;margin: 0 5px;\" title='Mở danh sách hồ sơ'><i class=\"fas fa-file-export\"></i></a>";
+                        console.log(trangThai);
+                        let stt = '';
+                        if(trangThai == app.trangThaiDuAnConst.duAnOpen)
+                        {
+                            stt = '<a title="Dự án mở, click để đổi trạng thái" style="cursor:pointer;font-size:25px; font-weight: bolder;margin: 0 5px;" class="text-success" data-rowId="'+row.duAn.id+'" data-status="'+row.duAn.trangThai+'"><i class="fas fa-unlock-alt"></i></a>'
+                        }
+                        if(trangThai == app.trangThaiDuAnConst.duAnClose){
+                            stt = '<a title="Dự án đóng, click để đổi trạng thái" style="cursor:pointer;font-size:25px; font-weight: bolder;margin: 0 5px;" class="text-danger" data-rowId="'+row.duAn.id+'" data-status="'+row.duAn.trangThai+'"><i class="fas fa-lock"></i></a>'
+                        }
+                        return stt+ "&nbsp &nbsp &nbsp"+linkHoSo;
                     }
                 }
             ]
