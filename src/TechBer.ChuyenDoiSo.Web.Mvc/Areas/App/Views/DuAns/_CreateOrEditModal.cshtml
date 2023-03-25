@@ -14,9 +14,9 @@
                 <input type="hidden" name="id" value="@Model.DuAn.Id"/>
             }
             <div class="row">
-                <div class="col-6">
+                <div class="col-4">
                     <div class="form-group m-form__group">
-                        <label for="LoaiDuAnName">@L("LoaiDuAn")</label>
+                        <label for="LoaiDuAnName">@L("LoaiDuAn")<i style="color:red">(*)</i></label>
                         <div class="input-group">
                             <input class="form-control" id="LoaiDuAnName" name="loaiDuAnName" value="@Model.LoaiDuAnName" type="text" disabled>
                             <div class="input-group-append">
@@ -40,18 +40,8 @@
                         <input class="form-control" id="DuAn_LoaiDuAnId" value="" type="text" name="loaiDuAnId" hidden/>
                     }
 
-                    <div class="form-group">
-                        <label for="DuAn_Name">@L("TenDuAn")</label>
-                        <input class="form-control" id="DuAn_Name" value="@Model.DuAn.Name" type="text" name="name" required/>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="DuAn_Descriptions">@L("MaDuAn")</label>
-                        <input class="form-control" id="DuAn_Descriptions" value="@Model.DuAn.Descriptions" type="text" name="descriptions"/>
-                    </div>
-                    
                 </div>
-                <div class="col-6">
+                <div class="col-4">
                     <div class="form-group m-form__group">
                         <label for="ChuongName">@L("Chuongs")</label>
                         <div class="input-group">
@@ -76,6 +66,9 @@
                     {
                         <input class="form-control" id="DuAn_ChuongId" value="" type="text" name="chuongId" hidden/>
                     }
+                    
+                </div>
+                <div class="col-4">
                     <div class="form-group m-form__group">
                         <label for="LoaiKhoanName">@L("LoaiKhoans")</label>
                         <div class="input-group">
@@ -100,13 +93,41 @@
                     {
                         <input class="form-control" id="DuAn_LoaiKhoanId" value="" type="text" name="loaiKhoanId" hidden/>
                     }
-                    
+                </div>
+
+            </div>
+            <div class="form-group">
+                <label for="DuAn_Name">@L("TenDuAn")<i style="color:red">(*)</i></label>
+                <input class="form-control" id="DuAn_Name" value="@Model.DuAn.Name" type="text" name="name" required/>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <div class="form-group">
+                        <label for="DuAn_Descriptions">
+                            @L("MaDuAn")<i style="color:red">(*)</i>
+                        </label>
+                        <input class="form-control" id="DuAn_Descriptions" value="@Model.DuAn.Descriptions" type="text" name="descriptions"/>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <label for="DuAn_MaDVQHNS">@L("MaDVQHNS")</label>
+                        <input class="form-control" id="DuAn_MaDVQHNS" value="@Model.DuAn.MaDVQHNS" type="text" name="maDVQHNS"/>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <label for="DuAn_NgayBatDau">@L("NgayBatDau")</label>
+                        <input class="form-control m-input date-picker" id="DuAn_NgayBatDau" type="text" name="ngayBatDau" value="@Model.DuAn.NgayBatDau"/>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <label for="DuAn_NgayKetThuc">@L("NgayKetThuc")</label>
+                        <input class="form-control m-input date-picker" id="DuAn_NgayKetThuc" type="text" name="ngayKetThuc" value="@Model.DuAn.NgayKetThuc"/>
+                    </div>
                 </div>
             </div>
-            
-            
-
-
         </form>
     </div>
 </div>

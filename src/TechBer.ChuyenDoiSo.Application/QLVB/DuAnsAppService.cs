@@ -270,6 +270,9 @@ namespace TechBer.ChuyenDoiSo.QLVB
             duAn.Name = input.Name;
             duAn.ChuongId = input.ChuongId;
             duAn.LoaiKhoanId = input.LoaiKhoanId;
+            duAn.MaDVQHNS = input.MaDVQHNS;
+            duAn.NgayBatDau = input.NgayBatDau;
+            duAn.NgayKetThuc = input.NgayKetThuc;
             await _duAnRepository.UpdateAsync(duAn);
         }
 
