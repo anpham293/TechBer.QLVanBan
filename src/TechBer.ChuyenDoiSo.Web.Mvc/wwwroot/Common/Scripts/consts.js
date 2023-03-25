@@ -80,6 +80,10 @@
         trangThaiNhanHoSoGiay:{
             chuaNopHoSoGiay: 0,
             daNopHoSoGiay: 1
+        },
+        trangThaiDuAnConst:{
+            duAnOpen: 0,
+            duAnClose: 1
         }
     });
 

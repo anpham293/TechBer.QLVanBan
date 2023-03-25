@@ -16,7 +16,11 @@ namespace TechBer.ChuyenDoiSo.QLVB.Dtos
 		
 		
 		 public int? LoaiDuAnId { get; set; }
+		 public int? ChuongId { get; set; }
 		 
-		 
+		 public int? LoaiKhoanId { get; set; }
+		 public string MaDVQHNS { get; set; }
+		 public DateTime? NgayBatDau { get; set; }
+		 public DateTime? NgayKetThuc { get; set; }
     }
 }

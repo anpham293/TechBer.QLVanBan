@@ -19,6 +19,7 @@ using Abp.Domain.Entities;
 using Castle.Core.Internal;
 using Microsoft.EntityFrameworkCore;
 using TechBer.ChuyenDoiSo.Authorization.Users;
+using TechBer.ChuyenDoiSo.QuanLyDanhMuc;
 
 namespace TechBer.ChuyenDoiSo.QLVB
 {
@@ -28,6 +29,8 @@ namespace TechBer.ChuyenDoiSo.QLVB
         private readonly IRepository<DuAn> _duAnRepository;
         private readonly IDuAnsExcelExporter _duAnsExcelExporter;
         private readonly IRepository<LoaiDuAn, int> _lookup_loaiDuAnRepository;
+        private readonly IRepository<Chuong, int> _lookup_chuongRepository;
+        private readonly IRepository<LoaiKhoan, int> _lookup_loaiKhoanRepository;
         private readonly IRepository<QuyTrinhDuAnAssigned, long> _quyTrinhDuAnAssignedRepository;
         private readonly IRepository<QuyTrinhDuAn, int> _quyTrinhDuAnRepository;
         private readonly IRepository<VanBanDuAn, int> _vanBanRepository;
@@ -36,6 +39,8 @@ namespace TechBer.ChuyenDoiSo.QLVB
 
         public DuAnsAppService(IRepository<DuAn> duAnRepository, IDuAnsExcelExporter duAnsExcelExporter,
             IRepository<LoaiDuAn, int> lookup_loaiDuAnRepository,
+            IRepository<Chuong, int> lookup_chuongRepository,
+            IRepository<LoaiKhoan, int> lookup_loaiKhoanRepository,
             IRepository<QuyTrinhDuAnAssigned, long> quyTrinhDuAnAssignedRepository,
             IRepository<QuyTrinhDuAn, int> quyTrinhDuAnRepository,
             IRepository<VanBanDuAn, int> vanBanRepository,
@@ -45,6 +50,8 @@ namespace TechBer.ChuyenDoiSo.QLVB
             _duAnRepository = duAnRepository;
             _duAnsExcelExporter = duAnsExcelExporter;
             _lookup_loaiDuAnRepository = lookup_loaiDuAnRepository;
+            _lookup_chuongRepository = lookup_chuongRepository;
+            _lookup_loaiKhoanRepository = lookup_loaiKhoanRepository;
             _quyTrinhDuAnAssignedRepository = quyTrinhDuAnAssignedRepository;
             _quyTrinhDuAnRepository = quyTrinhDuAnRepository;
             _userOrganizationUnitRepository = userOrganizationUnitRepository;
@@ -56,6 +63,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
             var listUserOrganizationUnit =  _userOrganizationUnitRepository.GetAll()
                 .WhereIf(true, p => p.UserId == userId)
                 .Select(uou => uou.OrganizationUnitId);
+            
             var filteredDuAns = _duAnRepository.GetAll()
                     .Include(e => e.LoaiDuAnFk)
                     .WhereIf(!string.IsNullOrWhiteSpace(input.Filter),
@@ -75,7 +83,13 @@ namespace TechBer.ChuyenDoiSo.QLVB
                     {
                         Name = o.Name,
                         Descriptions = o.Descriptions,
-                        Id = o.Id
+                        Id = o.Id,
+                        TrangThai = o.TrangThai,
+                        ChuongId = o.ChuongId,
+                        LoaiKhoanId = o.LoaiKhoanId,
+                        MaDVQHNS = o.MaDVQHNS,
+                        NgayBatDau = o.NgayBatDau,
+                        NgayKetThuc = o.NgayKetThuc
                     },
                     LoaiDuAnName = s1 == null || s1.Name == null ? "" : s1.Name.ToString(),
                     LoaiDuAn = new LoaiDuAnDto()
@@ -160,7 +174,18 @@ namespace TechBer.ChuyenDoiSo.QLVB
                     await _lookup_loaiDuAnRepository.FirstOrDefaultAsync((int) output.DuAn.LoaiDuAnId);
                 output.LoaiDuAnName = _lookupLoaiDuAn?.Name?.ToString();
             }
-
+            if (output.DuAn.ChuongId != null)
+            {
+                var _lookupChuong =
+                    await _lookup_chuongRepository.FirstOrDefaultAsync((int) output.DuAn.ChuongId);
+                    output.ChuongName = _lookupChuong?.MaSo + " - " + _lookupChuong?.Ten;
+            }
+            if (output.DuAn.LoaiKhoanId != null)
+            {
+                var _lookupLoaiKhoan =
+                    await _lookup_loaiKhoanRepository.FirstOrDefaultAsync((int) output.DuAn.LoaiKhoanId);
+                output.LoaiKhoanName = _lookupLoaiKhoan?.MaSo + " - " + _lookupLoaiKhoan?.Ten;
+            }
             return output;
         }
 
@@ -250,6 +275,11 @@ namespace TechBer.ChuyenDoiSo.QLVB
             var duAn = await _duAnRepository.FirstOrDefaultAsync((int) input.Id);
             duAn.Descriptions = input.Descriptions;
             duAn.Name = input.Name;
+            duAn.ChuongId = input.ChuongId;
+            duAn.LoaiKhoanId = input.LoaiKhoanId;
+            duAn.MaDVQHNS = input.MaDVQHNS;
+            duAn.NgayBatDau = input.NgayBatDau;
+            duAn.NgayKetThuc = input.NgayKetThuc;
             await _duAnRepository.UpdateAsync(duAn);
         }
 
@@ -322,6 +352,71 @@ namespace TechBer.ChuyenDoiSo.QLVB
             }
 
             return new PagedResultDto<DuAnLoaiDuAnLookupTableDto>(
+                totalCount,
+                lookupTableDtoList
+            );
+        }
+        
+        [AbpAuthorize(AppPermissions.Pages_DuAns)]
+        public async Task<PagedResultDto<DuAnChuongLookupTableDto>> GetAllChuongForLookupTable(
+            ChuongLookupTableInput input)
+        {
+            var query = _lookup_chuongRepository.GetAll()
+                .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => e.Ten != null && e.Ten.Contains(input.Filter)
+                    || e.MaSo != null && e.MaSo.Contains(input.Filter))
+                .WhereIf(true, e => e.CapQuanLyId == input.CapQuanLyFilterId)
+                ;
+
+            var totalCount = await query.CountAsync();
+
+            var chuongList = await query
+                .PageBy(input)
+                .ToListAsync();
+
+            var lookupTableDtoList = new List<DuAnChuongLookupTableDto>();
+            foreach (var chuong in chuongList)
+            {
+                lookupTableDtoList.Add(new DuAnChuongLookupTableDto
+                {
+                    Id = chuong.Id,
+                    MaSo = chuong.MaSo,
+                    Ten = chuong.Ten,
+                    CapQuanLyId = (int)chuong.CapQuanLyId
+                });
+            }
+
+            return new PagedResultDto<DuAnChuongLookupTableDto>(
+                totalCount,
+                lookupTableDtoList
+            );
+        }
+        [AbpAuthorize(AppPermissions.Pages_DuAns)]
+        public async Task<PagedResultDto<DuAnLoaiKhoanLookupTableDto>> GetAllLoaiKhoanForLookupTable(
+            LoaiKhoanLookupTableInput input)
+        {
+            var query = _lookup_loaiKhoanRepository.GetAll()
+                    .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => e.Ten != null && e.Ten.Contains(input.Filter)
+                                                                            || e.MaSo != null && e.MaSo.Contains(input.Filter))
+                ;
+
+            var totalCount = await query.CountAsync();
+
+            var loaiKhoanList = await query
+                .PageBy(input)
+                .ToListAsync();
+
+            var lookupTableDtoList = new List<DuAnLoaiKhoanLookupTableDto>();
+            foreach (var loaiKhoan in loaiKhoanList)
+            {
+                lookupTableDtoList.Add(new DuAnLoaiKhoanLookupTableDto
+                {
+                    Id = loaiKhoan.Id,
+                    MaSo = loaiKhoan.MaSo,
+                    Ten = loaiKhoan.Ten
+                });
+            }
+
+            return new PagedResultDto<DuAnLoaiKhoanLookupTableDto>(
                 totalCount,
                 lookupTableDtoList
             );
