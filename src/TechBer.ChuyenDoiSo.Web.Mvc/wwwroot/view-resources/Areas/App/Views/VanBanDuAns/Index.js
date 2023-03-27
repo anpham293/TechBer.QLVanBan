@@ -231,7 +231,13 @@
                     data: "vanBanDuAn.fileVanBan",
                     name: "fileVanBan",
                     render: function (displayName, type, row, meta) {
-                        return "<a class='text-info text-bold link-view' data-target='" + row.vanBanDuAn.id + "' style='cursor: pointer;color:whitesmoke; white-space: normal'>" + row.vanBanDuAn.fileVanBan + "</a>";
+                        // return "<a class='text-info text-bold link-view' data-target='" + row.vanBanDuAn.id + "' style='cursor: pointer;color:whitesmoke; white-space: normal'>" + row.vanBanDuAn.fileVanBan + "</a>";
+                        var file = "";
+                        if(row.vanBanDuAn.fileVanBan != null && row.vanBanDuAn.fileVanBan != "")
+                        {
+                            file = "<a class='text-warning text-bold link-view' data-target='" + row.vanBanDuAn.id + "' style='cursor:pointer;font-size:25px; font-weight: bolder;margin: 0 5px;'><i class=\"fas fa-file-pdf\"></i></a>";
+                        }
+                        return file
                     }
                 },
                 {
