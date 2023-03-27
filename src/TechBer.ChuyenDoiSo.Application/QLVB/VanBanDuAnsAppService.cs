@@ -91,9 +91,6 @@ namespace TechBer.ChuyenDoiSo.QLVB
                             : JsonConvert.DeserializeObject<FileMauSerializeObj>(o.FileVanBan).FileName),
                         Id = o.Id,
                         ViTriLuuTru = o.ViTriLuuTru,
-                        TrangThaiNhanHoSoGiay = o.TrangThaiNhanHoSoGiay,
-                        ThoiGianNhanHoSoGiay = o.ThoiGianNhanHoSoGiay,
-                        TenNguoiGiaoHoSo = o.TenNguoiGiaoHoSo,
                         TrangThaiChuyenDuyetHoSo = o.TrangThaiChuyenDuyetHoSo,
                         NguoiGuiId = o.NguoiGuiId,
                         NgayGui = o.NgayGui,
@@ -416,31 +413,6 @@ namespace TechBer.ChuyenDoiSo.QLVB
                 totalCount,
                 lookupTableDtoList
             );
-        }
-
-        public async Task<int> NhanHoSoGiay(NhanHoSoGiayDto input)
-        {
-            try
-            {
-                var vanBanDuAn = await _vanBanDuAnRepository.FirstOrDefaultAsync(input.Id);
-                if (vanBanDuAn != null)
-                {
-                    vanBanDuAn.TrangThaiNhanHoSoGiay = 1;
-                    vanBanDuAn.ThoiGianNhanHoSoGiay = DateTime.Now;
-                    vanBanDuAn.TenNguoiGiaoHoSo = input.TenNguoiNopHoSo;
-                }
-                else
-                {
-                    return (int)HttpStatusCode.InternalServerError;   
-                }
-
-                await _vanBanDuAnRepository.UpdateAsync(vanBanDuAn);
-                return (int)HttpStatusCode.OK;
-            }
-            catch (Exception ex)
-            {
-                return (int)HttpStatusCode.InternalServerError;
-            }
         }
         public async Task XuLyHoSo(XuLyHoSoInputDto input)
         {

@@ -99,44 +99,44 @@
                         cssClass: 'btn btn-brand dropdown-toggle',
                         text: '<i class="fa fa-cog"></i> ' + app.localize('Actions') + ' <span class="caret"></span>',
                         items: [
-                            {
-                                text: app.localize('NhanHoSoGiay'),
-                                visible: function (data) {
-                                    console.log(data);
-                                    return _permissions.edit && data.record.vanBanDuAn.trangThaiNhanHoSoGiay == 0;
-                                },
-                                action: function (data) {
-                                    // _createOrEditModal.open({id: data.record.vanBanDuAn.id});
-                                    sweetAlert({
-                                        text: app.localize("NhapTenNguoiNopHoSo"),
-                                        content:{
-                                            element: "input",
-                                            attributes:{
-                                                placeholder: "Nhập tên người nộp hồ sơ",
-                                                type: "text",
-                                            }
-                                        },
-                                        button:{
-                                            Text: app.localize("OK"),
-                                            closeModal: true
-                                        }
-                                    }).then(tenNguoiNopHoSo => {
-                                        if(tenNguoiNopHoSo != null){
-                                            _vanBanDuAnsService.nhanHoSoGiay({
-                                                id: data.record.vanBanDuAn.id,
-                                                tenNguoiNopHoSo: tenNguoiNopHoSo
-                                            }).then(result => {
-                                                if (result == 200){
-                                                    getVanBanDuAns();
-                                                }
-                                                else {
-                                                    swal(app.localize("Warning"), app.localize("CoLoiXayRa"), "warning");
-                                                }
-                                            })
-                                        }
-                                    })
-                                }
-                            },
+                            // {
+                            //     text: app.localize('NhanHoSoGiay'),
+                            //     visible: function (data) {
+                            //         console.log(data);
+                            //         return _permissions.edit && data.record.vanBanDuAn.trangThaiNhanHoSoGiay == 0;
+                            //     },
+                            //     action: function (data) {
+                            //         // _createOrEditModal.open({id: data.record.vanBanDuAn.id});
+                            //         sweetAlert({
+                            //             text: app.localize("NhapTenNguoiNopHoSo"),
+                            //             content:{
+                            //                 element: "input",
+                            //                 attributes:{
+                            //                     placeholder: "Nhập tên người nộp hồ sơ",
+                            //                     type: "text",
+                            //                 }
+                            //             },
+                            //             button:{
+                            //                 Text: app.localize("OK"),
+                            //                 closeModal: true
+                            //             }
+                            //         }).then(tenNguoiNopHoSo => {
+                            //             if(tenNguoiNopHoSo != null){
+                            //                 _vanBanDuAnsService.nhanHoSoGiay({
+                            //                     id: data.record.vanBanDuAn.id,
+                            //                     tenNguoiNopHoSo: tenNguoiNopHoSo
+                            //                 }).then(result => {
+                            //                     if (result == 200){
+                            //                         getVanBanDuAns();
+                            //                     }
+                            //                     else {
+                            //                         swal(app.localize("Warning"), app.localize("CoLoiXayRa"), "warning");
+                            //                     }
+                            //                 })
+                            //             }
+                            //         })
+                            //     }
+                            // },
                             {
                                 text: app.localize('ChuyenDuyetHoSo'),
                                 visible: function (data) {
@@ -256,20 +256,20 @@
                         }
                     }
                 },
-                {
-                    targets: 6,
-                    data: "vanBanDuAn",
-                    name: "duAnFk.name",
-                    render: function (displayName, type, row, meta) {
-                        console.log(row);
-                        if(row.vanBanDuAn.trangThaiNhanHoSoGiay == app.trangThaiNhanHoSoGiay.chuaNopHoSoGiay){
-                            return "<label class='badge badge-danger'>Chưa giao hồ sơ giấy</label>"
-                        }
-                        if(row.vanBanDuAn.trangThaiNhanHoSoGiay == app.trangThaiNhanHoSoGiay.daNopHoSoGiay){
-                            return "<labe class='badge badge-success'>N.giao: "+row.vanBanDuAn.tenNguoiGiaoHoSo +"<br>T.gian giao: "+ moment(row.vanBanDuAn.thoiGianNhanHoSoGiay).format('DD/MM/YYYY HH:mm:ss') +"</label>"
-                        }
-                    }
-                }
+                // {
+                //     targets: 6,
+                //     data: "vanBanDuAn",
+                //     name: "duAnFk.name",
+                //     render: function (displayName, type, row, meta) {
+                //         console.log(row);
+                //         if(row.vanBanDuAn.trangThaiNhanHoSoGiay == app.trangThaiNhanHoSoGiay.chuaNopHoSoGiay){
+                //             return "<label class='badge badge-danger'>Chưa giao hồ sơ giấy</label>"
+                //         }
+                //         if(row.vanBanDuAn.trangThaiNhanHoSoGiay == app.trangThaiNhanHoSoGiay.daNopHoSoGiay){
+                //             return "<labe class='badge badge-success'>N.giao: "+row.vanBanDuAn.tenNguoiGiaoHoSo +"<br>T.gian giao: "+ moment(row.vanBanDuAn.thoiGianNhanHoSoGiay).format('DD/MM/YYYY HH:mm:ss') +"</label>"
+                //         }
+                //     }
+                // }
             ],  
             // initComplete
         });
