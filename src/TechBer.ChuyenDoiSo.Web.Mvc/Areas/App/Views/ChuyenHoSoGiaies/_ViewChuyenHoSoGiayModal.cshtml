@@ -1,0 +1,48 @@
+﻿
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.Common.Modals
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.ChuyenHoSoGiaies
+@model ChuyenHoSoGiayViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("Details")))
+
+<div class="modal-body">
+    <div id="ChuyenHoSoGiayInformationsTab">
+        
+        <div class="row">
+            <div class="col-6 mb-3">
+                <h6>@L("NguoiChuyenId") :</h6>
+                @Model.ChuyenHoSoGiay.NguoiChuyenId
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("ThoiGianChuyen") :</h6>
+                @Model.ChuyenHoSoGiay.ThoiGianChuyen
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("SoLuong") :</h6>
+                @Model.ChuyenHoSoGiay.SoLuong
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("TrangThai") :</h6>
+                @Model.ChuyenHoSoGiay.TrangThai
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("ThoiGianNhan") :</h6>
+                @Model.ChuyenHoSoGiay.ThoiGianNhan
+            </div>
+
+            <div class="col-6 mb-3">
+                <h6>(@L("VanBanDuAn")) @L("Name") :</h6>
+                @Model.VanBanDuAnName
+            </div>
+            <div class="col-6 mb-3">
+                <h6>(@L("User")) @L("Name") :</h6>
+                @Model.UserName
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithClose.cshtml")
+

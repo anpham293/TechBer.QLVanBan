@@ -1,6 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
-  <texts>
+  <texts>    <text name="ChuyenHoSoGiay">Chuyen ho so giay</text>
+    <text name="TechBer.ChuyenDoiSo.QLVB.ChuyenHoSoGiay">ChuyenHoSoGiay</text>
+    <text name="NguoiChuyenId">Nguoi chuyen id</text>
+    <text name="ThoiGianChuyen">Thoi gian chuyen</text>
+    <text name="SoLuong">So luong</text>
+    <text name="TrangThai">Trang thai</text>
+    <text name="ThoiGianNhan">Thoi gian nhan</text>
+    <text name="ChuyenHoSoGiaiesHeaderInfo">Chuyen ho so giaies header info</text>
+    <text name="CreateNewChuyenHoSoGiay">Create new chuyen ho so giay</text>
+    <text name="EditChuyenHoSoGiay">Edit chuyen ho so giay</text>
+    <text name="DeleteChuyenHoSoGiay">Delete chuyen ho so giay</text>
+    <text name="ChuyenHoSoGiaies">Chuyen ho so giaies</text>
+    <text name="VanBanDuAnName">Van ban du an name</text>
+    <text name="PickVanBanDuAn">Pick van ban du an</text>
+    <text name="ThoiGianChuyenRange">Thoi gian chuyen range</text>
+    <text name="ThoiGianNhanRange">Thoi gian nhan range</text>
+
     <text name="TuyChonNhanh">Tuy chon nhanh</text>
     <text name="PickLoaiKhoan">Chon loai khoan</text>
     <text name="PickChuong">Chon chuong</text>

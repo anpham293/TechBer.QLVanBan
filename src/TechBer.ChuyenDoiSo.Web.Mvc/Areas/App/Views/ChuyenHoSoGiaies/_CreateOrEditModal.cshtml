@@ -1,0 +1,97 @@
+﻿
+@using System.Globalization
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.Common.Modals
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.ChuyenHoSoGiaies
+@model CreateOrEditChuyenHoSoGiayModalViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditChuyenHoSoGiay")) : L("CreateNewChuyenHoSoGiay")))
+
+<div class="modal-body">
+        <div id="ChuyenHoSoGiayInformationsTab">
+            <form name="ChuyenHoSoGiayInformationsForm" role="form" novalidate class="form-validation">
+
+                @if (Model.IsEditMode)
+                {
+                    <input type="hidden" name="id" value="@Model.ChuyenHoSoGiay.Id" />
+                }
+
+				            
+								<div class="form-group m-form__group">
+										<label for="VanBanDuAnName">@L("VanBanDuAn")</label>
+									    <div class="input-group">
+											<input class="form-control" id="VanBanDuAnName" name="vanBanDuAnName" value="@Model.VanBanDuAnName" type="text" disabled>
+										<div class="input-group-append">
+											<button class="btn btn-primary blue" id="OpenVanBanDuAnLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
+										</div> 
+										<div class="input-group-prepend">
+											<button class="btn btn-danger btn-icon" type="button" id="ClearVanBanDuAnNameButton"><i class="fa fa-times"></i></button>
+										</div>
+									</div>
+								</div>
+
+								@if (Model.IsEditMode)
+								{
+									<input class="form-control" id="ChuyenHoSoGiay_VanBanDuAnId" value="@Model.ChuyenHoSoGiay.VanBanDuAnId" type="text" name="vanBanDuAnId"  hidden/>
+								}
+								 else
+								{ 
+									<input class="form-control" id="ChuyenHoSoGiay_VanBanDuAnId" value="" type="text" name="vanBanDuAnId"  hidden/>
+								}
+
+            
+								<div class="form-group m-form__group">
+										<label for="UserName">@L("User")</label>
+									    <div class="input-group">
+											<input class="form-control" id="UserName" name="userName" value="@Model.UserName" type="text" disabled>
+										<div class="input-group-append">
+											<button class="btn btn-primary blue" id="OpenUserLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
+										</div> 
+										<div class="input-group-prepend">
+											<button class="btn btn-danger btn-icon" type="button" id="ClearUserNameButton"><i class="fa fa-times"></i></button>
+										</div>
+									</div>
+								</div>
+
+								@if (Model.IsEditMode)
+								{
+									<input class="form-control" id="ChuyenHoSoGiay_NguoiNhanId" value="@Model.ChuyenHoSoGiay.NguoiNhanId" type="text" name="nguoiNhanId"  hidden/>
+								}
+								 else
+								{ 
+									<input class="form-control" id="ChuyenHoSoGiay_NguoiNhanId" value="" type="text" name="nguoiNhanId"  hidden/>
+								}
+
+
+
+				
+								<div class="form-group">
+									<label for="ChuyenHoSoGiay_NguoiChuyenId">@L("NguoiChuyenId")</label>
+									<input class="form-control m-input" id="ChuyenHoSoGiay_NguoiChuyenId" value="@Model.ChuyenHoSoGiay.NguoiChuyenId.ToString(CultureInfo.InvariantCulture)" type="number" name="nguoiChuyenId"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="ChuyenHoSoGiay_ThoiGianChuyen">@L("ThoiGianChuyen")</label>
+									<input class="form-control m-input date-picker" id="ChuyenHoSoGiay_ThoiGianChuyen" type="text" name="thoiGianChuyen" value="@Model.ChuyenHoSoGiay.ThoiGianChuyen"/>
+								</div>
+					
+								<div class="form-group">
+									<label for="ChuyenHoSoGiay_SoLuong">@L("SoLuong")</label>
+									<input class="form-control m-input" id="ChuyenHoSoGiay_SoLuong" value="@Model.ChuyenHoSoGiay.SoLuong.ToString(CultureInfo.InvariantCulture)" type="number" name="soLuong"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="ChuyenHoSoGiay_TrangThai">@L("TrangThai")</label>
+									<input class="form-control m-input" id="ChuyenHoSoGiay_TrangThai" value="@Model.ChuyenHoSoGiay.TrangThai.ToString(CultureInfo.InvariantCulture)" type="number" name="trangThai"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="ChuyenHoSoGiay_ThoiGianNhan">@L("ThoiGianNhan")</label>
+									<input class="form-control m-input date-picker" id="ChuyenHoSoGiay_ThoiGianNhan" type="text" name="thoiGianNhan" value="@Model.ChuyenHoSoGiay.ThoiGianNhan"/>
+								</div>
+					
+
+            </form>
+        </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")
