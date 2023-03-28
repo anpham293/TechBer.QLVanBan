@@ -1,0 +1,52 @@
+﻿@using TechBer.ChuyenDoiSo.Authorization
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.Common.Modals
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("DanhSachGiaoHoSoGiay")))
+
+<input type="hidden" id="vanBanDuAnId" value="@Model.VanBanDuAnId">
+
+<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+    <div class="@(await GetContainerClass()) kt-grid__item kt-grid__item--fluid">
+        <div class="kt-portlet kt-portlet--mobile">
+            <div class="kt-portlet__body">
+                <div class="kt-form">
+                    <div class="row align-items-center mb-4">
+                        <div class="row">
+                            <div class="col-6">
+                            <button type="button" id="CreateNewChuyenHoSoGiayButton" class="btn btn-primary">
+                                <i class="fas fa-plus"></i> Thêm mới
+                            </button>
+                        </div>
+                            <div class="col-6">
+                                <div class="input-group">
+                                    <input type="text" id="ChuyenHoSoGiaiesTableFilter" class="form-control m-input" placeholder="@L("SearchWithThreeDot")" value="@Model.FilterText">
+                                    <span class="input-group-btn">
+                                        <button id="GetChuyenHoSoGiaiesButton" class="btn btn-primary" type="submit">
+                                            <i class="flaticon-search-1"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row align-items-center">
+                    <table id="ChuyenHoSoGiaiesTable" class="display table table-striped table-bordered table-hover dt-responsive nowrap">
+                        <thead>
+                        <tr>
+                            <th>@L("Actions")</th>
+                            <th>@L("HoSo")</th>
+                            <th>@L("NguoiChuyenHoSo")</th>
+                            <th>@L("ThoiGianChuyen")</th>
+                            <th>@L("SoLuong")</th>
+                            <th>@L("TrangThai")</th>
+                            <th>@L("ThoiGianNhan")</th>
+                            <th>@L("NguoiNhanHoSo")</th>
+                            <th>@L("ThaoTacXuLy")</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

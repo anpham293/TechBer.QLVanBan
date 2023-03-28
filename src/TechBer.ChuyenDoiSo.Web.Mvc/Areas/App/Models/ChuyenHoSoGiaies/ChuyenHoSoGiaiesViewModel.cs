@@ -3,5 +3,6 @@
     public class ChuyenHoSoGiaiesViewModel
     {
 		public string FilterText { get; set; }
+        public int VanBanDuAnId { get; set; }
     }
 }

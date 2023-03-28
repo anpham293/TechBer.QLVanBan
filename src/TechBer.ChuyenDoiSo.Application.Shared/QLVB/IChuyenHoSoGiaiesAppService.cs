@@ -26,6 +26,9 @@ namespace TechBer.ChuyenDoiSo.QLVB
 		Task<PagedResultDto<ChuyenHoSoGiayVanBanDuAnLookupTableDto>> GetAllVanBanDuAnForLookupTable(GetAllForLookupTableInput input);
 		
 		Task<PagedResultDto<ChuyenHoSoGiayUserLookupTableDto>> GetAllUserForLookupTable(GetAllForLookupTableInput input);
-		
+
+		Task<PagedResultDto<GetChuyenHoSoGiayForViewDto>> ChuyenHoSoGiayVanBanDuAnGetAll(ChuyenHoSoGiayVanBanDuAnGetAllInput input);
+
+		Task<string> CapNhatTrangThaiChuyenHoSoGiay(int id, int trangThai);
     }
 }

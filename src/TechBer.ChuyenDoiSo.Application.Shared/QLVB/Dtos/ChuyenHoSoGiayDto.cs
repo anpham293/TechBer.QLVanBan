@@ -19,7 +19,7 @@ namespace TechBer.ChuyenDoiSo.QLVB.Dtos
 
 		 public int? VanBanDuAnId { get; set; }
 
-		 		 public long? NguoiNhanId { get; set; }
+		 public long? NguoiNhanId { get; set; }
 
 		 
     }

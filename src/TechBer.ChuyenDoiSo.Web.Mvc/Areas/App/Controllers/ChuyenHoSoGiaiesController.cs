@@ -26,52 +26,59 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
         public ActionResult Index()
         {
             var model = new ChuyenHoSoGiaiesViewModel
-			{
-				FilterText = ""
-			};
+            {
+                FilterText = ""
+            };
 
             return View(model);
-        } 
-       
+        }
 
-			 [AbpMvcAuthorize(AppPermissions.Pages_ChuyenHoSoGiaies_Create, AppPermissions.Pages_ChuyenHoSoGiaies_Edit)]
-			public async Task<PartialViewResult> CreateOrEditModal(int? id)
-			{
-				GetChuyenHoSoGiayForEditOutput getChuyenHoSoGiayForEditOutput;
 
-				if (id.HasValue){
-					getChuyenHoSoGiayForEditOutput = await _chuyenHoSoGiaiesAppService.GetChuyenHoSoGiayForEdit(new EntityDto { Id = (int) id });
-				}
-				else {
-					getChuyenHoSoGiayForEditOutput = new GetChuyenHoSoGiayForEditOutput{
-						ChuyenHoSoGiay = new CreateOrEditChuyenHoSoGiayDto()
-					};
-				getChuyenHoSoGiayForEditOutput.ChuyenHoSoGiay.ThoiGianChuyen = DateTime.Now;
-				getChuyenHoSoGiayForEditOutput.ChuyenHoSoGiay.ThoiGianNhan = DateTime.Now;
-				}
+        [AbpMvcAuthorize(AppPermissions.Pages_ChuyenHoSoGiaies_Create, AppPermissions.Pages_ChuyenHoSoGiaies_Edit)]
+        public async Task<PartialViewResult> CreateOrEditModal(int? id, int vanBanDuAnId)
+        {
+            GetChuyenHoSoGiayForEditOutput getChuyenHoSoGiayForEditOutput;
 
-				var viewModel = new CreateOrEditChuyenHoSoGiayModalViewModel()
-				{
-					ChuyenHoSoGiay = getChuyenHoSoGiayForEditOutput.ChuyenHoSoGiay,
-					VanBanDuAnName = getChuyenHoSoGiayForEditOutput.VanBanDuAnName,
-					UserName = getChuyenHoSoGiayForEditOutput.UserName,                
-				};
+            if (id.HasValue)
+            {
+                getChuyenHoSoGiayForEditOutput =
+                    await _chuyenHoSoGiaiesAppService.GetChuyenHoSoGiayForEdit(new EntityDto {Id = (int) id});
+            }
+            else
+            {
+                getChuyenHoSoGiayForEditOutput = new GetChuyenHoSoGiayForEditOutput
+                {
+                    ChuyenHoSoGiay = new CreateOrEditChuyenHoSoGiayDto()
+                };
+                getChuyenHoSoGiayForEditOutput.ChuyenHoSoGiay.ThoiGianChuyen = DateTime.Now;
+                getChuyenHoSoGiayForEditOutput.ChuyenHoSoGiay.ThoiGianNhan = DateTime.Now;
+            }
 
-				return PartialView("_CreateOrEditModal", viewModel);
-			}
-			
+            var viewModel = new CreateOrEditChuyenHoSoGiayModalViewModel()
+            {
+                ChuyenHoSoGiay = getChuyenHoSoGiayForEditOutput.ChuyenHoSoGiay,
+                VanBanDuAnName = getChuyenHoSoGiayForEditOutput.VanBanDuAnName,
+                UserName = getChuyenHoSoGiayForEditOutput.UserName,
+                VanBanDuAnId = vanBanDuAnId
+            };
+
+            return PartialView("_CreateOrEditModal", viewModel);
+        }
+
 
         public async Task<PartialViewResult> ViewChuyenHoSoGiayModal(int id)
         {
-			var getChuyenHoSoGiayForViewDto = await _chuyenHoSoGiaiesAppService.GetChuyenHoSoGiayForView(id);
+            var getChuyenHoSoGiayForViewDto = await _chuyenHoSoGiaiesAppService.GetChuyenHoSoGiayForView(id);
 
             var model = new ChuyenHoSoGiayViewModel()
             {
-                ChuyenHoSoGiay = getChuyenHoSoGiayForViewDto.ChuyenHoSoGiay
-                , VanBanDuAnName = getChuyenHoSoGiayForViewDto.VanBanDuAnName 
-
-                , UserName = getChuyenHoSoGiayForViewDto.UserName 
-
+                ChuyenHoSoGiay = getChuyenHoSoGiayForViewDto.ChuyenHoSoGiay,
+                VanBanDuAnName = getChuyenHoSoGiayForViewDto.VanBanDuAnName,
+                UserName = getChuyenHoSoGiayForViewDto.UserName,
+                TenNguoiChuyen = getChuyenHoSoGiayForViewDto.TenNguoiChuyen,
+                TenNguoiNhan = getChuyenHoSoGiayForViewDto.TenNguoiNhan,
+                QuyTrinhDuAnName = getChuyenHoSoGiayForViewDto.QuyTrinhDuAnName,
+                DuAnName = getChuyenHoSoGiayForViewDto.DuAnName
             };
 
             return PartialView("_ViewChuyenHoSoGiayModal", model);
@@ -89,6 +96,7 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
 
             return PartialView("_ChuyenHoSoGiayVanBanDuAnLookupTableModal", viewModel);
         }
+
         [AbpMvcAuthorize(AppPermissions.Pages_ChuyenHoSoGiaies_Create, AppPermissions.Pages_ChuyenHoSoGiaies_Edit)]
         public PartialViewResult UserLookupTableModal(long? id, string displayName)
         {
@@ -102,5 +110,15 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
             return PartialView("_ChuyenHoSoGiayUserLookupTableModal", viewModel);
         }
 
+        public async Task<PartialViewResult> ChuyenHoSoGiayVanBanDuAn(int vanBanDuAnId)
+        {
+            var viewModel = new ChuyenHoSoGiaiesViewModel
+            {
+                FilterText = "",
+                VanBanDuAnId = vanBanDuAnId
+            };
+
+            return PartialView("_ViewChuyenHoSoGiayVanBanDuAn", viewModel);
+        }
     }
 }

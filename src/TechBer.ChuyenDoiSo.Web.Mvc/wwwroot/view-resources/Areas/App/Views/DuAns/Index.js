@@ -109,6 +109,7 @@
                 {
                     targets: 4,
                     data: "duAn.trangThai",
+                    className: "text-center",
                     render: function (trangThai, type, row, meta) {
                         let linkHoSo = "<a href='/App/VanBanDuAns?duanid=" + row.duAn.id + "' style=\"cursor:pointer;font-size:25px; font-weight: bolder;margin: 0 5px;\" title='Mở danh sách hồ sơ'><i class=\"fas fa-file-export\"></i></a>";
                         console.log(trangThai);

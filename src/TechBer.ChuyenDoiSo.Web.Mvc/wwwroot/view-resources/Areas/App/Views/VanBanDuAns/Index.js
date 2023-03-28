@@ -49,6 +49,13 @@
             modalClass: 'ViewVanBanDuAnModal',
             modalSize: "modal-xl"
         });
+        
+        var _viewChuyenHoSoGiayModal = new app.ModalManager({
+            viewUrl: abp.appPath + 'App/ChuyenHoSoGiaies/ChuyenHoSoGiayVanBanDuAn',
+            scriptUrl: abp.appPath + 'view-resources/Areas/App/Views/ChuyenHoSoGiaies/_ViewChuyenHoSoGiayVanBanDuAn.js',
+            modalClass: 'ViewChuyenHoSoGiayVanBanDuAn',
+            modalSize: "modal-xl"
+        });
 
         var _entityTypeHistoryModal = app.modals.EntityTypeHistoryModal.create();
 
@@ -99,44 +106,12 @@
                         cssClass: 'btn btn-brand dropdown-toggle',
                         text: '<i class="fa fa-cog"></i> ' + app.localize('Actions') + ' <span class="caret"></span>',
                         items: [
-                            // {
-                            //     text: app.localize('NhanHoSoGiay'),
-                            //     visible: function (data) {
-                            //         console.log(data);
-                            //         return _permissions.edit && data.record.vanBanDuAn.trangThaiNhanHoSoGiay == 0;
-                            //     },
-                            //     action: function (data) {
-                            //         // _createOrEditModal.open({id: data.record.vanBanDuAn.id});
-                            //         sweetAlert({
-                            //             text: app.localize("NhapTenNguoiNopHoSo"),
-                            //             content:{
-                            //                 element: "input",
-                            //                 attributes:{
-                            //                     placeholder: "Nhập tên người nộp hồ sơ",
-                            //                     type: "text",
-                            //                 }
-                            //             },
-                            //             button:{
-                            //                 Text: app.localize("OK"),
-                            //                 closeModal: true
-                            //             }
-                            //         }).then(tenNguoiNopHoSo => {
-                            //             if(tenNguoiNopHoSo != null){
-                            //                 _vanBanDuAnsService.nhanHoSoGiay({
-                            //                     id: data.record.vanBanDuAn.id,
-                            //                     tenNguoiNopHoSo: tenNguoiNopHoSo
-                            //                 }).then(result => {
-                            //                     if (result == 200){
-                            //                         getVanBanDuAns();
-                            //                     }
-                            //                     else {
-                            //                         swal(app.localize("Warning"), app.localize("CoLoiXayRa"), "warning");
-                            //                     }
-                            //                 })
-                            //             }
-                            //         })
-                            //     }
-                            // },
+                            {
+                                text: app.localize('ChuyenHoSoGiay'),
+                                action: function (data) {
+                                    _viewChuyenHoSoGiayModal.open({ vanBanDuAnId : data.record.vanBanDuAn.id})
+                                }
+                            },
                             {
                                 text: app.localize('ChuyenDuyetHoSo'),
                                 visible: function (data) {
@@ -230,6 +205,7 @@
                     targets: 4,
                     data: "vanBanDuAn.fileVanBan",
                     name: "fileVanBan",
+                    className: "text-center",
                     render: function (displayName, type, row, meta) {
                         // return "<a class='text-info text-bold link-view' data-target='" + row.vanBanDuAn.id + "' style='cursor: pointer;color:whitesmoke; white-space: normal'>" + row.vanBanDuAn.fileVanBan + "</a>";
                         var file = "";
@@ -244,6 +220,7 @@
                     targets: 5,
                     data: "vanBanDuAn",
                     name: "duAnFk.name",
+                    className: "text-center",
                     render: function (displayName, type, row, meta) {
                         if(row.vanBanDuAn.trangThaiChuyenDuyetHoSo == app.trangThaiDuyetHoSoConst.chuaGuiDuyet){
                             return "<label class='badge badge-danger'>Chưa gửi duyệt</label>"

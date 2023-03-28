@@ -45,7 +45,7 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Startup
                         AppPageNames.Common.ChuyenHoSoGiaies,
                         L("ChuyenHoSoGiaies"),
                         url: "App/ChuyenHoSoGiaies",
-                        icon: "flaticon-more",
+                        icon: "fas fa-paper-plane",
                         permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_ChuyenHoSoGiaies)
                     )
                 )

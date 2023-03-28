@@ -77,9 +77,10 @@
             dangChoDuyet:1,
             daDuyet:2
         },
-        trangThaiNhanHoSoGiay:{
-            chuaNopHoSoGiay: 0,
-            daNopHoSoGiay: 1
+        trangThaiChuyenHoSoGiay:{
+            chuaGuiHoSo: 0,
+            dangChoTiepNhan: 1,
+            daNhanHoSo: 2
         },
         trangThaiDuAnConst:{
             duAnOpen: 0,

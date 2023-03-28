@@ -1,6 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<localizationDictionary culture="en">
-  <texts>    <text name="ChuyenHoSoGiay">Chuyen ho so giay</text>
+<localizationDictionary culture="en"> 
+  <texts>
+    <text name="DanhSachGiaoHoSoGiay">Danh sach giao ho so giay</text>
+    <text name="ThaoTacXuLy">Thao tac xu ly</text>
+    <text name="NguoiNhanHoSo">Nguoi nhan ho so</text>
+    <text name="NguoiChuyenHoSo">Nguoi chuyen ho so</text>
+    <text name="ChuyenHoSoGiay">Chuyen ho so giay</text>
     <text name="TechBer.ChuyenDoiSo.QLVB.ChuyenHoSoGiay">ChuyenHoSoGiay</text>
     <text name="NguoiChuyenId">Nguoi chuyen id</text>
     <text name="ThoiGianChuyen">Thoi gian chuyen</text>
