@@ -1,4 +1,5 @@
-﻿using Abp.Application.Navigation;
+﻿
+using Abp.Application.Navigation;
 using Abp.Authorization;
 using Abp.Localization;
 using TechBer.ChuyenDoiSo.Authorization;
@@ -38,6 +39,14 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Startup
                         url: "App/DuyetHoSo",
                         icon: "fas fa-file-alt",
                         permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_DuyetHoSo)
+                    )
+                )
+                .AddItem(new MenuItemDefinition(
+                        AppPageNames.Common.ChuyenHoSoGiaies,
+                        L("ChuyenHoSoGiaies"),
+                        url: "App/ChuyenHoSoGiaies",
+                        icon: "fas fa-paper-plane",
+                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_ChuyenHoSoGiaies)
                     )
                 )
                 .AddItem(new MenuItemDefinition(

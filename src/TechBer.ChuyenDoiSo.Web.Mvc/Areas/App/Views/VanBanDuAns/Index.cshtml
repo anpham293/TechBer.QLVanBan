@@ -70,22 +70,6 @@
     <div class="@(await GetContainerClass()) kt-grid__item kt-grid__item--fluid">
         <div class="kt-portlet kt-portlet--mobile">
             <div class="kt-portlet__body">
-                <div class="kt-form">
-                    <div class="row align-items-center mb-4">
-                        <div class="col-xl-12">
-                            <div class="form-group align-items-center">
-                                <div class="input-group">
-                                    <input type="text" id="VanBanDuAnsTableFilter" class="form-control m-input" placeholder="@L("SearchWithThreeDot")" value="@Model.FilterText">
-                                    <span class="input-group-btn">
-                                        <button id="GetVanBanDuAnsButton" class="btn btn-primary" type="submit">
-                                            <i class="flaticon-search-1"></i>
-                                        </button>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div id="AdvacedAuditFiltersArea" style="display: none" hidden class="row mb-4">
                     <input hidden id="loaduanid" value="@Model.DuAnId.LoaiDuAnId">
                     <div class="col-md-12">
@@ -148,48 +132,32 @@
 
                 <div class="row align-items-center">
                     <div class="col-md-4 align-self-stretch"    >
-                        <div class="kt-container kt-container--fluid">
+                        <div class="kt-container kt-container--fluid" style="padding: 0">
                             <div class="kt-subheader__main">
                                 <h3 class="kt-subheader__title">
-                                    <span>Danh sách quy trình</span>
+                                    <span>Quy trình</span>
                                 </h3>
                                 <div class="kt-portlet__head-toolbar" id="find">
                                     <div class="kt-portlet__head-actions">
-                                        <button type="button" id="Collapse" class="btn btn-danger"><i class="fa fa-minus"></i> Thu hẹp</button>
-                                        <button type="button" id="Expand" class="btn btn-success" hidden><i class="fa fa-plus"></i> Mở rộng</button>
-
                                         @if (IsGranted(AppPermissions.Pages_QuyTrinhDuAns_Create))
                                         {
                                             <button type="button" id="AddRootUnitButtonIA" class="btn btn-primary">
-                                                <i class="la la-plus"></i> @L("AddRootUnit")
+                                                <i class="fas fa-plus"></i> Thêm quy trình
                                             </button>
                                         }
-                                        <button type="button" class="btn btn-default" id="reload-tree">
-                                            <i class="fa fa-sync"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-success" id="filall">
-                                            <i class="fa fa-sync"></i> Hiện tất cả
-                                        </button>
+                                        <button type="button" id="Collapse" class="btn btn-success"><i class="fas fa-eye"></i> Hiện tất cả</button>
+                                        <button type="button" id="Expand" class="btn btn-outline-secondary" hidden><i class="fas fa-eye-slash"></i> Hiện tất cả</button>
+                                        <button type="button" class="btn btn-info" id="reload-tree"><i class="fa fa-sync"></i>Refresh</button>
+
                                     </div>
                                     <br>
-                                    <div class="row kt-portlet__head-actions">
-                                        <div class="col-lg-4">
-                                            <span>
-                                                <i class="fa fa-folder" style="color: #a2a5b9"></i> Q.Trình không hồ sơ
-                                            </span>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <span>
-                                                <i class="fa fa-folder" style="color: red"></i> Q.Trình cần cập nhật hồ sơ
-                                            </span>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <span>
-                                                <i class="fa fa-folder" style="color: green"></i> Q.Trình đã đủ hồ sơ
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <br/>
+                                    <table class="display table table-striped table-bordered table-hover dt-responsive nowrap">
+                                        <tr>
+                                            <th style="text-align: center"><i class="fa fa-folder" style="color: #a2a5b9"></i> Không hồ sơ</th>
+                                            <th style="text-align: center"><i class="fa fa-folder" style="color: red"></i> Thiếu hồ sơ</th>
+                                            <th style="text-align: center"><i class="fa fa-folder" style="color: green"></i> Đủ hồ sơ</th>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
                             <div class="kt-portlet__body" style="position:relative;height:calc(100vh - 300px); overflow-y: scroll">
@@ -199,14 +167,34 @@
                     </div>
                     <div class="col-md-8 align-self-stretch">
                         <div class="kt-subheader__main">
+                            <h3 class="kt-subheader__title">
+                                <span>Hồ sơ</span>
+                            </h3>
                             <div class="kt-portlet__head-toolbar" id="find">
                                 <div class="kt-portlet__head-actions">
-                                    @if (IsGranted(AppPermissions.Pages_VanBanDuAns_Create))
-                                    {
-                                        <button type="button" id="CreateVanBan" class="btn btn-primary">
-                                            <i class="la la-plus"></i> Thêm mới hồ sơ
-                                        </button>
-                                    }
+                                    <div class="row">
+                                        <div class="col-6">
+                                            @if (IsGranted(AppPermissions.Pages_VanBanDuAns_Create))
+                                            {
+                                                <button type="button" id="CreateVanBan" class="btn btn-primary">
+                                                    <i class="fas fa-plus"></i> Thêm hồ sơ
+                                                </button>
+                                            }
+                                            <button type="button" class="btn btn-success" id="filall">
+                                                <i class="fas fa-eye"></i>Hiện tất cả
+                                            </button>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="input-group">
+                                                <input type="text" id="VanBanDuAnsTableFilter" class="form-control m-input" placeholder="@L("SearchWithThreeDot")" value="@Model.FilterText">
+                                                <span class="input-group-btn">
+                                                    <button id="GetVanBanDuAnsButton" class="btn btn-primary" type="submit">
+                                                        <i class="flaticon-search-1"></i>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -219,7 +207,7 @@
                                 <th>@L("NgayBanHanh")</th>
                                 <th>@L("FileHoSo")</th>
                                 <th>@L("DuyetHoSo")</th>
-                                <th>@L("HoSoGiay")</th>
+                                @* <th>@L("HoSoGiay")</th> *@
                             </tr>
                             </thead>
                         </table>

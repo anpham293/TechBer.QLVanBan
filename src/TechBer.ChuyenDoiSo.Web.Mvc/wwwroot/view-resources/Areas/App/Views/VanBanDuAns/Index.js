@@ -49,6 +49,13 @@
             modalClass: 'ViewVanBanDuAnModal',
             modalSize: "modal-xl"
         });
+        
+        var _viewChuyenHoSoGiayModal = new app.ModalManager({
+            viewUrl: abp.appPath + 'App/ChuyenHoSoGiaies/ChuyenHoSoGiayVanBanDuAn',
+            scriptUrl: abp.appPath + 'view-resources/Areas/App/Views/ChuyenHoSoGiaies/_ViewChuyenHoSoGiayVanBanDuAn.js',
+            modalClass: 'ViewChuyenHoSoGiayVanBanDuAn',
+            modalSize: "modal-xl"
+        });
 
         var _entityTypeHistoryModal = app.modals.EntityTypeHistoryModal.create();
 
@@ -100,41 +107,9 @@
                         text: '<i class="fa fa-cog"></i> ' + app.localize('Actions') + ' <span class="caret"></span>',
                         items: [
                             {
-                                text: app.localize('NhanHoSoGiay'),
-                                visible: function (data) {
-                                    console.log(data);
-                                    return _permissions.edit && data.record.vanBanDuAn.trangThaiNhanHoSoGiay == 0;
-                                },
+                                text: app.localize('ChuyenHoSoGiay'),
                                 action: function (data) {
-                                    // _createOrEditModal.open({id: data.record.vanBanDuAn.id});
-                                    sweetAlert({
-                                        text: app.localize("NhapTenNguoiNopHoSo"),
-                                        content:{
-                                            element: "input",
-                                            attributes:{
-                                                placeholder: "Nhập tên người nộp hồ sơ",
-                                                type: "text",
-                                            }
-                                        },
-                                        button:{
-                                            Text: app.localize("OK"),
-                                            closeModal: true
-                                        }
-                                    }).then(tenNguoiNopHoSo => {
-                                        if(tenNguoiNopHoSo != null){
-                                            _vanBanDuAnsService.nhanHoSoGiay({
-                                                id: data.record.vanBanDuAn.id,
-                                                tenNguoiNopHoSo: tenNguoiNopHoSo
-                                            }).then(result => {
-                                                if (result == 200){
-                                                    getVanBanDuAns();
-                                                }
-                                                else {
-                                                    swal(app.localize("Warning"), app.localize("CoLoiXayRa"), "warning");
-                                                }
-                                            })
-                                        }
-                                    })
+                                    _viewChuyenHoSoGiayModal.open({ vanBanDuAnId : data.record.vanBanDuAn.id})
                                 }
                             },
                             {
@@ -230,14 +205,22 @@
                     targets: 4,
                     data: "vanBanDuAn.fileVanBan",
                     name: "fileVanBan",
+                    className: "text-center",
                     render: function (displayName, type, row, meta) {
-                        return "<a class='text-info text-bold link-view' data-target='" + row.vanBanDuAn.id + "' style='cursor: pointer;color:whitesmoke; white-space: normal'>" + row.vanBanDuAn.fileVanBan + "</a>";
+                        // return "<a class='text-info text-bold link-view' data-target='" + row.vanBanDuAn.id + "' style='cursor: pointer;color:whitesmoke; white-space: normal'>" + row.vanBanDuAn.fileVanBan + "</a>";
+                        var file = "";
+                        if(row.vanBanDuAn.fileVanBan != null && row.vanBanDuAn.fileVanBan != "")
+                        {
+                            file = "<a class='text-warning text-bold link-view' data-target='" + row.vanBanDuAn.id + "' style='cursor:pointer;font-size:25px; font-weight: bolder;margin: 0 5px;'><i class=\"fas fa-file-pdf\"></i></a>";
+                        }
+                        return file
                     }
                 },
                 {
                     targets: 5,
                     data: "vanBanDuAn",
                     name: "duAnFk.name",
+                    className: "text-center",
                     render: function (displayName, type, row, meta) {
                         if(row.vanBanDuAn.trangThaiChuyenDuyetHoSo == app.trangThaiDuyetHoSoConst.chuaGuiDuyet){
                             return "<label class='badge badge-danger'>Chưa gửi duyệt</label>"
@@ -250,20 +233,20 @@
                         }
                     }
                 },
-                {
-                    targets: 6,
-                    data: "vanBanDuAn",
-                    name: "duAnFk.name",
-                    render: function (displayName, type, row, meta) {
-                        console.log(row);
-                        if(row.vanBanDuAn.trangThaiNhanHoSoGiay == app.trangThaiNhanHoSoGiay.chuaNopHoSoGiay){
-                            return "<label class='badge badge-danger'>Chưa giao hồ sơ giấy</label>"
-                        }
-                        if(row.vanBanDuAn.trangThaiNhanHoSoGiay == app.trangThaiNhanHoSoGiay.daNopHoSoGiay){
-                            return "<labe class='badge badge-success'>N.giao: "+row.vanBanDuAn.tenNguoiGiaoHoSo +"<br>T.gian giao: "+ moment(row.vanBanDuAn.thoiGianNhanHoSoGiay).format('DD/MM/YYYY HH:mm:ss') +"</label>"
-                        }
-                    }
-                }
+                // {
+                //     targets: 6,
+                //     data: "vanBanDuAn",
+                //     name: "duAnFk.name",
+                //     render: function (displayName, type, row, meta) {
+                //         console.log(row);
+                //         if(row.vanBanDuAn.trangThaiNhanHoSoGiay == app.trangThaiNhanHoSoGiay.chuaNopHoSoGiay){
+                //             return "<label class='badge badge-danger'>Chưa giao hồ sơ giấy</label>"
+                //         }
+                //         if(row.vanBanDuAn.trangThaiNhanHoSoGiay == app.trangThaiNhanHoSoGiay.daNopHoSoGiay){
+                //             return "<labe class='badge badge-success'>N.giao: "+row.vanBanDuAn.tenNguoiGiaoHoSo +"<br>T.gian giao: "+ moment(row.vanBanDuAn.thoiGianNhanHoSoGiay).format('DD/MM/YYYY HH:mm:ss') +"</label>"
+                //         }
+                //     }
+                // }
             ],  
             // initComplete
         });

@@ -1,0 +1,52 @@
+﻿@using System.Globalization
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.Common.Modals
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.ChuyenHoSoGiaies
+@model CreateOrEditChuyenHoSoGiayModalViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditChuyenHoSoGiay")) : L("CreateNewChuyenHoSoGiay")))
+
+<div class="modal-body">
+    <div id="ChuyenHoSoGiayInformationsTab">
+        <form name="ChuyenHoSoGiayInformationsForm" role="form" novalidate class="form-validation">
+
+            @if (Model.IsEditMode)
+            {
+                <input type="hidden" name="id" value="@Model.ChuyenHoSoGiay.Id"/>
+            }
+            <input type="hidden" name="vanBanDuAnId" value="@Model.VanBanDuAnId" id="a">
+            
+            <div class="form-group m-form__group">
+                <label for="UserName">@L("NguoiNhanHoSo")</label>
+                <div class="input-group">
+                    <input class="form-control" id="UserName" name="userName" value="@Model.UserName" type="text" disabled>
+                    <div class="input-group-append">
+                        <button class="btn btn-primary blue" id="OpenUserLookupTableButton" type="button">
+                            <i class="fa fa-search"></i> @L("Pick")</button>
+                    </div>
+                    <div class="input-group-prepend">
+                        <button class="btn btn-danger btn-icon" type="button" id="ClearUserNameButton">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            @if (Model.IsEditMode)
+            {
+                <input class="form-control" id="ChuyenHoSoGiay_NguoiNhanId" value="@Model.ChuyenHoSoGiay.NguoiNhanId" type="text" name="nguoiNhanId" hidden/>
+            }
+            else
+            {
+                <input class="form-control" id="ChuyenHoSoGiay_NguoiNhanId" value="" type="text" name="nguoiNhanId" hidden/>
+            }
+            
+            <div class="form-group">
+                <label for="ChuyenHoSoGiay_SoLuong">@L("SoLuong")</label>
+                <input class="form-control m-input" id="ChuyenHoSoGiay_SoLuong" value="@Model.ChuyenHoSoGiay.SoLuong.ToString(CultureInfo.InvariantCulture)" type="number" name="soLuong"/>
+            </div>
+            
+        </form>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

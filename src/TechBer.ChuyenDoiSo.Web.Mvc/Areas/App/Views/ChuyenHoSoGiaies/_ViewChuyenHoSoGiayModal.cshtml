@@ -1,0 +1,102 @@
+﻿
+@using TechBer.ChuyenDoiSo.QLVB
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.Common.Modals
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.ChuyenHoSoGiaies
+@model ChuyenHoSoGiayViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("Details")))
+
+<div class="modal-body">
+    <div id="ChuyenHoSoGiayInformationsTab">
+        
+        <div class="row">
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th style="text-align: center; font-weight: bold" colspan="3"> THÔNG TIN CHUYỂN HỒ SƠ GIẤY</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td style="text-align: center">
+                        <i class="fas fa-layer-group"></i>
+                    </td>
+                    <td style="text-align: left; font-weight: bold"> Dự án</td>
+                    <td style="text-align: center">@Model.DuAnName</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center">
+                        <i class="fas fa-folder-open"></i>
+                    </td>
+                    <td style="text-align: left; font-weight: bold"> Quy trình</td>
+                    <td style="text-align: center">@Model.QuyTrinhDuAnName</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center">
+                        <i class="fas fa-map"></i>
+                    </td>
+                    <td style="text-align: left; font-weight: bold"> Hồ sơ </td>
+                    <td style="text-align: center">@Model.VanBanDuAnName</td>
+                </tr> 
+                <tr>
+                    <td style="text-align: center">
+                        <i class="fas fa-box-open"></i>
+                    </td>
+                    <td style="text-align: left; font-weight: bold"> Số lượng </td>
+                    <td style="text-align: center">@Model.ChuyenHoSoGiay.SoLuong</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center">
+                        <i class="fas fa-user"></i>
+                    </td>
+                    <td style="text-align: left; font-weight: bold"> Người chuyển</td>
+                    <td style="text-align: center">@Model.TenNguoiChuyen</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center">
+                        <i class="fas fa-calendar-alt"></i>
+                    </td>
+                    <td style="text-align: left; font-weight: bold"> Thời gian chuyển</td>
+                    <td style="text-align: center">@Model.ChuyenHoSoGiay.ThoiGianChuyen?.ToString("dd/MM/yyyy")</td>
+                </tr> 
+                <tr>
+                    <td style="text-align: center">
+                        <i class="fas fa-user"></i>
+                    </td>
+                    <td style="text-align: left; font-weight: bold"> Người nhận</td>
+                    <td style="text-align: center">@Model.TenNguoiNhan</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center">
+                        <i class="fas fa-calendar-alt"></i>
+                    </td>
+                    <td style="text-align: left; font-weight: bold"> Thời gian nhận</td>
+                    <td style="text-align: center">@Model.ChuyenHoSoGiay.ThoiGianNhan?.ToString("dd/MM/yyyy")</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center">
+                        <i class="fas fa-address-card"></i>
+                    </td>
+                    <td style="text-align: left; font-weight: bold"> Trạng thái</td>
+                    @if (Model.ChuyenHoSoGiay.TrangThai == TrangThaiChuyenHoSoGiayConst.CHUA_GUI_HO_SO)
+                    {
+                        <td style="text-align: center"><label class='badge badge-danger'>Chưa gửi hồ sơ</label></td>
+                    }
+                    @if (Model.ChuyenHoSoGiay.TrangThai == TrangThaiChuyenHoSoGiayConst.DANG_CHO_TIEP_NHAN)
+                    {
+                        <label class='badge badge-primary'>Chờ tiếp nhận</label>
+                    }
+                    @if (Model.ChuyenHoSoGiay.TrangThai == TrangThaiChuyenHoSoGiayConst.DA_NHAN_HO_SO)
+                    {
+                        <label class='badge badge-success'>Đã nhận hồ sơ</label>
+                    }
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithClose.cshtml")
+

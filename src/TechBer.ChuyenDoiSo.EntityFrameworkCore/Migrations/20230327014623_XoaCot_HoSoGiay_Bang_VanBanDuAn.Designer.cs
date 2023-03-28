@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TechBer.ChuyenDoiSo.EntityFrameworkCore;
 
 namespace TechBer.ChuyenDoiSo.Migrations
 {
     [DbContext(typeof(ChuyenDoiSoDbContext))]
-    partial class ChuyenDoiSoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230327014623_XoaCot_HoSoGiay_Bang_VanBanDuAn")]
+    partial class XoaCot_HoSoGiay_Bang_VanBanDuAn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1905,47 +1907,6 @@ namespace TechBer.ChuyenDoiSo.Migrations
                     b.ToTable("AbpTenants");
                 });
 
-            modelBuilder.Entity("TechBer.ChuyenDoiSo.QLVB.ChuyenHoSoGiay", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("NguoiChuyenId")
-                        .HasColumnType("int");
-
-                    b.Property<long?>("NguoiNhanId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("SoLuong")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TenantId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("ThoiGianChuyen")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<DateTime?>("ThoiGianNhan")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("TrangThai")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("VanBanDuAnId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NguoiNhanId");
-
-                    b.HasIndex("TenantId");
-
-                    b.HasIndex("VanBanDuAnId");
-
-                    b.ToTable("ChuyenHoSoGiaies");
-                });
-
             modelBuilder.Entity("TechBer.ChuyenDoiSo.QLVB.DuAn", b =>
                 {
                     b.Property<int>("Id")
@@ -3002,17 +2963,6 @@ namespace TechBer.ChuyenDoiSo.Migrations
                     b.HasOne("TechBer.ChuyenDoiSo.Authorization.Users.User", "LastModifierUser")
                         .WithMany()
                         .HasForeignKey("LastModifierUserId");
-                });
-
-            modelBuilder.Entity("TechBer.ChuyenDoiSo.QLVB.ChuyenHoSoGiay", b =>
-                {
-                    b.HasOne("TechBer.ChuyenDoiSo.Authorization.Users.User", "NguoiNhanFk")
-                        .WithMany()
-                        .HasForeignKey("NguoiNhanId");
-
-                    b.HasOne("TechBer.ChuyenDoiSo.QLVB.VanBanDuAn", "VanBanDuAnFk")
-                        .WithMany()
-                        .HasForeignKey("VanBanDuAnId");
                 });
 
             modelBuilder.Entity("TechBer.ChuyenDoiSo.QLVB.DuAn", b =>
