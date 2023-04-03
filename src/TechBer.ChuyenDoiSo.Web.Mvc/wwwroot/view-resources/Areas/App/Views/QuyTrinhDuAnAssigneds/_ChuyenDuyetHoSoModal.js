@@ -46,7 +46,7 @@
                 abp.notify.info(app.localize('SavedSuccessfully'));
                 _modalManager.setResult(result);
                 _modalManager.close();
-                // abp.event.trigger('app.createOrEditQuyTrinhDuAnAssignedModalSaved');
+                abp.event.trigger('app.createOrEditVanBanDuAnModalSaved');
             }).always(function () {
                 _modalManager.setBusy(false);
             });

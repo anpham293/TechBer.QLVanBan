@@ -13,44 +13,47 @@
             {
                 <input type="hidden" name="id" value="@Model.VanBanDuAn.Id"/>
             }
-
-
+            
             <input class="form-control" id="VanBanDuAn_DuAnId" value="@Model.VanBanDuAn.DuAnId" type="text" name="duAnId" hidden/>
 
             <input class="form-control" id="VanBanDuAn_QuyTrinhDuAnId" value="@Model.VanBanDuAn.QuyTrinhDuAnId" type="text" name="quyTrinhDuAnId" hidden/>
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="VanBanDuAn_Name">@L("TenHoSo")</label>
+                        <input class="form-control" id="VanBanDuAn_Name" value="@Model.VanBanDuAn.Name" type="text" name="name"/>
+                    </div>
 
+                    <div class="form-group">
+                        <label for="VanBanDuAn_KyHieuVanBan">@L("QuyetDinh")</label>
+                        <input class="form-control" id="VanBanDuAn_KyHieuVanBan" value="@Model.VanBanDuAn.KyHieuVanBan" type="text" name="kyHieuVanBan"/>
+                    </div>
 
-            <div class="form-group">
-                <label for="VanBanDuAn_Name">@L("TenHoSo")</label>
-                <input class="form-control" id="VanBanDuAn_Name" value="@Model.VanBanDuAn.Name" type="text" name="name"/>
-            </div>
+                    <div class="form-group">
+                        <label for="VanBanDuAn_NgayBanHanh">@L("NgayBanHanh")</label>
+                        <input class="form-control m-input date-picker" id="VanBanDuAn_NgayBanHanh" type="text" name="ngayBanHanh" value="@Model.VanBanDuAn.NgayBanHanh"/>
+                    </div>
 
-            <div class="form-group">
-                <label for="VanBanDuAn_KyHieuVanBan">@L("QuyetDinh")</label>
-                <input class="form-control" id="VanBanDuAn_KyHieuVanBan" value="@Model.VanBanDuAn.KyHieuVanBan" type="text" name="kyHieuVanBan"/>
-            </div>
+                    <div class="form-group">
+                        <label for="VanBanDuAn_SoLuongVanBanGiay">@L("SoQuyenHoSo")</label>
+                        <input class="form-control" id="VanBanDuAn_SoLuongVanBanGiay" type="number" name="soLuongVanBanGiay" value="@Model.VanBanDuAn.SoLuongVanBanGiay"/>
+                    </div>
 
-            <div class="form-group">
-                <label for="VanBanDuAn_NgayBanHanh">@L("NgayBanHanh")</label>
-                <input class="form-control m-input date-picker" id="VanBanDuAn_NgayBanHanh" type="text" name="ngayBanHanh" value="@Model.VanBanDuAn.NgayBanHanh"/>
-            </div>
-
-            <div class="form-group">
-                <label for="VanBanDuAn_SoLuongVanBanGiay">@L("SoQuyenHoSo")</label>
-                <input class="form-control" id="VanBanDuAn_SoLuongVanBanGiay" type="number" name="soLuongVanBanGiay" value="@Model.VanBanDuAn.SoLuongVanBanGiay"/>
-            </div>
-            
-            <div class="form-group">
-                <label for="VanBanDuAn_FileVanBan">@L("FileHoSo")</label>
-                <div class="custom-file form-group">
-                    <input id="VanBanDuAn_FileVanBan" type="file" name="fileMau" accept="application/pdf" value="" class="form-control custom-file-input mb-4"/>
-                    <label id="custom-select-file" class="custom-file-label">Chọn file...</label>
+                    <div class="form-group">
+                        <label for="VanBanDuAn_SoTienThanhToan">@L("SoTienThanhToan")</label>
+                        <input class="form-control" id="VanBanDuAn_SoTienThanhToan" value="@Model.VanBanDuAn.SoTienThanhToan.ToString(CultureInfo.InvariantCulture)" type="text" name="soTienThanhToan" required data-inputmask="'alias': 'decimal', 'groupSeparator': '.', 'autoGroup': true, 'digits': 2, 'digitsOptional': false, 'suffix': ' VNĐ', 'placeholder': '0'"/>
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">    
-                <label for="VanBanDuAn_SoTienThanhToan">@L("SoTienThanhToan")</label>
-                <input class="form-control" id="VanBanDuAn_SoTienThanhToan" value="@Model.VanBanDuAn.SoTienThanhToan.ToString(CultureInfo.InvariantCulture)" type="text" name="soTienThanhToan" required data-inputmask="'alias': 'decimal', 'groupSeparator': '.', 'autoGroup': true, 'digits': 2, 'digitsOptional': false, 'suffix': ' VNĐ', 'placeholder': '0'"/>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="VanBanDuAn_FileVanBan">@L("FileHoSo")</label>
+                        <div class="custom-file form-group">
+                            <input id="VanBanDuAn_FileVanBan" type="file" name="fileMau" accept="application/pdf" value="" class="form-control custom-file-input mb-4"/>
+                            <label id="custom-select-file" class="custom-file-label">Chọn file...</label>
+                        </div>
+                    </div>
+                </div>
             </div>
         </form>
     </div>

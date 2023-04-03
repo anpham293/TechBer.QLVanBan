@@ -28,7 +28,8 @@
         var _createOrEditModal = new app.ModalManager({
             viewUrl: abp.appPath + 'App/VanBanDuAns/CreateOrEditModal',
             scriptUrl: abp.appPath + 'view-resources/Areas/App/Views/VanBanDuAns/_CreateOrEditModal.js',
-            modalClass: 'CreateOrEditVanBanDuAnModal'
+            modalClass: 'CreateOrEditVanBanDuAnModal',
+            modalSize: "modal-xl"
         }, function () {
             CayPhuLucIA.loadlai();
         });
@@ -164,8 +165,19 @@
                     }
                 },
                 {
-                    width: '250px',
                     targets: 1,
+                    data: "quyTrinhDuAnAssigned",
+                    name: "quyTrinhDuAnAssigned.maQuyTrinh",
+                    className: "text-center",
+                    render: function (data) {
+                        var maQuyTrinh = "";
+                        maQuyTrinh = '<a>'+ data.maQuyTrinh +'</a>';
+                        return maQuyTrinh;
+                    }
+                },
+                {
+                    width: '250px',
+                    targets: 2,
                     data: "vanBanDuAn",
                     name: "name",
                     render: function (vanBanDuAn) {
@@ -186,12 +198,16 @@
                     }
                 },
                 {
-                    targets: 2,
+                    targets: 3,
                     data: "vanBanDuAn.kyHieuVanBan",
-                    name: "kyHieuVanBan"
+                    name: "kyHieuVanBan",
+                    className: "text-center",
+                    render: function (data) {
+                        return '<a style="white-space: normal">'+ data +'</a>'
+                    }
                 },
                 {
-                    targets: 3,
+                    targets: 4,
                     data: "vanBanDuAn.ngayBanHanh",
                     name: "ngayBanHanh",
                     render: function (ngayBanHanh) {
@@ -202,7 +218,7 @@
                     }
                 },
                 {
-                    targets: 4,
+                    targets: 5,
                     data: "vanBanDuAn.fileVanBan",
                     name: "fileVanBan",
                     className: "text-center",
@@ -217,7 +233,7 @@
                     }
                 },
                 {
-                    targets: 5,
+                    targets: 6,
                     data: "vanBanDuAn",
                     name: "duAnFk.name",
                     className: "text-center",
@@ -822,7 +838,6 @@
 
         abp.event.on('app.createOrEditQuyTrinhDuAnModalSaved', function () {
             getQuyTrinhDuAns();
-            
         });
 
         $('#GetQuyTrinhDuAnsButton').click(function (e) {
