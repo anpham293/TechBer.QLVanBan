@@ -18,6 +18,7 @@ using Abp.Extensions;
 using Abp.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using TechBer.ChuyenDoiSo.Authorization.Users;
 using TechBer.ChuyenDoiSo.Storage;
 using TechBer.ChuyenDoiSo.Dto;
 using TechBer.ChuyenDoiSo.QuanLyDanhMuc.Dtos;
@@ -35,12 +36,14 @@ namespace TechBer.ChuyenDoiSo.QLVB
         private readonly IRepository<QuyTrinhDuAnAssigned, long> _lookup_quyTrinhDuAnRepository;
         private readonly ITempFileCacheManager _tempFileCacheManager;
         private readonly IBinaryObjectManager _binaryObjectManager;
+        private readonly IRepository<User, long> _lookup_userRepository;
 
 
         public VanBanDuAnsAppService(IRepository<VanBanDuAn> vanBanDuAnRepository,
             IVanBanDuAnsExcelExporter vanBanDuAnsExcelExporter, IRepository<DuAn, int> lookup_duAnRepository,
             IRepository<QuyTrinhDuAnAssigned, long> lookup_quyTrinhDuAnRepository,
             ITempFileCacheManager tempFileCacheManager,
+            IRepository<User, long> lookup_userRepository,
             IBinaryObjectManager binaryObjectManager)
         {
             _vanBanDuAnRepository = vanBanDuAnRepository;
@@ -49,6 +52,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
             _lookup_quyTrinhDuAnRepository = lookup_quyTrinhDuAnRepository;
             _tempFileCacheManager = tempFileCacheManager;
             _binaryObjectManager = binaryObjectManager;
+            _lookup_userRepository = lookup_userRepository;
         }
 
         public async Task<PagedResultDto<GetVanBanDuAnForViewDto>> GetAll(GetAllVanBanDuAnsInput input)
@@ -445,7 +449,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
         public async Task<PagedResultDto<GetVanBanDuAnForViewDto>> GetAllHoSoCanDuyet(
                                                                GetAllHoSoCanDuyetInput input)
         {
-            var filteredQuyTrinhDuAnAssigneds = _vanBanDuAnRepository.GetAll()
+            var filteredHoSoCanDuyet = _vanBanDuAnRepository.GetAll()
                 .Include(e => e.QuyTrinhDuAnAssignedFk)
                 .Include(e => e.DuAnFk)
                 .WhereIf(input.TrangThaiDuyetFilter!=null , e => e.TrangThaiChuyenDuyetHoSo == input.TrangThaiDuyetFilter)
@@ -453,11 +457,15 @@ namespace TechBer.ChuyenDoiSo.QLVB
                 .WhereIf(!string.IsNullOrWhiteSpace(input.DuAnNameFilter), e => e.DuAnFk.Name.Contains(input.DuAnNameFilter))
                 ;
 
-            var pagedAndFilteredQuyTrinhDuAnAssigneds = filteredQuyTrinhDuAnAssigneds
+            var pagedAndFilteredQuyTrinhDuAnAssigneds = filteredHoSoCanDuyet
                 .OrderBy(input.Sorting ?? "id asc")
                 .PageBy(input);
 
             var quyTrinhDuAnAssigneds = from o in pagedAndFilteredQuyTrinhDuAnAssigneds
+                join o2 in _lookup_userRepository.GetAll() on o.NguoiGuiId equals o2.Id into j2
+                from s2 in j2.DefaultIfEmpty()
+                join o3 in _lookup_userRepository.GetAll() on o.NguoiDuyetId equals o3.Id into j3
+                from s3 in j3.DefaultIfEmpty()
                 select new GetVanBanDuAnForViewDto()
                 {
                     VanBanDuAn = new VanBanDuAnDto()
@@ -479,10 +487,12 @@ namespace TechBer.ChuyenDoiSo.QLVB
                         KeToanTiepNhanId = o.KeToanTiepNhanId,
                         XuLyCuaLanhDao = o.XuLyCuaLanhDao,
                         SoLuongVanBanGiay = o.SoLuongVanBanGiay
-                    }
+                    },
+                    TenNguoiGui = s2 == null || s2.Name == null ? "" : (s2.Surname + " " + s2.Name).ToString(),
+                    TenNguoiDuyet = s3 == null || s3.Name == null ? "" : (s3.Surname + " " + s3.Name).ToString()
                 };
 
-            var totalCount = await filteredQuyTrinhDuAnAssigneds.CountAsync();
+            var totalCount = await filteredHoSoCanDuyet.CountAsync();
 
             return new PagedResultDto<GetVanBanDuAnForViewDto>(
                 totalCount,

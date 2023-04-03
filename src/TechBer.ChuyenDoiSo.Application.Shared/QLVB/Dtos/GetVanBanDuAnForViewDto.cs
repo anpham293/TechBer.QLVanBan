@@ -9,5 +9,7 @@
 		public string QuyTrinhDuAnName { get; set;}
 
 		public QuyTrinhDuAnAssignedDto QuyTrinhDuAnAssigned { get; set; }
+		public string TenNguoiGui { get; set; }
+		public string TenNguoiDuyet { get; set; }
     }
 }

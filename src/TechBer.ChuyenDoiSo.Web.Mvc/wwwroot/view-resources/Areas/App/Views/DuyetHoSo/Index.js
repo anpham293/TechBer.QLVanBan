@@ -30,8 +30,8 @@
         });
 
         var _viewQuyTrinhDuAnAssignedModal = new app.ModalManager({
-            viewUrl: abp.appPath + 'App/QuyTrinhDuAnAssigneds/ViewquyTrinhDuAnAssignedModal',
-            modalClass: 'ViewQuyTrinhDuAnAssignedModal'
+            viewUrl: abp.appPath + 'App/QuyTrinhDuAnAssigneds/ViewChuyenDuyetHoSoModal',
+            modalClass: 'ChuyenDuyetHoSoModalViewModel'
         });
 
         var _entityTypeHistoryModal = app.modals.EntityTypeHistoryModal.create();
@@ -49,8 +49,8 @@
             return element.data("DateTimePicker").date().format("YYYY-MM-DDT00:00:00Z");
         }
 
-        var _viewVanBanDuAnModal = new app.ModalManager({
-            viewUrl: abp.appPath + 'App/VanBanDuAns/ViewvanBanDuAnModal',
+        var _viewChuyenHoSoModal = new app.ModalManager({
+            viewUrl: abp.appPath + 'App/QuyTrinhDuAnAssigneds/ViewvanBanDuAnModal',
             modalClass: 'ViewVanBanDuAnModal',
             modalSize: "modal-xl"
         });
@@ -96,7 +96,11 @@
                             {
                                 text: app.localize('View'),
                                 action: function (data) {
-                                    _viewVanBanDuAnModal.open({id: data.record.vanBanDuAn.id});
+                                    _viewQuyTrinhDuAnAssignedModal.open({
+                                        vanBanDuAnId: data.record.vanBanDuAn.id,
+                                        typeDuyetHoSo : app.typeDuyetHoSoConst.chanhVanPhongDuyet
+                                        // type = 1: quản lý, 2: chánh vp
+                                    });
                                 }
                             },
                         ]
@@ -112,11 +116,8 @@
                 },
                 {
                     targets: 2,
-                    data: "vanBanDuAn",
-                    name: "name",
-                    render(vanBanDuAn){
-                        return '<a style="white-space: normal">'+ vanBanDuAn.soLuongVanBanGiay +'</a>';
-                    }
+                    data: "tenNguoiGui",
+                    name: "tenNguoiGui"
                 },
                 {
                     targets: 3,
@@ -150,19 +151,19 @@
                 },
                 {
                     targets: 6,
-                    data: "vanBanDuAn.ngayGui",
-                    name: "thoiGianNhan" ,
-                    render: function (thoiGianNhan) {
-                        if (thoiGianNhan) {
-                            return moment(thoiGianNhan).format('L');
+                    data: "vanBanDuAn.ngayDuyet",
+                    name: "ngayDuyet" ,
+                    render: function (ngayDuyet) {
+                        if (ngayDuyet) {
+                            return moment(ngayDuyet).format('L');
                         }
                         return "";
                     }
                 },
                 {
                     targets: 7,
-                    data: "vanBanDuAn.name" ,
-                    name: "nguoiNhanFk.name"
+                    data: "tenNguoiDuyet" ,
+                    name: "tenNguoiDuyet"
                 },
             ]
         });

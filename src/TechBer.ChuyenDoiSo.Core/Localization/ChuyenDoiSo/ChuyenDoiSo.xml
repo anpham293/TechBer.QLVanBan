@@ -1,6 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en"> 
   <texts>
+    <text name="ThoiGianGui">Thoi gian gui</text>
+    <text name="ThoiGianDuyet">Thoi gian duyet</text>
+    <text name="NguoiDuyetPhieu">Nguoi duyet phieu</text>
+    <text name="NguoiChuyenPhieu">Nguoi chuyen phieu</text>
     <text name="DanhSachGiaoHoSoGiay">Danh sach giao ho so giay</text>
     <text name="ThaoTacXuLy">Thao tac xu ly</text>
     <text name="NguoiNhanHoSo">Nguoi nhan ho so</text>

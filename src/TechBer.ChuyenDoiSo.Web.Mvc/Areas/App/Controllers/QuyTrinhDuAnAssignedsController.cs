@@ -267,6 +267,64 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
             };
             return PartialView("_ChuyenDuyetHoSoModal", viewModel);
         }
+        
+        [AbpMvcAuthorize(AppPermissions.Pages_QuyTrinhDuAnAssigneds_Edit)]
+        public PartialViewResult ViewChuyenDuyetHoSoModal(ChuyenDuyetHoSoModalInput input)
+        {
+            var tenNguoiGiao = "";
+            long nguoiGiaoId = -1;
+            var ngayGuiPhieu = "";
+            var vanBanDuAn = _vanBanDuAnRepository.FirstOrDefault(input.VanBanDuAnId);
+            // var quyTrinhDuAnAssigned =
+            //     _quyTrinhDuAnAssignedsRepository.FirstOrDefaultAsync((long)vanBanDuAn.QuyTrinhDuAnAssignedId);
+            var duAn = _duAnRepository.FirstOrDefault((int)vanBanDuAn.DuAnId);
+
+            List<CommonLookupTableDto> listKeToanPhuTrach = new List<CommonLookupTableDto>();
+            foreach (var VARIABLE in _userRepository.GetAll())
+            {
+                listKeToanPhuTrach.Add(new CommonLookupTableDto()
+                {
+                    Id = (int)VARIABLE.Id,
+                    DisplayName = VARIABLE.Surname + " " + VARIABLE.Name
+                });
+            }
+            if (vanBanDuAn.NgayGui.HasValue)
+            {
+                ngayGuiPhieu = (vanBanDuAn.NgayGui).ToString();
+            }
+            else
+            {
+                ngayGuiPhieu = DateTime.Now.ToString("dd/MM/yyyy");
+            }
+
+            if (vanBanDuAn.NguoiGuiId.HasValue)
+            {
+                var nguoiGiao = _userRepository.FirstOrDefault((long)vanBanDuAn.NguoiGuiId);
+                tenNguoiGiao = nguoiGiao.Surname + " " + nguoiGiao.Name;
+                nguoiGiaoId = nguoiGiao.Id;
+            
+            }
+            else
+            {
+                var nguoiGiao = _userRepository.FirstOrDefault((long)AbpSession.UserId);
+                tenNguoiGiao = nguoiGiao.Surname + " " + nguoiGiao.Name;
+                nguoiGiaoId = nguoiGiao.Id;
+            }
+            var keToanId = vanBanDuAn.KeToanTiepNhanId;
+            var viewModel = new ChuyenDuyetHoSoModalViewModel()
+            {
+                VanBanDuAn = ObjectMapper.Map<VanBanDuAnDto>(vanBanDuAn),
+                DuAn = ObjectMapper.Map<DuAnDto>(duAn),
+                SoLuongVanBan = vanBanDuAn.SoLuongVanBanGiay,
+                ListKeToanTiepNhan = listKeToanPhuTrach,
+                TenNguoiGiao = tenNguoiGiao,
+                NgayGuiPhieu = ngayGuiPhieu,
+                KeToanTiepNhanId = keToanId,
+                NguoiGuiId = nguoiGiaoId,
+                TypeDuyetHoSo = input.TypeDuyetHoSo
+            };
+            return PartialView("_ViewChuyenDuyetHoSoModal", viewModel);
+        }
 
         public ActionResult BaoCaoNopHoSoTrongThangTheoDuAnView()
         {

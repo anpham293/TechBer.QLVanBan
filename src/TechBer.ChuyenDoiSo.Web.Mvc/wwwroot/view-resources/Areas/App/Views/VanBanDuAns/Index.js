@@ -58,6 +58,11 @@
             modalSize: "modal-xl"
         });
 
+        var _viewQuyTrinhDuAnAssignedModal = new app.ModalManager({
+            viewUrl: abp.appPath + 'App/QuyTrinhDuAnAssigneds/ViewChuyenDuyetHoSoModal',
+            modalClass: 'ChuyenDuyetHoSoModalViewModel'
+        });
+
         var _entityTypeHistoryModal = app.modals.EntityTypeHistoryModal.create();
 
         function entityHistoryIsEnabled() {
@@ -242,10 +247,10 @@
                             return "<label class='badge badge-danger'>Chưa gửi duyệt</label>"
                         }
                         if(row.vanBanDuAn.trangThaiChuyenDuyetHoSo == app.trangThaiDuyetHoSoConst.dangChoDuyet){
-                            return "<labe class='badge badge-info'>Đang gửi duyệt <br>T.gian gửi: "+ moment(row.vanBanDuAn.ngayGui).format('DD/MM/YYYY HH:mm:ss') +"</label>"
+                            return "<a class='viewChuyenDuyetHoSo' vanBanDuAnId = '"+ row.vanBanDuAn.id +"'><label class='badge badge-info'>Đang gửi duyệt <br>T.gian gửi: "+ moment(row.vanBanDuAn.ngayGui).format('DD/MM/YYYY HH:mm:ss') +"</label></a>"
                         }
                         if(row.vanBanDuAn.trangThaiChuyenDuyetHoSo == app.trangThaiDuyetHoSoConst.daDuyet){
-                            return "<label class='badge badge-success'>Đã duyệt <br>T.gian duyệt: "+ moment(row.vanBanDuAn.ngayDuyet).format('DD/MM/YYYY HH:mm:ss') +" </label>"
+                            return "<a  class='viewChuyenDuyetHoSo' vanBanDuAnId = '"+ row.vanBanDuAn.id +"'><label class='badge badge-success'>Đã duyệt <br>T.gian duyệt: "+ moment(row.vanBanDuAn.ngayDuyet).format('DD/MM/YYYY HH:mm:ss') +" </label></a>"
                         }
                     }
                 },
@@ -267,6 +272,16 @@
             // initComplete
         });
 
+        $(document).on('click', '.viewChuyenDuyetHoSo', function () {
+            var seft = $(this);
+            vanBanDuAnId = seft.attr('vanBanDuAnId');
+            _viewQuyTrinhDuAnAssignedModal.open({
+                vanBanDuAnId: vanBanDuAnId,
+                typeDuyetHoSo : app.typeDuyetHoSoConst.chanhVanPhongDuyet
+                // type = 1: quản lý, 2: chánh vp
+            });
+        });
+        
         function getVanBanDuAns() {
             dataTable.ajax.reload();
         }
