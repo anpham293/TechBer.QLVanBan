@@ -100,7 +100,11 @@ namespace TechBer.ChuyenDoiSo.QLVB
                         XuLyCuaLanhDao = o.XuLyCuaLanhDao
                     },
                     DuAnName = s1 == null || s1.Name == null ? "" : s1.Name.ToString(),
-                    QuyTrinhDuAnName = s2 == null || s2.Name == null ? "" : s2.Name.ToString()
+                    QuyTrinhDuAnName = s2 == null || s2.Name == null ? "" : s2.Name.ToString(),
+                    QuyTrinhDuAnAssigned = new QuyTrinhDuAnAssignedDto()
+                    {
+                        MaQuyTrinh = s2.MaQuyTrinh
+                    }
                 };
 
             var totalCount = await filteredVanBanDuAns.CountAsync();
@@ -458,10 +462,23 @@ namespace TechBer.ChuyenDoiSo.QLVB
                 {
                     VanBanDuAn = new VanBanDuAnDto()
                     {
-                        Name = o.Name,
-                        SoLuongVanBanGiay = o.SoLuongVanBanGiay,
                         Id = o.Id,
-                        TrangThaiChuyenDuyetHoSo = o.TrangThaiChuyenDuyetHoSo
+                        Name = o.Name,
+                        KyHieuVanBan = o.KyHieuVanBan,
+                        NgayBanHanh = o.NgayBanHanh,
+                        FileVanBan = o.FileVanBan,
+                        DuAnId = o.DuAnId,
+                        ViTriLuuTru = o.ViTriLuuTru,
+                        LastFileVanBanTime = o.LastFileVanBanTime,
+                        NguoiNopHoSoId = o.NguoiNopHoSoId,
+                        TrangThaiChuyenDuyetHoSo = o.TrangThaiChuyenDuyetHoSo,
+                        NguoiGuiId = o.NguoiGuiId,
+                        NgayGui = o.NgayGui,
+                        NguoiDuyetId = o.NguoiDuyetId,
+                        NgayDuyet = o.NgayDuyet,
+                        KeToanTiepNhanId = o.KeToanTiepNhanId,
+                        XuLyCuaLanhDao = o.XuLyCuaLanhDao,
+                        SoLuongVanBanGiay = o.SoLuongVanBanGiay
                     }
                 };
 

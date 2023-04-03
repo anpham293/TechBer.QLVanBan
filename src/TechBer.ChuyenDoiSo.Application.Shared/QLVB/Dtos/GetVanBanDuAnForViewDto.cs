@@ -8,6 +8,6 @@
 
 		public string QuyTrinhDuAnName { get; set;}
 
-
+		public QuyTrinhDuAnAssignedDto QuyTrinhDuAnAssigned { get; set; }
     }
 }

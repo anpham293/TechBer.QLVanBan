@@ -120,17 +120,50 @@
                 },
                 {
                     targets: 3,
+                    data: "vanBanDuAn.ngayGui",
+                    name: "thoiGianNhan" ,
+                    render: function (thoiGianNhan) {
+                        if (thoiGianNhan) {
+                            return moment(thoiGianNhan).format('L');
+                        }
+                        return "";
+                    }
+                },
+                {
+                    targets: 4,
+                    data: "vanBanDuAn.soLuongVanBanGiay",
+                    name: "soLuong"
+                },
+                {
+                    targets: 5,
                     data: "vanBanDuAn",
                     name: "name",
-                    render(vanBanDuAn){
-                        if(vanBanDuAn.trangThaiChuyenDuyetHoSo == app.trangThaiDuyetHoSoConst.dangChoDuyet){
-                            return '<label class="badge badge-danger" >Đang chờ duyệt</label>';
+                    className: "text-center",
+                    render(displayName, type, row, meta){
+                        if(row.vanBanDuAn.trangThaiChuyenDuyetHoSo == app.trangThaiDuyetHoSoConst.dangChoDuyet){
+                            return "<labe class='badge badge-info'>Đang chờ duyệt <br>T.gian gửi: "+ moment(row.vanBanDuAn.ngayGui).format('DD/MM/YYYY HH:mm:ss') +"</label>"
                         }
-                        if(vanBanDuAn.trangThaiChuyenDuyetHoSo == app.trangThaiDuyetHoSoConst.daDuyet){
-                            return '<label class="badge badge-success" >Đã duyệt</label>';
+                        if(row.vanBanDuAn.trangThaiChuyenDuyetHoSo == app.trangThaiDuyetHoSoConst.daDuyet){
+                            return "<label class='badge badge-success'>Đã duyệt <br>T.gian duyệt: "+ moment(row.vanBanDuAn.ngayDuyet).format('DD/MM/YYYY HH:mm:ss') +" </label>"
                         }
                     }
-                }
+                },
+                {
+                    targets: 6,
+                    data: "vanBanDuAn.ngayGui",
+                    name: "thoiGianNhan" ,
+                    render: function (thoiGianNhan) {
+                        if (thoiGianNhan) {
+                            return moment(thoiGianNhan).format('L');
+                        }
+                        return "";
+                    }
+                },
+                {
+                    targets: 7,
+                    data: "vanBanDuAn.name" ,
+                    name: "nguoiNhanFk.name"
+                },
             ]
         });
 
@@ -192,7 +225,7 @@
                 });
         });
 
-        abp.event.on('app.createOrEditQuyTrinhDuAnAssignedModalSaved', function () {
+        abp.event.on('app.createOrEditVanBanDuAnModalSaved', function () {
             getQuyTrinhDuAnAssigneds();
         });
 
