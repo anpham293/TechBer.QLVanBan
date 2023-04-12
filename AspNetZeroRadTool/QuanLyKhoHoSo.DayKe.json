@@ -1,0 +1,76 @@
+{
+  "IsRegenerate": false,
+  "MenuPosition": "main",
+  "RelativeNamespace": "QuanLyKhoHoSo",
+  "EntityName": "DayKe",
+  "EntityNamePlural": "DayKes",
+  "TableName": "DayKes",
+  "PrimaryKeyType": "int",
+  "BaseClass": "FullAuditedEntity",
+  "EntityHistory": true,
+  "AutoMigration": true,
+  "UpdateDatabase": true,
+  "CreateUserInterface": true,
+  "CreateViewOnly": true,
+  "CreateExcelExport": true,
+  "IsNonModalCRUDPage": false,
+  "PagePermission": {
+    "Host": true,
+    "Tenant": true
+  },
+  "Properties": [
+    {
+      "Name": "MaSo",
+      "Type": "string",
+      "MaxLength": -1,
+      "MinLength": -1,
+      "Range": {
+        "IsRangeSet": false,
+        "MinimumValue": 0,
+        "MaximumValue": 0
+      },
+      "Required": false,
+      "Nullable": false,
+      "Regex": "",
+      "UserInterface": {
+        "AdvancedFilter": true,
+        "List": true,
+        "CreateOrUpdate": true
+      }
+    },
+    {
+      "Name": "Ten",
+      "Type": "string",
+      "MaxLength": -1,
+      "MinLength": -1,
+      "Range": {
+        "IsRangeSet": false,
+        "MinimumValue": 0,
+        "MaximumValue": 0
+      },
+      "Required": false,
+      "Nullable": false,
+      "Regex": "",
+      "UserInterface": {
+        "AdvancedFilter": true,
+        "List": true,
+        "CreateOrUpdate": true
+      }
+    }
+  ],
+  "NavigationProperties": [
+    {
+      "Namespace": "TechBer.ChuyenDoiSo.QuanLyKhoHoSo",
+      "ForeignEntityName": "PhongKho",
+      "IdType": "int",
+      "IsNullable": true,
+      "PropertyName": "PhongKhoId",
+      "DisplayPropertyName": "MaSo",
+      "DuplicationNumber": 0,
+      "RelationType": "single",
+      "ViewType": "LookupTable"
+    }
+  ],
+  "EnumDefinitions": [],
+  "DbContext": null
+}

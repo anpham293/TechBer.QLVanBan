@@ -1,6 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en"> 
-  <texts>    <text name="QuanLyKhoHoSo">Quan ly kho ho so</text>
+  <texts>    <text name="DayKe">Day ke</text>
+    <text name="TechBer.ChuyenDoiSo.QuanLyKhoHoSo.DayKe">DayKe</text>
+    <text name="DayKesHeaderInfo">Day kes header info</text>
+    <text name="CreateNewDayKe">Create new day ke</text>
+    <text name="EditDayKe">Edit day ke</text>
+    <text name="DeleteDayKe">Delete day ke</text>
+    <text name="DayKes">Day kes</text>
+    <text name="PhongKhoMaSo">Phong kho ma so</text>
+    <text name="PickPhongKho">Pick phong kho</text>
+    <text name="QuanLyKhoHoSo">Quan ly kho ho so</text>
     <text name="PhongKho">Phong kho</text>
     <text name="TechBer.ChuyenDoiSo.QuanLyKhoHoSo.PhongKho">PhongKho</text>
     <text name="PhongKhosHeaderInfo">Phong khos header info</text>

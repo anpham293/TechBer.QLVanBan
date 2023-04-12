@@ -49,6 +49,14 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Startup
                     )
                 )
                 .AddItem(new MenuItemDefinition(
+                        AppPageNames.Common.DayKes,
+                        L("DayKes"),
+                        url: "App/DayKes",
+                        icon: "flaticon-more",
+                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_DayKes)
+                    )
+                )
+                .AddItem(new MenuItemDefinition(
                         AppPageNames.Common.ChuyenHoSoGiaies,
                         L("ChuyenHoSoGiaies"),
                         url: "App/ChuyenHoSoGiaies",
