@@ -1,4 +1,5 @@
-﻿using TechBer.ChuyenDoiSo.QLVB;
+﻿using TechBer.ChuyenDoiSo.QuanLyKhoHoSo;
+using TechBer.ChuyenDoiSo.QLVB;
 using TechBer.ChuyenDoiSo.QuanLyDanhMuc;
 using TechBer.ChuyenDoiSo.QuanLyChuyenDoiSo;
 using Abp.IdentityServer4;
@@ -20,6 +21,8 @@ namespace TechBer.ChuyenDoiSo.EntityFrameworkCore
 {
     public class ChuyenDoiSoDbContext : AbpZeroDbContext<Tenant, Role, User, ChuyenDoiSoDbContext>, IAbpPersistedGrantDbContext
     {
+        public virtual DbSet<PhongKho> PhongKhos { get; set; }
+
         public virtual DbSet<ChuyenHoSoGiay> ChuyenHoSoGiaies { get; set; }
 
         public virtual DbSet<LoaiKhoan> LoaiKhoans { get; set; }
@@ -90,7 +93,12 @@ namespace TechBer.ChuyenDoiSo.EntityFrameworkCore
            
            
            
-            modelBuilder.Entity<ChuyenHoSoGiay>(c =>
+           
+            modelBuilder.Entity<PhongKho>(p =>
+            {
+                p.HasIndex(e => new { e.TenantId });
+            });
+ modelBuilder.Entity<ChuyenHoSoGiay>(c =>
             {
                 c.HasIndex(e => new { e.TenantId });
             });

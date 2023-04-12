@@ -1,6 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en"> 
-  <texts>
+  <texts>    <text name="QuanLyKhoHoSo">Quan ly kho ho so</text>
+    <text name="PhongKho">Phong kho</text>
+    <text name="TechBer.ChuyenDoiSo.QuanLyKhoHoSo.PhongKho">PhongKho</text>
+    <text name="PhongKhosHeaderInfo">Phong khos header info</text>
+    <text name="CreateNewPhongKho">Create new phong kho</text>
+    <text name="EditPhongKho">Edit phong kho</text>
+    <text name="DeletePhongKho">Delete phong kho</text>
+    <text name="PhongKhos">Phong khos</text>
+
     <text name="DuToan">Du toan</text>
     <text name="TongMucDauTu">Tong muc dau tu</text>
     <text name="XemChiTiet">Xem chi tiet</text>

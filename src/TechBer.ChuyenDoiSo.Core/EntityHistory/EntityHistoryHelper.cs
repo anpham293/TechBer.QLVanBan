@@ -1,4 +1,5 @@
-﻿using TechBer.ChuyenDoiSo.QLVB;
+﻿using TechBer.ChuyenDoiSo.QuanLyKhoHoSo;
+using TechBer.ChuyenDoiSo.QLVB;
 using TechBer.ChuyenDoiSo.QuanLyDanhMuc;
 using TechBer.ChuyenDoiSo.QuanLyChuyenDoiSo;
 using System;
@@ -15,6 +16,7 @@ namespace TechBer.ChuyenDoiSo.EntityHistory
 
         public static readonly Type[] HostSideTrackedTypes =
         {
+            typeof(PhongKho),
             typeof(ChuyenHoSoGiay),
             typeof(LoaiKhoan),
             typeof(Chuong),
@@ -30,6 +32,7 @@ namespace TechBer.ChuyenDoiSo.EntityHistory
 
         public static readonly Type[] TenantSideTrackedTypes =
         {
+            typeof(PhongKho),
             typeof(ChuyenHoSoGiay),
             typeof(LoaiKhoan),
             typeof(Chuong),
