@@ -63,7 +63,7 @@
                         text: '<i class="fa fa-cog"></i> ' + app.localize('Actions') + ' <span class="caret"></span>',
                         items: [
                             {
-                                text: app.localize('View'),
+                                text: app.localize('XemChiTiet'),
                                 action: function (data) {
                                     _viewDuAnModal.open({id: data.record.duAn.id});
                                 }
@@ -103,11 +103,56 @@
                 },
                 {
                     targets: 3,
-                    data: "loaiDuAnName",
-                    name: "loaiDuAnFk.name"
+                    data: "duAn.tongMucDauTu",
+                    name: "tongMucDauTu",
+                    className: "text-center",
+                    render: function (data) {
+                        return '<a>'+ addCommas(data) +' VNĐ</a>' ;
+                    }
                 },
                 {
                     targets: 4,
+                    data: "duAn.duToan",
+                    name: "duToan",
+                    className: "text-center",
+                    render: function (data) {
+                        return '<a>'+ addCommas(data) +' VNĐ</a>' ;
+                    }
+                },
+                {
+                    targets: 5,
+                    data: "loaiDuAnName",
+                    name: "loaiDuAnFk.name"
+                }, 
+                {
+                    targets: 6,
+                    data: "duAn.ngayBatDau",
+                    name: "ngayBatDau",
+                    className: "text-center",
+                    render: function (data) {
+                        var ngayBatDau = "";
+                        if(data!=null){
+                            ngayBatDau = moment(data).format("L");
+                        }
+                        return ngayBatDau;
+                    }
+                },
+                {
+                    targets: 7,
+                    data: "duAn.ngayKetThuc",
+                    name: "ngayKetThuc",
+                    className: "text-center",
+                    render: function (data) {
+                        var ngayKetThuc = "";
+                        if(data!=null){
+                            ngayKetThuc = moment(data).format("L");
+                        }
+                        return ngayKetThuc;
+                    }
+                    
+                },
+                {
+                    targets: 8,
                     data: "duAn.trangThai",
                     className: "text-center",
                     render: function (trangThai, type, row, meta) {

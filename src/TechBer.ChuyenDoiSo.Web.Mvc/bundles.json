@@ -70,7 +70,8 @@
         "wwwroot/view-resources/Areas/App/Views/Common/Modals/_LookupModal.js",
         "wwwroot/view-resources/Areas/App/Views/Common/Modals/_EntityTypeHistoryModal.js",
         "wwwroot/view-resources/Areas/App/Views/DemoUiComponents/DateAndTimePickers/DemoDateAndTimePickers.js",
-        "node_modules/inputmask/dist/jquery.inputmask.bundle.js"
+        "node_modules/inputmask/dist/jquery.inputmask.bundle.js",
+        "wwwroot/view-resources/Areas/App/Views/Common/Helper.js"
       ]
     },
     {

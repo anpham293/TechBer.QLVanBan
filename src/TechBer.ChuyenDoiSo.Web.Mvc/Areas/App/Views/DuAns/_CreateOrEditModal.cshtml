@@ -1,4 +1,5 @@
 ﻿@using System.Globalization
+@using TechBer.ChuyenDoiSo.Common
 @using TechBer.ChuyenDoiSo.Web.Areas.App.Models.Common.Modals
 @using TechBer.ChuyenDoiSo.Web.Areas.App.Models.DuAns
 @model CreateOrEditDuAnModalViewModel
@@ -15,8 +16,34 @@
             }
             <div class="row">
                 <div class="col-4">
+                    <div class="form-group">
+                        <label for="DuAn_Descriptions">
+                            @L("MaDuAn")<i style="color:red">(*)</i>
+                        </label>
+                        <input class="form-control" id="DuAn_Descriptions" value="@Model.DuAn.Descriptions" type="text" name="descriptions"/>
+                    </div>
+                </div>
+                <div class="col-8">
+                    <div class="form-group">
+                        <label for="DuAn_Name">
+                            @L("TenDuAn")<i style="color:red">(*)</i>
+                        </label>
+                        <input class="form-control" id="DuAn_Name" value="@Model.DuAn.Name" type="text" name="name" required/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="DuAn_MaDVQHNS">@L("MaDVQHNS")</label>
+                        <input class="form-control" id="DuAn_MaDVQHNS" value="@Model.DuAn.MaDVQHNS" type="text" name="maDVQHNS"/>
+                    </div>
+                </div>
+                <div class="col-8">
                     <div class="form-group m-form__group">
-                        <label for="LoaiDuAnName">@L("LoaiDuAn")<i style="color:red">(*)</i></label>
+                        <label for="LoaiDuAnName">
+                            @L("LoaiDuAn")<i style="color:red">(*)</i>
+                        </label>
                         <div class="input-group">
                             <input class="form-control" id="LoaiDuAnName" name="loaiDuAnName" value="@Model.LoaiDuAnName" type="text" disabled>
                             <div class="input-group-append">
@@ -41,7 +68,16 @@
                     }
 
                 </div>
+            </div>
+
+            <div class="row">
                 <div class="col-4">
+                    <div class="form-group">
+                        <label for="DuAn_NgayBatDau">@L("NgayBatDau")</label>
+                        <input class="form-control m-input date-picker" id="DuAn_NgayBatDau" type="text" name="ngayBatDau" value="@Model.DuAn.NgayBatDau"/>
+                    </div>
+                </div>
+                <div class="col-8">
                     <div class="form-group m-form__group">
                         <label for="ChuongName">@L("Chuongs")</label>
                         <div class="input-group">
@@ -66,9 +102,15 @@
                     {
                         <input class="form-control" id="DuAn_ChuongId" value="" type="text" name="chuongId" hidden/>
                     }
-                    
+
                 </div>
                 <div class="col-4">
+                    <div class="form-group">
+                        <label for="DuAn_NgayKetThuc">@L("NgayKetThuc")</label>
+                        <input class="form-control m-input date-picker" id="DuAn_NgayKetThuc" type="text" name="ngayKetThuc" value="@Model.DuAn.NgayKetThuc"/>
+                    </div>
+                </div>
+                <div class="col-8">
                     <div class="form-group m-form__group">
                         <label for="LoaiKhoanName">@L("LoaiKhoans")</label>
                         <div class="input-group">
@@ -94,37 +136,32 @@
                         <input class="form-control" id="DuAn_LoaiKhoanId" value="" type="text" name="loaiKhoanId" hidden/>
                     }
                 </div>
-
-            </div>
-            <div class="form-group">
-                <label for="DuAn_Name">@L("TenDuAn")<i style="color:red">(*)</i></label>
-                <input class="form-control" id="DuAn_Name" value="@Model.DuAn.Name" type="text" name="name" required/>
             </div>
             <div class="row">
-                <div class="col-3">
+                <div class="col-4">
                     <div class="form-group">
-                        <label for="DuAn_Descriptions">
-                            @L("MaDuAn")<i style="color:red">(*)</i>
-                        </label>
-                        <input class="form-control" id="DuAn_Descriptions" value="@Model.DuAn.Descriptions" type="text" name="descriptions"/>
+                        <label for="DuAn_TongMucDauTu">@L("TongMucDauTu")</label>
+                        <input class="form-control" id="DuAn_TongMucDauTu" value="@Model.DuAn.TongMucDauTu.ToString(CultureInfo.InvariantCulture)" type="text" name="tongMucDauTu" required data-inputmask="'alias': 'decimal', 'groupSeparator': '.', 'autoGroup': true, 'digits': 0, 'digitsOptional': false, 'suffix': ' VNĐ', 'placeholder': '0'"/>
                     </div>
                 </div>
-                <div class="col-3">
+                <div class="col-8">
                     <div class="form-group">
-                        <label for="DuAn_MaDVQHNS">@L("MaDVQHNS")</label>
-                        <input class="form-control" id="DuAn_MaDVQHNS" value="@Model.DuAn.MaDVQHNS" type="text" name="maDVQHNS"/>
+                        <label for="DuAn_TongMucDauTuBangChu">Bằng chữ</label>
+                        <input style="font-style: italic" class="form-control" id="DuAn_TongMucDauTuBangChu" value="@Helper.DocTienBangChu((long) Model.DuAn.TongMucDauTu, " đồng.")" disabled/>
                     </div>
                 </div>
-                <div class="col-3">
+            </div>
+            <div class="row">
+                <div class="col-4">
                     <div class="form-group">
-                        <label for="DuAn_NgayBatDau">@L("NgayBatDau")</label>
-                        <input class="form-control m-input date-picker" id="DuAn_NgayBatDau" type="text" name="ngayBatDau" value="@Model.DuAn.NgayBatDau"/>
+                        <label for="DuAn_DuToan">@L("DuToan")</label>
+                        <input class="form-control" id="DuAn_DuToan" value="@Model.DuAn.DuToan.ToString(CultureInfo.InvariantCulture)" type="text" name="duToan" required data-inputmask="'alias': 'decimal', 'groupSeparator': '.', 'autoGroup': true, 'digits': 0, 'digitsOptional': false, 'suffix': ' VNĐ', 'placeholder': '0'"/>
                     </div>
                 </div>
-                <div class="col-3">
+                <div class="col-8">
                     <div class="form-group">
-                        <label for="DuAn_NgayKetThuc">@L("NgayKetThuc")</label>
-                        <input class="form-control m-input date-picker" id="DuAn_NgayKetThuc" type="text" name="ngayKetThuc" value="@Model.DuAn.NgayKetThuc"/>
+                        <label for="DuAn_DuToanBangChu">Bằng chữ</label>
+                        <input style="font-style: italic" class="form-control" id="DuAn_DuToanBangChu" value="@Helper.DocTienBangChu((long) Model.DuAn.DuToan, " đồng.")" disabled/>
                     </div>
                 </div>
             </div>

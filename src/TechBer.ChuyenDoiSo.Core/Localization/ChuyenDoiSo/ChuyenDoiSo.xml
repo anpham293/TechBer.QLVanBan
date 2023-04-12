@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en"> 
   <texts>
+    <text name="DuToan">Du toan</text>
+    <text name="TongMucDauTu">Tong muc dau tu</text>
+    <text name="XemChiTiet">Xem chi tiet</text>
     <text name="ThoiGianGui">Thoi gian gui</text>
     <text name="ThoiGianDuyet">Thoi gian duyet</text>
     <text name="NguoiDuyetPhieu">Nguoi duyet phieu</text>

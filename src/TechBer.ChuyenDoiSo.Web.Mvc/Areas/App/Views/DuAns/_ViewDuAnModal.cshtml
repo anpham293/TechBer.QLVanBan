@@ -1,4 +1,4 @@
-﻿
+﻿@using TechBer.ChuyenDoiSo.Common
 @using TechBer.ChuyenDoiSo.Web.Areas.App.Models.Common.Modals
 @using TechBer.ChuyenDoiSo.Web.Areas.App.Models.DuAns
 @model DuAnViewModel
@@ -7,26 +7,74 @@
 
 <div class="modal-body">
     <div id="DuAnInformationsTab">
-        
+        <h4 style="text-align: center">THÔNG TIN DỰ ÁN</h4>
         <div class="row">
-            <div class="col-6 mb-3">
-                <h6>@L("Name") :</h6>
-                @Model.DuAn.Name
-            </div>
-            <div class="col-6 mb-3">
-                <h6>@L("Descriptions") :</h6>
-                @Model.DuAn.Descriptions
-            </div>
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th style="text-align: center; font-weight: bold" colspan="3">@Model.DuAn.Name</th>
+                </tr>
+                <tr>
+                    <th style="text-align: center; font-weight: bold" colspan="3">Ngày bắt đầu: @Model.DuAn.NgayBatDau?.ToString("dd/MM/yyyy")
+                        - Ngày kết thúc: @Model.DuAn.NgayKetThuc?.ToString("dd/MM/yyyy")
+                        </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td style="text-align: center">
+                        <i class="fas fa-layer-group"></i>
+                    </td>
+                    <td style="text-align: left; font-weight: bold">Mã dự án</td>
+                    <td style="text-align: center">@Model.DuAn.Descriptions</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center">
+                        <i class="fas fa-layer-group"></i>
+                    </td>
+                    <td style="text-align: left; font-weight: bold">Loại dự án</td>
+                    <td style="text-align: center">@Model.LoaiDuAnName</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center">
+                        <i class="fas fa-layer-group"></i>
+                    </td>
+                    <td style="text-align: left; font-weight: bold">Chương</td>
+                    <td style="text-align: center">@Model.ChuongName</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center">
+                        <i class="fas fa-layer-group"></i>
+                    </td>
+                    <td style="text-align: left; font-weight: bold">Loại khoản</td>
+                    <td style="text-align: center">@Model.LoaiKhoanName</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center">
+                        <i class="fas fa-layer-group"></i>
+                    </td>
+                    <td style="text-align: left; font-weight: bold">Tổng mức đầu tư</td>
+                    <td style="text-align: center">
+                        @Model.DuAn.TongMucDauTu.toCurrency() VNĐ<br>
+                        <a style="font-style: italic">(@Helper.DocTienBangChu((long) Model.DuAn.TongMucDauTu, " đồng"))</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: center">
+                        <i class="fas fa-layer-group"></i>
+                    </td>
+                    <td style="text-align: left; font-weight: bold">Dự toán</td>
+                    <td style="text-align: center">
+                        @Model.DuAn.DuToan.toCurrency() VNĐ<br>
+                        <a style="font-style: italic">(@Helper.DocTienBangChu((long) Model.DuAn.DuToan, " đồng"))</a>
+                    </td>
+                </tr>
 
-            <div class="col-6 mb-3">
-                <h6>(@L("LoaiDuAn")) @L("Name") :</h6>
-                @Model.LoaiDuAnName
-            </div>
 
+                </tbody>
+            </table>
         </div>
-
     </div>
 </div>
 
 @await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithClose.cshtml")
-

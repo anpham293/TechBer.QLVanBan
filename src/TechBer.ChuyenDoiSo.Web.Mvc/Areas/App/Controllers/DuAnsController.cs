@@ -66,21 +66,22 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
 
 				return PartialView("_CreateOrEditModal", viewModel);
 			}
-			
 
-        public async Task<PartialViewResult> ViewDuAnModal(int id)
-        {
-			var getDuAnForViewDto = await _duAnsAppService.GetDuAnForView(id);
 
-            var model = new DuAnViewModel()
-            {
-                DuAn = getDuAnForViewDto.DuAn
-                , LoaiDuAnName = getDuAnForViewDto.LoaiDuAnName 
+			public async Task<PartialViewResult> ViewDuAnModal(int id)
+			{
+				var getDuAnForViewDto = await _duAnsAppService.GetDuAnForView(id);
 
-            };
+				var model = new DuAnViewModel()
+				{
+					DuAn = getDuAnForViewDto.DuAn, 
+					LoaiDuAnName = getDuAnForViewDto.LoaiDuAnName,
+					ChuongName = getDuAnForViewDto.ChuongName,
+					LoaiKhoanName = getDuAnForViewDto.LoaiKhoanName
+				};
 
-            return PartialView("_ViewDuAnModal", model);
-        }
+				return PartialView("_ViewDuAnModal", model);
+			}
 
         [AbpMvcAuthorize(AppPermissions.Pages_DuAns_Create, AppPermissions.Pages_DuAns_Edit)]
         public PartialViewResult LoaiDuAnLookupTableModal(int? id, string displayName)
