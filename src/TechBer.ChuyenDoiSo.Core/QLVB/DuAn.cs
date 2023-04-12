@@ -29,5 +29,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
         public virtual string MaDVQHNS { get; set; }
         public virtual DateTime? NgayBatDau { get; set; }
         public virtual DateTime? NgayKetThuc { get; set; }
+        public virtual decimal TongMucDauTu { get; set; }
+        public virtual decimal DuToan { get; set; }
     }
 }

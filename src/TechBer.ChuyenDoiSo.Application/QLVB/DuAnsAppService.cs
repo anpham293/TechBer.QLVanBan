@@ -89,7 +89,9 @@ namespace TechBer.ChuyenDoiSo.QLVB
                         LoaiKhoanId = o.LoaiKhoanId,
                         MaDVQHNS = o.MaDVQHNS,
                         NgayBatDau = o.NgayBatDau,
-                        NgayKetThuc = o.NgayKetThuc
+                        NgayKetThuc = o.NgayKetThuc,
+                        TongMucDauTu = o.TongMucDauTu,
+                        DuToan = o.DuToan
                     },
                     LoaiDuAnName = s1 == null || s1.Name == null ? "" : s1.Name.ToString(),
                     LoaiDuAn = new LoaiDuAnDto()
@@ -156,6 +158,17 @@ namespace TechBer.ChuyenDoiSo.QLVB
                 var _lookupLoaiDuAn =
                     await _lookup_loaiDuAnRepository.FirstOrDefaultAsync((int) output.DuAn.LoaiDuAnId);
                 output.LoaiDuAnName = _lookupLoaiDuAn?.Name?.ToString();
+            }
+
+            if (output.DuAn.ChuongId != null)
+            {
+                var _lookupChuong = await _lookup_chuongRepository.FirstOrDefaultAsync((int) output.DuAn.ChuongId);
+                output.ChuongName = _lookupChuong?.MaSo?.ToString() + " - " + _lookupChuong?.Ten?.ToString();
+            }
+            if (output.DuAn.LoaiKhoanId != null)
+            {
+                var _lookupLoaiKhoan = await _lookup_loaiKhoanRepository.FirstOrDefaultAsync((int) output.DuAn.LoaiKhoanId);
+                output.LoaiKhoanName = _lookupLoaiKhoan?.MaSo?.ToString() + " - " + _lookupLoaiKhoan?.Ten?.ToString();
             }
 
             return output;
@@ -280,6 +293,8 @@ namespace TechBer.ChuyenDoiSo.QLVB
             duAn.MaDVQHNS = input.MaDVQHNS;
             duAn.NgayBatDau = input.NgayBatDau;
             duAn.NgayKetThuc = input.NgayKetThuc;
+            duAn.TongMucDauTu = input.TongMucDauTu;
+            duAn.DuToan = input.DuToan;
             await _duAnRepository.UpdateAsync(duAn);
         }
 

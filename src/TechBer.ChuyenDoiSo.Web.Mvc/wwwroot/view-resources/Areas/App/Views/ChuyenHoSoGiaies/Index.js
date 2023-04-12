@@ -101,7 +101,7 @@
                     name: "thoiGianChuyen" ,
                     render: function (thoiGianChuyen) {
                         if (thoiGianChuyen) {
-                            return moment(thoiGianChuyen).format('L');
+                            return moment(thoiGianChuyen).format('DD/MM/YYYY hh:MM:ss');
                         }
                         return "";
                     }
@@ -137,7 +137,7 @@
                     name: "thoiGianNhan" ,
                     render: function (thoiGianNhan) {
                         if (thoiGianNhan) {
-                            return moment(thoiGianNhan).format('L');
+                            return moment(thoiGianNhan).format('DD/MM/YYYY hh:MM:ss');
                         }
                         return "";
                     }

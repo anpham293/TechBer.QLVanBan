@@ -83,7 +83,21 @@
             _$duAnInformationForm.find('input[name=loaiKhoanName]').val('');
             _$duAnInformationForm.find('input[name=loaiKhoanId]').val('');
         });
+        
+        $('#DuAn_TongMucDauTu').inputmask();
+        $('#DuAn_DuToan').inputmask();
 
+        $('#DuAn_TongMucDauTu').change(function() {
+            var xuLy='';
+            xuLy = DocSoThanhChu($('#DuAn_TongMucDauTu').inputmask('unmaskedvalue'));
+                $('#DuAn_TongMucDauTuBangChu').val(xuLy);
+        });
+        $('#DuAn_DuToan').change(function() {
+            var xuLy='';
+            xuLy = DocSoThanhChu($('#DuAn_DuToan').inputmask('unmaskedvalue'));
+            $('#DuAn_DuToanBangChu').val(xuLy);
+        });
+        
         this.save = function () {
             if (!_$duAnInformationForm.valid()) {
                 return;
@@ -94,7 +108,9 @@
             }
 
             var duAn = _$duAnInformationForm.serializeFormToObject();
-
+            duAn.tongMucDauTu = $('#DuAn_TongMucDauTu').inputmask('unmaskedvalue');
+            duAn.duToan = $('#DuAn_DuToan').inputmask('unmaskedvalue');
+            
             _modalManager.setBusy(true);
             _duAnsService.createOrEdit(
                 duAn
