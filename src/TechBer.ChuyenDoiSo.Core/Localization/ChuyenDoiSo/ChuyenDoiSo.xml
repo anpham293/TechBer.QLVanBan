@@ -1,6 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en"> 
-  <texts>    <text name="DayKe">Day ke</text>
+  <texts>    <text name="ThungHoSo">Thung ho so</text>
+    <text name="TechBer.ChuyenDoiSo.QuanLyKhoHoSo.ThungHoSo">ThungHoSo</text>
+    <text name="MoTa">Mo ta</text>
+    <text name="ThungHoSosHeaderInfo">Thung ho sos header info</text>
+    <text name="CreateNewThungHoSo">Create new thung ho so</text>
+    <text name="EditThungHoSo">Edit thung ho so</text>
+    <text name="DeleteThungHoSo">Delete thung ho so</text>
+    <text name="ThungHoSos">Thung ho sos</text>
+    <text name="DayKeMaSo">Day ke ma so</text>
+    <text name="PickDayKe">Pick day ke</text>
+    <text name="DayKe">Day ke</text>
     <text name="TechBer.ChuyenDoiSo.QuanLyKhoHoSo.DayKe">DayKe</text>
     <text name="DayKesHeaderInfo">Day kes header info</text>
     <text name="CreateNewDayKe">Create new day ke</text>

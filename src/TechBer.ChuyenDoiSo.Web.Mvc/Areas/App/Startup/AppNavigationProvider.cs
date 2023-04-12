@@ -57,6 +57,14 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Startup
                     )
                 )
                 .AddItem(new MenuItemDefinition(
+                        AppPageNames.Common.ThungHoSos,
+                        L("ThungHoSos"),
+                        url: "App/ThungHoSos",
+                        icon: "flaticon-more",
+                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_ThungHoSos)
+                    )
+                )
+                .AddItem(new MenuItemDefinition(
                         AppPageNames.Common.ChuyenHoSoGiaies,
                         L("ChuyenHoSoGiaies"),
                         url: "App/ChuyenHoSoGiaies",
