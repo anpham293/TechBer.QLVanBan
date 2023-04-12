@@ -36,8 +36,6 @@ namespace TechBer.ChuyenDoiSo.QLVB
         public virtual long? QuyTrinhDuAnAssignedId { get; set; }
 
         [ForeignKey("QuyTrinhDuAnAssignedId")] public QuyTrinhDuAnAssigned QuyTrinhDuAnAssignedFk { get; set; }
-
-        public virtual string ViTriLuuTru { get; set; }
         public virtual DateTime? LastFileVanBanTime { get; set; }
         public virtual long? NguoiNopHoSoId { get; set; }
         public virtual decimal SoTienThanhToan { get; set; }
@@ -49,5 +47,6 @@ namespace TechBer.ChuyenDoiSo.QLVB
         public virtual DateTime? NgayDuyet { get; set; }
         public virtual long? KeToanTiepNhanId { get; set; }
         public virtual string XuLyCuaLanhDao { get; set; }
+        public virtual int? ThungHoSoId { get; set; }
     }
 }

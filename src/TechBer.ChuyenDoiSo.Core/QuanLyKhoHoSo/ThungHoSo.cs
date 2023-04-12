@@ -23,6 +23,7 @@ namespace TechBer.ChuyenDoiSo.QuanLyKhoHoSo
 		public virtual string MoTa { get; set; }
 		
 		public virtual int TrangThai { get; set; }
+		public virtual string QrString { get; set; }
 		
 
 		public virtual int? DayKeId { get; set; }

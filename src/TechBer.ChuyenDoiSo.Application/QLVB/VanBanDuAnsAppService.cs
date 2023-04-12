@@ -94,7 +94,6 @@ namespace TechBer.ChuyenDoiSo.QLVB
                             ? o.FileVanBan
                             : JsonConvert.DeserializeObject<FileMauSerializeObj>(o.FileVanBan).FileName),
                         Id = o.Id,
-                        ViTriLuuTru = o.ViTriLuuTru,
                         TrangThaiChuyenDuyetHoSo = o.TrangThaiChuyenDuyetHoSo,
                         NguoiGuiId = o.NguoiGuiId,
                         NgayGui = o.NgayGui,
@@ -476,7 +475,6 @@ namespace TechBer.ChuyenDoiSo.QLVB
                         NgayBanHanh = o.NgayBanHanh,
                         FileVanBan = o.FileVanBan,
                         DuAnId = o.DuAnId,
-                        ViTriLuuTru = o.ViTriLuuTru,
                         LastFileVanBanTime = o.LastFileVanBanTime,
                         NguoiNopHoSoId = o.NguoiNopHoSoId,
                         TrangThaiChuyenDuyetHoSo = o.TrangThaiChuyenDuyetHoSo,
