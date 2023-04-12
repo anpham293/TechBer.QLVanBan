@@ -2285,11 +2285,11 @@ namespace TechBer.ChuyenDoiSo.Migrations
                     b.Property<int?>("TenantId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TrangThaiChuyenDuyetHoSo")
+                    b.Property<int?>("ThungHoSoId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ViTriLuuTru")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                    b.Property<int>("TrangThaiChuyenDuyetHoSo")
+                        .HasColumnType("int");
 
                     b.Property<string>("XuLyCuaLanhDao")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -2727,6 +2727,159 @@ namespace TechBer.ChuyenDoiSo.Migrations
                     b.ToTable("TinhThanhs");
                 });
 
+            modelBuilder.Entity("TechBer.ChuyenDoiSo.QuanLyKhoHoSo.DayKe", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DeleterUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("MaSo")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<int?>("PhongKhoId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Ten")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PhongKhoId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("DayKes");
+                });
+
+            modelBuilder.Entity("TechBer.ChuyenDoiSo.QuanLyKhoHoSo.PhongKho", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DeleterUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("MaSo")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Ten")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("PhongKhos");
+                });
+
+            modelBuilder.Entity("TechBer.ChuyenDoiSo.QuanLyKhoHoSo.ThungHoSo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("DayKeId")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("DeleterUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int?>("DuAnId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("MaSo")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("MoTa")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("QrString")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Ten")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TrangThai")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DayKeId");
+
+                    b.HasIndex("DuAnId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("ThungHoSos");
+                });
+
             modelBuilder.Entity("TechBer.ChuyenDoiSo.Storage.BinaryObject", b =>
                 {
                     b.Property<Guid>("Id")
@@ -3119,6 +3272,24 @@ namespace TechBer.ChuyenDoiSo.Migrations
                         .HasForeignKey("TinhThanhId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("TechBer.ChuyenDoiSo.QuanLyKhoHoSo.DayKe", b =>
+                {
+                    b.HasOne("TechBer.ChuyenDoiSo.QuanLyKhoHoSo.PhongKho", "PhongKhoFk")
+                        .WithMany()
+                        .HasForeignKey("PhongKhoId");
+                });
+
+            modelBuilder.Entity("TechBer.ChuyenDoiSo.QuanLyKhoHoSo.ThungHoSo", b =>
+                {
+                    b.HasOne("TechBer.ChuyenDoiSo.QuanLyKhoHoSo.DayKe", "DayKeFk")
+                        .WithMany()
+                        .HasForeignKey("DayKeId");
+
+                    b.HasOne("TechBer.ChuyenDoiSo.QLVB.DuAn", "DuAnFk")
+                        .WithMany()
+                        .HasForeignKey("DuAnId");
                 });
 
             modelBuilder.Entity("Abp.Application.Features.EditionFeatureSetting", b =>

@@ -1,0 +1,59 @@
+﻿
+@using System.Globalization
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.Common.Modals
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.DayKes
+@model CreateOrEditDayKeModalViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditDayKe")) : L("CreateNewDayKe")))
+
+<div class="modal-body">
+        <div id="DayKeInformationsTab">
+            <form name="DayKeInformationsForm" role="form" novalidate class="form-validation">
+
+                @if (Model.IsEditMode)
+                {
+                    <input type="hidden" name="id" value="@Model.DayKe.Id" />
+                }
+
+				            
+								<div class="form-group m-form__group">
+										<label for="PhongKhoMaSo">@L("PhongKho")</label>
+									    <div class="input-group">
+											<input class="form-control" id="PhongKhoMaSo" name="phongKhoMaSo" value="@Model.PhongKhoMaSo" type="text" disabled>
+										<div class="input-group-append">
+											<button class="btn btn-primary blue" id="OpenPhongKhoLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
+										</div> 
+										<div class="input-group-prepend">
+											<button class="btn btn-danger btn-icon" type="button" id="ClearPhongKhoMaSoButton"><i class="fa fa-times"></i></button>
+										</div>
+									</div>
+								</div>
+
+								@if (Model.IsEditMode)
+								{
+									<input class="form-control" id="DayKe_PhongKhoId" value="@Model.DayKe.PhongKhoId" type="text" name="phongKhoId"  hidden/>
+								}
+								 else
+								{ 
+									<input class="form-control" id="DayKe_PhongKhoId" value="" type="text" name="phongKhoId"  hidden/>
+								}
+
+
+
+				
+								<div class="form-group">
+									<label for="DayKe_MaSo">@L("MaSo")</label>
+									<input class="form-control" id="DayKe_MaSo" value="@Model.DayKe.MaSo" type="text" name="maSo"     />
+								</div>
+					
+								<div class="form-group">
+									<label for="DayKe_Ten">@L("Ten")</label>
+									<input class="form-control" id="DayKe_Ten" value="@Model.DayKe.Ten" type="text" name="ten"     />
+								</div>
+					
+
+            </form>
+        </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

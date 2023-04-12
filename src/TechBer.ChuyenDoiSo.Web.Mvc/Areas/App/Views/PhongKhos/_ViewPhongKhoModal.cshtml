@@ -1,0 +1,28 @@
+﻿
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.Common.Modals
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.PhongKhos
+@model PhongKhoViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("Details")))
+
+<div class="modal-body">
+    <div id="PhongKhoInformationsTab">
+        
+        <div class="row">
+            <div class="col-6 mb-3">
+                <h6>@L("MaSo") :</h6>
+                @Model.PhongKho.MaSo
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Ten") :</h6>
+                @Model.PhongKho.Ten
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithClose.cshtml")
+

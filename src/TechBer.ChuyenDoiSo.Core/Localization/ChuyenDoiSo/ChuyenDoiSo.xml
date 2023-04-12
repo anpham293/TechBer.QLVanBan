@@ -1,6 +1,33 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en"> 
-  <texts>
+  <texts>    <text name="ThungHoSo">Thung ho so</text>
+    <text name="TechBer.ChuyenDoiSo.QuanLyKhoHoSo.ThungHoSo">ThungHoSo</text>
+    <text name="MoTa">Mo ta</text>
+    <text name="ThungHoSosHeaderInfo">Thung ho sos header info</text>
+    <text name="CreateNewThungHoSo">Create new thung ho so</text>
+    <text name="EditThungHoSo">Edit thung ho so</text>
+    <text name="DeleteThungHoSo">Delete thung ho so</text>
+    <text name="ThungHoSos">Thung ho sos</text>
+    <text name="DayKeMaSo">Day ke ma so</text>
+    <text name="PickDayKe">Pick day ke</text>
+    <text name="DayKe">Day ke</text>
+    <text name="TechBer.ChuyenDoiSo.QuanLyKhoHoSo.DayKe">DayKe</text>
+    <text name="DayKesHeaderInfo">Day kes header info</text>
+    <text name="CreateNewDayKe">Create new day ke</text>
+    <text name="EditDayKe">Edit day ke</text>
+    <text name="DeleteDayKe">Delete day ke</text>
+    <text name="DayKes">Day kes</text>
+    <text name="PhongKhoMaSo">Phong kho ma so</text>
+    <text name="PickPhongKho">Pick phong kho</text>
+    <text name="QuanLyKhoHoSo">Quan ly kho ho so</text>
+    <text name="PhongKho">Phong kho</text>
+    <text name="TechBer.ChuyenDoiSo.QuanLyKhoHoSo.PhongKho">PhongKho</text>
+    <text name="PhongKhosHeaderInfo">Phong khos header info</text>
+    <text name="CreateNewPhongKho">Create new phong kho</text>
+    <text name="EditPhongKho">Edit phong kho</text>
+    <text name="DeletePhongKho">Delete phong kho</text>
+    <text name="PhongKhos">Phong khos</text>
+
     <text name="DuToan">Du toan</text>
     <text name="TongMucDauTu">Tong muc dau tu</text>
     <text name="XemChiTiet">Xem chi tiet</text>

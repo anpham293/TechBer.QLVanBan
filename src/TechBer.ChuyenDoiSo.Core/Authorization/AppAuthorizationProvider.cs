@@ -30,6 +30,27 @@ namespace TechBer.ChuyenDoiSo.Authorization
 
             var pages = context.GetPermissionOrNull(AppPermissions.Pages) ?? context.CreatePermission(AppPermissions.Pages, L("Pages"));
 
+            var thungHoSos = pages.CreateChildPermission(AppPermissions.Pages_ThungHoSos, L("ThungHoSos"));
+            thungHoSos.CreateChildPermission(AppPermissions.Pages_ThungHoSos_Create, L("CreateNewThungHoSo"));
+            thungHoSos.CreateChildPermission(AppPermissions.Pages_ThungHoSos_Edit, L("EditThungHoSo"));
+            thungHoSos.CreateChildPermission(AppPermissions.Pages_ThungHoSos_Delete, L("DeleteThungHoSo"));
+
+
+
+            var dayKes = pages.CreateChildPermission(AppPermissions.Pages_DayKes, L("DayKes"));
+            dayKes.CreateChildPermission(AppPermissions.Pages_DayKes_Create, L("CreateNewDayKe"));
+            dayKes.CreateChildPermission(AppPermissions.Pages_DayKes_Edit, L("EditDayKe"));
+            dayKes.CreateChildPermission(AppPermissions.Pages_DayKes_Delete, L("DeleteDayKe"));
+
+
+
+            var phongKhos = pages.CreateChildPermission(AppPermissions.Pages_PhongKhos, L("PhongKhos"));
+            phongKhos.CreateChildPermission(AppPermissions.Pages_PhongKhos_Create, L("CreateNewPhongKho"));
+            phongKhos.CreateChildPermission(AppPermissions.Pages_PhongKhos_Edit, L("EditPhongKho"));
+            phongKhos.CreateChildPermission(AppPermissions.Pages_PhongKhos_Delete, L("DeletePhongKho"));
+
+
+
             var chuyenHoSoGiaies = pages.CreateChildPermission(AppPermissions.Pages_ChuyenHoSoGiaies, L("ChuyenHoSoGiaies"));
             chuyenHoSoGiaies.CreateChildPermission(AppPermissions.Pages_ChuyenHoSoGiaies_Create, L("CreateNewChuyenHoSoGiay"));
             chuyenHoSoGiaies.CreateChildPermission(AppPermissions.Pages_ChuyenHoSoGiaies_Edit, L("EditChuyenHoSoGiay"));

@@ -1,4 +1,6 @@
-﻿using TechBer.ChuyenDoiSo.QLVB.Dtos;
+﻿using TechBer.ChuyenDoiSo.QuanLyKhoHoSo.Dtos;
+using TechBer.ChuyenDoiSo.QuanLyKhoHoSo;
+using TechBer.ChuyenDoiSo.QLVB.Dtos;
 using TechBer.ChuyenDoiSo.QLVB;
 using TechBer.ChuyenDoiSo.QuanLyDanhMuc.Dtos;
 using TechBer.ChuyenDoiSo.QuanLyDanhMuc;
@@ -53,6 +55,12 @@ namespace TechBer.ChuyenDoiSo
     {
         public static void CreateMappings(IMapperConfigurationExpression configuration)
         {
+            configuration.CreateMap<CreateOrEditThungHoSoDto, ThungHoSo>().ReverseMap();
+            configuration.CreateMap<ThungHoSoDto, ThungHoSo>().ReverseMap();
+            configuration.CreateMap<CreateOrEditDayKeDto, DayKe>().ReverseMap();
+            configuration.CreateMap<DayKeDto, DayKe>().ReverseMap();
+            configuration.CreateMap<CreateOrEditPhongKhoDto, PhongKho>().ReverseMap();
+            configuration.CreateMap<PhongKhoDto, PhongKho>().ReverseMap();
             configuration.CreateMap<CreateOrEditChuyenHoSoGiayDto, ChuyenHoSoGiay>().ReverseMap();
             configuration.CreateMap<ChuyenHoSoGiayDto, ChuyenHoSoGiay>().ReverseMap();
             configuration.CreateMap<CreateOrEditLoaiKhoanDto, LoaiKhoan>().ReverseMap();
