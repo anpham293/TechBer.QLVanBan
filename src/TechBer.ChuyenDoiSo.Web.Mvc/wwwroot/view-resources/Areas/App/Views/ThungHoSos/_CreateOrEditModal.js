@@ -13,7 +13,8 @@
         });        var _ThungHoSoduAnLookupTableModal = new app.ModalManager({
             viewUrl: abp.appPath + 'App/ThungHoSos/DuAnLookupTableModal',
             scriptUrl: abp.appPath + 'view-resources/Areas/App/Views/ThungHoSos/_ThungHoSoDuAnLookupTableModal.js',
-            modalClass: 'DuAnLookupTableModal'
+            modalClass: 'DuAnLookupTableModal',
+            modalSize: 'modal-xl'
         });
 
         this.init = function (modalManager) {

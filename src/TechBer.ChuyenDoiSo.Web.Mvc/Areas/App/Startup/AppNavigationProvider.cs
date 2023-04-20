@@ -36,46 +36,52 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Startup
                         AppPageNames.Common.DuyetHoSo,
                         L("DuyetHoSo"),
                         url: "App/DuyetHoSo",
-                        icon: "fas fa-file-alt",
+                        icon: "fas fa-clipboard-check",
                         permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_DuyetHoSo)
-                    )
-                )
-                .AddItem(new MenuItemDefinition(
-                        AppPageNames.Common.PhongKhos,
-                        L("PhongKhos"),
-                        url: "App/PhongKhos",
-                        icon: "flaticon-more",
-                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_PhongKhos)
-                    )
-                )
-                .AddItem(new MenuItemDefinition(
-                        AppPageNames.Common.DayKes,
-                        L("DayKes"),
-                        url: "App/DayKes",
-                        icon: "flaticon-more",
-                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_DayKes)
-                    )
-                )
-                .AddItem(new MenuItemDefinition(
-                        AppPageNames.Common.ThungHoSos,
-                        L("ThungHoSos"),
-                        url: "App/ThungHoSos",
-                        icon: "flaticon-more",
-                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_ThungHoSos)
                     )
                 )
                 .AddItem(new MenuItemDefinition(
                         AppPageNames.Common.ChuyenHoSoGiaies,
                         L("ChuyenHoSoGiaies"),
                         url: "App/ChuyenHoSoGiaies",
-                        icon: "fas fa-paper-plane",
+                        icon: "fas fa-dolly",
                         permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_ChuyenHoSoGiaies)
                     )
                 )
                 .AddItem(new MenuItemDefinition(
                         "",
-                        L("BaoCaoHoSo"),
-                        icon: "fas fa-file-excel"
+                        L("LuuTruHoSo"),
+                        icon: "fas fa-box-open"
+                    )
+                    .AddItem(new MenuItemDefinition(
+                            AppPageNames.Common.PhongKhos,
+                            L("PhongKhos"),
+                            url: "App/PhongKhos",
+                            icon: "fas fa-warehouse",
+                            permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_PhongKhos)
+                        )
+                    )
+                    .AddItem(new MenuItemDefinition(
+                            AppPageNames.Common.DayKes,
+                            L("DayKes"),
+                            url: "App/DayKes",
+                            icon: "fas fa-pallet",
+                            permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_DayKes)
+                        )
+                    )
+                    .AddItem(new MenuItemDefinition(
+                            AppPageNames.Common.ThungHoSos,
+                            L("ThungHoSos"),
+                            url: "App/ThungHoSos",
+                            icon: "fas fa-boxes",
+                            permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_ThungHoSos)
+                        )
+                    )
+                )
+                .AddItem(new MenuItemDefinition(
+                        "",
+                        L("BaoCao"),
+                        icon: "fas fa-paste"
                     )
                     .AddItem(new MenuItemDefinition(
                             AppPageNames.Common.LoaiDuAns,
@@ -111,7 +117,7 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Startup
                         AppPageNames.Common.CapQuanLies,
                         L("CapQuanLies"),
                         url: "App/CapQuanLies",
-                        icon: "flaticon-more",
+                        icon: "fas fa-sort-amount-down",
                         permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_CapQuanLies)
                     )
 
@@ -120,7 +126,7 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Startup
                         AppPageNames.Common.Chuongs,
                         L("Chuongs"),
                         url: "App/Chuongs",
-                        icon: "flaticon-more",
+                        icon: "fas fa-sort-alpha-down",
                         permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Chuongs)
                     )
                 )
@@ -128,7 +134,7 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Startup
                         AppPageNames.Common.LoaiKhoans,
                         L("LoaiKhoans"),
                         url: "App/LoaiKhoans",
-                        icon: "flaticon-more",
+                        icon: "fas fa-sort-numeric-down",
                         permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_LoaiKhoans)
                     )
                 )

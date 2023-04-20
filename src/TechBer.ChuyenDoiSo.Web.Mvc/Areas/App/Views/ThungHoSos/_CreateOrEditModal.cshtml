@@ -1,5 +1,4 @@
-﻿
-@using System.Globalization
+﻿@using System.Globalization
 @using TechBer.ChuyenDoiSo.Web.Areas.App.Models.Common.Modals
 @using TechBer.ChuyenDoiSo.Web.Areas.App.Models.ThungHoSos
 @model CreateOrEditThungHoSoModalViewModel
@@ -7,86 +6,92 @@
 @await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditThungHoSo")) : L("CreateNewThungHoSo")))
 
 <div class="modal-body">
-        <div id="ThungHoSoInformationsTab">
-            <form name="ThungHoSoInformationsForm" role="form" novalidate class="form-validation">
+    <div id="ThungHoSoInformationsTab">
+        <form name="ThungHoSoInformationsForm" role="form" novalidate class="form-validation">
 
-                @if (Model.IsEditMode)
-                {
-                    <input type="hidden" name="id" value="@Model.ThungHoSo.Id" />
-                }
+            @if (Model.IsEditMode)
+            {
+                <input type="hidden" name="id" value="@Model.ThungHoSo.Id"/>
+            }
 
-				            
-								<div class="form-group m-form__group">
-										<label for="DayKeMaSo">@L("DayKe")</label>
-									    <div class="input-group">
-											<input class="form-control" id="DayKeMaSo" name="dayKeMaSo" value="@Model.DayKeMaSo" type="text" disabled>
-										<div class="input-group-append">
-											<button class="btn btn-primary blue" id="OpenDayKeLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
-										</div> 
-										<div class="input-group-prepend">
-											<button class="btn btn-danger btn-icon" type="button" id="ClearDayKeMaSoButton"><i class="fa fa-times"></i></button>
-										</div>
-									</div>
-								</div>
+            <div class="form-group m-form__group">
+                <div class="form-group m-form__group">
+                    <label for="DuAnName">@L("DuAn")</label>
+                    <div class="input-group">
+                        <input class="form-control" id="DuAnName" name="duAnName" value="@Model.DuAnName" type="text" disabled>
+                        <div class="input-group-append">
+                            <button class="btn btn-primary blue" id="OpenDuAnLookupTableButton" type="button">
+                                <i class="fa fa-search"></i> @L("Pick")</button>
+                        </div>
+                        <div class="input-group-prepend">
+                            <button class="btn btn-danger btn-icon" type="button" id="ClearDuAnNameButton">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
 
-								@if (Model.IsEditMode)
-								{
-									<input class="form-control" id="ThungHoSo_DayKeId" value="@Model.ThungHoSo.DayKeId" type="text" name="dayKeId"  hidden/>
-								}
-								 else
-								{ 
-									<input class="form-control" id="ThungHoSo_DayKeId" value="" type="text" name="dayKeId"  hidden/>
-								}
+                <label for="DayKeMaSo">@L("DayKe")</label>
+                <div class="input-group">
+                    <input class="form-control" id="DayKeMaSo" name="dayKeMaSo" value="@Model.DayKeMaSo" type="text" disabled>
+                    <div class="input-group-append">
+                        <button class="btn btn-primary blue" id="OpenDayKeLookupTableButton" type="button">
+                            <i class="fa fa-search"></i> @L("Pick")</button>
+                    </div>
+                    <div class="input-group-prepend">
+                        <button class="btn btn-danger btn-icon" type="button" id="ClearDayKeMaSoButton">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
 
+            @if (Model.IsEditMode)
+            {
+                <input class="form-control" id="ThungHoSo_DayKeId" value="@Model.ThungHoSo.DayKeId" type="text" name="dayKeId" hidden/>
+            }
+            else
+            {
+                <input class="form-control" id="ThungHoSo_DayKeId" value="" type="text" name="dayKeId" hidden/>
+            }
             
-								<div class="form-group m-form__group">
-										<label for="DuAnName">@L("DuAn")</label>
-									    <div class="input-group">
-											<input class="form-control" id="DuAnName" name="duAnName" value="@Model.DuAnName" type="text" disabled>
-										<div class="input-group-append">
-											<button class="btn btn-primary blue" id="OpenDuAnLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
-										</div> 
-										<div class="input-group-prepend">
-											<button class="btn btn-danger btn-icon" type="button" id="ClearDuAnNameButton"><i class="fa fa-times"></i></button>
-										</div>
-									</div>
-								</div>
+            @if (Model.IsEditMode)
+            {
+                <input class="form-control" id="ThungHoSo_DuAnId" value="@Model.ThungHoSo.DuAnId" type="text" name="duAnId" hidden/>
+            }
+            else
+            {
+                <input class="form-control" id="ThungHoSo_DuAnId" value="" type="text" name="duAnId" hidden/>
+            }
 
-								@if (Model.IsEditMode)
-								{
-									<input class="form-control" id="ThungHoSo_DuAnId" value="@Model.ThungHoSo.DuAnId" type="text" name="duAnId"  hidden/>
-								}
-								 else
-								{ 
-									<input class="form-control" id="ThungHoSo_DuAnId" value="" type="text" name="duAnId"  hidden/>
-								}
+            <div class="row">
+                <div class="col-6">
+                    
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="ThungHoSo_MaSo">@L("MaSo")</label>
+                <input class="form-control" id="ThungHoSo_MaSo" value="@Model.ThungHoSo.MaSo" type="text" name="maSo"/>
+            </div>
+
+            <div class="form-group">
+                <label for="ThungHoSo_Ten">@L("Ten")</label>
+                <input class="form-control" id="ThungHoSo_Ten" value="@Model.ThungHoSo.Ten" type="text" name="ten"/>
+            </div>
+
+            <div class="form-group">
+                <label for="ThungHoSo_MoTa">@L("MoTa")</label>
+                <textarea class="form-control" id="ThungHoSo_MoTa" type="text" name="moTa" rows="5" >@Model.ThungHoSo.MoTa</textarea>
+            </div>
+
+            @* <div class="form-group"> *@
+            @*     <label for="ThungHoSo_TrangThai">@L("TrangThai")</label> *@
+            @*     <input class="form-control m-input" id="ThungHoSo_TrangThai" value="@Model.ThungHoSo.TrangThai.ToString(CultureInfo.InvariantCulture)" type="number" name="trangThai"/> *@
+            @* </div> *@
 
 
-
-				
-								<div class="form-group">
-									<label for="ThungHoSo_MaSo">@L("MaSo")</label>
-									<input class="form-control" id="ThungHoSo_MaSo" value="@Model.ThungHoSo.MaSo" type="text" name="maSo"     />
-								</div>
-					
-								<div class="form-group">
-									<label for="ThungHoSo_Ten">@L("Ten")</label>
-									<input class="form-control" id="ThungHoSo_Ten" value="@Model.ThungHoSo.Ten" type="text" name="ten"     />
-								</div>
-					
-								<div class="form-group">
-									<label for="ThungHoSo_MoTa">@L("MoTa")</label>
-									<input class="form-control" id="ThungHoSo_MoTa" value="@Model.ThungHoSo.MoTa" type="text" name="moTa"     />
-								</div>
-					
-								<div class="form-group">
-									<label for="ThungHoSo_TrangThai">@L("TrangThai")</label>
-									<input class="form-control m-input" id="ThungHoSo_TrangThai" value="@Model.ThungHoSo.TrangThai.ToString(CultureInfo.InvariantCulture)" type="number" name="trangThai"  />
-								</div>
-					
-
-            </form>
-        </div>
+        </form>
+    </div>
 </div>
 
 @await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")
