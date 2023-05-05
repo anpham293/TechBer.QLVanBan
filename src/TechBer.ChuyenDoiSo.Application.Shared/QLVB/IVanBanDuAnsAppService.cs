@@ -17,7 +17,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
         Task<GetVanBanDuAnForViewDto> GetVanBanDuAnForView(int id);
 
 		Task<GetVanBanDuAnForEditOutput> GetVanBanDuAnForEdit(EntityDto input);
-
+		Task<GetSapXepHoSoVaoThungOutput> GetSapXepHoSoVaoThung(EntityDto input);
 		Task CreateOrEdit(CreateOrEditVanBanDuAnDto input);
 
 		Task Delete(EntityDto input);
@@ -26,8 +26,11 @@ namespace TechBer.ChuyenDoiSo.QLVB
 
 		
 		Task<PagedResultDto<VanBanDuAnDuAnLookupTableDto>> GetAllDuAnForLookupTable(GetAllForLookupTableInput input);
+
+		Task<PagedResultDto<VanBanDuAnThungHoSoLookupTableDto>> GetAllThungHoSoForLookupTable(GetAllForLookupTableInput input);
 		
 		Task<PagedResultDto<VanBanDuAnQuyTrinhDuAnLookupTableDto>> GetAllQuyTrinhDuAnForLookupTable(GetAllForLookupTableInput input);
+		Task SapXepHoSoVaoThung(SapXepHoSoVaoThungDto input);
 
 		Task XuLyHoSo(XuLyHoSoInputDto input);
 

@@ -24,8 +24,8 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
         private readonly IRepository<CapQuanLy> _capQuanLyRepository;
 
         public DuAnsController(IDuAnsAppService duAnsAppService,
-								IRepository<CapQuanLy> capQuanLyRepository
-	        )
+            IRepository<CapQuanLy> capQuanLyRepository
+        )
         {
             _duAnsAppService = duAnsAppService;
             _capQuanLyRepository = capQuanLyRepository;
@@ -34,54 +34,57 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
         public ActionResult Index()
         {
             var model = new DuAnsViewModel
-			{
-				FilterText = ""
-			};
+            {
+                FilterText = ""
+            };
 
             return View(model);
-        } 
-       
-
-			 [AbpMvcAuthorize(AppPermissions.Pages_DuAns_Create, AppPermissions.Pages_DuAns_Edit)]
-			public async Task<PartialViewResult> CreateOrEditModal(int? id)
-			{
-				GetDuAnForEditOutput getDuAnForEditOutput;
-
-				if (id.HasValue){
-					getDuAnForEditOutput = await _duAnsAppService.GetDuAnForEdit(new EntityDto { Id = (int) id });
-				}
-				else {
-					getDuAnForEditOutput = new GetDuAnForEditOutput{
-						DuAn = new CreateOrEditDuAnDto()
-					};
-				}
-
-				var viewModel = new CreateOrEditDuAnModalViewModel()
-				{
-					DuAn = getDuAnForEditOutput.DuAn,
-					LoaiDuAnName = getDuAnForEditOutput.LoaiDuAnName,           
-					ChuongName = getDuAnForEditOutput.ChuongName,           
-					LoaiKhoanName = getDuAnForEditOutput.LoaiKhoanName,           
-				};
-
-				return PartialView("_CreateOrEditModal", viewModel);
-			}
+        }
 
 
-			public async Task<PartialViewResult> ViewDuAnModal(int id)
-			{
-				var getDuAnForViewDto = await _duAnsAppService.GetDuAnForView(id);
+        [AbpMvcAuthorize(AppPermissions.Pages_DuAns_Create, AppPermissions.Pages_DuAns_Edit)]
+        public async Task<PartialViewResult> CreateOrEditModal(int? id)
+        {
+            GetDuAnForEditOutput getDuAnForEditOutput;
 
-				var model = new DuAnViewModel()
-				{
-					DuAn = getDuAnForViewDto.DuAn, 
-					LoaiDuAnName = getDuAnForViewDto.LoaiDuAnName,
-					ChuongName = getDuAnForViewDto.ChuongName,
-					LoaiKhoanName = getDuAnForViewDto.LoaiKhoanName
-				};
+            if (id.HasValue)
+            {
+                getDuAnForEditOutput = await _duAnsAppService.GetDuAnForEdit(new EntityDto {Id = (int) id});
+            }
+            else
+            {
+                getDuAnForEditOutput = new GetDuAnForEditOutput
+                {
+                    DuAn = new CreateOrEditDuAnDto()
+                };
+            }
 
-				return PartialView("_ViewDuAnModal", model);
-			}
+            var viewModel = new CreateOrEditDuAnModalViewModel()
+            {
+                DuAn = getDuAnForEditOutput.DuAn,
+                LoaiDuAnName = getDuAnForEditOutput.LoaiDuAnName,
+                ChuongName = getDuAnForEditOutput.ChuongName,
+                LoaiKhoanName = getDuAnForEditOutput.LoaiKhoanName,
+            };
+
+            return PartialView("_CreateOrEditModal", viewModel);
+        }
+
+
+        public async Task<PartialViewResult> ViewDuAnModal(int id)
+        {
+            var getDuAnForViewDto = await _duAnsAppService.GetDuAnForView(id);
+
+            var model = new DuAnViewModel()
+            {
+                DuAn = getDuAnForViewDto.DuAn,
+                LoaiDuAnName = getDuAnForViewDto.LoaiDuAnName,
+                ChuongName = getDuAnForViewDto.ChuongName,
+                LoaiKhoanName = getDuAnForViewDto.LoaiKhoanName
+            };
+
+            return PartialView("_ViewDuAnModal", model);
+        }
 
         [AbpMvcAuthorize(AppPermissions.Pages_DuAns_Create, AppPermissions.Pages_DuAns_Edit)]
         public PartialViewResult LoaiDuAnLookupTableModal(int? id, string displayName)
@@ -99,25 +102,35 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
         [AbpMvcAuthorize(AppPermissions.Pages_DuAns_Create, AppPermissions.Pages_DuAns_Edit)]
         public PartialViewResult ChuongLookupTableModal(int? id, string displayName)
         {
-	        var viewModel = new DuAnChuongLookupTableViewModel()
-	        {
-		        Id = id,
-		        DisplayName = displayName,
-		        FilterText = "",
-		        ListCapQuanLy = ObjectMapper.Map<List<CapQuanLyDto>>(_capQuanLyRepository.GetAllList())
-	        };
-	        return PartialView("_DuAnChuongLookupTableModal", viewModel);
+            var viewModel = new DuAnChuongLookupTableViewModel()
+            {
+                Id = id,
+                DisplayName = displayName,
+                FilterText = "",
+                ListCapQuanLy = ObjectMapper.Map<List<CapQuanLyDto>>(_capQuanLyRepository.GetAllList())
+            };
+            return PartialView("_DuAnChuongLookupTableModal", viewModel);
         }
+
         [AbpMvcAuthorize(AppPermissions.Pages_DuAns_Create, AppPermissions.Pages_DuAns_Edit)]
         public PartialViewResult LoaiKhoanLookupTableModal(int? id, string displayName)
         {
-	        var viewModel = new DuAnLoaiKhoanLookupTableViewModel()
-	        {
-		        Id = id,
-		        DisplayName = displayName,
-		        FilterText = ""
-	        };
-	        return PartialView("_DuAnLoaiKhoanLookupTableModal", viewModel);
+            var viewModel = new DuAnLoaiKhoanLookupTableViewModel()
+            {
+                Id = id,
+                DisplayName = displayName,
+                FilterText = ""
+            };
+            return PartialView("_DuAnLoaiKhoanLookupTableModal", viewModel);
+        }
+        [AbpMvcAuthorize(AppPermissions.Pages_DuAns_ThemUserVaoDuAn)]
+        public PartialViewResult DanhSachUserDuAnModal()
+        {
+            var viewModel = new DuAnLoaiKhoanLookupTableViewModel()
+            {
+                FilterText = ""
+            };
+            return PartialView("_ViewDanhSachUserDuAnModal", viewModel);
         }
     }
 }

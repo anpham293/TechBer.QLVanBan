@@ -143,7 +143,36 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
 
             return PartialView("_VanBanDuAnQuyTrinhDuAnLookupTableModal", viewModel);
         }
-
+        
+        [AbpMvcAuthorize(AppPermissions.Pages_VanBanDuAns_Edit)]
+        public async Task<PartialViewResult> SapXepHoSoVaoThungModal(SapXepHoSoVaoThungModalInput input)
+        {
+            GetSapXepHoSoVaoThungOutput getSapXepHoSoVaoThungOutput;
+            getSapXepHoSoVaoThungOutput = await _vanBanDuAnsAppService.GetSapXepHoSoVaoThung(new EntityDto {Id = (int) input.VanBanDuAnId});
+            
+            var viewModel = new SapXepHoSoVaoThungViewModel()
+            {
+                VanBanDuAn = getSapXepHoSoVaoThungOutput.VanBanDuAn,
+                ThungHoSoName = getSapXepHoSoVaoThungOutput.ThungHoSoName
+            };
+        
+            return PartialView("_ViewSapXepHoSoVaoThungModal", viewModel);
+        }
+        
+        [AbpMvcAuthorize(AppPermissions.Pages_VanBanDuAns_Edit)]
+        public PartialViewResult ThungHoSoLookupTableModal(int? id, string displayName)
+        {
+            var viewModel = new VanBanDuAnThungHoSoViewModel()
+            {
+                Id = id,
+                DisplayName = displayName,
+                FilterText = ""
+            };
+            return PartialView("_VanBanDuAnThungHoSoLookupTableModal", viewModel);
+        }
+        
+        
+        
         [DisableRequestSizeLimit]
         public UploadFileOutput UploadFileHopDong(FileDto input)
         {

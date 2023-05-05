@@ -97,6 +97,8 @@ namespace TechBer.ChuyenDoiSo.Authorization
             duAns.CreateChildPermission(AppPermissions.Pages_DuAns_Create, L("CreateNewDuAn"));
             duAns.CreateChildPermission(AppPermissions.Pages_DuAns_Edit, L("EditDuAn"));
             duAns.CreateChildPermission(AppPermissions.Pages_DuAns_Delete, L("DeleteDuAn"));
+            duAns.CreateChildPermission(AppPermissions.Pages_DuAns_XemToanBoDuAn, L("XemToanBoDuAn"));
+            duAns.CreateChildPermission(AppPermissions.Pages_DuAns_ThemUserVaoDuAn, L("ThemUserVaoDuAn"));
 
             var duyethoso = pages.CreateChildPermission(AppPermissions.Pages_DuyetHoSo, L("DuyetHoSo"));
 

@@ -21,6 +21,13 @@
             modalClass: 'CreateOrEditDuAnModal',
             modalSize: "modal-xl"
         });
+        
+        var _danhSachUserDuAnModal = new app.ModalManager({
+            viewUrl: abp.appPath + 'App/DuAns/DanhSachUserDuAnModal',
+            scriptUrl: abp.appPath + 'view-resources/Areas/App/Views/DuAns/_CreateOrEditModal.js',
+            modalClass: 'CreateOrEditDuAnModal',
+            modalSize: "modal-xl"
+        });
 
         var _viewDuAnModal = new app.ModalManager({
             viewUrl: abp.appPath + 'App/DuAns/ViewduAnModal',
@@ -156,8 +163,8 @@
                     data: "duAn.trangThai",
                     className: "text-center",
                     render: function (trangThai, type, row, meta) {
+                        let themUser = '<a title="Thêm người vào dự án" style="cursor:pointer;font-size:25px; font-weight: bolder;margin: 0 5px;" class="text-info DanhSachUserDuAn"  duAnId="'+row.duAn.id+'"><i class="fas fa-user-plus"></i></a>';
                         let linkHoSo = "<a href='/App/VanBanDuAns?duanid=" + row.duAn.id + "' style=\"cursor:pointer;font-size:25px; font-weight: bolder;margin: 0 5px;\" title='Mở danh sách hồ sơ'><i class=\"fas fa-file-export\"></i></a>";
-                        console.log(trangThai);
                         let stt = '';
                         if(trangThai == app.trangThaiDuAnConst.duAnOpen)
                         {
@@ -166,7 +173,7 @@
                         if(trangThai == app.trangThaiDuAnConst.duAnClose){
                             stt = '<a title="Dự án đóng, click để đổi trạng thái" style="cursor:pointer;font-size:25px; font-weight: bolder;margin: 0 5px;" class="text-danger" data-rowId="'+row.duAn.id+'" data-status="'+row.duAn.trangThai+'"><i class="fas fa-lock"></i></a>'
                         }
-                        return stt+ "&nbsp &nbsp &nbsp"+linkHoSo;
+                        return themUser + "&nbsp &nbsp &nbsp" + stt + "&nbsp &nbsp &nbsp" + linkHoSo;
                     }
                 }
             ]
@@ -208,7 +215,9 @@
         $('#CreateNewDuAnButton').click(function () {
             _createOrEditModal.open();
         });
-
+        $(document).on('click','.DanhSachUserDuAn', function () {
+            _danhSachUserDuAnModal.open();
+        });
         $('#ExportToExcelButton').click(function () {
             _duAnsService
                 .getDuAnsToExcel({

@@ -28,5 +28,6 @@
          public decimal SoTienThanhToan { get; set; }
          
          public int SoLuongVanBanGiay { get; set; }
+         public int? ThungHoSoId { get; set; }
      }
  }

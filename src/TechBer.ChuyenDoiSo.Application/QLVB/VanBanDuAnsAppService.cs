@@ -22,6 +22,7 @@ using TechBer.ChuyenDoiSo.Authorization.Users;
 using TechBer.ChuyenDoiSo.Storage;
 using TechBer.ChuyenDoiSo.Dto;
 using TechBer.ChuyenDoiSo.QuanLyDanhMuc.Dtos;
+using TechBer.ChuyenDoiSo.QuanLyKhoHoSo;
 using GetAllForLookupTableInput = TechBer.ChuyenDoiSo.QLVB.Dtos.GetAllForLookupTableInput;
 
 namespace TechBer.ChuyenDoiSo.QLVB
@@ -34,6 +35,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
         private readonly IVanBanDuAnsExcelExporter _vanBanDuAnsExcelExporter;
         private readonly IRepository<DuAn, int> _lookup_duAnRepository;
         private readonly IRepository<QuyTrinhDuAnAssigned, long> _lookup_quyTrinhDuAnRepository;
+        private readonly IRepository<ThungHoSo, int> _lookup_thungHoSoRepository;
         private readonly ITempFileCacheManager _tempFileCacheManager;
         private readonly IBinaryObjectManager _binaryObjectManager;
         private readonly IRepository<User, long> _lookup_userRepository;
@@ -44,6 +46,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
             IRepository<QuyTrinhDuAnAssigned, long> lookup_quyTrinhDuAnRepository,
             ITempFileCacheManager tempFileCacheManager,
             IRepository<User, long> lookup_userRepository,
+            IRepository<ThungHoSo, int> lookup_thungHoSoRepository,
             IBinaryObjectManager binaryObjectManager)
         {
             _vanBanDuAnRepository = vanBanDuAnRepository;
@@ -52,6 +55,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
             _lookup_quyTrinhDuAnRepository = lookup_quyTrinhDuAnRepository;
             _tempFileCacheManager = tempFileCacheManager;
             _binaryObjectManager = binaryObjectManager;
+            _lookup_thungHoSoRepository = lookup_thungHoSoRepository;
             _lookup_userRepository = lookup_userRepository;
         }
 
@@ -100,7 +104,8 @@ namespace TechBer.ChuyenDoiSo.QLVB
                         NguoiDuyetId = o.NguoiDuyetId,
                         NgayDuyet = o.NgayDuyet,
                         KeToanTiepNhanId = o.KeToanTiepNhanId,
-                        XuLyCuaLanhDao = o.XuLyCuaLanhDao
+                        XuLyCuaLanhDao = o.XuLyCuaLanhDao,
+                        DuAnId = o.DuAnId
                     },
                     DuAnName = s1 == null || s1.Name == null ? "" : s1.Name.ToString(),
                     QuyTrinhDuAnName = s2 == null || s2.Name == null ? "" : s2.Name.ToString(),
@@ -161,6 +166,22 @@ namespace TechBer.ChuyenDoiSo.QLVB
                 output.QuyTrinhDuAnName = _lookupQuyTrinhDuAn?.Name?.ToString();
             }
 
+            return output;
+        }
+        [AbpAuthorize(AppPermissions.Pages_VanBanDuAns_Edit)]
+        public async Task<GetSapXepHoSoVaoThungOutput> GetSapXepHoSoVaoThung(EntityDto input)
+        {
+            var vanBanDuAn = await _vanBanDuAnRepository.FirstOrDefaultAsync(input.Id);
+
+            var output = new GetSapXepHoSoVaoThungOutput()
+                {VanBanDuAn = ObjectMapper.Map<CreateOrEditVanBanDuAnDto>(vanBanDuAn)};
+            
+            if (output.VanBanDuAn.ThungHoSoId != null)
+            {
+                var _lookupThungHoSo =
+                    await _lookup_thungHoSoRepository.FirstOrDefaultAsync((int)output.VanBanDuAn.ThungHoSoId);
+                output.ThungHoSoName = _lookupThungHoSo?.Ten == null ? "" : _lookupThungHoSo.Ten;
+            }
             return output;
         }
 
@@ -392,6 +413,36 @@ namespace TechBer.ChuyenDoiSo.QLVB
         }
 
         [AbpAuthorize(AppPermissions.Pages_VanBanDuAns)]
+        public async Task<PagedResultDto<VanBanDuAnThungHoSoLookupTableDto>> GetAllThungHoSoForLookupTable(
+            GetAllForLookupTableInput input)
+        {
+            var query = _lookup_thungHoSoRepository.GetAll().WhereIf(
+                !string.IsNullOrWhiteSpace(input.Filter),
+                e => e.Ten != null && e.Ten.Contains(input.Filter)
+            );
+
+            var totalCount = await query.CountAsync();
+
+            var duAnList = await query
+                .PageBy(input)
+                .ToListAsync();
+
+            var lookupTableDtoList = new List<VanBanDuAnThungHoSoLookupTableDto>();
+            foreach (var duAn in duAnList)
+            {
+                lookupTableDtoList.Add(new VanBanDuAnThungHoSoLookupTableDto
+                {
+                    Id = duAn.Id,
+                    DisplayName = duAn.Ten?.ToString()
+                });
+            }
+
+            return new PagedResultDto<VanBanDuAnThungHoSoLookupTableDto>(
+                totalCount,
+                lookupTableDtoList
+            );
+        }
+        [AbpAuthorize(AppPermissions.Pages_VanBanDuAns)]
         public async Task<PagedResultDto<VanBanDuAnQuyTrinhDuAnLookupTableDto>> GetAllQuyTrinhDuAnForLookupTable(
             GetAllForLookupTableInput input)
         {
@@ -420,6 +471,22 @@ namespace TechBer.ChuyenDoiSo.QLVB
                 totalCount,
                 lookupTableDtoList
             );
+        }
+        
+        [AbpAuthorize(AppPermissions.Pages_VanBanDuAns_Edit)]
+        public async Task SapXepHoSoVaoThung(SapXepHoSoVaoThungDto input)
+        {
+            try
+            {
+                var vanBanDuAn = await _vanBanDuAnRepository.FirstOrDefaultAsync((int) input.VanBanDuAnId);
+                vanBanDuAn.ThungHoSoId = input.ThungHoSoId;
+                await _vanBanDuAnRepository.UpdateAsync(vanBanDuAn);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
         public async Task XuLyHoSo(XuLyHoSoInputDto input)
         {

@@ -55,6 +55,8 @@
         public const string Pages_DuAns_Create = "Pages.DuAns.Create";
         public const string Pages_DuAns_Edit = "Pages.DuAns.Edit";
         public const string Pages_DuAns_Delete = "Pages.DuAns.Delete";
+        public const string Pages_DuAns_XemToanBoDuAn = "Pages.DuAns.XemToanBoDuAn";
+        public const string Pages_DuAns_ThemUserVaoDuAn = "Pages.DuAns.ThemUserVaoDuAn";
         
         public const string Pages_DuyetHoSo = "Pages.DuyetHoSo";
 

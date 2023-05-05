@@ -61,7 +61,6 @@
                     targets: 0,
                     data: null,
                     orderable: false,
-                    autoWidth: false,
                     defaultContent: '',
                     rowAction: {
                         cssClass: 'btn btn-brand dropdown-toggle',
@@ -88,12 +87,15 @@
                 {
                     targets: 1,
                     data: "vanBanDuAnName",
-                    name: "vanBanDuAnName"
+                    name: "vanBanDuAnName",
+                    render: function (data){
+                        return '<a style="white-space: normal">'+data+'</a>'
+                    }
                 },
                 {
                     targets: 2,
                     data: "tenNguoiChuyen",
-                    name: "nguoiChuyenId"
+                    name: "tenNguoiChuyen"
                 },
                 {
                     targets: 3,

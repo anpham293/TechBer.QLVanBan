@@ -45,6 +45,12 @@
             modalClass: 'ChuyenDuyetHoSoModal'
         });
         
+        var _sapXepHoSoVaoThungModal = new app.ModalManager({
+            viewUrl: abp.appPath + 'App/VanBanDuAns/SapXepHoSoVaoThungModal',
+            scriptUrl: abp.appPath + 'view-resources/Areas/App/Views/VanBanDuAns/_SapXepHoSoVaoThungModal.js',
+            modalClass: 'SapXepHoSoVaoThungModal'
+        });
+        
         var _viewVanBanDuAnModal = new app.ModalManager({
             viewUrl: abp.appPath + 'App/VanBanDuAns/ViewvanBanDuAnModal',
             modalClass: 'ViewVanBanDuAnModal',
@@ -128,6 +134,19 @@
                                         vanBanDuAnId: data.record.vanBanDuAn.id,
                                         typeDuyetHoSo: app.typeDuyetHoSoConst.quanLyDuyet
                                         // type = 1: quản lý, 2: chánh vp
+                                    })
+                                }
+                            },
+                            {
+                                text: app.localize('SapXepHoSoVaoThung'),
+                                visible: function (data) {
+                                    return _permissions.edit;
+                                },
+                                action: function (data) {
+                                    console.log('a',data.record.vanBanDuAn.id);
+                                    console.log('b',data.record.vanBanDuAn.duAnId);
+                                    _sapXepHoSoVaoThungModal.open({
+                                        vanBanDuAnId: data.record.vanBanDuAn.id
                                     })
                                 }
                             },

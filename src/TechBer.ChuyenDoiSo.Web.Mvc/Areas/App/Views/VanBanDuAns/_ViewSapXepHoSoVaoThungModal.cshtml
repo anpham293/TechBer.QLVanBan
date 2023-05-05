@@ -1,0 +1,34 @@
+﻿@using System.Globalization
+@using GraphQL
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.Common.Modals
+@model TechBer.ChuyenDoiSo.Web.Areas.App.Models.VanBanDuAns.SapXepHoSoVaoThungViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("SapXepHoSoVaoThungHoSo")))
+
+<div class="modal-body">
+    <div id="SapXepHoSoVaoThungInformationsTab">
+        <form name="SapXepHoSoVaoThungInformationsForm" role="form" novalidate class="form-validation">
+            <input hidden id="VanBanDuAn_Id" value="@Model.VanBanDuAn.Id" type="text" name="vanBanDuAnId">
+            <div class="col-12">
+                <div class="form-group m-form__group">
+                    <label for="ThungHoSoName">@L("ThungHoSo")</label>
+                    <div class="input-group">
+                        <input class="form-control" id="ThungHoSoName" name="thungHoSoName" value="@Model.ThungHoSoName" type="text" disabled>
+                        <div class="input-group-append">
+                            <button class="btn btn-primary blue" id="OpenThungHoSoLookupTableButton" type="button">
+                                <i class="fa fa-search"></i> @L("Pick")</button>
+                        </div>
+                        <div class="input-group-prepend">
+                            <button class="btn btn-danger btn-icon" type="button" id="ClearThungHoSoNameButton">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <input class="form-control" id="VanBanDuAn_ThungHoSoId" value="@Model.VanBanDuAn.ThungHoSoId" type="text" name="thungHoSoId" hidden/>
+            </div>
+        </form>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")
