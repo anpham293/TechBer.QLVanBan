@@ -42,7 +42,20 @@
                 return null;
             }
             return element.data("DateTimePicker").date().format("YYYY-MM-DDT00:00:00Z");
+        };
+
+        function isEmptyOrSpaces(str) {
+            return str === null || str.match(/^ *$/) !== null;
         }
+
+        var _qroptions = {
+            text: "",
+            width: 300,
+            height: 300,
+            logo: "/Common/Images/techber.png",
+            quietZone: 15,
+            quietZoneColor: "rgba(247,247,247,62%)",
+        };
 
         var dataTable = _$thungHoSosTable.DataTable({
             paging: true,
@@ -88,6 +101,12 @@
                                 },
                                 action: function (data) {
                                     _createOrEditModal.open({id: data.record.thungHoSo.id});
+                                }
+                            },
+                            {
+                                text: app.localize('mo'),
+                                action: function (data) {
+                                    window.open("https://localhost:6666");
                                 }
                             },
                             {
@@ -140,6 +159,15 @@
                 },
                 {
                     targets: 6,
+                    width: 30,
+                    data: "thungHoSo.qrString",
+                    name: "qrstring",
+                    render: function (qrstring) {
+                        return "<a class='qrstring-click' style='cursor: pointer' data-target='" + qrstring + "'><i class='fa fa-qrcode' style='font-size: xx-large'></i></a>";
+                    }
+                },
+                {
+                    targets: 7,
                     data: "duAnName",
                     name: "duAnFk.name"
                 }
@@ -166,6 +194,80 @@
                 }
             );
         }
+
+
+        function printPage(e, f, title) {
+            var w = window.open();
+            var field = $("#" + e).html();
+            var html = "<!DOCTYPE HTML>";
+            html += '<html lang="en-us">';
+            html += '<head><title>' + title + '</title></head>';
+
+            html += "<body style='padding: 0px 0px 0px 0px!important'>" + f;
+
+            //check to see if they are null so "undefined" doesnt print on the page. <br>s optional, just to give space
+
+            if (field != null) html += field;
+
+            html += "</body>";
+            setTimeout(w.document.write(html),1000);
+            setTimeout(w.window.print(), 1000);
+            w.document.close();
+        }
+        
+        $(document).on("click", ".qrstring-click", function () {
+            var QRContainer = document.createElement("div");
+            QRContainer.className = "text-center";
+            QRContainer.id = "qrcontainer";
+            QRContainer.textContent = "";
+            result = $(this).attr("data-target");
+            if (!isEmptyOrSpaces(result)) {
+                _qroptions.text = "https://truyxuatnguongoc.techber.vn/Truyxuat?id="+result;
+                var qrCode = new QRCode(QRContainer, _qroptions);
+                //TODO -- In QR code
+                console.log(qrCode);
+                console.log(qrCode._oDrawing);
+                console.log(qrCode._oDrawing.dataURL);
+                QRContainer.title = qrCode._oDrawing.dataURL;
+                console.log(QRContainer);
+                sweetAlert({
+                    content: QRContainer,
+                    title: "QRCode Thùng hồ sơ",
+                    buttons: [
+                        {
+                            visible: true,
+                            text: "In QRCode",
+                            value: 3,
+                            className: "swal-button inqrcode",
+                            closeModal: false,
+                        },
+                        {
+                            visible: true,
+                            text: "Đóng",
+                            value: 1,
+                            className: "",
+                            closeModal: true,
+                        }
+                    ]
+                }).then(function (result) {
+                   if(result === 3){
+                       var htmlQrCode = '<img alt="qrcode" src="'+ qrCode._oDrawing.dataURL+'"/>';
+                       printPage("afsafasf", htmlQrCode, "QR thùng hồ sơ",);
+                   }
+                })
+            } else {
+                sweetAlert({
+                    text: app.localize("CoLoiXayRa")
+                })
+            }
+        });
+
+        
+        
+        // $(document).on("click",".inqrcode",function () {
+        //    
+        //     // printPage("afsafasf",htmlResult , "QR thùng hồ sơ");
+        // });
 
         $('#ShowAdvancedFiltersSpan').click(function () {
             $('#ShowAdvancedFiltersSpan').hide();

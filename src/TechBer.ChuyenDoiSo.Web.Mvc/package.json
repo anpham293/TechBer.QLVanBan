@@ -1,4 +1,4 @@
-﻿{
+{
   "name": "abpzerotemplate",
   "scripts": {
     "create-bundles": "yarn && gulp buildDev",
@@ -39,6 +39,7 @@
     "detect-zoom": "^1.0.2",
     "dropzone": "^5.5.1",
     "easy-pie-chart": "^2.1.7",
+    "easyqrcodejs": "^4.4.13",
     "famfamfam-flags": "^1.0.0",
     "flot": "^0.8.0-alpha",
     "gmaps": "^0.4.24",

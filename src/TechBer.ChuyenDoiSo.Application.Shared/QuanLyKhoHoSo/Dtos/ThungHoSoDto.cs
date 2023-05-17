@@ -14,10 +14,10 @@ namespace TechBer.ChuyenDoiSo.QuanLyKhoHoSo.Dtos
 
 		public int TrangThai { get; set; }
 
-
+		public  string QrString { get; set; }
 		 public int? DayKeId { get; set; }
 
-		 		 public int? DuAnId { get; set; }
+		public int? DuAnId { get; set; }
 
 		 
     }

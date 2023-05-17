@@ -17,6 +17,7 @@ using TechBer.ChuyenDoiSo.Authorization;
 using Abp.Extensions;
 using Abp.Authorization;
 using Microsoft.EntityFrameworkCore;
+using TechBer.ChuyenDoiSo.Common;
 
 namespace TechBer.ChuyenDoiSo.QuanLyKhoHoSo
 {
@@ -71,7 +72,8 @@ namespace TechBer.ChuyenDoiSo.QuanLyKhoHoSo
                                 Ten = o.Ten,
                                 MoTa = o.MoTa,
                                 TrangThai = o.TrangThai,
-                                Id = o.Id
+                                Id = o.Id,
+                                QrString = o.QrString
 							},
                          	DayKeMaSo = s1 == null || s1.MaSo == null ? "" : s1.MaSo.ToString(),
                          	DuAnName = s2 == null || s2.Name == null ? "" : s2.Name.ToString()
@@ -148,7 +150,11 @@ namespace TechBer.ChuyenDoiSo.QuanLyKhoHoSo
 			{
 				thungHoSo.TenantId = (int?) AbpSession.TenantId;
 			}
-		
+			
+			var insertedId = await _thungHoSoRepository.InsertAndGetIdAsync(thungHoSo);
+			thungHoSo.Id = insertedId;
+			thungHoSo.QrString =
+				Extension.sha256_hash(thungHoSo.Id.ToString());
 
             await _thungHoSoRepository.InsertAsync(thungHoSo);
          }
@@ -157,7 +163,7 @@ namespace TechBer.ChuyenDoiSo.QuanLyKhoHoSo
 		 protected virtual async Task Update(CreateOrEditThungHoSoDto input)
          {
             var thungHoSo = await _thungHoSoRepository.FirstOrDefaultAsync((int)input.Id);
-             ObjectMapper.Map(input, thungHoSo);
+            ObjectMapper.Map(input, thungHoSo);
          }
 
 		 [AbpAuthorize(AppPermissions.Pages_ThungHoSos_Delete)]

@@ -167,7 +167,8 @@
         "node_modules/perfect-scrollbar/dist/perfect-scrollbar.min.js",
         "node_modules/tooltip.js/dist/umd/tooltip.min.js",
         "node_modules/sticky-js/dist/sticky.min.js",
-        "node_modules/summernote/dist/summernote.js"
+        "node_modules/summernote/dist/summernote.js",
+        "node_modules/easyqrcodejs/dist/easy.qrcode.min.js"
       ]
     },
     {
