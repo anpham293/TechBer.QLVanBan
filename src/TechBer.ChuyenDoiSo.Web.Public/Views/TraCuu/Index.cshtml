@@ -1,0 +1,33 @@
+﻿@model TechBer.ChuyenDoiSo.Public.Dto.GetDataFromQrCodeResultDto
+@{
+    ViewBag.CurrentPageName = "Tra cứu hồ sơ trong thùng hồ sơ";
+}
+
+<div class="row margin-bottom-40">
+    <!-- BEGIN CONTENT -->
+    <div class="col-md-12 col-sm-12">
+        <h3> Dự án: @Model.DuAn.Name </h3>
+        <div class="content-page">
+            <div class="row">
+                <strong>Chi tiết Hồ sơ trong thùng: @Model.ThungHoSo.Ten </strong>
+                <table class="table-bordered table table-hover table-striped">
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên hồ sơ</th>
+                    </tr>
+                   
+                    @{ Int32 stt1 = 1;}
+                    @foreach (var Variable in Model.ListVanBanDuAn)
+                    {
+                        <tr>
+                            <td>@stt1</td>
+                            <td>@Variable.Name</td>
+                        </tr>
+                        stt1++;
+                    }
+                </table>
+                </div>
+            </div>
+        </div>
+    <!-- END CONTENT -->
+</div>                                                                   
