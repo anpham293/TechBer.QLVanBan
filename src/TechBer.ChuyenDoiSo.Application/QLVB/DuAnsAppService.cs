@@ -33,7 +33,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
         private readonly IRepository<LoaiKhoan, int> _lookup_loaiKhoanRepository;
         private readonly IRepository<QuyTrinhDuAnAssigned, long> _quyTrinhDuAnAssignedRepository;
         private readonly IRepository<QuyTrinhDuAn, int> _quyTrinhDuAnRepository;
-        private readonly IRepository<VanBanDuAn, int> _vanBanRepository;
+        private readonly IRepository<VanBanDuAn> _vanBanDuAnRepository;
         private readonly IRepository<UserOrganizationUnit, long> _userOrganizationUnitRepository;
 
 
@@ -43,7 +43,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
             IRepository<LoaiKhoan, int> lookup_loaiKhoanRepository,
             IRepository<QuyTrinhDuAnAssigned, long> quyTrinhDuAnAssignedRepository,
             IRepository<QuyTrinhDuAn, int> quyTrinhDuAnRepository,
-            IRepository<VanBanDuAn, int> vanBanRepository,
+            IRepository<VanBanDuAn> vanBanDuAnRepository,
             IRepository<UserOrganizationUnit, long> userOrganizationUnitRepository
         )
         {
@@ -55,6 +55,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
             _quyTrinhDuAnAssignedRepository = quyTrinhDuAnAssignedRepository;
             _quyTrinhDuAnRepository = quyTrinhDuAnRepository;
             _userOrganizationUnitRepository = userOrganizationUnitRepository;
+            _vanBanDuAnRepository = vanBanDuAnRepository;
         }
 
         public async Task<PagedResultDto<GetDuAnForViewDto>> GetAll(GetAllDuAnsInput input)
@@ -99,8 +100,14 @@ namespace TechBer.ChuyenDoiSo.QLVB
                         Id = s1.Id,
                         Name = s1.Name,
                         OrganizationUnitId = s1.OrganizationUnitId
-                    }
+                    },
+                    TongSoTienThanhToan = 0
                 }).ToListAsync();
+            foreach (var VARIABLE in listDuAnLoaiDuAnOrganizationUnit)
+            {
+                VARIABLE.TongSoTienThanhToan = _vanBanDuAnRepository.GetAll()
+                    .WhereIf(true, p => p.DuAnId.Equals(VARIABLE.DuAn.Id)).Sum(s => s.SoTienThanhToan);
+            }
             // foreach (var VARIABLE in listUserOrganizationUnit)
             // {
             //     foreach (var VARIABLE1 in listDuAnLoaiDuAnOrganizationUnit)
@@ -111,13 +118,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
             //         }
             //     }
             // }
-
             
-
-
-
-            
-
             // var pagedAndFilteredDuAns = filteredDuAns
             //     .OrderBy(input.Sorting ?? "id asc")
             //     .PageBy(input);
@@ -135,12 +136,10 @@ namespace TechBer.ChuyenDoiSo.QLVB
             //         },
             //         LoaiDuAnName = s1 == null || s1.Name == null ? "" : s1.Name.ToString()
             //     };
-
             
             var duAns =  listDuAnLoaiDuAnOrganizationUnit.WhereIf(true, e => listUserOrganizationUnit.Contains((long)e.LoaiDuAn.OrganizationUnitId));
-
+            
             var totalCount = await filteredDuAns.CountAsync();
-
             return new PagedResultDto<GetDuAnForViewDto>(
                 totalCount,
                  duAns.ToList()
@@ -303,7 +302,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
         {
             List<long> idlist = await _quyTrinhDuAnAssignedRepository.GetAll().WhereIf(true, p => p.DuAnId == input.Id)
                 .Select(p => p.Id).ToListAsync();
-            await _vanBanRepository.DeleteAsync(p => idlist.Contains(p.QuyTrinhDuAnAssignedId.Value));
+            await _vanBanDuAnRepository.DeleteAsync(p => idlist.Contains(p.QuyTrinhDuAnAssignedId.Value));
             await _quyTrinhDuAnAssignedRepository.DeleteAsync(p => idlist.Contains(p.Id));
             await _duAnRepository.DeleteAsync(input.Id);
         }

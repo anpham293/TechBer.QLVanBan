@@ -104,12 +104,6 @@
                                 }
                             },
                             {
-                                text: app.localize('mo'),
-                                action: function (data) {
-                                    window.open("https://localhost:6666");
-                                }
-                            },
-                            {
                                 text: app.localize('History'),
                                 visible: function () {
                                     return entityHistoryIsEnabled();
@@ -222,7 +216,7 @@
             QRContainer.textContent = "";
             result = $(this).attr("data-target");
             if (!isEmptyOrSpaces(result)) {
-                _qroptions.text = "https://truyxuatnguongoc.techber.vn/Truyxuat?id="+result;
+                _qroptions.text = "https://tracuuhoso.techber.vn/Tracuu?id="+result;
                 var qrCode = new QRCode(QRContainer, _qroptions);
                 //TODO -- In QR code
                 console.log(qrCode);

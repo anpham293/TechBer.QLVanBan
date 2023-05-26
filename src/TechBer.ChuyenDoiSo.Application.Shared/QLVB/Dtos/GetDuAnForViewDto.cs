@@ -13,5 +13,6 @@ namespace TechBer.ChuyenDoiSo.QLVB.Dtos
 		public LoaiDuAnDto LoaiDuAn { get; set; }
 		public long UserId { get; set; }
 
+		public decimal TongSoTienThanhToan { get; set; }
     }
 }

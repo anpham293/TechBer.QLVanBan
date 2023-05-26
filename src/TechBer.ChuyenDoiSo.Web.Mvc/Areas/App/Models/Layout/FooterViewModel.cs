@@ -8,7 +8,7 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Models.Layout
 
         public string GetProductNameWithEdition()
         {
-            const string productName = "Quản lý dự án";
+            const string productName = "Phần mềm quản lý Đầu tư công";
 
             if (LoginInformations.Tenant?.Edition?.DisplayName == null)
             {

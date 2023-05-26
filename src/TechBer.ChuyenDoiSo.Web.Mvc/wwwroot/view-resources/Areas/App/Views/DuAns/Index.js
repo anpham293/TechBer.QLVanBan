@@ -156,10 +156,32 @@
                         }
                         return ngayKetThuc;
                     }
+                    // render: function (data) {
+                    //     var html = '<div class="progress progress--sm"><div class="progress-bar kt-bg-danger" role="progressbar" style="width: 100%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div> </div>';
+                    //     return html;
+                    //
+                    // }
                     
                 },
                 {
                     targets: 8,
+                    data: "duAn",
+                    name: "tienDo",
+                    className: "text-center",
+                    render: function (data, type, row, meta) {
+                        var giaiNgan = row.tongSoTienThanhToan;
+                        var tongMucDauTu = row.duAn.tongMucDauTu;
+                        var tienDo = (giaiNgan/tongMucDauTu*100).toFixed(2) == 'NaN' ? 0 : (giaiNgan/tongMucDauTu*100).toFixed(2);
+                        console.log("175", tienDo);
+                        var html = '<div class="progress progress--sm"><div class="progress-bar kt-bg-success" role="progressbar" style="width: '+tienDo +'%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div> </div>' +
+                                    '<div class="kt-widget24__action"><span class="kt-widget24__number"><span class="counterup">'+tienDo+'</span>%</span> </div>';
+                        return html;
+
+                    }
+
+                },
+                {
+                    targets: 9,
                     data: "duAn.trangThai",
                     className: "text-center",
                     render: function (trangThai, type, row, meta) {
