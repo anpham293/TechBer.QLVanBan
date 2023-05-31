@@ -141,18 +141,18 @@
                     data: "thungHoSo.moTa",
                     name: "moTa"
                 },
+                // {
+                //     targets: 4,
+                //     data: "thungHoSo.trangThai",
+                //     name: "trangThai"
+                // },
                 {
                     targets: 4,
-                    data: "thungHoSo.trangThai",
-                    name: "trangThai"
-                },
-                {
-                    targets: 5,
                     data: "dayKeMaSo",
                     name: "dayKeFk.maSo"
                 },
                 {
-                    targets: 6,
+                    targets: 5,
                     width: 30,
                     data: "thungHoSo.qrString",
                     name: "qrstring",
@@ -161,7 +161,7 @@
                     }
                 },
                 {
-                    targets: 7,
+                    targets: 6,
                     data: "duAnName",
                     name: "duAnFk.name"
                 }

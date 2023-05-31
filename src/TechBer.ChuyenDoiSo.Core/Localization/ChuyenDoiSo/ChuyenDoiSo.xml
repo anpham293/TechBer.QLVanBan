@@ -2,6 +2,7 @@
 <localizationDictionary culture="en"> 
   <texts>
 <!--    <text name="SapXepHoSoVaoThungHoSo">Sap xep ho so vao thung ho so</text>-->
+    <text name="QR">QR</text>
     <text name="TienDo">Tien do</text>
     <text name="LuuTruHoSo">Luu tru ho so</text>
     

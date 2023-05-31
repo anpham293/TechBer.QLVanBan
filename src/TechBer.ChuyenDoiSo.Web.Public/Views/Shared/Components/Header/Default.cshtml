@@ -69,7 +69,8 @@
 <div class="header">
     <div class="container">
         <a class="site-logo" href="@Url.Action("Index", "Home")">
-            <img src="@Model.GetLogoUrl(ApplicationPath)" alt="" height="38" />
+            @* <img src="@Model.GetLogoUrl(ApplicationPath)" alt="" height="38" /> *@
+            <img alt="Logo" src="/Common/Images/logo.png"  width="100%" height="70" class="kt-header__brand-logo-default" >
         </a>
         <a href="javascript:void(0);" class="mobi-toggler"><i class="fa fa-bars" aria-label="@L("Toggle")"></i></a>
         <div class="header-navigation pull-right font-transform-inherit">
