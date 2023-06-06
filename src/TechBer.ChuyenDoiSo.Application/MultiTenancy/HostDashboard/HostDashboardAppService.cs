@@ -4,12 +4,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using Abp.Auditing;
 using Abp.Authorization;
+using Abp.Collections.Extensions;
 using Abp.Domain.Repositories;
 using Abp.Timing;
 using Microsoft.EntityFrameworkCore;
 using TechBer.ChuyenDoiSo.Authorization;
 using TechBer.ChuyenDoiSo.MultiTenancy.HostDashboard.Dto;
 using TechBer.ChuyenDoiSo.MultiTenancy.Payments;
+using TechBer.ChuyenDoiSo.QLVB;
+using TechBer.ChuyenDoiSo.Tenants.Dashboard.Dto;
 
 namespace TechBer.ChuyenDoiSo.MultiTenancy.HostDashboard
 {
@@ -25,15 +28,25 @@ namespace TechBer.ChuyenDoiSo.MultiTenancy.HostDashboard
         private readonly ISubscriptionPaymentRepository _subscriptionPaymentRepository;
         private readonly IRepository<Tenant> _tenantRepository;
         private readonly IIncomeStatisticsService _incomeStatisticsService;
+        private readonly IRepository<DuAn> _duAnRepository;
+        private readonly IRepository<VanBanDuAn> _vanBanDuAnRepository;
+        private readonly IRepository<LoaiDuAn> _loaiDuAnRepository;
 
         public HostDashboardAppService(
             ISubscriptionPaymentRepository subscriptionPaymentRepository,
             IRepository<Tenant> tenantRepository,
-            IIncomeStatisticsService incomeStatisticsService)
+            IIncomeStatisticsService incomeStatisticsService,
+            IRepository<DuAn> duAnRepository,
+            IRepository<VanBanDuAn> vanBanDuAnRepository,
+            IRepository<LoaiDuAn> loaiDuAnRepository
+            )
         {
             _subscriptionPaymentRepository = subscriptionPaymentRepository;
             _tenantRepository = tenantRepository;
             _incomeStatisticsService = incomeStatisticsService;
+            _duAnRepository = duAnRepository;
+            _vanBanDuAnRepository = vanBanDuAnRepository;
+            _loaiDuAnRepository = loaiDuAnRepository;
         }
 
         public async Task<TopStatsData> GetTopStatsData(GetTopStatsInput input)
@@ -177,6 +190,24 @@ namespace TechBer.ChuyenDoiSo.MultiTenancy.HostDashboard
             return (await query.ToListAsync())
                 .Select(t => ObjectMapper.Map<RecentTenant>(t))
                 .ToList();
+        }
+
+        public async Task<BaoCaoLoaiDuAnOutput> GetBaoCaoDuAn()
+        {
+            var listBaoCaoLoaiDuAns = new List<ChiTietBaoCaoLoaiDuAn>();
+            var loaiDuAns = _loaiDuAnRepository.GetAll().ToList();
+            foreach (var loaiDuAn in loaiDuAns)
+            {
+                var chiTiet = new ChiTietBaoCaoLoaiDuAn();
+                chiTiet.TenLoaiDuAn = loaiDuAn.Name;
+                chiTiet.LoaiDuAn_SoDuAn =
+                    _duAnRepository.GetAll().WhereIf(true, p => p.LoaiDuAnId == loaiDuAn.Id).Count();
+                listBaoCaoLoaiDuAns.Add(chiTiet);
+            }
+            return new BaoCaoLoaiDuAnOutput()
+            {
+                listBaoCaoLoaiDuAns = listBaoCaoLoaiDuAns
+            };
         }
     }
 }

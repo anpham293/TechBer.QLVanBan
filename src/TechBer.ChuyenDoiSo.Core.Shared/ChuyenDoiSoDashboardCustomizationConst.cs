@@ -32,6 +32,7 @@
                 public const string EditionStatistics = "Widgets_Host_EditionStatistics";
                 public const string SubscriptionExpiringTenants = "Widgets_Host_SubscriptionExpiringTenants";
                 public const string RecentTenants = "Widgets_Host_RecentTenants";
+                public const string BaoCaoDuAn = "Widgets_Host_BaoCaoDuAn";
             }
         }
 

@@ -17,7 +17,7 @@
                 <tr>
                     <th style="text-align: center; font-weight: bold" colspan="3">Ngày bắt đầu: @Model.DuAn.NgayBatDau?.ToString("dd/MM/yyyy")
                         - Ngày kết thúc: @Model.DuAn.NgayKetThuc?.ToString("dd/MM/yyyy")
-                        </th>
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -69,12 +69,115 @@
                         <a style="font-style: italic">(@Helper.DocTienBangChu((long) Model.DuAn.DuToan, " đồng"))</a>
                     </td>
                 </tr>
-
-
+                <tr>
+                    <td style="text-align: center">
+                        <i class="fas fa-layer-group"></i>
+                    </td>
+                    <td style="text-align: left; font-weight: bold">Số tiền đã thanh toán</td>
+                    <td style="text-align: center">
+                        @Model.TongSoTienThanhToan.toCurrency() VNĐ<br>
+                        <a style="font-style: italic">(@Helper.DocTienBangChu((long) Model.TongSoTienThanhToan, " đồng"))</a>
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </div>
+        <div class="row">
+            <canvas class="m_chart_cham_diem" id="SoDo"></canvas>
+        </div>
     </div>
 </div>
+<script>
+$(function () {
+        var labels = ['Chi tiết'];
+        const data = {
+          labels: labels,
+          datasets: [{
+              axis: 'y',
+                  label: 'Tổng mức đầu tư',
+                  data: [@Model.DuAn.TongMucDauTu],
+                  fill: false,
+                  backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    // 'rgba(255, 159, 64, 0.2)',
+                    // 'rgba(255, 205, 86, 0.2)',
+                    // 'rgba(75, 192, 192, 0.2)',
+                    // 'rgba(54, 162, 235, 0.2)',
+                    //'rgba(153, 102, 255, 0.2)',
+                    //'rgba(201, 203, 207, 0.2)'
+                  ],
+                  borderColor: [
+                    'rgb(255, 99, 132)',
+                    // 'rgb(255, 159, 64)',
+                    // 'rgb(255, 205, 86)',
+                    // 'rgb(75, 192, 192)',
+                    // 'rgb(54, 162, 235)',
+                    //'rgb(153, 102, 255)',
+                    //'rgb(201, 203, 207)'
+                  ],
+                  borderWidth: 1
+          },
+          {
+               axis: 'y',
+                label: 'Dự toán',
+                data: [@Model.DuAn.DuToan],
+                fill: false,
+                backgroundColor: [
+                  'rgba(75, 192, 192, 0.2)'
+                ],
+                borderColor: [
+                  'rgb(255, 159, 64)'
+                ],
+                borderWidth: 1
+           },
+           {
+              axis: 'y',
+               label: 'Số tiền thanh toán',
+               data: [@Model.TongSoTienThanhToan],
+               fill: false,
+               backgroundColor: [
+                 'rgba(255, 159, 64, 0.2)'
+               ],
+               borderColor: [
+                 'rgb(255, 205, 86)'
+               ],
+               borderWidth: 1
+           }
+          ]
+        };
 
+        var canvas = $('#SoDo');
+
+        var myChart = new Chart(canvas, {
+            type: 'bar',
+            data: data,
+              options: {
+                locale: 'vi-VN',
+                 scales: {
+                        yAxes: [
+                            {
+                                ticks: {
+                                    callback: function(label, index, labels) {
+                                        return label.toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
+                                    }
+                                },                              
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Số tiền'
+                                }
+                            }
+                        ]
+                    },
+                  tooltips: {
+                        callbacks: {
+                            label: function(tooltipItem, data) {
+                                return tooltipItem.yLabel.toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
+                            }
+                        }
+                    }  ,
+                indexAxis: 'y',             
+              }
+        });
+});
+</script>
 @await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithClose.cshtml")

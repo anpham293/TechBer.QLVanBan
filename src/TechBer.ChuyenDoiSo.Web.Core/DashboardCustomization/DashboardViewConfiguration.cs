@@ -154,6 +154,14 @@ namespace TechBer.ChuyenDoiSo.Web.DashboardCustomization
                     viewFileRoot + "RecentTenants.cshtml",
                     jsAndCssFileRoot + "RecentTenants/RecentTenants.min.js",
                     jsAndCssFileRoot + "RecentTenants/RecentTenants.min.css"));
+            WidgetViewDefinitions.Add(ChuyenDoiSoDashboardCustomizationConsts.Widgets.Host.BaoCaoDuAn,
+                new WidgetViewDefinition(
+                    ChuyenDoiSoDashboardCustomizationConsts.Widgets.Host.BaoCaoDuAn,
+                    viewFileRoot + "BaoCaoDuAn.cshtml",
+                    jsAndCssFileRoot + "BaoCaoDuAn/BaoCaoDuAn.min.js",
+                    jsAndCssFileRoot + "BaoCaoDuAn/BaoCaoDuAn.min.css",
+                    12,
+                    10));
 
             //add your host side widgets definitions here
             #endregion

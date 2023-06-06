@@ -80,7 +80,8 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
                 DuAn = getDuAnForViewDto.DuAn,
                 LoaiDuAnName = getDuAnForViewDto.LoaiDuAnName,
                 ChuongName = getDuAnForViewDto.ChuongName,
-                LoaiKhoanName = getDuAnForViewDto.LoaiKhoanName
+                LoaiKhoanName = getDuAnForViewDto.LoaiKhoanName,
+                TongSoTienThanhToan = getDuAnForViewDto.TongSoTienThanhToan
             };
 
             return PartialView("_ViewDuAnModal", model);

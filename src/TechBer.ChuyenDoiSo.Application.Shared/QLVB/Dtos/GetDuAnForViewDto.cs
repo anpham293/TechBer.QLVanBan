@@ -15,4 +15,9 @@ namespace TechBer.ChuyenDoiSo.QLVB.Dtos
 
 		public decimal TongSoTienThanhToan { get; set; }
     }
+
+    public class GetSoDoDuAnOutput
+    {
+	    public DuAnDto DuAn { get; set; }
+    }
 }

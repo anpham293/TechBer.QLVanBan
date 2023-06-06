@@ -30,5 +30,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
 
 		Task<PagedResultDto<DuAnLoaiKhoanLookupTableDto>> GetAllLoaiKhoanForLookupTable(
 			LoaiKhoanLookupTableInput input);
+
+		Task<GetSoDoDuAnOutput> SoDoDuAn(int id);
     }
 }

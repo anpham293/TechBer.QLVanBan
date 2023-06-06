@@ -169,6 +169,9 @@ namespace TechBer.ChuyenDoiSo.QLVB
                 var _lookupLoaiKhoan = await _lookup_loaiKhoanRepository.FirstOrDefaultAsync((int) output.DuAn.LoaiKhoanId);
                 output.LoaiKhoanName = _lookupLoaiKhoan?.MaSo?.ToString() + " - " + _lookupLoaiKhoan?.Ten?.ToString();
             }
+            
+            output.TongSoTienThanhToan =  _vanBanDuAnRepository.GetAll()
+                .WhereIf(true, p => p.DuAnId == id).Sum(s => s.SoTienThanhToan);
 
             return output;
         }
@@ -434,6 +437,11 @@ namespace TechBer.ChuyenDoiSo.QLVB
                 totalCount,
                 lookupTableDtoList
             );
+        }
+
+        public async Task<GetSoDoDuAnOutput> SoDoDuAn(int id)
+        {
+            return new GetSoDoDuAnOutput();
         }
     }
 }

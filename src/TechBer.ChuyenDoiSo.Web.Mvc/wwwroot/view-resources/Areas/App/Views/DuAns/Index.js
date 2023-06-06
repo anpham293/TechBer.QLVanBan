@@ -172,7 +172,6 @@
                         var giaiNgan = row.tongSoTienThanhToan;
                         var tongMucDauTu = row.duAn.tongMucDauTu;
                         var tienDo = (giaiNgan/tongMucDauTu*100).toFixed(2) == 'NaN' ? 0 : (giaiNgan/tongMucDauTu*100).toFixed(2);
-                        console.log("175", tienDo);
                         var html = '<div class="progress progress--sm"><div class="progress-bar kt-bg-success" role="progressbar" style="width: '+tienDo +'%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div> </div>' +
                                     '<div class="kt-widget24__action"><span class="kt-widget24__number"><span class="counterup">'+tienDo+'</span>%</span> </div>';
                         return html;

@@ -162,11 +162,19 @@ namespace TechBer.ChuyenDoiSo.DashboardCustomization.Definitions
                 usedWidgetFilters: new List<string>() { dateRangeFilter.Id },
                 permissions: hostWidgetsDefaultPermission);
 
+            var baoCaoDuAn = new WidgetDefinition(
+                ChuyenDoiSoDashboardCustomizationConsts.Widgets.Host.BaoCaoDuAn,
+                "WidgetBaoCaoDuAn",
+                side: MultiTenancySides.Host,
+                permissions: hostWidgetsDefaultPermission
+            );
+            
             WidgetDefinitions.Add(incomeStatistics);
             WidgetDefinitions.Add(hostTopStats);
             WidgetDefinitions.Add(editionStatistics);
             WidgetDefinitions.Add(subscriptionExpiringTenants);
             WidgetDefinitions.Add(recentTenants);
+            WidgetDefinitions.Add(baoCaoDuAn);
 
             // Add your host side widgets here
 
@@ -203,7 +211,8 @@ namespace TechBer.ChuyenDoiSo.DashboardCustomization.Definitions
                     hostTopStats.Id,
                     editionStatistics.Id,
                     subscriptionExpiringTenants.Id,
-                    recentTenants.Id
+                    recentTenants.Id,
+                    baoCaoDuAn.Id
                 });
 
             DashboardDefinitions.Add(defaultHostDashboard);
