@@ -1,0 +1,51 @@
+﻿
+@using System.Globalization
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.Common.Modals
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.QuyetDinhs
+@model CreateOrEditQuyetDinhModalViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditQuyetDinh")) : L("CreateNewQuyetDinh")))
+
+<div class="modal-body">
+        <div id="QuyetDinhInformationsTab">
+            <form name="QuyetDinhInformationsForm" role="form" novalidate class="form-validation">
+
+                @if (Model.IsEditMode)
+                {
+                    <input type="hidden" name="id" value="@Model.QuyetDinh.Id" />
+                }
+
+				
+
+				
+								<div class="form-group">
+									<label for="QuyetDinh_So">@L("So")</label>
+									<input class="form-control" id="QuyetDinh_So" value="@Model.QuyetDinh.So" type="text" name="so"     />
+								</div>
+					
+								<div class="form-group">
+									<label for="QuyetDinh_Ten">@L("Ten")</label>
+									<input class="form-control" id="QuyetDinh_Ten" value="@Model.QuyetDinh.Ten" type="text" name="ten"     />
+								</div>
+					
+								<div class="form-group">
+									<label for="QuyetDinh_NgayBanHanh">@L("NgayBanHanh")</label>
+									<input class="form-control m-input date-picker" id="QuyetDinh_NgayBanHanh" type="text" name="ngayBanHanh" value="@Model.QuyetDinh.NgayBanHanh"/>
+								</div>
+					
+								<div class="form-group">
+									<label for="QuyetDinh_FileQuyetDinh">@L("FileQuyetDinh")</label>
+									<input class="form-control" id="QuyetDinh_FileQuyetDinh" value="@Model.QuyetDinh.FileQuyetDinh" type="text" name="fileQuyetDinh"     />
+								</div>
+					
+								<div class="form-group">
+									<label for="QuyetDinh_TrangThai">@L("TrangThai")</label>
+									<input class="form-control m-input" id="QuyetDinh_TrangThai" value="@Model.QuyetDinh.TrangThai.ToString(CultureInfo.InvariantCulture)" type="number" name="trangThai"  />
+								</div>
+					
+
+            </form>
+        </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

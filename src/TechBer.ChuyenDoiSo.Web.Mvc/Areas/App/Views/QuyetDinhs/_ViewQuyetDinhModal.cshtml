@@ -1,0 +1,40 @@
+﻿
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.Common.Modals
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.QuyetDinhs
+@model QuyetDinhViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("Details")))
+
+<div class="modal-body">
+    <div id="QuyetDinhInformationsTab">
+        
+        <div class="row">
+            <div class="col-6 mb-3">
+                <h6>@L("So") :</h6>
+                @Model.QuyetDinh.So
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Ten") :</h6>
+                @Model.QuyetDinh.Ten
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("NgayBanHanh") :</h6>
+                @Model.QuyetDinh.NgayBanHanh
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("FileQuyetDinh") :</h6>
+                @Model.QuyetDinh.FileQuyetDinh
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("TrangThai") :</h6>
+                @Model.QuyetDinh.TrangThai
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithClose.cshtml")
+

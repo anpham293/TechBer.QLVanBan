@@ -55,6 +55,8 @@ namespace TechBer.ChuyenDoiSo
     {
         public static void CreateMappings(IMapperConfigurationExpression configuration)
         {
+            configuration.CreateMap<CreateOrEditQuyetDinhDto, QuyetDinh>().ReverseMap();
+            configuration.CreateMap<QuyetDinhDto, QuyetDinh>().ReverseMap();
             configuration.CreateMap<CreateOrEditThungHoSoDto, ThungHoSo>().ReverseMap();
             configuration.CreateMap<ThungHoSoDto, ThungHoSo>().ReverseMap();
             configuration.CreateMap<CreateOrEditDayKeDto, DayKe>().ReverseMap();

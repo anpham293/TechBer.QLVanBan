@@ -1,6 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en"> 
-  <texts>
+  <texts>    <text name="TechBer.ChuyenDoiSo.QLVB.QuyetDinh">QuyetDinh</text>
+    <text name="So">So</text>
+    <text name="FileQuyetDinh">File quyet dinh</text>
+    <text name="QuyetDinhsHeaderInfo">Quyet dinhs header info</text>
+    <text name="CreateNewQuyetDinh">Create new quyet dinh</text>
+    <text name="EditQuyetDinh">Edit quyet dinh</text>
+    <text name="DeleteQuyetDinh">Delete quyet dinh</text>
+    <text name="QuyetDinhs">Quyet dinhs</text>
+
 <!--    <text name="SapXepHoSoVaoThungHoSo">Sap xep ho so vao thung ho so</text>-->
     <text name="QR">QR</text>
     <text name="TienDo">Tien do</text>

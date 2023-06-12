@@ -1,4 +1,12 @@
-﻿using Abp.Application.Navigation;
+﻿
+.                AddItem(new MenuItemDefinition(
+                        AppPageNames.Common.QuyetDinhs,
+                        L("QuyetDinhs"),
+                        url: "App/QuyetDinhs",
+                        icon: "flaticon-more",
+                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_QuyetDinhs)
+                    )
+                )using Abp.Application.Navigation;
 using Abp.Authorization;
 using Abp.Localization;
 using TechBer.ChuyenDoiSo.Authorization;
