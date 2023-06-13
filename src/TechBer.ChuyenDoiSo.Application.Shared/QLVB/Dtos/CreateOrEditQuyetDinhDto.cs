@@ -22,7 +22,9 @@ namespace TechBer.ChuyenDoiSo.QLVB.Dtos
 		
 		public int TrangThai { get; set; }
 		
-		
+		public string UploadedFileToken { get; set; }
+		public string FileName { get; set; }
+		public string ContentType { get; set; }
 
     }
 }

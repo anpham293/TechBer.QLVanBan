@@ -1,12 +1,4 @@
-﻿
-.                AddItem(new MenuItemDefinition(
-                        AppPageNames.Common.QuyetDinhs,
-                        L("QuyetDinhs"),
-                        url: "App/QuyetDinhs",
-                        icon: "flaticon-more",
-                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_QuyetDinhs)
-                    )
-                )using Abp.Application.Navigation;
+﻿using Abp.Application.Navigation;
 using Abp.Authorization;
 using Abp.Localization;
 using TechBer.ChuyenDoiSo.Authorization;
@@ -30,6 +22,14 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Startup
                         icon: "flaticon-line-graph",
                         permissionDependency: new SimplePermissionDependency(AppPermissions
                             .Pages_Administration_Host_Dashboard)
+                    )
+                )
+                .AddItem(new MenuItemDefinition(
+                        AppPageNames.Common.QuyetDinhs,
+                        L("QuyetDinhs"),
+                        url: "App/QuyetDinhs",
+                        icon: "far fa-file-alt",
+                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_QuyetDinhs)
                     )
                 )
                 .AddItem(new MenuItemDefinition(
