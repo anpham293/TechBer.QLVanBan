@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Abp.AspNetCore.Mvc.Authorization;
@@ -9,10 +10,14 @@ using TechBer.ChuyenDoiSo.Authorization;
 using TechBer.ChuyenDoiSo.QLVB;
 using TechBer.ChuyenDoiSo.QLVB.Dtos;
 using Abp.Application.Services.Dto;
+using Abp.Domain.Repositories;
 using Abp.Extensions;
 using Abp.IO.Extensions;
 using Abp.UI;
 using Abp.Web.Models;
+using DocumentFormat.OpenXml.Packaging;
+using Microsoft.AspNetCore.Hosting;
+using Newtonsoft.Json;
 using TechBer.ChuyenDoiSo.Dto;
 using TechBer.ChuyenDoiSo.Storage;
 using UploadFileOutput = TechBer.ChuyenDoiSo.QuanLyChuyenDoiSo.Dtos.UploadFileOutput;
@@ -24,17 +29,23 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
     public class QuyetDinhsController : ChuyenDoiSoControllerBase
     {
         private const int MaxFileSize = 524288000; //500MB
+        private readonly IWebHostEnvironment _appEnvironment;
         private readonly IQuyetDinhsAppService _quyetDinhsAppService;
         private readonly ITempFileCacheManager _tempFileCacheManager;
         private readonly IBinaryObjectManager _binaryObjectManager;
+        private readonly IRepository<QuyetDinh> _quyetDinhRepository;
 
         public QuyetDinhsController(IQuyetDinhsAppService quyetDinhsAppService,
+            IWebHostEnvironment appEnvironment,
             ITempFileCacheManager tempFileCacheManager,
-            IBinaryObjectManager binaryObjectManager)
+            IBinaryObjectManager binaryObjectManager,
+            IRepository<QuyetDinh> quyetDinhRepository)
         {
+            _appEnvironment = appEnvironment;
             _quyetDinhsAppService = quyetDinhsAppService;
             _tempFileCacheManager = tempFileCacheManager;
             _binaryObjectManager = binaryObjectManager;
+            _quyetDinhRepository = quyetDinhRepository;
         }
 
         public ActionResult Index()
@@ -126,6 +137,64 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
             {
                 return new UploadFileOutput(new ErrorInfo(ex.Message));
             }
+        }
+
+        public class FileMauSerializeObj
+        {
+            public string Guid { get; set; }
+            public string FileName { get; set; }
+            public string ContentType { get; set; }
+        }
+        public async Task<PartialViewResult> ViewQuyetDinhFileDoc(int id)
+        {
+            QuyetDinh quyetDinh = await _quyetDinhRepository.FirstOrDefaultAsync(id);
+            
+            FileMauSerializeObj fileMauSerializeObj =
+                JsonConvert.DeserializeObject<FileMauSerializeObj>(quyetDinh.FileQuyetDinh);
+            
+            BinaryObject file = await _binaryObjectManager.GetOrNullAsync(Guid.Parse(fileMauSerializeObj.Guid));
+            
+            byte[] fileByte = file.Bytes;
+            byte[] downloadFileBytes;
+            using (Stream stream = new MemoryStream())
+			{
+				stream.Write(fileByte, 0, (int)fileByte.Length);
+				try
+				{
+
+					using (WordprocessingDocument myTemplate = WordprocessingDocument.Open(stream, true))
+					{
+						string docText;
+						using (StreamReader sr = new StreamReader(myTemplate.MainDocumentPart.GetStream()))
+						{
+							docText = sr.ReadToEnd();
+						}
+                        using (StreamWriter sw = new StreamWriter(myTemplate.MainDocumentPart.GetStream(FileMode.Create)))
+						{
+							sw.Write(docText);
+						}
+						myTemplate.Close();
+					}
+				}
+				catch (Exception e)
+				{
+					Console.WriteLine(e);
+					throw;
+				}
+
+
+				stream.Position = 0;
+				downloadFileBytes = stream.GetAllBytes();
+			}
+            byte[] bytes = downloadFileBytes;
+            FileStream fs = new FileStream(_appEnvironment.WebRootPath + "/Common/" + AbpSession.UserId + "QuyetDinh.docx", FileMode.OpenOrCreate);
+            fs.Write(bytes, 0, bytes.Length);
+            fs.Close();
+            var model = new QuyetDinhFileDocViewModel()
+            {
+                FileName = AbpSession.UserId + "QuyetDinh.docx"
+            };
+            return PartialView("_ViewQuyetDinhFileDoc", model);
         }
     }
 }

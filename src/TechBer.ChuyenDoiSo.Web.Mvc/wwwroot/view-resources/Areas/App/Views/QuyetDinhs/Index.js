@@ -3,8 +3,8 @@
 
         var _$quyetDinhsTable = $('#QuyetDinhsTable');
         var _quyetDinhsService = abp.services.app.quyetDinhs;
-		var _entityTypeFullName = 'TechBer.ChuyenDoiSo.QLVB.QuyetDinh';
-        
+        var _entityTypeFullName = 'TechBer.ChuyenDoiSo.QLVB.QuyetDinh';
+
         $('.date-picker').datetimepicker({
             locale: abp.localization.currentLanguage.name,
             format: 'L'
@@ -16,19 +16,23 @@
             'delete': abp.auth.hasPermission('Pages.QuyetDinhs.Delete')
         };
 
-         var _createOrEditModal = new app.ModalManager({
+        var _createOrEditModal = new app.ModalManager({
             viewUrl: abp.appPath + 'App/QuyetDinhs/CreateOrEditModal',
             scriptUrl: abp.appPath + 'view-resources/Areas/App/Views/QuyetDinhs/_CreateOrEditModal.js',
             modalClass: 'CreateOrEditQuyetDinhModal'
-        });       
+        });
+        var _viewQuyetDinhFileDoc = new app.ModalManager({
+            viewUrl: abp.appPath + 'App/QuyetDinhs/ViewQuyetDinhFileDoc'
+        });
 
-		 var _viewQuyetDinhModal = new app.ModalManager({
+        var _viewQuyetDinhModal = new app.ModalManager({
             viewUrl: abp.appPath + 'App/QuyetDinhs/ViewquyetDinhModal',
             modalClass: 'ViewQuyetDinhModal'
         });
 
-		        var _entityTypeHistoryModal = app.modals.EntityTypeHistoryModal.create();
-		        function entityHistoryIsEnabled() {
+        var _entityTypeHistoryModal = app.modals.EntityTypeHistoryModal.create();
+
+        function entityHistoryIsEnabled() {
             return abp.auth.hasPermission('Pages.Administration.AuditLogs') &&
                 abp.custom.EntityHistory &&
                 abp.custom.EntityHistory.IsEnabled &&
@@ -39,7 +43,7 @@
             if (element.data("DateTimePicker").date() == null) {
                 return null;
             }
-            return element.data("DateTimePicker").date().format("YYYY-MM-DDT00:00:00Z"); 
+            return element.data("DateTimePicker").date().format("YYYY-MM-DDT00:00:00Z");
         }
 
         var dataTable = _$quyetDinhsTable.DataTable({
@@ -50,14 +54,14 @@
                 ajaxFunction: _quyetDinhsService.getAll,
                 inputFilter: function () {
                     return {
-					filter: $('#QuyetDinhsTableFilter').val(),
-					soFilter: $('#SoFilterId').val(),
-					tenFilter: $('#TenFilterId').val(),
-					minNgayBanHanhFilter:  getDateFilter($('#MinNgayBanHanhFilterId')),
-					maxNgayBanHanhFilter:  getDateFilter($('#MaxNgayBanHanhFilterId')),
-					fileQuyetDinhFilter: $('#FileQuyetDinhFilterId').val(),
-					minTrangThaiFilter: $('#MinTrangThaiFilterId').val(),
-					maxTrangThaiFilter: $('#MaxTrangThaiFilterId').val()
+                        filter: $('#QuyetDinhsTableFilter').val(),
+                        soFilter: $('#SoFilterId').val(),
+                        tenFilter: $('#TenFilterId').val(),
+                        minNgayBanHanhFilter: getDateFilter($('#MinNgayBanHanhFilterId')),
+                        maxNgayBanHanhFilter: getDateFilter($('#MaxNgayBanHanhFilterId')),
+                        fileQuyetDinhFilter: $('#FileQuyetDinhFilterId').val(),
+                        minTrangThaiFilter: $('#MinTrangThaiFilterId').val(),
+                        maxTrangThaiFilter: $('#MaxTrangThaiFilterId').val()
                     };
                 }
             },
@@ -73,76 +77,82 @@
                         cssClass: 'btn btn-brand dropdown-toggle',
                         text: '<i class="fa fa-cog"></i> ' + app.localize('Actions') + ' <span class="caret"></span>',
                         items: [
-						{
+                            {
                                 text: app.localize('View'),
                                 action: function (data) {
-                                    _viewQuyetDinhModal.open({ id: data.record.quyetDinh.id });
+                                    _viewQuyetDinhModal.open({id: data.record.quyetDinh.id});
                                 }
-                        },
-						{
-                            text: app.localize('Edit'),
-                            visible: function () {
-                                return _permissions.edit;
                             },
-                            action: function (data) {
-                            _createOrEditModal.open({ id: data.record.quyetDinh.id });                                
-                            }
-                        },
-                        {
-                            text: app.localize('History'),
-                            visible: function () {
-                                return entityHistoryIsEnabled();
+                            {
+                                text: app.localize('Edit'),
+                                visible: function () {
+                                    return _permissions.edit;
+                                },
+                                action: function (data) {
+                                    _createOrEditModal.open({id: data.record.quyetDinh.id});
+                                }
                             },
-                            action: function (data) {
-                                _entityTypeHistoryModal.open({
-                                    entityTypeFullName: _entityTypeFullName,
-                                    entityId: data.record.quyetDinh.id
-                                });
-                            }
-						}, 
-						{
-                            text: app.localize('Delete'),
-                            visible: function () {
-                                return _permissions.delete;
+                            {
+                                text: app.localize('XEM'),
+                                action: function (data) {
+                                    _viewQuyetDinhFileDoc.open({id: data.record.quyetDinh.id});
+                                }
                             },
-                            action: function (data) {
-                                deleteQuyetDinh(data.record.quyetDinh);
-                            }
-                        }]
+                            {
+                                text: app.localize('History'),
+                                visible: function () {
+                                    return entityHistoryIsEnabled();
+                                },
+                                action: function (data) {
+                                    _entityTypeHistoryModal.open({
+                                        entityTypeFullName: _entityTypeFullName,
+                                        entityId: data.record.quyetDinh.id
+                                    });
+                                }
+                            },
+                            {
+                                text: app.localize('Delete'),
+                                visible: function () {
+                                    return _permissions.delete;
+                                },
+                                action: function (data) {
+                                    deleteQuyetDinh(data.record.quyetDinh);
+                                }
+                            }]
                     }
                 },
-					{
-						targets: 1,
-						 data: "quyetDinh.so",
-						 name: "so"   
-					},
-					{
-						targets: 2,
-						 data: "quyetDinh.ten",
-						 name: "ten"   
-					},
-					{
-						targets: 3,
-						 data: "quyetDinh.ngayBanHanh",
-						 name: "ngayBanHanh" ,
-					render: function (ngayBanHanh) {
-						if (ngayBanHanh) {
-							return moment(ngayBanHanh).format('L');
-						}
-						return "";
-					}
-			  
-					},
-					{
-						targets: 4,
-						 data: "quyetDinh.fileQuyetDinh",
-						 name: "fileQuyetDinh"   
-					},
-					{
-						targets: 5,
-						 data: "quyetDinh.trangThai",
-						 name: "trangThai"   
-					}
+                {
+                    targets: 1,
+                    data: "quyetDinh.so",
+                    name: "so"
+                },
+                {
+                    targets: 2,
+                    data: "quyetDinh.ten",
+                    name: "ten"
+                },
+                {
+                    targets: 3,
+                    data: "quyetDinh.ngayBanHanh",
+                    name: "ngayBanHanh",
+                    render: function (ngayBanHanh) {
+                        if (ngayBanHanh) {
+                            return moment(ngayBanHanh).format('L');
+                        }
+                        return "";
+                    }
+
+                },
+                {
+                    targets: 4,
+                    data: "quyetDinh.fileQuyetDinh",
+                    name: "fileQuyetDinh"
+                },
+                {
+                    targets: 5,
+                    data: "quyetDinh.trangThai",
+                    name: "trangThai"
+                }
             ]
         });
 
@@ -167,7 +177,7 @@
             );
         }
 
-		$('#ShowAdvancedFiltersSpan').click(function () {
+        $('#ShowAdvancedFiltersSpan').click(function () {
             $('#ShowAdvancedFiltersSpan').hide();
             $('#HideAdvancedFiltersSpan').show();
             $('#AdvacedAuditFiltersArea').slideDown();
@@ -181,20 +191,20 @@
 
         $('#CreateNewQuyetDinhButton').click(function () {
             _createOrEditModal.open();
-        });        
+        });
 
-		$('#ExportToExcelButton').click(function () {
+        $('#ExportToExcelButton').click(function () {
             _quyetDinhsService
                 .getQuyetDinhsToExcel({
-				filter : $('#QuyetDinhsTableFilter').val(),
-					soFilter: $('#SoFilterId').val(),
-					tenFilter: $('#TenFilterId').val(),
-					minNgayBanHanhFilter:  getDateFilter($('#MinNgayBanHanhFilterId')),
-					maxNgayBanHanhFilter:  getDateFilter($('#MaxNgayBanHanhFilterId')),
-					fileQuyetDinhFilter: $('#FileQuyetDinhFilterId').val(),
-					minTrangThaiFilter: $('#MinTrangThaiFilterId').val(),
-					maxTrangThaiFilter: $('#MaxTrangThaiFilterId').val()
-				})
+                    filter: $('#QuyetDinhsTableFilter').val(),
+                    soFilter: $('#SoFilterId').val(),
+                    tenFilter: $('#TenFilterId').val(),
+                    minNgayBanHanhFilter: getDateFilter($('#MinNgayBanHanhFilterId')),
+                    maxNgayBanHanhFilter: getDateFilter($('#MaxNgayBanHanhFilterId')),
+                    fileQuyetDinhFilter: $('#FileQuyetDinhFilterId').val(),
+                    minTrangThaiFilter: $('#MinTrangThaiFilterId').val(),
+                    maxTrangThaiFilter: $('#MaxTrangThaiFilterId').val()
+                })
                 .done(function (result) {
                     app.downloadTempFile(result);
                 });
@@ -204,15 +214,15 @@
             getQuyetDinhs();
         });
 
-		$('#GetQuyetDinhsButton').click(function (e) {
+        $('#GetQuyetDinhsButton').click(function (e) {
             e.preventDefault();
             getQuyetDinhs();
         });
 
-		$(document).keypress(function(e) {
-		  if(e.which === 13) {
-			getQuyetDinhs();
-		  }
-		});
+        $(document).keypress(function (e) {
+            if (e.which === 13) {
+                getQuyetDinhs();
+            }
+        });
     });
 })();
