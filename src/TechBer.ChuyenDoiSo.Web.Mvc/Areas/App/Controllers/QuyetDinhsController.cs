@@ -196,5 +196,27 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
             };
             return PartialView("_ViewQuyetDinhFileDoc", model);
         }
+
+        public async Task<PartialViewResult> ViewQuyetDinhFilePdf(int id)
+        {
+            QuyetDinh quyetDinh = await _quyetDinhRepository.FirstOrDefaultAsync(id);
+            var file = JsonConvert.DeserializeObject<FileMauSerializeObj>(quyetDinh.FileQuyetDinh);
+            
+            var model = new QuyetDinhFilePdfViewModel()
+            {
+                guid = file.Guid,
+                contentType = file.ContentType,
+                fileName = file.FileName
+            };
+            
+            return PartialView("_ViewQuyetDinhFilePdf", model);
+        }
+        [HttpGet]
+        public async Task<ActionResult> Download(string guid, string contentType)
+        {
+            var binObj = await _binaryObjectManager.GetOrNullAsync(Guid.Parse(guid));
+            var content = binObj.Bytes;
+            return File(content, contentType);
+        }
     }
 }

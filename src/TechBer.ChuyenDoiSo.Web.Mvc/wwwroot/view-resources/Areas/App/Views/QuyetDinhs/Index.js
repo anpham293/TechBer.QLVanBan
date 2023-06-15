@@ -24,6 +24,10 @@
         var _viewQuyetDinhFileDoc = new app.ModalManager({
             viewUrl: abp.appPath + 'App/QuyetDinhs/ViewQuyetDinhFileDoc'
         });
+        var _viewQuyetDinhFilePdf = new app.ModalManager({
+            viewUrl: abp.appPath + 'App/QuyetDinhs/ViewQuyetDinhFilePdf',
+            modalClass: 'ViewQuyetDinhModal'
+        });
 
         var _viewQuyetDinhModal = new app.ModalManager({
             viewUrl: abp.appPath + 'App/QuyetDinhs/ViewquyetDinhModal',
@@ -95,7 +99,17 @@
                             {
                                 text: app.localize('XEM'),
                                 action: function (data) {
-                                    _viewQuyetDinhFileDoc.open({id: data.record.quyetDinh.id});
+                                    var a = data.record.quyetDinh.fileQuyetDinh;
+                                    var b = JSON.parse(a);
+                                    var c = b.ContentType;
+                                    if(c=='application/pdf'){
+                                        _viewQuyetDinhFilePdf.open({id: data.record.quyetDinh.id});
+                                    }
+                                    else{
+                                        _viewQuyetDinhFileDoc.open({id: data.record.quyetDinh.id});
+                                    } 
+                                    
+                                  
                                 }
                             },
                             {

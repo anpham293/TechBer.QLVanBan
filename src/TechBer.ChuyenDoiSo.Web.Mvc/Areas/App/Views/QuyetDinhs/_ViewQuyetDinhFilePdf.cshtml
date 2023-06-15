@@ -1,0 +1,17 @@
+﻿@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.Common.Modals
+@model TechBer.ChuyenDoiSo.Web.Areas.App.Models.QuyetDinhs.QuyetDinhFilePdfViewModel
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.fileName))
+
+<div class="modal-body">
+    <div id="ViewQuyetDinhFilePdf">
+        <div class="row">
+            <div class="col-12">
+                <iframe style="width:100%; height: 80vh" src="/App/QuyetDinhs/Download?guid=@Model.guid&contentType=@Model.contentType"></iframe>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithClose.cshtml")
