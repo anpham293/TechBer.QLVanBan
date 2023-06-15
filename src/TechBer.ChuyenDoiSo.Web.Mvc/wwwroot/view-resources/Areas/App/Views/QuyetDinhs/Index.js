@@ -96,22 +96,22 @@
                                     _createOrEditModal.open({id: data.record.quyetDinh.id});
                                 }
                             },
-                            {
-                                text: app.localize('XEM'),
-                                action: function (data) {
-                                    var a = data.record.quyetDinh.fileQuyetDinh;
-                                    var b = JSON.parse(a);
-                                    var c = b.ContentType;
-                                    if(c=='application/pdf'){
-                                        _viewQuyetDinhFilePdf.open({id: data.record.quyetDinh.id});
-                                    }
-                                    else{
-                                        _viewQuyetDinhFileDoc.open({id: data.record.quyetDinh.id});
-                                    } 
-                                    
-                                  
-                                }
-                            },
+                            // {
+                            //     text: app.localize('XEM'),
+                            //     action: function (data) {
+                            //         var a = data.record.quyetDinh.fileQuyetDinh;
+                            //         var b = JSON.parse(a);
+                            //         var c = b.ContentType;
+                            //         if(c=='application/pdf'){
+                            //             _viewQuyetDinhFilePdf.open({id: data.record.quyetDinh.id});
+                            //         }
+                            //         else{
+                            //             _viewQuyetDinhFileDoc.open({id: data.record.quyetDinh.id});
+                            //         } 
+                            //        
+                            //      
+                            //     }
+                            // },
                             {
                                 text: app.localize('History'),
                                 visible: function () {
@@ -160,16 +160,38 @@
                 {
                     targets: 4,
                     data: "quyetDinh.fileQuyetDinh",
-                    name: "fileQuyetDinh"
-                },
-                {
-                    targets: 5,
-                    data: "quyetDinh.trangThai",
-                    name: "trangThai"
+                    name: "fileQuyetDinh",
+                    className: "text-center",
+                    render: function (data, type, row, meta) {
+                        var file = row.quyetDinh.fileQuyetDinh;
+                        if(file == null || file == ''){
+                            return '';
+                        }else {
+                            var jsonFile = JSON.parse(file);
+                            var contentTypeJsonFile = jsonFile.ContentType;
+                            if(contentTypeJsonFile == 'application/pdf'){
+                                return  "<a class='text-warning text-bold view-pdf' data-target='" + row.quyetDinh.id + "' style='cursor:pointer;font-size:25px; font-weight: bolder;margin: 0 5px;'><i class=\"fas fa-file-pdf\"></i></a>";
+                            }
+                            else {
+                                return  "<a class='text-info text-bold view-word' data-target='" + row.quyetDinh.id + "' style='cursor:pointer;font-size:25px; font-weight: bolder;margin: 0 5px;'><i class=\"fas fa-file-word\"></i></a>";
+                            }
+                        }
+                       
+                    }
                 }
             ]
         });
 
+        $(document).on("click", ".view-pdf", function () {
+            var self = $(this);
+            _viewQuyetDinhFilePdf.open({id: self.attr("data-target")});
+        });
+
+        $(document).on("click", ".view-word", function () {
+            var self = $(this);
+            _viewQuyetDinhFileDoc.open({id: self.attr("data-target")});
+        });
+        
         function getQuyetDinhs() {
             dataTable.ajax.reload();
         }
