@@ -19,6 +19,12 @@
             modalClass: 'QuyTrinhDuAnLookupTableModal'
         });
 
+        var _VanBanDuAnquyetDinhLookupTableModal = new app.ModalManager({
+            viewUrl: abp.appPath + 'App/VanBanDuAns/QuyetDinhLookupTableModal',
+            scriptUrl: abp.appPath + 'view-resources/Areas/App/Views/VanBanDuAns/_VanBanDuAnQuyetDinhLookupTableModal.js',
+            modalClass: 'QuyetDinhLookupTableModal'
+        });
+
         this.init = function (modalManager) {
             _modalManager = modalManager;
 
@@ -44,7 +50,6 @@
             beforeSubmit: function (formData, jqForm, options) {
                 abp.ui.setBusy('.modal-content');
                 var $fileInput = $('#VanBanDuAnInformationsForm input[name=fileMau]');
-                console.log($fileInput);
                 var files = $fileInput.get()[0].files;
 
                 if (!files.length) {
@@ -121,6 +126,21 @@
             _$vanBanDuAnInformationForm.find('input[name=quyTrinhDuAnId]').val('');
         });
         
+        $('#OpenQuyetDinhLookupTableButton').click(function () {
+
+            var vanBanDuAn = _$vanBanDuAnInformationForm.serializeFormToObject();
+
+            _VanBanDuAnquyetDinhLookupTableModal.open({id: vanBanDuAn.quyetDinhId, displayName: vanBanDuAn.quyetDinhSo}, function (data) {
+                _$vanBanDuAnInformationForm.find('input[name=quyetDinhSo]').val(data.displayName);
+                _$vanBanDuAnInformationForm.find('input[name=quyetDinhId]').val(data.id);
+            });
+        });
+
+        $('#ClearLoaiKhoanNameButton').click(function () {
+            _$vanBanDuAnInformationForm.find('input[name=quyetDinhSo]').val('');
+            _$vanBanDuAnInformationForm.find('input[name=quyetDinhId]').val('');
+        });
+        
         $('#VanBanDuAn_SoTienThanhToan').inputmask();
 
         this.save = function () {
@@ -142,9 +162,6 @@
             vanBanDuAn.contentType = contentType;
             vanBanDuAn.soTienThanhToan = $('#VanBanDuAn_SoTienThanhToan').inputmask('unmaskedvalue');
             
-            //console.log(uploadedFileToken);
-            //console.log("vanbanduan:");
-            console.log(vanBanDuAn);
             _modalManager.setBusy(true);
             _vanBanDuAnsService.createOrEdit(
                 vanBanDuAn

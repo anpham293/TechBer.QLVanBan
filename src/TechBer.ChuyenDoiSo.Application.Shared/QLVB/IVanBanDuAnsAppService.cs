@@ -30,6 +30,8 @@ namespace TechBer.ChuyenDoiSo.QLVB
 		Task<PagedResultDto<VanBanDuAnThungHoSoLookupTableDto>> GetAllThungHoSoForLookupTable(GetAllForLookupTableInput input);
 		
 		Task<PagedResultDto<VanBanDuAnQuyTrinhDuAnLookupTableDto>> GetAllQuyTrinhDuAnForLookupTable(GetAllForLookupTableInput input);
+
+		Task<PagedResultDto<VanBanDuAnQuyetDinhLookupTableDto>> GetAllQuyetDinhForLookupTable(GetAllForLookupTableInput input);
 		Task SapXepHoSoVaoThung(SapXepHoSoVaoThungDto input);
 
 		Task XuLyHoSo(XuLyHoSoInputDto input);

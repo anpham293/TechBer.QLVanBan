@@ -29,5 +29,6 @@
          
          public int SoLuongVanBanGiay { get; set; }
          public int? ThungHoSoId { get; set; }
+         public int? QuyetDinhId { get; set; }
      }
  }

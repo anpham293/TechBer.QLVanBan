@@ -10,6 +10,7 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Models.VanBanDuAns
         public string DuAnName { get; set; }
 
         public string QuyTrinhDuAnName { get; set; }
+        public string QuyetDinhSo { get; set; }
 
 
         public bool IsEditMode => VanBanDuAn.Id.HasValue;

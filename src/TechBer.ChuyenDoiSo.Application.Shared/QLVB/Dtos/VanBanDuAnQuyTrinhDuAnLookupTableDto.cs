@@ -8,4 +8,11 @@ namespace TechBer.ChuyenDoiSo.QLVB.Dtos
 
 		public string DisplayName { get; set; }
     }
+    
+    public class VanBanDuAnQuyetDinhLookupTableDto
+    {
+	    public long Id { get; set; }
+
+	    public string DisplayName { get; set; }
+    }
 }

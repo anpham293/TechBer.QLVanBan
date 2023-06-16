@@ -36,6 +36,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
         private readonly IRepository<DuAn, int> _lookup_duAnRepository;
         private readonly IRepository<QuyTrinhDuAnAssigned, long> _lookup_quyTrinhDuAnRepository;
         private readonly IRepository<ThungHoSo, int> _lookup_thungHoSoRepository;
+        private readonly IRepository<QuyetDinh, int> _lookup_quyetDinhSoRepository;
         private readonly ITempFileCacheManager _tempFileCacheManager;
         private readonly IBinaryObjectManager _binaryObjectManager;
         private readonly IRepository<User, long> _lookup_userRepository;
@@ -47,7 +48,8 @@ namespace TechBer.ChuyenDoiSo.QLVB
             ITempFileCacheManager tempFileCacheManager,
             IRepository<User, long> lookup_userRepository,
             IRepository<ThungHoSo, int> lookup_thungHoSoRepository,
-            IBinaryObjectManager binaryObjectManager)
+            IBinaryObjectManager binaryObjectManager,
+            IRepository<QuyetDinh, int> lookup_quyetDinhSoRepository)
         {
             _vanBanDuAnRepository = vanBanDuAnRepository;
             _vanBanDuAnsExcelExporter = vanBanDuAnsExcelExporter;
@@ -57,6 +59,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
             _binaryObjectManager = binaryObjectManager;
             _lookup_thungHoSoRepository = lookup_thungHoSoRepository;
             _lookup_userRepository = lookup_userRepository;
+            _lookup_quyetDinhSoRepository = lookup_quyetDinhSoRepository;
         }
 
         public async Task<PagedResultDto<GetVanBanDuAnForViewDto>> GetAll(GetAllVanBanDuAnsInput input)
@@ -164,6 +167,13 @@ namespace TechBer.ChuyenDoiSo.QLVB
                 var _lookupQuyTrinhDuAn =
                     await _lookup_quyTrinhDuAnRepository.FirstOrDefaultAsync((int) output.VanBanDuAn.QuyTrinhDuAnId);
                 output.QuyTrinhDuAnName = _lookupQuyTrinhDuAn?.Name?.ToString();
+            }
+            
+            if (output.VanBanDuAn.QuyetDinhId != null)
+            {
+                var _lookupQuyetDinh =
+                    await _lookup_quyetDinhSoRepository.FirstOrDefaultAsync((int) output.VanBanDuAn.QuyetDinhId);
+                output.QuyetDinhSo = _lookupQuyetDinh?.So?.ToString();
             }
 
             return output;
@@ -318,6 +328,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
                     vanBanDuAn.NgayBanHanh = input.NgayBanHanh;
                     vanBanDuAn.SoLuongVanBanGiay = input.SoLuongVanBanGiay;
                     vanBanDuAn.SoTienThanhToan = input.SoTienThanhToan;
+                    vanBanDuAn.QuyetDinhId= input.QuyetDinhId;
                     await _vanBanDuAnRepository.UpdateAsync(vanBanDuAn);
                 }
             }
@@ -468,6 +479,37 @@ namespace TechBer.ChuyenDoiSo.QLVB
             }
 
             return new PagedResultDto<VanBanDuAnQuyTrinhDuAnLookupTableDto>(
+                totalCount,
+                lookupTableDtoList
+            );
+        }
+        
+        [AbpAuthorize(AppPermissions.Pages_VanBanDuAns)]
+        public async Task<PagedResultDto<VanBanDuAnQuyetDinhLookupTableDto>> GetAllQuyetDinhForLookupTable(
+            GetAllForLookupTableInput input)
+        {
+            var query = _lookup_quyetDinhSoRepository.GetAll().WhereIf(
+                !string.IsNullOrWhiteSpace(input.Filter),
+                e => e.So != null && e.So.Contains(input.Filter)
+            );
+
+            var totalCount = await query.CountAsync();
+
+            var quyetDinhList = await query
+                .PageBy(input)
+                .ToListAsync();
+
+            var lookupTableDtoList = new List<VanBanDuAnQuyetDinhLookupTableDto>();
+            foreach (var quyTrinhDuAn in quyetDinhList)
+            {
+                lookupTableDtoList.Add(new VanBanDuAnQuyetDinhLookupTableDto
+                {
+                    Id = quyTrinhDuAn.Id,
+                    DisplayName = quyTrinhDuAn.So?.ToString()
+                });
+            }
+
+            return new PagedResultDto<VanBanDuAnQuyetDinhLookupTableDto>(
                 totalCount,
                 lookupTableDtoList
             );

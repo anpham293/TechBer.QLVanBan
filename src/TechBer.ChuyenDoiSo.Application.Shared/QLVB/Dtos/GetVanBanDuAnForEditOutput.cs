@@ -11,6 +11,7 @@ namespace TechBer.ChuyenDoiSo.QLVB.Dtos
 		public string DuAnName { get; set;}
 
 		public string QuyTrinhDuAnName { get; set;}
+		public string QuyetDinhSo { get; set; }
     }
     public class GetSapXepHoSoVaoThungOutput
     {

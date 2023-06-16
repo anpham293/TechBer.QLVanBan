@@ -95,6 +95,7 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
                 VanBanDuAn = getVanBanDuAnForEditOutput.VanBanDuAn,
                 DuAnName = getVanBanDuAnForEditOutput.DuAnName,
                 QuyTrinhDuAnName = getVanBanDuAnForEditOutput.QuyTrinhDuAnName,
+                QuyetDinhSo = getVanBanDuAnForEditOutput.QuyetDinhSo,
             };
 
             return PartialView("_CreateOrEditModal", viewModel);
@@ -142,6 +143,19 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
             };
 
             return PartialView("_VanBanDuAnQuyTrinhDuAnLookupTableModal", viewModel);
+        }
+        
+        [AbpMvcAuthorize(AppPermissions.Pages_VanBanDuAns_Create, AppPermissions.Pages_VanBanDuAns_Edit)]
+        public PartialViewResult QuyetDinhLookupTableModal(int? id, string displayName)
+        {
+            var viewModel = new VanBanDuAnQuyetDinhLookupTableViewModel()
+            {
+                Id = id,
+                DisplayName = displayName,
+                FilterText = ""
+            };
+
+            return PartialView("_VanBanDuAnQuyetDinhLookupTableModal", viewModel);
         }
         
         [AbpMvcAuthorize(AppPermissions.Pages_VanBanDuAns_Edit)]
