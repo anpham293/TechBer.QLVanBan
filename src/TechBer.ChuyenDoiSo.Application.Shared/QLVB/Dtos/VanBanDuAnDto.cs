@@ -28,5 +28,7 @@ namespace TechBer.ChuyenDoiSo.QLVB.Dtos
         public long? KeToanTiepNhanId { get; set; }
         public string XuLyCuaLanhDao { get; set; }
         public int SoLuongVanBanGiay { get; set; }
+        public int? ThungHoSoId { get; set; }
+        public int? QuyetDinhId { get; set; }
     }
 }

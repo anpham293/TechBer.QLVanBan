@@ -48,5 +48,6 @@ namespace TechBer.ChuyenDoiSo.QLVB
         public virtual long? KeToanTiepNhanId { get; set; }
         public virtual string XuLyCuaLanhDao { get; set; }
         public virtual int? ThungHoSoId { get; set; }
+        public virtual int? QuyetDinhId { get; set; }
     }
 }
