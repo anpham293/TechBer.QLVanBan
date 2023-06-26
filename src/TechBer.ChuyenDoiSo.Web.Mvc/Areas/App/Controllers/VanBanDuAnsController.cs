@@ -232,5 +232,16 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
             var content = binObj.Bytes;
             return File(content, contentType);
         }
+        
+        [AbpMvcAuthorize(AppPermissions.Pages_VanBanDuAns_Create, AppPermissions.Pages_VanBanDuAns_Edit)]
+        public async Task<PartialViewResult> ChiTietVanBanDuAnViewModal(int id)
+        {
+            //var getVanBanDuAnForChiTietDto = await _vanBanDuAnsAppService.GetVanBanDuAnForChiTiet(id);
+            var viewModel = new ChiTietVanBanDuAnViewModel(){
+                
+            };
+
+            return PartialView("_ChiTietVanBanDuAnViewModal", viewModel);
+        }
     }
 }

@@ -38,5 +38,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
 
 		Task<PagedResultDto<GetVanBanDuAnForViewDto>> GetAllHoSoCanDuyet(
 			GetAllHoSoCanDuyetInput input);
+
+		Task<GetVanBanDuAnForChiTietDto> GetVanBanDuAnForChiTiet(int id);
     }
 }

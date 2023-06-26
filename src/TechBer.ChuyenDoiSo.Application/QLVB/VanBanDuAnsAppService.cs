@@ -7,6 +7,7 @@ using Abp.Linq.Extensions;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Abp.Domain.Repositories;
 using TechBer.ChuyenDoiSo.QLVB.Exporting;
@@ -16,6 +17,7 @@ using Abp.Application.Services.Dto;
 using TechBer.ChuyenDoiSo.Authorization;
 using Abp.Extensions;
 using Abp.Authorization;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using TechBer.ChuyenDoiSo.Authorization.Users;
@@ -36,7 +38,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
         private readonly IRepository<DuAn, int> _lookup_duAnRepository;
         private readonly IRepository<QuyTrinhDuAnAssigned, long> _lookup_quyTrinhDuAnRepository;
         private readonly IRepository<ThungHoSo, int> _lookup_thungHoSoRepository;
-        private readonly IRepository<QuyetDinh, int> _lookup_quyetDinhSoRepository;
+        private readonly IRepository<QuyetDinh, int> _lookup_quyetDinhRepository;
         private readonly ITempFileCacheManager _tempFileCacheManager;
         private readonly IBinaryObjectManager _binaryObjectManager;
         private readonly IRepository<User, long> _lookup_userRepository;
@@ -49,7 +51,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
             IRepository<User, long> lookup_userRepository,
             IRepository<ThungHoSo, int> lookup_thungHoSoRepository,
             IBinaryObjectManager binaryObjectManager,
-            IRepository<QuyetDinh, int> lookup_quyetDinhSoRepository)
+            IRepository<QuyetDinh, int> lookup_quyetDinhRepository)
         {
             _vanBanDuAnRepository = vanBanDuAnRepository;
             _vanBanDuAnsExcelExporter = vanBanDuAnsExcelExporter;
@@ -59,7 +61,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
             _binaryObjectManager = binaryObjectManager;
             _lookup_thungHoSoRepository = lookup_thungHoSoRepository;
             _lookup_userRepository = lookup_userRepository;
-            _lookup_quyetDinhSoRepository = lookup_quyetDinhSoRepository;
+            _lookup_quyetDinhRepository = lookup_quyetDinhRepository;
         }
 
         public async Task<PagedResultDto<GetVanBanDuAnForViewDto>> GetAll(GetAllVanBanDuAnsInput input)
@@ -172,7 +174,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
             if (output.VanBanDuAn.QuyetDinhId != null)
             {
                 var _lookupQuyetDinh =
-                    await _lookup_quyetDinhSoRepository.FirstOrDefaultAsync((int) output.VanBanDuAn.QuyetDinhId);
+                    await _lookup_quyetDinhRepository.FirstOrDefaultAsync((int) output.VanBanDuAn.QuyetDinhId);
                 output.QuyetDinhSo = _lookupQuyetDinh?.So?.ToString();
             }
 
@@ -488,7 +490,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
         public async Task<PagedResultDto<VanBanDuAnQuyetDinhLookupTableDto>> GetAllQuyetDinhForLookupTable(
             GetAllForLookupTableInput input)
         {
-            var query = _lookup_quyetDinhSoRepository.GetAll().WhereIf(
+            var query = _lookup_quyetDinhRepository.GetAll().WhereIf(
                 !string.IsNullOrWhiteSpace(input.Filter),
                 e => e.So != null && e.So.Contains(input.Filter)
             );
@@ -605,6 +607,10 @@ namespace TechBer.ChuyenDoiSo.QLVB
                 totalCount,
                 await quyTrinhDuAnAssigneds.ToListAsync()
             );
+        }
+        public async Task<GetVanBanDuAnForChiTietDto> GetVanBanDuAnForChiTiet(int id)
+        {
+            return new GetVanBanDuAnForChiTietDto();
         }
     }
 }

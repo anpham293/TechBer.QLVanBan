@@ -23,6 +23,11 @@
 .kt-menu__link:hover{
     background-color: #00bb7742!important;
 }
+
+.modal-full{
+    min-width:70%
+}
+
 body {
     height: 100%;
     margin: 0px;

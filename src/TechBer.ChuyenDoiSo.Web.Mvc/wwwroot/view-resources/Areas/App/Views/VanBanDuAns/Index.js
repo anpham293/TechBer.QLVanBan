@@ -39,6 +39,13 @@
             modalClass: 'CreateOrEditQuyTrinhDuAnAssignedModal'
         });
 
+        var _chiTietVanBanDuAnViewModal = new app.ModalManager({
+            viewUrl: abp.appPath + 'App/VanBanDuAns/ChiTietVanBanDuAnViewModal',
+            scriptUrl: abp.appPath + 'view-resources/Areas/App/Views/VanBanDuAns/_ChiTietVanBanDuAnViewModal.js',
+            modalClass: 'ChiTietVanBanDuAnViewModal',
+            modalSize: "modal-full"
+        });
+        
         var _chuyenDuyetHoSoModal = new app.ModalManager({
             viewUrl: abp.appPath + 'App/QuyTrinhDuAnAssigneds/ChuyenDuyetHoSoModal',
             scriptUrl: abp.appPath + 'view-resources/Areas/App/Views/QuyTrinhDuAnAssigneds/_ChuyenDuyetHoSoModal.js',
@@ -166,6 +173,15 @@
                                 }
                             },
                             {
+                                text: app.localize('XemChiTiet'),
+                                visible: function () {
+                                    return _permissions.edit;
+                                },
+                                action: function (data) {
+                                    _chiTietVanBanDuAnViewModal.open({id: data.record.vanBanDuAn.id});
+                                }
+                            },
+                            {
                                 text: app.localize('History'),
                                 visible: function () {
                                     return entityHistoryIsEnabled();
@@ -223,15 +239,6 @@
                 },
                 {
                     targets: 3,
-                    data: "vanBanDuAn.kyHieuVanBan",
-                    name: "kyHieuVanBan",
-                    className: "text-center",
-                    render: function (data) {
-                        return '<a style="white-space: normal">'+ data +'</a>'
-                    }
-                },
-                {
-                    targets: 4,
                     data: "vanBanDuAn.ngayBanHanh",
                     name: "ngayBanHanh",
                     render: function (ngayBanHanh) {
@@ -242,7 +249,7 @@
                     }
                 },
                 {
-                    targets: 5,
+                    targets: 4,
                     data: "vanBanDuAn.fileVanBan",
                     name: "fileVanBan",
                     className: "text-center",
@@ -257,7 +264,7 @@
                     }
                 },
                 {
-                    targets: 6,
+                    targets: 5,
                     data: "vanBanDuAn",
                     name: "duAnFk.name",
                     className: "text-center",
