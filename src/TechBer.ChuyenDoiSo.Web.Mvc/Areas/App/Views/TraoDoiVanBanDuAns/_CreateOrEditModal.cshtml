@@ -1,0 +1,82 @@
+﻿
+@using System.Globalization
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.Common.Modals
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.TraoDoiVanBanDuAns
+@model CreateOrEditTraoDoiVanBanDuAnModalViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditTraoDoiVanBanDuAn")) : L("CreateNewTraoDoiVanBanDuAn")))
+
+<div class="modal-body">
+        <div id="TraoDoiVanBanDuAnInformationsTab">
+            <form name="TraoDoiVanBanDuAnInformationsForm" role="form" novalidate class="form-validation">
+
+                @if (Model.IsEditMode)
+                {
+                    <input type="hidden" name="id" value="@Model.TraoDoiVanBanDuAn.Id" />
+                }
+
+				            
+								<div class="form-group m-form__group">
+										<label for="UserName">@L("User")</label>
+									    <div class="input-group">
+											<input class="form-control" id="UserName" name="userName" value="@Model.UserName" type="text" disabled>
+										<div class="input-group-append">
+											<button class="btn btn-primary blue" id="OpenUserLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
+										</div> 
+										<div class="input-group-prepend">
+											<button class="btn btn-danger btn-icon" type="button" id="ClearUserNameButton"><i class="fa fa-times"></i></button>
+										</div>
+									</div>
+								</div>
+
+								@if (Model.IsEditMode)
+								{
+									<input class="form-control" id="TraoDoiVanBanDuAn_UserId" value="@Model.TraoDoiVanBanDuAn.UserId" type="text" name="userId"  hidden/>
+								}
+								 else
+								{ 
+									<input class="form-control" id="TraoDoiVanBanDuAn_UserId" value="" type="text" name="userId"  hidden/>
+								}
+
+            
+								<div class="form-group m-form__group">
+										<label for="VanBanDuAnName">@L("VanBanDuAn")</label>
+									    <div class="input-group">
+											<input class="form-control" id="VanBanDuAnName" name="vanBanDuAnName" value="@Model.VanBanDuAnName" type="text" disabled>
+										<div class="input-group-append">
+											<button class="btn btn-primary blue" id="OpenVanBanDuAnLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
+										</div> 
+										<div class="input-group-prepend">
+											<button class="btn btn-danger btn-icon" type="button" id="ClearVanBanDuAnNameButton"><i class="fa fa-times"></i></button>
+										</div>
+									</div>
+								</div>
+
+								@if (Model.IsEditMode)
+								{
+									<input class="form-control" id="TraoDoiVanBanDuAn_VanBanDuAnId" value="@Model.TraoDoiVanBanDuAn.VanBanDuAnId" type="text" name="vanBanDuAnId"  hidden/>
+								}
+								 else
+								{ 
+									<input class="form-control" id="TraoDoiVanBanDuAn_VanBanDuAnId" value="" type="text" name="vanBanDuAnId"  hidden/>
+								}
+
+
+
+				
+								<div class="form-group">
+									<label for="TraoDoiVanBanDuAn_NgayGui">@L("NgayGui")</label>
+									<input class="form-control m-input date-picker" id="TraoDoiVanBanDuAn_NgayGui" type="text" name="ngayGui" value="@Model.TraoDoiVanBanDuAn.NgayGui"/>
+								</div>
+					
+								<div class="form-group">
+									<label for="TraoDoiVanBanDuAn_NoiDung">@L("NoiDung")</label>
+									<input class="form-control" id="TraoDoiVanBanDuAn_NoiDung" value="@Model.TraoDoiVanBanDuAn.NoiDung" type="text" name="noiDung"     />
+								</div>
+					
+
+            </form>
+        </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

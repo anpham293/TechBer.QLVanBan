@@ -1,6 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en"> 
-  <texts>    <text name="TechBer.ChuyenDoiSo.QLVB.QuyetDinh">QuyetDinh</text>
+  <texts>    <text name="TraoDoiVanBanDuAn">Trao doi van ban du an</text>
+    <text name="TechBer.ChuyenDoiSo.QLVB.TraoDoiVanBanDuAn">TraoDoiVanBanDuAn</text>
+    <text name="NgayGui">Ngay gui</text>
+    <text name="NoiDung">Noi dung</text>
+    <text name="TraoDoiVanBanDuAnsHeaderInfo">Trao doi van ban du ans header info</text>
+    <text name="CreateNewTraoDoiVanBanDuAn">Create new trao doi van ban du an</text>
+    <text name="EditTraoDoiVanBanDuAn">Edit trao doi van ban du an</text>
+    <text name="DeleteTraoDoiVanBanDuAn">Delete trao doi van ban du an</text>
+    <text name="TraoDoiVanBanDuAns">Trao doi van ban du ans</text>
+    <text name="NgayGuiRange">Ngay gui range</text>
+    <text name="TechBer.ChuyenDoiSo.QLVB.QuyetDinh">QuyetDinh</text>
     <text name="So">So</text>
     <text name="FileQuyetDinh">File quyet dinh</text>
     <text name="QuyetDinhsHeaderInfo">Quyet dinhs header info</text>
