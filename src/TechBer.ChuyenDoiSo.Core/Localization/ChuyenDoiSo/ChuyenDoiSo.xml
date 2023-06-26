@@ -1,6 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en"> 
-  <texts>    <text name="TraoDoiVanBanDuAn">Trao doi van ban du an</text>
+  <texts>    <text name="BaoCaoVanBanDuAn">Bao cao van ban du an</text>
+    <text name="TechBer.ChuyenDoiSo.QLVB.BaoCaoVanBanDuAn">BaoCaoVanBanDuAn</text>
+    <text name="NoiDungCongViec">Noi dung cong viec</text>
+    <text name="MoTaChiTiet">Mo ta chi tiet</text>
+    <text name="FileBaoCao">File bao cao</text>
+    <text name="BaoCaoVanBanDuAnsHeaderInfo">Bao cao van ban du ans header info</text>
+    <text name="CreateNewBaoCaoVanBanDuAn">Create new bao cao van ban du an</text>
+    <text name="EditBaoCaoVanBanDuAn">Edit bao cao van ban du an</text>
+    <text name="DeleteBaoCaoVanBanDuAn">Delete bao cao van ban du an</text>
+    <text name="BaoCaoVanBanDuAns">Bao cao van ban du ans</text>
+    <text name="TraoDoiVanBanDuAn">Trao doi van ban du an</text>
     <text name="TechBer.ChuyenDoiSo.QLVB.TraoDoiVanBanDuAn">TraoDoiVanBanDuAn</text>
     <text name="NgayGui">Ngay gui</text>
     <text name="NoiDung">Noi dung</text>

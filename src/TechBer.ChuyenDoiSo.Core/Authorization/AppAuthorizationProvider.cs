@@ -30,6 +30,13 @@ namespace TechBer.ChuyenDoiSo.Authorization
 
             var pages = context.GetPermissionOrNull(AppPermissions.Pages) ?? context.CreatePermission(AppPermissions.Pages, L("Pages"));
 
+            var baoCaoVanBanDuAns = pages.CreateChildPermission(AppPermissions.Pages_BaoCaoVanBanDuAns, L("BaoCaoVanBanDuAns"));
+            baoCaoVanBanDuAns.CreateChildPermission(AppPermissions.Pages_BaoCaoVanBanDuAns_Create, L("CreateNewBaoCaoVanBanDuAn"));
+            baoCaoVanBanDuAns.CreateChildPermission(AppPermissions.Pages_BaoCaoVanBanDuAns_Edit, L("EditBaoCaoVanBanDuAn"));
+            baoCaoVanBanDuAns.CreateChildPermission(AppPermissions.Pages_BaoCaoVanBanDuAns_Delete, L("DeleteBaoCaoVanBanDuAn"));
+
+
+
             var traoDoiVanBanDuAns = pages.CreateChildPermission(AppPermissions.Pages_TraoDoiVanBanDuAns, L("TraoDoiVanBanDuAns"));
             traoDoiVanBanDuAns.CreateChildPermission(AppPermissions.Pages_TraoDoiVanBanDuAns_Create, L("CreateNewTraoDoiVanBanDuAn"));
             traoDoiVanBanDuAns.CreateChildPermission(AppPermissions.Pages_TraoDoiVanBanDuAns_Edit, L("EditTraoDoiVanBanDuAn"));
