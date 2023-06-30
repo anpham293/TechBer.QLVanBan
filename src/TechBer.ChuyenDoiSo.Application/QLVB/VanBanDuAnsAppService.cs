@@ -25,6 +25,7 @@ using TechBer.ChuyenDoiSo.Storage;
 using TechBer.ChuyenDoiSo.Dto;
 using TechBer.ChuyenDoiSo.QuanLyDanhMuc.Dtos;
 using TechBer.ChuyenDoiSo.QuanLyKhoHoSo;
+using TechBer.ChuyenDoiSo.QuanLyKhoHoSo.Dtos;
 using GetAllForLookupTableInput = TechBer.ChuyenDoiSo.QLVB.Dtos.GetAllForLookupTableInput;
 
 namespace TechBer.ChuyenDoiSo.QLVB
@@ -140,10 +141,10 @@ namespace TechBer.ChuyenDoiSo.QLVB
                 output.DuAnName = _lookupDuAn?.Name?.ToString();
             }
 
-            if (output.VanBanDuAn.QuyTrinhDuAnId != null)
+            if (output.VanBanDuAn.QuyTrinhDuAnAssignedId != null)
             {
                 var _lookupQuyTrinhDuAn =
-                    await _lookup_quyTrinhDuAnRepository.FirstOrDefaultAsync((int) output.VanBanDuAn.QuyTrinhDuAnId);
+                    await _lookup_quyTrinhDuAnRepository.FirstOrDefaultAsync((int) output.VanBanDuAn.QuyTrinhDuAnAssignedId);
                 output.QuyTrinhDuAnName = _lookupQuyTrinhDuAn?.Name?.ToString();
             }
 
@@ -610,7 +611,41 @@ namespace TechBer.ChuyenDoiSo.QLVB
         }
         public async Task<GetVanBanDuAnForChiTietDto> GetVanBanDuAnForChiTiet(int id)
         {
-            return new GetVanBanDuAnForChiTietDto();
+            var vanBanDuAn = await _vanBanDuAnRepository.FirstOrDefaultAsync(id);
+            var output = new GetVanBanDuAnForChiTietDto()
+                {VanBanDuAn = ObjectMapper.Map<VanBanDuAnDto>(vanBanDuAn)};
+            
+            if (output.VanBanDuAn.DuAnId != null)
+            {
+                var duAn = await _lookup_duAnRepository.FirstOrDefaultAsync((int)output.VanBanDuAn.DuAnId);
+                output.DuAn = ObjectMapper.Map<DuAnDto>(duAn);
+            }
+            
+            if (output.VanBanDuAn.QuyTrinhDuAnAssignedId != null)
+            {
+                var quyTrinhDuAn = await _lookup_quyTrinhDuAnRepository.FirstOrDefaultAsync((int)output.VanBanDuAn.QuyTrinhDuAnAssignedId);
+                output.QuyTrinhDuAnAssigned = ObjectMapper.Map<QuyTrinhDuAnAssignedDto>(quyTrinhDuAn);
+            }
+            if (output.VanBanDuAn.ThungHoSoId != null)
+            {
+                var thungHoSo = await _lookup_thungHoSoRepository.FirstOrDefaultAsync((int)output.VanBanDuAn.ThungHoSoId);
+                output.ThungHoSo = ObjectMapper.Map<ThungHoSoDto>(thungHoSo);
+            }
+            else
+            { 
+                output.ThungHoSo = new ThungHoSoDto();
+            }
+            if (output.VanBanDuAn.QuyetDinhId != null)
+            {
+                var quyetDinh = await _lookup_quyetDinhRepository.FirstOrDefaultAsync((int)output.VanBanDuAn.QuyetDinhId);
+                output.QuyetDinh = ObjectMapper.Map<QuyetDinhDto>(quyetDinh);
+            }
+            else
+            { 
+                output.QuyetDinh = new QuyetDinhDto();
+            }
+            
+            return output;
         }
     }
 }

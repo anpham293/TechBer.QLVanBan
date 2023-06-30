@@ -22,11 +22,13 @@
             modalClass: 'CreateOrEditQuyetDinhModal'
         });
         var _viewQuyetDinhFileDoc = new app.ModalManager({
-            viewUrl: abp.appPath + 'App/QuyetDinhs/ViewQuyetDinhFileDoc'
+            viewUrl: abp.appPath + 'App/QuyetDinhs/ViewQuyetDinhFileDoc',
+            modalSize: "modal-xl"
         });
         var _viewQuyetDinhFilePdf = new app.ModalManager({
             viewUrl: abp.appPath + 'App/QuyetDinhs/ViewQuyetDinhFilePdf',
-            modalClass: 'ViewQuyetDinhModal'
+            modalClass: 'ViewQuyetDinhModal',
+            modalSize: "modal-xl"
         });
 
         var _viewQuyetDinhModal = new app.ModalManager({

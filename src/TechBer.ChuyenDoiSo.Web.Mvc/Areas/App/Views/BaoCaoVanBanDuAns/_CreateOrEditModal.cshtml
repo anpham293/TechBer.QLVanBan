@@ -1,5 +1,4 @@
-﻿
-@using System.Globalization
+﻿@using System.Globalization
 @using TechBer.ChuyenDoiSo.Web.Areas.App.Models.Common.Modals
 @using TechBer.ChuyenDoiSo.Web.Areas.App.Models.BaoCaoVanBanDuAns
 @model CreateOrEditBaoCaoVanBanDuAnModalViewModel
@@ -7,81 +6,32 @@
 @await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditBaoCaoVanBanDuAn")) : L("CreateNewBaoCaoVanBanDuAn")))
 
 <div class="modal-body">
-        <div id="BaoCaoVanBanDuAnInformationsTab">
-            <form name="BaoCaoVanBanDuAnInformationsForm" role="form" novalidate class="form-validation">
+    <div id="BaoCaoVanBanDuAnInformationsTab">
+        <form name="BaoCaoVanBanDuAnInformationsForm" role="form" novalidate class="form-validation">
 
-                @if (Model.IsEditMode)
-                {
-                    <input type="hidden" name="id" value="@Model.BaoCaoVanBanDuAn.Id" />
-                }
-
-				            
-								<div class="form-group m-form__group">
-										<label for="VanBanDuAnName">@L("VanBanDuAn")</label>
-									    <div class="input-group">
-											<input class="form-control" id="VanBanDuAnName" name="vanBanDuAnName" value="@Model.VanBanDuAnName" type="text" disabled>
-										<div class="input-group-append">
-											<button class="btn btn-primary blue" id="OpenVanBanDuAnLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
-										</div> 
-										<div class="input-group-prepend">
-											<button class="btn btn-danger btn-icon" type="button" id="ClearVanBanDuAnNameButton"><i class="fa fa-times"></i></button>
-										</div>
-									</div>
-								</div>
-
-								@if (Model.IsEditMode)
-								{
-									<input class="form-control" id="BaoCaoVanBanDuAn_VanBanDuAnId" value="@Model.BaoCaoVanBanDuAn.VanBanDuAnId" type="text" name="vanBanDuAnId"  hidden/>
-								}
-								 else
-								{ 
-									<input class="form-control" id="BaoCaoVanBanDuAn_VanBanDuAnId" value="" type="text" name="vanBanDuAnId"  hidden/>
-								}
-
+            @if (Model.IsEditMode)
+            {
+                <input type="hidden" name="id" value="@Model.BaoCaoVanBanDuAn.Id"/>
+            }
             
-								<div class="form-group m-form__group">
-										<label for="UserName">@L("User")</label>
-									    <div class="input-group">
-											<input class="form-control" id="UserName" name="userName" value="@Model.UserName" type="text" disabled>
-										<div class="input-group-append">
-											<button class="btn btn-primary blue" id="OpenUserLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
-										</div> 
-										<div class="input-group-prepend">
-											<button class="btn btn-danger btn-icon" type="button" id="ClearUserNameButton"><i class="fa fa-times"></i></button>
-										</div>
-									</div>
-								</div>
+            <div class="form-group">
+                <label for="BaoCaoVanBanDuAn_NoiDungCongViec">@L("NoiDungCongViec")</label>
+                <input class="form-control" id="BaoCaoVanBanDuAn_NoiDungCongViec" value="@Model.BaoCaoVanBanDuAn.NoiDungCongViec" type="text" name="noiDungCongViec"/>
+            </div>
 
-								@if (Model.IsEditMode)
-								{
-									<input class="form-control" id="BaoCaoVanBanDuAn_UserId" value="@Model.BaoCaoVanBanDuAn.UserId" type="text" name="userId"  hidden/>
-								}
-								 else
-								{ 
-									<input class="form-control" id="BaoCaoVanBanDuAn_UserId" value="" type="text" name="userId"  hidden/>
-								}
+            <div class="form-group">
+                <label for="BaoCaoVanBanDuAn_MoTaChiTiet">@L("MoTaChiTiet")</label>
+                <input class="form-control" id="BaoCaoVanBanDuAn_MoTaChiTiet" value="@Model.BaoCaoVanBanDuAn.MoTaChiTiet" type="text" name="moTaChiTiet"/>
+            </div>
+
+            <div class="form-group">
+                <label for="BaoCaoVanBanDuAn_FileBaoCao">@L("FileBaoCao")</label>
+                <input class="form-control" id="BaoCaoVanBanDuAn_FileBaoCao" value="@Model.BaoCaoVanBanDuAn.FileBaoCao" type="text" name="fileBaoCao"/>
+            </div>
 
 
-
-				
-								<div class="form-group">
-									<label for="BaoCaoVanBanDuAn_NoiDungCongViec">@L("NoiDungCongViec")</label>
-									<input class="form-control" id="BaoCaoVanBanDuAn_NoiDungCongViec" value="@Model.BaoCaoVanBanDuAn.NoiDungCongViec" type="text" name="noiDungCongViec"     />
-								</div>
-					
-								<div class="form-group">
-									<label for="BaoCaoVanBanDuAn_MoTaChiTiet">@L("MoTaChiTiet")</label>
-									<input class="form-control" id="BaoCaoVanBanDuAn_MoTaChiTiet" value="@Model.BaoCaoVanBanDuAn.MoTaChiTiet" type="text" name="moTaChiTiet"     />
-								</div>
-					
-								<div class="form-group">
-									<label for="BaoCaoVanBanDuAn_FileBaoCao">@L("FileBaoCao")</label>
-									<input class="form-control" id="BaoCaoVanBanDuAn_FileBaoCao" value="@Model.BaoCaoVanBanDuAn.FileBaoCao" type="text" name="fileBaoCao"     />
-								</div>
-					
-
-            </form>
-        </div>
+        </form>
+    </div>
 </div>
 
 @await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

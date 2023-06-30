@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Abp.Application.Services;
 using Abp.Application.Services.Dto;
@@ -26,6 +27,8 @@ namespace TechBer.ChuyenDoiSo.QLVB
 		Task<PagedResultDto<TraoDoiVanBanDuAnUserLookupTableDto>> GetAllUserForLookupTable(GetAllForLookupTableInput input);
 		
 		Task<PagedResultDto<TraoDoiVanBanDuAnVanBanDuAnLookupTableDto>> GetAllVanBanDuAnForLookupTable(GetAllForLookupTableInput input);
-		
+		Task GuiTraoDoi(TraoDoiVanBanDuAnDto input);
+		Task<GetHienThiTraoDoiDto> GetHienThiTraoDoi(int id);
+
     }
 }

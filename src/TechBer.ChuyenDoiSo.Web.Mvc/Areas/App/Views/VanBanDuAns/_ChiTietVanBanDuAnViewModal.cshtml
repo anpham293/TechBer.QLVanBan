@@ -1,7 +1,157 @@
-﻿@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.Common.Modals
+﻿@using Newtonsoft.Json.Linq
+@using TechBer.ChuyenDoiSo.Common
+@using TechBer.ChuyenDoiSo.QLVB
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.Common.Modals
+@model  TechBer.ChuyenDoiSo.Web.Areas.App.Models.VanBanDuAns.ChiTietVanBanDuAnViewModel
 @await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("ChiTietHoSo")))
+
+<!--Dữ liệu-->
+<div hidden>
+    <input id="VanBanDuAnId" value="@Model.VanBanDuAn.Id"/>
+</div>
+
+<!--Hiển thị-->
 <div>
-   <h3>Dự án</h3>
-   <h4>Quy trình</h4>
-   <h5>Hồ sơ</h5>
+    <div class="row">
+        <div class="col-3">
+            <h4>Trao đổi</h4>
+            <div id="hienThiTraoDoi" name="hienThiTraoDoi"></div>
+            <form name="traoDoiVanBanDuAnForm" id="traoDoiVanBanDuAnForm" role="form">
+                <div class="row">
+                    <div class="col-9">
+                        <textarea id="noiDung" class="col-12" type="text" name="noiDung" class="kt-messenger__forkt-input" placeholder="@L("TypeAMessageHere")" required maxlength="500"></textarea>
+                    </div>
+                    <div class="col-3">
+                        <a class="text-warning text-bold" id="guiTraoDoi" data-target="2" style="cursor:pointer;font-size:25px; font-weight: bolder;margin: 0 5px;"><i class="fas fa-paper-plane"></i></a>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-1">
+        </div>
+        <div class="col-8">
+            <div>
+                <h4>Thông tin hồ sơ</h4>
+                <div class="row" style="width: 100%">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th style="text-align: center; font-weight: bold" >&nbsp;</th>
+                            <th style="text-align: center; font-weight: bold" >Danh mục</th>
+                            <th style="text-align: center; font-weight: bold" >Chi tiết</th>
+                            <th style="text-align: center; font-weight: bold" >File</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td style="text-align: center">
+                                <i class="fas fa-layer-group"></i>
+                            </td>
+                            <td style="text-align: left; font-weight: bold">Hồ sơ</td>
+                            <td style="text-align: center">@Model.VanBanDuAn.Name</td>
+                            <input hidden id="FileVanBanDuAn" value="@Model.VanBanDuAn.FileVanBan">
+                            <input hidden id="VanBanDuAnId" value="@Model.VanBanDuAn.Id">
+                            <td style="text-align: center" id="hienThiFileVanBanDuAn">
+                            </td>
+                        </tr><!--Hồ sơ-->
+                        <tr>
+                            <td style="text-align: center">
+                                <i class="fas fa-layer-group"></i>
+                            </td>
+                            <td style="text-align: left; font-weight: bold">Dự án</td>
+                            <td style="text-align: center">@Model.DuAn.Name</td>
+                            <td style="text-align: center">
+                                <a class='text-danger text-bold view-duAn' data-target='@Model.DuAn.Id' style='cursor:pointer;font-size:25px; font-weight: bolder;margin: 0 5px;'><i class='fas fa-eye'></i></a>
+                            </td>
+                        </tr><!--Dự án-->
+                        <tr>
+                            <td style="text-align: center">
+                                <i class="fas fa-layer-group"></i>
+                            </td>
+                            <td style="text-align: left; font-weight: bold">Quy trình</td>
+                            <td style="text-align: center">@Model.QuyTrinhDuAnAssigned.Name</td>
+                        </tr><!--Quy trình-->
+                        <tr>
+                            <td style="text-align: center">
+                                <i class="fas fa-layer-group"></i>
+                            </td>
+                            <td style="text-align: left; font-weight: bold">Quyết định</td>
+                            @if (Model.QuyetDinh != null){
+                                <td style="text-align: center">
+                                    @Model.QuyetDinh.Ten <br/>
+                                    Ban hành: @Model.QuyetDinh.NgayBanHanh.ToString("dd/MM/yyyy")
+                                </td>
+                                <input hidden id="FileQuyetDinh" value="@Model.QuyetDinh.FileQuyetDinh">
+                                <input hidden id="QuyetDinhId" value="@Model.QuyetDinh.Id">
+                                <td style="text-align: center" id="hienThiFileQuyetDinh">
+                                </td>
+                            }
+                            else{
+                                <td style="text-align: center">&nbsp;</td>
+                                <td style="text-align: center">&nbsp;</td>
+                            }
+                        </tr><!--Quyết định-->
+                        <tr>
+                            <td style="text-align: center">
+                                <i class="fas fa-layer-group"></i>
+                            </td>
+                            <td style="text-align: left; font-weight: bold">Thùng hồ sơ</td>
+                            <td style="text-align: center">
+                                @if (Model.ThungHoSo.Id == null || Model.ThungHoSo.Id == 0)
+                                {
+                                    <a style="font-style: italic">(Chưa xếp hồ sơ vào thùng)</a>
+                                }
+                                else
+                                {
+                                    @Model.ThungHoSo.Ten;
+                                }
+                                
+                            </td>
+                            <td style="text-align: center">&nbsp;</td>
+                        </tr><!--Thùng hồ sơ-->
+                        <tr>
+                            <td style="text-align: center">
+                                <i class="fas fa-layer-group"></i>
+                            </td>
+                            <td style="text-align: left; font-weight: bold">Duyệt hồ sơ</td>
+                            <input hidden id="trangThaiDuyetHoSo" value="@Model.VanBanDuAn.TrangThaiChuyenDuyetHoSo">
+                            <input hidden id="ngayGui" value="@Model.VanBanDuAn.NgayGui?.ToString("dd/MM/yyyy HH:mm:ss")">
+                            <input hidden id="ngayDuyet" value="@Model.VanBanDuAn.NgayDuyet?.ToString("dd/MM/yyyy HH:mm:ss")">
+                            <td style="text-align: center" id="hienThiDuyetHoSo"></td>
+                            <td style="text-align: center">&nbsp;</td>
+                        </tr><!--Duyệt hồ sơ-->
+                        <tr>
+                            <td style="text-align: center">
+                                <i class="fas fa-layer-group"></i>
+                            </td>
+                            <td style="text-align: left; font-weight: bold">Chuyển hồ sơ</td>
+                            <td style="text-align: center">@Model.ThungHoSo.Ten</td>
+                            <td style="text-align: center">&nbsp;</td>
+                        </tr><!--Chuyển hồ sơ-->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div>
+                <h4>Báo cáo tiến độ</h4>
+                <button id="CreateNewBaoCaoVanBanDuAnButton" class="btn btn-primary blue"><i class="fa fa-plus"></i></button>
+                <div class="row align-items-center" style="width: 100%">
+                    <table id="BaoCaoVanBanDuAnsTable" class="display table table-striped table-bordered table-hover dt-responsive nowrap">
+                        <thead>
+                        <tr>
+                            <th>@L("Actions")</th>
+                            <th>@L("NoiDungCongViec")</th>
+                            <th>@L("MoTaChiTiet")</th>
+                            <th>@L("FileBaoCao")</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary close-button" data-dismiss="modal">@L("Close")</button>
 </div>

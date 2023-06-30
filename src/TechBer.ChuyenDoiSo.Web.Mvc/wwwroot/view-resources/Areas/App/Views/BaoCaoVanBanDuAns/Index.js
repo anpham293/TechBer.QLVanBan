@@ -1,6 +1,5 @@
 ﻿(function () {
     $(function () {
-
         var _$baoCaoVanBanDuAnsTable = $('#BaoCaoVanBanDuAnsTable');
         var _baoCaoVanBanDuAnsService = abp.services.app.baoCaoVanBanDuAns;
 		var _entityTypeFullName = 'TechBer.ChuyenDoiSo.QLVB.BaoCaoVanBanDuAn';

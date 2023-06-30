@@ -258,5 +258,28 @@ namespace TechBer.ChuyenDoiSo.QLVB
                 lookupTableDtoList
             );
          }
+
+         public async Task<GetHienThiTraoDoiDto> GetHienThiTraoDoi(int id)
+         {
+	         var traoDoi = _traoDoiVanBanDuAnRepository.GetAll().WhereIf(true, p => p.VanBanDuAnId == id).ToList();
+	         return new GetHienThiTraoDoiDto()
+	         {
+		         ListTraoDoiVanBanDuAn = ObjectMapper.Map<List<TraoDoiVanBanDuAnDto>>(traoDoi)
+	         };
+         }
+         public async Task GuiTraoDoi(TraoDoiVanBanDuAnDto input)
+         {
+	         var traoDoiVanBanDuAn = ObjectMapper.Map<TraoDoiVanBanDuAn>(input);
+	         
+	         if (AbpSession.TenantId != null)
+	         {
+		         traoDoiVanBanDuAn.TenantId = (int?) AbpSession.TenantId;
+	         }
+	         traoDoiVanBanDuAn.NgayGui = DateTime.Now;
+	         traoDoiVanBanDuAn.UserId = AbpSession.UserId;
+		
+
+	         await _traoDoiVanBanDuAnRepository.InsertAsync(traoDoiVanBanDuAn);
+         }
     }
 }

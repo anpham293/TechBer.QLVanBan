@@ -236,9 +236,13 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
         [AbpMvcAuthorize(AppPermissions.Pages_VanBanDuAns_Create, AppPermissions.Pages_VanBanDuAns_Edit)]
         public async Task<PartialViewResult> ChiTietVanBanDuAnViewModal(int id)
         {
-            //var getVanBanDuAnForChiTietDto = await _vanBanDuAnsAppService.GetVanBanDuAnForChiTiet(id);
+            var getVanBanDuAnForChiTietDto = await _vanBanDuAnsAppService.GetVanBanDuAnForChiTiet(id);
             var viewModel = new ChiTietVanBanDuAnViewModel(){
-                
+                DuAn =  getVanBanDuAnForChiTietDto.DuAn,
+                VanBanDuAn = getVanBanDuAnForChiTietDto.VanBanDuAn,
+                QuyTrinhDuAnAssigned = getVanBanDuAnForChiTietDto.QuyTrinhDuAnAssigned,
+                ThungHoSo = getVanBanDuAnForChiTietDto.ThungHoSo,
+                QuyetDinh = getVanBanDuAnForChiTietDto.QuyetDinh
             };
 
             return PartialView("_ChiTietVanBanDuAnViewModal", viewModel);
