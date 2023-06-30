@@ -7,13 +7,14 @@
 
 <div class="modal-body">
     <div id="BaoCaoVanBanDuAnInformationsTab">
-        <form name="BaoCaoVanBanDuAnInformationsForm" role="form" novalidate class="form-validation">
+        <form name="BaoCaoVanBanDuAnInformationsForm" id="BaoCaoVanBanDuAnInformationsForm"  method="POST" role="form" novalidate class="form-validation" action="BaoCaoVanBanDuAns/UploadFileBaoCaoVanBanDuAn">
 
             @if (Model.IsEditMode)
             {
                 <input type="hidden" name="id" value="@Model.BaoCaoVanBanDuAn.Id"/>
             }
-            
+            <input type="hidden" name="vanBanDuAnId" value="@Model.VanBanDuAnId"/>
+            <input type="hidden" name="userId" value="@Model.NguoiGuiId"/>
             <div class="form-group">
                 <label for="BaoCaoVanBanDuAn_NoiDungCongViec">@L("NoiDungCongViec")</label>
                 <input class="form-control" id="BaoCaoVanBanDuAn_NoiDungCongViec" value="@Model.BaoCaoVanBanDuAn.NoiDungCongViec" type="text" name="noiDungCongViec"/>
@@ -26,7 +27,10 @@
 
             <div class="form-group">
                 <label for="BaoCaoVanBanDuAn_FileBaoCao">@L("FileBaoCao")</label>
-                <input class="form-control" id="BaoCaoVanBanDuAn_FileBaoCao" value="@Model.BaoCaoVanBanDuAn.FileBaoCao" type="text" name="fileBaoCao"/>
+                <div class="custom-file form-group">
+                    <input id="BaoCaoVanBanDuAn_FileBaoCao" type="file" name="fileMau" accept="application/pdf,.doc,.docx,.xlsx ,.xls" value="" class="form-control custom-file-input mb-4"/>
+                    <label id="custom-select-file" class="custom-file-label">Chọn file...</label>
+                </div>
             </div>
 
 

@@ -58,8 +58,66 @@
                 _$baoCaoVanBanDuAnInformationForm.find('input[name=userName]').val(''); 
                 _$baoCaoVanBanDuAnInformationForm.find('input[name=userId]').val(''); 
         });
-		
 
+
+        //Begin ImportFile
+
+        var uploadedFileToken = null;
+        var fileName = "";
+        var contentType = "";
+
+        $('#BaoCaoVanBanDuAnInformationsForm input[name=fileMau]').change(function (e) {
+            if (e.target.files[0]) {
+                fileName = e.target.files[0].name;
+            } else {
+                fileName = "";
+            }
+            $('#BaoCaoVanBanDuAnInformationsForm').submit();
+        });
+        $('#BaoCaoVanBanDuAnInformationsForm').ajaxForm({
+            beforeSubmit: function (formData, jqForm, options) {
+                abp.ui.setBusy('.modal-content');
+                var $fileInput = $('#BaoCaoVanBanDuAnInformationsForm input[name=fileMau]');
+                var files = $fileInput.get()[0].files;
+
+                if (!files.length) {
+                    uploadedFileToken = null;
+                    contentType = "";
+                    fileName = "";
+                    return false;
+                }
+
+                var file = files[0];
+
+                // File size check
+                if (file.size > 524288000) { //500MB
+                    console.log('file>500')
+                    abp.message.warn(app.localize('FileUpload_Warn_SizeLimit', app.constsSoHoa.maxFileBytesUserFriendlyValue));
+                    uploadedFileToken = null;
+                    contentType = "";
+                    fileName = "";
+                    return false;
+                }
+
+                var mimeType = _.filter(formData, { name: 'fileMau' })[0].value.type;
+                console.log(mimeType);
+                formData.push({ name: 'FileType', value: mimeType });
+                formData.push({ name: 'FileName', value: file.name });
+                formData.push({ name: 'FileToken', value: app.guid() });
+                return true;
+            },
+            success: function (response) {
+                if (response.success) {
+                    uploadedFileToken = response.result.fileToken;
+                    contentType = response.result.fileType;
+                } else {
+                    abp.message.error(response.error.message);
+                }
+                abp.ui.clearBusy('.modal-content');
+
+            }
+        });
+        // End ImportFile
 
         this.save = function () {
             if (!_$baoCaoVanBanDuAnInformationForm.valid()) {
@@ -75,6 +133,9 @@
             }
 
             var baoCaoVanBanDuAn = _$baoCaoVanBanDuAnInformationForm.serializeFormToObject();
+            baoCaoVanBanDuAn.uploadedFileToken = uploadedFileToken;
+            baoCaoVanBanDuAn.fileName = fileName;
+            baoCaoVanBanDuAn.contentType = contentType;
 			
 			 _modalManager.setBusy(true);
 			 _baoCaoVanBanDuAnsService.createOrEdit(
