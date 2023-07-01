@@ -4,4 +4,9 @@
     {
 		public string FilterText { get; set; }
     }
+    
+    public class BaoCaoVanBanDuAnFileExcelViewModel
+    {
+        public string FileName { get; set; }
+    }
 }

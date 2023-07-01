@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Abp.AspNetCore.Mvc.Authorization;
@@ -9,12 +10,18 @@ using TechBer.ChuyenDoiSo.Authorization;
 using TechBer.ChuyenDoiSo.QLVB;
 using TechBer.ChuyenDoiSo.QLVB.Dtos;
 using Abp.Application.Services.Dto;
+using Abp.Domain.Repositories;
 using Abp.Extensions;
 using Abp.IO.Extensions;
 using Abp.UI;
 using Abp.Web.Models;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Spreadsheet;
+using Microsoft.AspNetCore.Hosting;
+using Newtonsoft.Json;
 using TechBer.ChuyenDoiSo.Dto;
 using TechBer.ChuyenDoiSo.Storage;
+using TechBer.ChuyenDoiSo.Web.Areas.App.Models.QuyetDinhs;
 
 namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
 {
@@ -26,15 +33,21 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
         private readonly IBaoCaoVanBanDuAnsAppService _baoCaoVanBanDuAnsAppService;
         private readonly ITempFileCacheManager _tempFileCacheManager;
         private readonly IBinaryObjectManager _binaryObjectManager;
+        private readonly IRepository<BaoCaoVanBanDuAn> _baoCaoVanBanDuAnRepository;
+        private readonly IWebHostEnvironment _appEnvironment;
 
         public BaoCaoVanBanDuAnsController(IBaoCaoVanBanDuAnsAppService baoCaoVanBanDuAnsAppService,
             ITempFileCacheManager tempFileCacheManager,
-            IBinaryObjectManager binaryObjectManager
+            IBinaryObjectManager binaryObjectManager,
+            IWebHostEnvironment appEnvironment,
+            IRepository<BaoCaoVanBanDuAn> baoCaoVanBanDuAnRepository
         )
         {
             _baoCaoVanBanDuAnsAppService = baoCaoVanBanDuAnsAppService;
             _tempFileCacheManager = tempFileCacheManager;
             _binaryObjectManager = binaryObjectManager;
+            _appEnvironment = appEnvironment;
+            _baoCaoVanBanDuAnRepository = baoCaoVanBanDuAnRepository;
         }
 
         public ActionResult Index()
@@ -157,6 +170,100 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
             {
                 return new UploadFileOutput(new ErrorInfo(ex.Message));
             }
+        }
+
+        public class FileMauSerializeObj
+        {
+            public string Guid { get; set; }
+            public string FileName { get; set; }
+            public string ContentType { get; set; }
+        }
+
+        public async Task<PartialViewResult> ViewBaoCaoVanBanDuAnFileExcel(int id)
+        {
+            BaoCaoVanBanDuAn baoCaoVanBanDuAn = await _baoCaoVanBanDuAnRepository.FirstOrDefaultAsync(id);
+
+            FileMauSerializeObj fileMauSerializeObj =
+                JsonConvert.DeserializeObject<FileMauSerializeObj>(baoCaoVanBanDuAn.FileBaoCao);
+
+            BinaryObject file = await _binaryObjectManager.GetOrNullAsync(Guid.Parse(fileMauSerializeObj.Guid));
+
+            byte[] fileByte = file.Bytes;
+            byte[] downloadFileBytes;
+            using (Stream stream = new MemoryStream())
+            {
+                stream.Write(fileByte, 0, (int)fileByte.Length);
+                try
+                {
+                    using (SpreadsheetDocument doc = SpreadsheetDocument.Open(stream, false))
+                    {
+                        WorkbookPart workbookPart = doc.WorkbookPart;
+                        SharedStringTablePart sstpart = workbookPart.GetPartsOfType<SharedStringTablePart>().First();
+                        SharedStringTable sst = sstpart.SharedStringTable;
+
+                        WorksheetPart worksheetPart = workbookPart.WorksheetParts.First();
+                        Worksheet sheet = worksheetPart.Worksheet;
+
+                        var cells = sheet.Descendants<Cell>();
+                        var rows = sheet.Descendants<Row>();
+
+                        Console.WriteLine("Row count = {0}", rows.LongCount());
+                        Console.WriteLine("Cell count = {0}", cells.LongCount());
+
+                        // One way: go through each cell in the sheet
+                        foreach (Cell cell in cells)
+                        {
+                            if ((cell.DataType != null) && (cell.DataType == CellValues.SharedString))
+                            {
+                                int ssid = int.Parse(cell.CellValue.Text);
+                                string str = sst.ChildElements[ssid].InnerText;
+                                Console.WriteLine("Shared string {0}: {1}", ssid, str);
+                            }
+                            else if (cell.CellValue != null)
+                            {
+                                Console.WriteLine("Cell contents: {0}", cell.CellValue.Text);
+                            }
+                        }
+
+                        // Or... via each row
+                        foreach (Row row in rows)
+                        {
+                            foreach (Cell c in row.Elements<Cell>())
+                            {
+                                if ((c.DataType != null) && (c.DataType == CellValues.SharedString))
+                                {
+                                    int ssid = int.Parse(c.CellValue.Text);
+                                    string str = sst.ChildElements[ssid].InnerText;
+                                    Console.WriteLine("Shared string {0}: {1}", ssid, str);
+                                }
+                                else if (c.CellValue != null)
+                                {
+                                    Console.WriteLine("Cell contents: {0}", c.CellValue.Text);
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+                stream.Position = 0;
+                downloadFileBytes = stream.GetAllBytes();
+            }
+
+            byte[] bytes = downloadFileBytes;
+            FileStream fs =
+                new FileStream(_appEnvironment.WebRootPath + "/Common/" + AbpSession.UserId + "BaoCaoVanBanDuAn.xlsx",
+                    FileMode.OpenOrCreate);
+            fs.Write(bytes, 0, bytes.Length);
+            fs.Close();
+            var model = new BaoCaoVanBanDuAnFileExcelViewModel()
+            {
+                FileName = AbpSession.UserId + "BaoCaoVanBanDuAn.xlsx"
+            };
+            return PartialView("_ViewBaoCaoVanBanDuAnFileExcel", model);
         }
     }
 }

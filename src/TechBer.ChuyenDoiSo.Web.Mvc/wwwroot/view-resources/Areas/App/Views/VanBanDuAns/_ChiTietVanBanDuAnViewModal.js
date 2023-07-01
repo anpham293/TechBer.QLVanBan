@@ -26,6 +26,11 @@
             viewUrl: abp.appPath + 'App/BaoCaoVanBanDuAns/ViewbaoCaoVanBanDuAnModal',
             modalClass: 'ViewBaoCaoVanBanDuAnModal'
         });
+        var _viewBaoCaoVanBanDuAnFileExcel = new app.ModalManager({
+            viewUrl: abp.appPath + 'App/BaoCaoVanBanDuAns/ViewBaoCaoVanBanDuAnFileExcel',
+            modalClass: 'ViewBaoCaoVanBanDuAnFileExcel',
+            modalSize: "modal-xl"
+        });
 
         var _entityTypeHistoryModal = app.modals.EntityTypeHistoryModal.create();
 
@@ -123,11 +128,36 @@
                 {
                     targets: 3,
                     data: "baoCaoVanBanDuAn.fileBaoCao",
-                    name: "fileBaoCao"
+                    name: "fileQuyetDinh",
+                    className: "text-center",
+                    render: function (data, type, row, meta) {
+                        var file = row.baoCaoVanBanDuAn.fileBaoCao;
+                        if(file == null || file == ''){
+                            return '';
+                        }else {
+                            var jsonFile = JSON.parse(file);
+                            var contentTypeJsonFile = jsonFile.ContentType;
+                            if(contentTypeJsonFile == 'application/pdf'){
+                                return  "<a class='text-warning text-bold baoCao-view-pdf' data-target='" + row.baoCaoVanBanDuAn.id + "' style='cursor:pointer;font-size:25px; font-weight: bolder;margin: 0 5px;'><i class=\"fas fa-file-pdf\"></i></a>";
+                            }
+                            if(contentTypeJsonFile == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'){
+                                return  "<a class='text-success text-bold baoCao-view-excel' data-target='" + row.baoCaoVanBanDuAn.id + "' style='cursor:pointer;font-size:25px; font-weight: bolder;margin: 0 5px;'><i class=\"fas fa-file-excel\"></i></a>";
+                            }
+                            else {
+                                return  "<a class='text-info text-bold baoCao-view-word' data-target='" + row.baoCaoVanBanDuAn.id + "' style='cursor:pointer;font-size:25px; font-weight: bolder;margin: 0 5px;'><i class=\"fas fa-file-word\"></i></a>";
+                            }
+                        }
+
+                    }
                 }
             ]
         });
 
+        $(document).off("click", ".baoCao-view-excel").on("click", ".baoCao-view-excel", function () {
+            var self = $(this);
+            _viewBaoCaoVanBanDuAnFileExcel.open({id: self.attr("data-target")});
+        });
+        
         function getBaoCaoVanBanDuAns() {
             dataTable.ajax.reload();
         }
