@@ -179,8 +179,27 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
             public string ContentType { get; set; }
         }
 
+        private string DeleteAllTemporaryFile()
+        {
+            try
+            {
+                string tempfolder = _appEnvironment.WebRootPath + "/Common/FileTemp";
+                System.IO.DirectoryInfo di = new DirectoryInfo(tempfolder);
+
+                foreach (FileInfo file in di.GetFiles())
+                {
+                    file.Delete();
+                }
+                return "1";
+            }
+            catch(Exception e)
+            {
+                return e.Message;
+            }
+        }
         public async Task<PartialViewResult> ViewBaoCaoVanBanDuAnFileExcel(int id)
         {
+            DeleteAllTemporaryFile();
             BaoCaoVanBanDuAn baoCaoVanBanDuAn = await _baoCaoVanBanDuAnRepository.FirstOrDefaultAsync(id);
 
             FileMauSerializeObj fileMauSerializeObj =
@@ -255,7 +274,7 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
 
             byte[] bytes = downloadFileBytes;
             FileStream fs =
-                new FileStream(_appEnvironment.WebRootPath + "/Common/" + AbpSession.UserId + "BaoCaoVanBanDuAn.xlsx",
+                new FileStream(_appEnvironment.WebRootPath + "/Common/FileTemp/" + AbpSession.UserId + "BaoCaoVanBanDuAn.xlsx",
                     FileMode.OpenOrCreate);
             fs.Write(bytes, 0, bytes.Length);
             fs.Close();

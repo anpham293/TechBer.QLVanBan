@@ -65,6 +65,10 @@
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.2.7" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Common\FileTemp\" />
+  </ItemGroup>
+
   <!--<ItemGroup>
     <Content Include="wwwroot\view-resources\Areas\App\Views\VanBanDuAns\Index.less" />
   </ItemGroup>-->

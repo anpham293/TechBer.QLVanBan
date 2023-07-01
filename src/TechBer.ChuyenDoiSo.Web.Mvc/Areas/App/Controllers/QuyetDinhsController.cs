@@ -145,8 +145,27 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
             public string FileName { get; set; }
             public string ContentType { get; set; }
         }
+        private string DeleteAllTemporaryFile()
+        {
+            try
+            {
+                string tempfolder = _appEnvironment.WebRootPath + "/Common/FileTemp";
+                System.IO.DirectoryInfo di = new DirectoryInfo(tempfolder);
+
+                foreach (FileInfo file in di.GetFiles())
+                {
+                    file.Delete();
+                }
+                return "1";
+            }
+            catch(Exception e)
+            {
+                return e.Message;
+            }
+        }
         public async Task<PartialViewResult> ViewQuyetDinhFileDoc(int id)
         {
+            DeleteAllTemporaryFile();
             QuyetDinh quyetDinh = await _quyetDinhRepository.FirstOrDefaultAsync(id);
             
             FileMauSerializeObj fileMauSerializeObj =
@@ -187,7 +206,7 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
 				downloadFileBytes = stream.GetAllBytes();
 			}
             byte[] bytes = downloadFileBytes;
-            FileStream fs = new FileStream(_appEnvironment.WebRootPath + "/Common/" + AbpSession.UserId + "QuyetDinh.docx", FileMode.OpenOrCreate);
+            FileStream fs = new FileStream(_appEnvironment.WebRootPath + "/Common/FileTemp/" + AbpSession.UserId + "QuyetDinh.docx", FileMode.OpenOrCreate);
             fs.Write(bytes, 0, bytes.Length);
             fs.Close();
             var model = new QuyetDinhFileDocViewModel()
