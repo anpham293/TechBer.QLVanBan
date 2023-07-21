@@ -53,19 +53,7 @@ namespace TechBer.ChuyenDoiSo.QLVB
             var filteredBaoCaoVanBanDuAns = _baoCaoVanBanDuAnRepository.GetAll()
                 .Include(e => e.VanBanDuAnFk)
                 .Include(e => e.UserFk)
-                .WhereIf(!string.IsNullOrWhiteSpace(input.Filter),
-                    e => false || e.NoiDungCongViec.Contains(input.Filter) || e.MoTaChiTiet.Contains(input.Filter) ||
-                         e.FileBaoCao.Contains(input.Filter))
-                .WhereIf(!string.IsNullOrWhiteSpace(input.NoiDungCongViecFilter),
-                    e => e.NoiDungCongViec == input.NoiDungCongViecFilter)
-                .WhereIf(!string.IsNullOrWhiteSpace(input.MoTaChiTietFilter),
-                    e => e.MoTaChiTiet == input.MoTaChiTietFilter)
-                .WhereIf(!string.IsNullOrWhiteSpace(input.FileBaoCaoFilter),
-                    e => e.FileBaoCao == input.FileBaoCaoFilter)
-                .WhereIf(!string.IsNullOrWhiteSpace(input.VanBanDuAnNameFilter),
-                    e => e.VanBanDuAnFk != null && e.VanBanDuAnFk.Name == input.VanBanDuAnNameFilter)
-                .WhereIf(!string.IsNullOrWhiteSpace(input.UserNameFilter),
-                    e => e.UserFk != null && e.UserFk.Name == input.UserNameFilter);
+                .WhereIf(true, p => p.VanBanDuAnId == input.VanBanDuAnId);
 
             var pagedAndFilteredBaoCaoVanBanDuAns = filteredBaoCaoVanBanDuAns
                 .OrderBy(input.Sorting ?? "id asc")

@@ -16,8 +16,8 @@ namespace TechBer.ChuyenDoiSo.QLVB.Dtos
 
 		 public string VanBanDuAnNameFilter { get; set; }
 
-		 		 public string UserNameFilter { get; set; }
+		public string UserNameFilter { get; set; }
 
-		 
+		 public int VanBanDuAnId { get; set; }
     }
 }

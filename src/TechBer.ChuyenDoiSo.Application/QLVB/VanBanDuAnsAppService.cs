@@ -93,6 +93,8 @@ namespace TechBer.ChuyenDoiSo.QLVB
                 from s1 in j1.DefaultIfEmpty()
                 join o2 in _lookup_quyTrinhDuAnRepository.GetAll() on o.QuyTrinhDuAnAssignedId equals o2.Id into j2
                 from s2 in j2.DefaultIfEmpty()
+                join o3 in _lookup_quyetDinhRepository.GetAll() on o.QuyetDinhId equals  o3.Id into  j3
+                from s3 in j3.DefaultIfEmpty()
                 select new GetVanBanDuAnForViewDto()
                 {
                     VanBanDuAn = new VanBanDuAnDto
@@ -118,6 +120,12 @@ namespace TechBer.ChuyenDoiSo.QLVB
                     QuyTrinhDuAnAssigned = new QuyTrinhDuAnAssignedDto()
                     {
                         MaQuyTrinh = s2.MaQuyTrinh
+                    },
+                    QuyetDinh = new QuyetDinhDto()
+                    {
+                        Id = s3.Id,
+                        Ten = s3.Ten,
+                        NgayBanHanh = s3.NgayBanHanh
                     }
                 };
 

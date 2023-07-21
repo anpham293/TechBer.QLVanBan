@@ -2,6 +2,7 @@
     app.modals.ChiTietVanBanDuAnViewModal = function () {
     //Phần khai báo và biến chung
         var vanBanDuAnId = $('#VanBanDuAnId').val();
+        var session_UserId = $('#Session_UserId').val();
         this.init = function(){
             getHienThiTraoDoi();
         };
@@ -56,12 +57,7 @@
                 ajaxFunction: _baoCaoVanBanDuAnsService.getAll,
                 inputFilter: function () {
                     return {
-                        filter: $('#BaoCaoVanBanDuAnsTableFilter').val(),
-                        noiDungCongViecFilter: $('#NoiDungCongViecFilterId').val(),
-                        moTaChiTietFilter: $('#MoTaChiTietFilterId').val(),
-                        fileBaoCaoFilter: $('#FileBaoCaoFilterId').val(),
-                        vanBanDuAnNameFilter: $('#VanBanDuAnNameFilterId').val(),
-                        userNameFilter: $('#UserNameFilterId').val()
+                        vanBanDuAnId: vanBanDuAnId
                     };
                 }
             },
@@ -218,28 +214,32 @@
         
         function getHienThiTraoDoi() {
             _traoDoiVanBanDuAnsService.getHienThiTraoDoi(vanBanDuAnId).done(function (data) {
-                function scrolldiv(e) {
-                    $('#' + e).scrollTop(1000000);
-                }
-
-                $(document).ready(function () {
-                    scrolldiv("media-list");
-                    scrolldiv("todotl");
-                });
                 var hienThi = '';
                 hienThi +=
-                    '<div class="form-group"><div class="col-md-12" style="height: 60vh; overflow-y: scroll">' +
-                    '<ul class="media-list" id="media-list">';
+                    '<div class="chat-history">'+
+                        '<div style="height: 65vh; overflow-y: scroll">' +
+                            '<ul>';
 
                 $.each(data.listTraoDoiVanBanDuAn, function (i) {
-                    hienThi +=
-                        '<li class="media">'+
-                        '<div class="media-body todo-comment">'+
-                        '<p class="todo-comment-head">'+
-                        '<span class="todo-comment-username">'+ data.listTraoDoiVanBanDuAn[i].noiDung +'</span>'+
-                        '</p>'+
-                        '</div>'+
-                        '</li>';
+                    if(data.listTraoDoiVanBanDuAn[i].userId == session_UserId){
+                        hienThi +=
+                            '<li class="clearfix">'+
+                                '<div class="message-data text-right">'+
+                                    '<span class="message-data-time">'+moment(data.listTraoDoiVanBanDuAn[i].ngayGui).format('DD/MM/YYYY HH:mm') + ', '+ data.listTraoDoiVanBanDuAn[i].userName +'</span>'+
+                                '</div>'+
+                                '<div class="message other-message float-right">'+ data.listTraoDoiVanBanDuAn[i].noiDung +
+                                '</div>'+
+                            '</li>';
+                    }else{
+                        hienThi +=
+                            '<li class="clearfix">'+
+                                '<div class="message-data">'+
+                                    '<span class="message-data-time">' + data.listTraoDoiVanBanDuAn[i].userName + ', '+ moment(data.listTraoDoiVanBanDuAn[i].ngayGui).format('DD/MM/YYYY HH:mm') +'</span>'+
+                                '</div>'+
+                                '<div class="message my-message">'+ data.listTraoDoiVanBanDuAn[i].noiDung +
+                                '</div>'+
+                            '</li>';
+                    }
                 });
                 hienThi += '</ul></div></div>';
                 $('#hienThiTraoDoi').html(hienThi);

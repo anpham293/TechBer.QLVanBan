@@ -27,9 +27,9 @@ namespace TechBer.ChuyenDoiSo.QLVB
 		 private readonly ITraoDoiVanBanDuAnsExcelExporter _traoDoiVanBanDuAnsExcelExporter;
 		 private readonly IRepository<User,long> _lookup_userRepository;
 		 private readonly IRepository<VanBanDuAn,int> _lookup_vanBanDuAnRepository;
-		 
 
-		  public TraoDoiVanBanDuAnsAppService(IRepository<TraoDoiVanBanDuAn> traoDoiVanBanDuAnRepository, ITraoDoiVanBanDuAnsExcelExporter traoDoiVanBanDuAnsExcelExporter , IRepository<User, long> lookup_userRepository, IRepository<VanBanDuAn, int> lookup_vanBanDuAnRepository) 
+
+		 public TraoDoiVanBanDuAnsAppService(IRepository<TraoDoiVanBanDuAn> traoDoiVanBanDuAnRepository, ITraoDoiVanBanDuAnsExcelExporter traoDoiVanBanDuAnsExcelExporter , IRepository<User, long> lookup_userRepository, IRepository<VanBanDuAn, int> lookup_vanBanDuAnRepository) 
 		  {
 			_traoDoiVanBanDuAnRepository = traoDoiVanBanDuAnRepository;
 			_traoDoiVanBanDuAnsExcelExporter = traoDoiVanBanDuAnsExcelExporter;
@@ -262,9 +262,16 @@ namespace TechBer.ChuyenDoiSo.QLVB
          public async Task<GetHienThiTraoDoiDto> GetHienThiTraoDoi(int id)
          {
 	         var traoDoi = _traoDoiVanBanDuAnRepository.GetAll().WhereIf(true, p => p.VanBanDuAnId == id).ToList();
+
+	         var traoDoiUsername = ObjectMapper.Map<List<TraoDoiVanBanDuAnDto>>(traoDoi);
+	         foreach (var VARIABLE in traoDoiUsername)
+	         {
+		         var user = _lookup_userRepository.FirstOrDefault((long) VARIABLE.UserId);
+		         VARIABLE.UserName = user.Surname + " " + user.Name;
+	         }
 	         return new GetHienThiTraoDoiDto()
 	         {
-		         ListTraoDoiVanBanDuAn = ObjectMapper.Map<List<TraoDoiVanBanDuAnDto>>(traoDoi)
+		         ListTraoDoiVanBanDuAn = traoDoiUsername
 	         };
          }
          public async Task GuiTraoDoi(TraoDoiVanBanDuAnDto input)

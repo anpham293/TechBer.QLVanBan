@@ -25,14 +25,6 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Startup
                     )
                 )
                 .AddItem(new MenuItemDefinition(
-                        AppPageNames.Common.QuyetDinhs,
-                        L("QuyetDinhs"),
-                        url: "App/QuyetDinhs",
-                        icon: "far fa-file-alt",
-                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_QuyetDinhs)
-                    )
-                )
-                .AddItem(new MenuItemDefinition(
                         AppPageNames.Common.DuAns,
                         L("DuAns"),
                         url: "App/DuAns",
@@ -112,6 +104,14 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Startup
                         "",
                         L("DanhMucQuanLy"),
                         icon: "fas fa-align-justify"
+                    )
+                    .AddItem(new MenuItemDefinition(
+                            AppPageNames.Common.QuyetDinhs,
+                            L("QuyetDinhs"),
+                            url: "App/QuyetDinhs",
+                            icon: "far fa-file-alt",
+                            permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_QuyetDinhs)
+                        )
                     )
                     .AddItem(new MenuItemDefinition(
                             AppPageNames.Common.LoaiDuAns,
@@ -241,37 +241,39 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Startup
                             permissionDependency: new SimplePermissionDependency(AppPermissions
                                 .Pages_Administration_UiCustomization)
                         )
-                    ).AddItem(new MenuItemDefinition(
-                            AppPageNames.Common.WebhookSubscriptions,
-                            L("WebhookSubscriptions"),
-                            url: "App/WebhookSubscription",
-                            icon: "flaticon2-world",
-                            permissionDependency: new SimplePermissionDependency(AppPermissions
-                                .Pages_Administration_WebhookSubscription)
-                        )
-                    ).AddItem(new MenuItemDefinition(
-                            AppPageNames.Common.DynamicEntityParameters,
-                            L("DynamicParameters"),
-                            icon: "flaticon-interface-8"
-                        ).AddItem(new MenuItemDefinition(
-                                AppPageNames.Common.DynamicParameters,
-                                L("Definitions"),
-                                url: "App/DynamicParameter",
-                                icon: "flaticon-map",
-                                permissionDependency: new SimplePermissionDependency(AppPermissions
-                                    .Pages_Administration_DynamicParameters)
-                            )
-                        )
-                        .AddItem(new MenuItemDefinition(
-                                AppPageNames.Common.EntityDynamicParameters,
-                                L("EntityDynamicParameters"),
-                                url: "App/EntityDynamicParameter",
-                                icon: "flaticon-map",
-                                permissionDependency: new SimplePermissionDependency(AppPermissions
-                                    .Pages_Administration_EntityDynamicParameters)
-                            )
-                        )
-                    ).AddItem(new MenuItemDefinition(
+                    )
+                    // .AddItem(new MenuItemDefinition(
+                    //         AppPageNames.Common.WebhookSubscriptions,
+                    //         L("WebhookSubscriptions"),
+                    //         url: "App/WebhookSubscription",
+                    //         icon: "flaticon2-world",
+                    //         permissionDependency: new SimplePermissionDependency(AppPermissions
+                    //             .Pages_Administration_WebhookSubscription)
+                    //     )
+                    // ).AddItem(new MenuItemDefinition(
+                    //         AppPageNames.Common.DynamicEntityParameters,
+                    //         L("DynamicParameters"),
+                    //         icon: "flaticon-interface-8"
+                    //     ).AddItem(new MenuItemDefinition(
+                    //             AppPageNames.Common.DynamicParameters,
+                    //             L("Definitions"),
+                    //             url: "App/DynamicParameter",
+                    //             icon: "flaticon-map",
+                    //             permissionDependency: new SimplePermissionDependency(AppPermissions
+                    //                 .Pages_Administration_DynamicParameters)
+                    //         )
+                    //     )
+                    //     .AddItem(new MenuItemDefinition(
+                    //             AppPageNames.Common.EntityDynamicParameters,
+                    //             L("EntityDynamicParameters"),
+                    //             url: "App/EntityDynamicParameter",
+                    //             icon: "flaticon-map",
+                    //             permissionDependency: new SimplePermissionDependency(AppPermissions
+                    //                 .Pages_Administration_EntityDynamicParameters)
+                    //         )
+                    //     )
+                    // )
+                    .AddItem(new MenuItemDefinition(
                             AppPageNames.Host.Settings,
                             L("Settings"),
                             url: "App/HostSettings",

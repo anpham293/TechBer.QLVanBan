@@ -12,5 +12,6 @@ namespace TechBer.ChuyenDoiSo.QLVB.Dtos
         public QuyetDinhDto QuyetDinh { get; set; }
         
         public ThungHoSoDto ThungHoSo { get; set; }
+        public long Session_UserId { get; set; }
     }
 }

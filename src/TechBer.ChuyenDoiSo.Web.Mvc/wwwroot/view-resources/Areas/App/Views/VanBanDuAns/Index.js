@@ -126,6 +126,24 @@
                         text: '<i class="fa fa-cog"></i> ' + app.localize('Actions') + ' <span class="caret"></span>',
                         items: [
                             {
+                                text: app.localize('XemChiTiet'),
+                                visible: function () {
+                                    return _permissions.edit;
+                                },
+                                action: function (data) {
+                                    _chiTietVanBanDuAnViewModal.open({id: data.record.vanBanDuAn.id});
+                                }
+                            },
+                            {
+                                text: app.localize('Edit'),
+                                visible: function () {
+                                    return _permissions.edit;
+                                },
+                                action: function (data) {
+                                    _createOrEditModal.open({id: data.record.vanBanDuAn.id});
+                                }
+                            },
+                            {
                                 text: app.localize('ChuyenHoSoGiay'),
                                 action: function (data) {
                                     _viewChuyenHoSoGiayModal.open({ vanBanDuAnId : data.record.vanBanDuAn.id})
@@ -161,24 +179,6 @@
                                 text: app.localize('View'),
                                 action: function (data) {
                                     _viewVanBanDuAnModal.open({id: data.record.vanBanDuAn.id});
-                                }
-                            },
-                            {
-                                text: app.localize('Edit'),
-                                visible: function () {
-                                    return _permissions.edit;
-                                },
-                                action: function (data) {
-                                    _createOrEditModal.open({id: data.record.vanBanDuAn.id});
-                                }
-                            },
-                            {
-                                text: app.localize('XemChiTiet'),
-                                visible: function () {
-                                    return _permissions.edit;
-                                },
-                                action: function (data) {
-                                    _chiTietVanBanDuAnViewModal.open({id: data.record.vanBanDuAn.id});
                                 }
                             },
                             {
@@ -265,6 +265,17 @@
                 },
                 {
                     targets: 5,
+                    data: "quyetDinh",
+                    name: "ngayBanHanh",
+                    render: function (quyetDinh, type, row, meta) {
+                        console.log(quyetDinh);
+                        var tenQuyetDinh = "";
+                        tenQuyetDinh = quyetDinh.ten != null ? quyetDinh.ten : "";
+                       return tenQuyetDinh;
+                    }
+                },
+                {
+                    targets: 6,
                     data: "vanBanDuAn",
                     name: "duAnFk.name",
                     className: "text-center",

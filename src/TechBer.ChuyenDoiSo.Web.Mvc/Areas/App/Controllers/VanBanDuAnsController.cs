@@ -242,7 +242,8 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
                 VanBanDuAn = getVanBanDuAnForChiTietDto.VanBanDuAn,
                 QuyTrinhDuAnAssigned = getVanBanDuAnForChiTietDto.QuyTrinhDuAnAssigned,
                 ThungHoSo = getVanBanDuAnForChiTietDto.ThungHoSo,
-                QuyetDinh = getVanBanDuAnForChiTietDto.QuyetDinh
+                QuyetDinh = getVanBanDuAnForChiTietDto.QuyetDinh,
+                Session_UserId = (long)AbpSession.UserId
             };
 
             return PartialView("_ChiTietVanBanDuAnViewModal", viewModel);

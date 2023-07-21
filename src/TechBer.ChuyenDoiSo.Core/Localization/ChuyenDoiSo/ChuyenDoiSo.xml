@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en"> 
-  <texts>    <text name="BaoCaoVanBanDuAn">Bao cao van ban du an</text>
+  <texts>
+    <text name="ChiTietHoSo">Chi tiet ho so</text>
+    <text name="QuyetDinhKemTheo">Quyet dinh kem theo</text>
+    <text name="BaoCaoVanBanDuAn">Bao cao van ban du an</text>
     <text name="TechBer.ChuyenDoiSo.QLVB.BaoCaoVanBanDuAn">BaoCaoVanBanDuAn</text>
     <text name="NoiDungCongViec">Noi dung cong viec</text>
     <text name="MoTaChiTiet">Mo ta chi tiet</text>
