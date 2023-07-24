@@ -72,7 +72,7 @@
                 }
 
                 var mimeType = _.filter(formData, { name: 'fileMau' })[0].value.type;
-                console.log(mimeType);
+                $('#fileName').html(file.name);
                 formData.push({ name: 'FileType', value: mimeType });
                 formData.push({ name: 'FileName', value: file.name });
                 formData.push({ name: 'FileToken', value: app.guid() });
@@ -86,9 +86,22 @@
                     abp.message.error(response.error.message);
                 }
                 abp.ui.clearBusy('.modal-content');
-
             }
         });
+        //Progress File Upload
+        $('#VanBanDuAn_FileVanBan').fileupload({
+            dataType: 'json',
+            maxFileSize: 524288000,
+            progressall: function (e, data) {
+                console.log(e);
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                $('#progress .progress-bar').css(
+                    'width',
+                    progress + '%'
+                );
+            }
+        });      
+
         
         $('#OpenDuAnLookupTableButton').click(function () {
 

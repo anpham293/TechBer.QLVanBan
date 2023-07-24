@@ -168,8 +168,6 @@
                                     return _permissions.edit;
                                 },
                                 action: function (data) {
-                                    console.log('a',data.record.vanBanDuAn.id);
-                                    console.log('b',data.record.vanBanDuAn.duAnId);
                                     _sapXepHoSoVaoThungModal.open({
                                         vanBanDuAnId: data.record.vanBanDuAn.id
                                     })
@@ -268,7 +266,6 @@
                     data: "quyetDinh",
                     name: "ngayBanHanh",
                     render: function (quyetDinh, type, row, meta) {
-                        console.log(quyetDinh);
                         var tenQuyetDinh = "";
                         tenQuyetDinh = quyetDinh.ten != null ? quyetDinh.ten : "";
                        return tenQuyetDinh;
@@ -560,7 +557,7 @@
                     })
                         .on('move_node.jstree', function (e, data) {
 
-                            console.log(data);
+                          //  console.log(data);
 
                             var parentNodeName = (!data.parent || data.parent === '#')
                                 ? app.localize('Root')
