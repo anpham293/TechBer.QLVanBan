@@ -24,8 +24,8 @@
         
         var _danhSachUserDuAnModal = new app.ModalManager({
             viewUrl: abp.appPath + 'App/DuAns/DanhSachUserDuAnModal',
-            scriptUrl: abp.appPath + 'view-resources/Areas/App/Views/DuAns/_CreateOrEditModal.js',
-            modalClass: 'CreateOrEditDuAnModal',
+            scriptUrl: abp.appPath + 'view-resources/Areas/App/Views/DuAns/_DanhSachUserDuAnModal.js',
+            modalClass: 'DanhSachUserDuAn',
             modalSize: "modal-xl"
         });
 

@@ -133,5 +133,15 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
             };
             return PartialView("_ViewDanhSachUserDuAnModal", viewModel);
         }
+        [AbpMvcAuthorize(AppPermissions.Pages_DuAns_ThemUserVaoDuAn)]
+        public PartialViewResult AddUserDuAnModal()
+        {
+            var viewModel = new DuAnLoaiKhoanLookupTableViewModel()
+            {
+                FilterText = ""
+            };
+            return PartialView("_AddUserDuAnModal", viewModel);
+        }
+        
     }
 }
