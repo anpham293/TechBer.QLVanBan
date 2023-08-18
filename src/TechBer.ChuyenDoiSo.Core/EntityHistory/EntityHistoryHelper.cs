@@ -16,6 +16,7 @@ namespace TechBer.ChuyenDoiSo.EntityHistory
 
         public static readonly Type[] HostSideTrackedTypes =
         {
+            typeof(UserDuAn),
             typeof(BaoCaoVanBanDuAn),
             typeof(TraoDoiVanBanDuAn),
             typeof(QuyetDinh),
@@ -37,6 +38,7 @@ namespace TechBer.ChuyenDoiSo.EntityHistory
 
         public static readonly Type[] TenantSideTrackedTypes =
         {
+            typeof(UserDuAn),
             typeof(BaoCaoVanBanDuAn),
             typeof(TraoDoiVanBanDuAn),
             typeof(QuyetDinh),

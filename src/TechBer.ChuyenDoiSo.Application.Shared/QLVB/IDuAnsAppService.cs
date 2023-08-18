@@ -32,5 +32,6 @@ namespace TechBer.ChuyenDoiSo.QLVB
 			LoaiKhoanLookupTableInput input);
 
 		Task<GetSoDoDuAnOutput> SoDoDuAn(int id);
+		Task<PagedResultDto<NameValueDto>> FindUsers(FindUserDuAnInput input);
     }
 }

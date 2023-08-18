@@ -1,5 +1,6 @@
 ﻿using System;
 using Abp.Application.Services.Dto;
+using TechBer.ChuyenDoiSo.Dto;
 
 namespace TechBer.ChuyenDoiSo.QLVB.Dtos
 {
@@ -21,5 +22,11 @@ namespace TechBer.ChuyenDoiSo.QLVB.Dtos
         public DateTime? NgayKetThuc { get; set; }
         public decimal TongMucDauTu { get; set; }
         public decimal DuToan { get; set; }
+    }
+    
+    public class FindUserDuAnInput : PagedAndFilteredInputDto
+    {
+        public long OrganizationUnitId { get; set; }
+       
     }
 }

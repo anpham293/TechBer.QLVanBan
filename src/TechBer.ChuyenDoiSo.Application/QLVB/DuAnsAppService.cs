@@ -443,5 +443,40 @@ namespace TechBer.ChuyenDoiSo.QLVB
         {
             return new GetSoDoDuAnOutput();
         }
+        
+        public async Task<PagedResultDto<NameValueDto>> FindUsers(FindUserDuAnInput input)
+        {
+            var userIdsInOrganizationUnit = _userOrganizationUnitRepository.GetAll()
+                .Where(uou => uou.OrganizationUnitId == input.OrganizationUnitId)
+                .Select(uou => uou.UserId);
+
+            var query = UserManager.Users
+                .Where(u => !userIdsInOrganizationUnit.Contains(u.Id))
+                .WhereIf(
+                    !input.Filter.IsNullOrWhiteSpace(),
+                    u =>
+                        u.Name.Contains(input.Filter) ||
+                        u.Surname.Contains(input.Filter) ||
+                        u.UserName.Contains(input.Filter) ||
+                        u.EmailAddress.Contains(input.Filter)
+                );
+
+            var userCount = await query.CountAsync();
+            var users = await query
+                .OrderBy(u => u.Name)
+                .ThenBy(u => u.Surname)
+                .PageBy(input)
+                .ToListAsync();
+
+            return new PagedResultDto<NameValueDto>(
+                userCount,
+                users.Select(u =>
+                    new NameValueDto(
+                        u.FullName + " (" + u.EmailAddress + ")",
+                        u.Id.ToString()
+                    )
+                ).ToList()
+            );
+        }
     }
 }

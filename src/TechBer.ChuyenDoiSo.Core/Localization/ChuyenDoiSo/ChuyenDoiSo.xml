@@ -1,6 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en"> 
-  <texts>
+  <texts>    <text name="UserDuAn">User du an</text>
+    <text name="TechBer.ChuyenDoiSo.QLVB.UserDuAn">UserDuAn</text>
+    <text name="UserDuAnsHeaderInfo">User du ans header info</text>
+    <text name="CreateNewUserDuAn">Create new user du an</text>
+    <text name="EditUserDuAn">Edit user du an</text>
+    <text name="DeleteUserDuAn">Delete user du an</text>
+    <text name="UserDuAns">User du ans</text>
+
     <text name="ChiTietHoSo">Chi tiet ho so</text>
     <text name="QuyetDinhKemTheo">Quyet dinh kem theo</text>
     <text name="BaoCaoVanBanDuAn">Bao cao van ban du an</text>
