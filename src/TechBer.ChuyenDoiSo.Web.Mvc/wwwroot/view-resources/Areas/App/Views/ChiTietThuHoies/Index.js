@@ -89,8 +89,8 @@
 					maxThu6Filter: $('#MaxThu6FilterId').val(),
 					minThu7Filter: $('#MinThu7FilterId').val(),
 					maxThu7Filter: $('#MaxThu7FilterId').val(),
-					minThu8Filter:  getDateFilter($('#MinThu8FilterId')),
-					maxThu8Filter:  getDateFilter($('#MaxThu8FilterId')),
+					minThu8Filter: $('#MinThu8FilterId').val(),
+					maxThu8Filter: $('#MaxThu8FilterId').val(),
 					minThu9Filter: $('#MinThu9FilterId').val(),
 					maxThu9Filter: $('#MaxThu9FilterId').val(),
 					minThu10Filter: $('#MinThu10FilterId').val(),
@@ -100,6 +100,7 @@
 					minThu12Filter: $('#MinThu12FilterId').val(),
 					maxThu12Filter: $('#MaxThu12FilterId').val(),
 					ghiChuFilter: $('#GhiChuFilterId').val(),
+					tenFilter: $('#TenFilterId').val(),
 					danhMucThuHoiTenFilter: $('#DanhMucThuHoiTenFilterId').val()
                     };
                 }
@@ -252,14 +253,7 @@
 					{
 						targets: 20,
 						 data: "chiTietThuHoi.thu8",
-						 name: "thu8" ,
-					render: function (thu8) {
-						if (thu8) {
-							return moment(thu8).format('L');
-						}
-						return "";
-					}
-			  
+						 name: "thu8"   
 					},
 					{
 						targets: 21,
@@ -288,6 +282,11 @@
 					},
 					{
 						targets: 26,
+						 data: "chiTietThuHoi.ten",
+						 name: "ten"   
+					},
+					{
+						targets: 27,
 						 data: "danhMucThuHoiTen" ,
 						 name: "danhMucThuHoiFk.ten" 
 					}
@@ -373,8 +372,8 @@
 					maxThu6Filter: $('#MaxThu6FilterId').val(),
 					minThu7Filter: $('#MinThu7FilterId').val(),
 					maxThu7Filter: $('#MaxThu7FilterId').val(),
-					minThu8Filter:  getDateFilter($('#MinThu8FilterId')),
-					maxThu8Filter:  getDateFilter($('#MaxThu8FilterId')),
+					minThu8Filter: $('#MinThu8FilterId').val(),
+					maxThu8Filter: $('#MaxThu8FilterId').val(),
 					minThu9Filter: $('#MinThu9FilterId').val(),
 					maxThu9Filter: $('#MaxThu9FilterId').val(),
 					minThu10Filter: $('#MinThu10FilterId').val(),
@@ -384,6 +383,7 @@
 					minThu12Filter: $('#MinThu12FilterId').val(),
 					maxThu12Filter: $('#MaxThu12FilterId').val(),
 					ghiChuFilter: $('#GhiChuFilterId').val(),
+					tenFilter: $('#TenFilterId').val(),
 					danhMucThuHoiTenFilter: $('#DanhMucThuHoiTenFilterId').val()
 				})
                 .done(function (result) {

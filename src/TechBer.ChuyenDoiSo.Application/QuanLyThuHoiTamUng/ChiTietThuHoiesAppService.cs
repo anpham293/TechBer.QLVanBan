@@ -40,7 +40,7 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
 			
 			var filteredChiTietThuHoies = _chiTietThuHoiRepository.GetAll()
 						.Include( e => e.DanhMucThuHoiFk)
-						.WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false  || e.GhiChu.Contains(input.Filter))
+						.WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false  || e.GhiChu.Contains(input.Filter) || e.Ten.Contains(input.Filter))
 						.WhereIf(input.MinDu1Filter != null, e => e.Du1 >= input.MinDu1Filter)
 						.WhereIf(input.MaxDu1Filter != null, e => e.Du1 <= input.MaxDu1Filter)
 						.WhereIf(input.MinDu2Filter != null, e => e.Du2 >= input.MinDu2Filter)
@@ -90,6 +90,7 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
 						.WhereIf(input.MinThu12Filter != null, e => e.Thu12 >= input.MinThu12Filter)
 						.WhereIf(input.MaxThu12Filter != null, e => e.Thu12 <= input.MaxThu12Filter)
 						.WhereIf(!string.IsNullOrWhiteSpace(input.GhiChuFilter),  e => e.GhiChu == input.GhiChuFilter)
+						.WhereIf(!string.IsNullOrWhiteSpace(input.TenFilter),  e => e.Ten == input.TenFilter)
 						.WhereIf(!string.IsNullOrWhiteSpace(input.DanhMucThuHoiTenFilter), e => e.DanhMucThuHoiFk != null && e.DanhMucThuHoiFk.Ten == input.DanhMucThuHoiTenFilter);
 
 			var pagedAndFilteredChiTietThuHoies = filteredChiTietThuHoies
@@ -128,6 +129,7 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
                                 Thu11 = o.Thu11,
                                 Thu12 = o.Thu12,
                                 GhiChu = o.GhiChu,
+                                Ten = o.Ten,
                                 Id = o.Id
 							},
                          	DanhMucThuHoiTen = s1 == null || s1.Ten == null ? "" : s1.Ten.ToString()
@@ -210,7 +212,7 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
 			
 			var filteredChiTietThuHoies = _chiTietThuHoiRepository.GetAll()
 						.Include( e => e.DanhMucThuHoiFk)
-						.WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false  || e.GhiChu.Contains(input.Filter))
+						.WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false  || e.GhiChu.Contains(input.Filter) || e.Ten.Contains(input.Filter))
 						.WhereIf(input.MinDu1Filter != null, e => e.Du1 >= input.MinDu1Filter)
 						.WhereIf(input.MaxDu1Filter != null, e => e.Du1 <= input.MaxDu1Filter)
 						.WhereIf(input.MinDu2Filter != null, e => e.Du2 >= input.MinDu2Filter)
@@ -260,6 +262,7 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
 						.WhereIf(input.MinThu12Filter != null, e => e.Thu12 >= input.MinThu12Filter)
 						.WhereIf(input.MaxThu12Filter != null, e => e.Thu12 <= input.MaxThu12Filter)
 						.WhereIf(!string.IsNullOrWhiteSpace(input.GhiChuFilter),  e => e.GhiChu == input.GhiChuFilter)
+						.WhereIf(!string.IsNullOrWhiteSpace(input.TenFilter),  e => e.Ten == input.TenFilter)
 						.WhereIf(!string.IsNullOrWhiteSpace(input.DanhMucThuHoiTenFilter), e => e.DanhMucThuHoiFk != null && e.DanhMucThuHoiFk.Ten == input.DanhMucThuHoiTenFilter);
 
 			var query = (from o in filteredChiTietThuHoies
@@ -294,6 +297,7 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
                                 Thu11 = o.Thu11,
                                 Thu12 = o.Thu12,
                                 GhiChu = o.GhiChu,
+                                Ten = o.Ten,
                                 Id = o.Id
 							},
                          	DanhMucThuHoiTen = s1 == null || s1.Ten == null ? "" : s1.Ten.ToString()

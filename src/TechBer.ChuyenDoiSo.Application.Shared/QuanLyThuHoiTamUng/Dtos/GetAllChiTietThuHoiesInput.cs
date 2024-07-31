@@ -64,8 +64,8 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng.Dtos
 		public decimal? MaxThu7Filter { get; set; }
 		public decimal? MinThu7Filter { get; set; }
 
-		public DateTime? MaxThu8Filter { get; set; }
-		public DateTime? MinThu8Filter { get; set; }
+		public decimal? MaxThu8Filter { get; set; }
+		public decimal? MinThu8Filter { get; set; }
 
 		public decimal? MaxThu9Filter { get; set; }
 		public decimal? MinThu9Filter { get; set; }
@@ -80,6 +80,8 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng.Dtos
 		public decimal? MinThu12Filter { get; set; }
 
 		public string GhiChuFilter { get; set; }
+
+		public string TenFilter { get; set; }
 
 
 		 public string DanhMucThuHoiTenFilter { get; set; }

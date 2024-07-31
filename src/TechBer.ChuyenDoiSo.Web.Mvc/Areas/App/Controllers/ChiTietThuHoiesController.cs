@@ -46,7 +46,6 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
 					getChiTietThuHoiForEditOutput = new GetChiTietThuHoiForEditOutput{
 						ChiTietThuHoi = new CreateOrEditChiTietThuHoiDto()
 					};
-				getChiTietThuHoiForEditOutput.ChiTietThuHoi.Thu8 = DateTime.Now;
 				}
 
 				var viewModel = new CreateOrEditChiTietThuHoiModalViewModel()

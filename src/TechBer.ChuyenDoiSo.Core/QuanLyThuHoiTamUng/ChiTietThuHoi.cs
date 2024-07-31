@@ -51,7 +51,7 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
 		
 		public virtual decimal Thu7 { get; set; }
 		
-		public virtual DateTime Thu8 { get; set; }
+		public virtual decimal Thu8 { get; set; }
 		
 		public virtual decimal Thu9 { get; set; }
 		
@@ -62,6 +62,8 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
 		public virtual decimal Thu12 { get; set; }
 		
 		public virtual string GhiChu { get; set; }
+		
+		public virtual string Ten { get; set; }
 		
 
 		public virtual long? DanhMucThuHoiId { get; set; }

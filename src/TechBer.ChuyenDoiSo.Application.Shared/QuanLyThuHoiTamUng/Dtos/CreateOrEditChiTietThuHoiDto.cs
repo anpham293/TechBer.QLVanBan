@@ -65,7 +65,7 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng.Dtos
 		public decimal Thu7 { get; set; }
 		
 		
-		public DateTime Thu8 { get; set; }
+		public decimal Thu8 { get; set; }
 		
 		
 		public decimal Thu9 { get; set; }
@@ -81,6 +81,9 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng.Dtos
 		
 		
 		public string GhiChu { get; set; }
+		
+		
+		public string Ten { get; set; }
 		
 		
 		 public long? DanhMucThuHoiId { get; set; }

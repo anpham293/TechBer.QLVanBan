@@ -60,6 +60,7 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng.Exporting
                         L("Thu11"),
                         L("Thu12"),
                         L("GhiChu"),
+                        L("Ten"),
                         (L("DanhMucThuHoi")) + L("Ten")
                         );
 
@@ -84,21 +85,18 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng.Exporting
                         _ => _.ChiTietThuHoi.Thu5,
                         _ => _.ChiTietThuHoi.Thu6,
                         _ => _.ChiTietThuHoi.Thu7,
-                        _ => _timeZoneConverter.Convert(_.ChiTietThuHoi.Thu8, _abpSession.TenantId, _abpSession.GetUserId()),
+                        _ => _.ChiTietThuHoi.Thu8,
                         _ => _.ChiTietThuHoi.Thu9,
                         _ => _.ChiTietThuHoi.Thu10,
                         _ => _.ChiTietThuHoi.Thu11,
                         _ => _.ChiTietThuHoi.Thu12,
                         _ => _.ChiTietThuHoi.GhiChu,
+                        _ => _.ChiTietThuHoi.Ten,
                         _ => _.DanhMucThuHoiTen
                         );
 
 					
-					for (var i = 1; i <= chiTietThuHoies.Count; i++)
-                    {
-                        SetCellDataFormat(sheet.GetRow(i).Cells[20], "yyyy-mm-dd");
-                    }
-                    sheet.AutoSizeColumn(20);
+					
                 });
         }
     }

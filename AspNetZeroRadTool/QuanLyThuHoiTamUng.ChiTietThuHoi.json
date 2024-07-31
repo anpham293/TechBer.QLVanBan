@@ -1,5 +1,5 @@
 {
-  "IsRegenerate": false,
+  "IsRegenerate": true,
   "MenuPosition": "main",
   "RelativeNamespace": "QuanLyThuHoiTamUng",
   "EntityName": "ChiTietThuHoi",
@@ -22,8 +22,8 @@
     {
       "Name": "Du1",
       "Type": "decimal",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0,
@@ -41,8 +41,8 @@
     {
       "Name": "Du2",
       "Type": "decimal",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0,
@@ -60,8 +60,8 @@
     {
       "Name": "Du3",
       "Type": "decimal",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0,
@@ -79,8 +79,8 @@
     {
       "Name": "Du4",
       "Type": "decimal",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0,
@@ -98,8 +98,8 @@
     {
       "Name": "Du5",
       "Type": "decimal",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0,
@@ -117,8 +117,8 @@
     {
       "Name": "Du6",
       "Type": "decimal",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0,
@@ -136,8 +136,8 @@
     {
       "Name": "Du7",
       "Type": "decimal",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0,
@@ -155,8 +155,8 @@
     {
       "Name": "Du8",
       "Type": "decimal",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0,
@@ -174,8 +174,8 @@
     {
       "Name": "Du9",
       "Type": "decimal",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0,
@@ -193,8 +193,8 @@
     {
       "Name": "Du10",
       "Type": "decimal",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0,
@@ -212,8 +212,8 @@
     {
       "Name": "Du11",
       "Type": "decimal",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0,
@@ -231,8 +231,8 @@
     {
       "Name": "Du12",
       "Type": "decimal",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0,
@@ -250,8 +250,8 @@
     {
       "Name": "Thu1",
       "Type": "decimal",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0,
@@ -269,8 +269,8 @@
     {
       "Name": "Thu2",
       "Type": "decimal",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0,
@@ -288,8 +288,8 @@
     {
       "Name": "Thu3",
       "Type": "decimal",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0,
@@ -307,8 +307,8 @@
     {
       "Name": "Thu4",
       "Type": "decimal",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0,
@@ -326,8 +326,8 @@
     {
       "Name": "Thu5",
       "Type": "decimal",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0,
@@ -345,8 +345,8 @@
     {
       "Name": "Thu6",
       "Type": "decimal",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0,
@@ -364,8 +364,8 @@
     {
       "Name": "Thu7",
       "Type": "decimal",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0,
@@ -382,9 +382,9 @@
     },
     {
       "Name": "Thu8",
-      "Type": "DateTime",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "Type": "decimal",
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0,
@@ -402,8 +402,8 @@
     {
       "Name": "Thu9",
       "Type": "decimal",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0,
@@ -421,8 +421,8 @@
     {
       "Name": "Thu10",
       "Type": "decimal",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0,
@@ -440,8 +440,8 @@
     {
       "Name": "Thu11",
       "Type": "decimal",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0,
@@ -459,8 +459,8 @@
     {
       "Name": "Thu12",
       "Type": "decimal",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0,
@@ -477,6 +477,25 @@
     },
     {
       "Name": "GhiChu",
+      "Type": "string",
+      "MaxLength": -1,
+      "MinLength": -1,
+      "Range": {
+        "IsRangeSet": false,
+        "MinimumValue": 0,
+        "MaximumValue": 0
+      },
+      "Required": false,
+      "Nullable": false,
+      "Regex": "",
+      "UserInterface": {
+        "AdvancedFilter": true,
+        "List": true,
+        "CreateOrUpdate": true
+      }
+    },
+    {
+      "Name": "Ten",
       "Type": "string",
       "MaxLength": -1,
       "MinLength": -1,
