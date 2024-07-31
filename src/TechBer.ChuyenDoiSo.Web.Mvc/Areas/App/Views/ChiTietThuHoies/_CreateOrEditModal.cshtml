@@ -1,5 +1,4 @@
-﻿
-@using System.Globalization
+﻿@using System.Globalization
 @using TechBer.ChuyenDoiSo.Web.Areas.App.Models.Common.Modals
 @using TechBer.ChuyenDoiSo.Web.Areas.App.Models.ChiTietThuHoies
 @model CreateOrEditChiTietThuHoiModalViewModel
@@ -7,168 +6,169 @@
 @await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditChiTietThuHoi")) : L("CreateNewChiTietThuHoi")))
 
 <div class="modal-body">
-        <div id="ChiTietThuHoiInformationsTab">
-            <form name="ChiTietThuHoiInformationsForm" role="form" novalidate class="form-validation">
+    <div id="ChiTietThuHoiInformationsTab">
+        <form name="ChiTietThuHoiInformationsForm" role="form" novalidate class="form-validation">
 
-                @if (Model.IsEditMode)
-                {
-                    <input type="hidden" name="id" value="@Model.ChiTietThuHoi.Id" />
-                }
-
-				            
-								<div class="form-group m-form__group">
-										<label for="DanhMucThuHoiTen">@L("DanhMucThuHoi")</label>
-									    <div class="input-group">
-											<input class="form-control" id="DanhMucThuHoiTen" name="danhMucThuHoiTen" value="@Model.DanhMucThuHoiTen" type="text" disabled>
-										<div class="input-group-append">
-											<button class="btn btn-primary blue" id="OpenDanhMucThuHoiLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
-										</div> 
-										<div class="input-group-prepend">
-											<button class="btn btn-danger btn-icon" type="button" id="ClearDanhMucThuHoiTenButton"><i class="fa fa-times"></i></button>
-										</div>
-									</div>
-								</div>
-
-								@if (Model.IsEditMode)
-								{
-									<input class="form-control" id="ChiTietThuHoi_DanhMucThuHoiId" value="@Model.ChiTietThuHoi.DanhMucThuHoiId" type="text" name="danhMucThuHoiId"  hidden/>
-								}
-								 else
-								{ 
-									<input class="form-control" id="ChiTietThuHoi_DanhMucThuHoiId" value="" type="text" name="danhMucThuHoiId"  hidden/>
-								}
+            @if (Model.IsEditMode)
+            {
+                <input type="hidden" name="id" value="@Model.ChiTietThuHoi.Id"/>
+            }
 
 
+            <div class="form-group m-form__group">
+                <label for="DanhMucThuHoiTen">@L("DanhMucThuHoi")</label>
+                <div class="input-group">
+                    <input class="form-control" id="DanhMucThuHoiTen" name="danhMucThuHoiTen" value="@Model.DanhMucThuHoiTen" type="text" disabled>
+                    <div class="input-group-append">
+                        <button class="btn btn-primary blue" id="OpenDanhMucThuHoiLookupTableButton" type="button">
+                            <i class="fa fa-search"></i> @L("Pick")</button>
+                    </div>
+                    <div class="input-group-prepend">
+                        <button class="btn btn-danger btn-icon" type="button" id="ClearDanhMucThuHoiTenButton">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
 
-				
-								<div class="form-group">
-									<label for="ChiTietThuHoi_Du1">@L("Du1")</label>
-									<input class="form-control m-input" id="ChiTietThuHoi_Du1" value="@Model.ChiTietThuHoi.Du1.ToString(CultureInfo.InvariantCulture)" type="number" name="du1"  />
-								</div>
-					
-								<div class="form-group">
-									<label for="ChiTietThuHoi_Du2">@L("Du2")</label>
-									<input class="form-control m-input" id="ChiTietThuHoi_Du2" value="@Model.ChiTietThuHoi.Du2.ToString(CultureInfo.InvariantCulture)" type="number" name="du2"  />
-								</div>
-					
-								<div class="form-group">
-									<label for="ChiTietThuHoi_Du3">@L("Du3")</label>
-									<input class="form-control m-input" id="ChiTietThuHoi_Du3" value="@Model.ChiTietThuHoi.Du3.ToString(CultureInfo.InvariantCulture)" type="number" name="du3"  />
-								</div>
-					
-								<div class="form-group">
-									<label for="ChiTietThuHoi_Du4">@L("Du4")</label>
-									<input class="form-control m-input" id="ChiTietThuHoi_Du4" value="@Model.ChiTietThuHoi.Du4.ToString(CultureInfo.InvariantCulture)" type="number" name="du4"  />
-								</div>
-					
-								<div class="form-group">
-									<label for="ChiTietThuHoi_Du5">@L("Du5")</label>
-									<input class="form-control m-input" id="ChiTietThuHoi_Du5" value="@Model.ChiTietThuHoi.Du5.ToString(CultureInfo.InvariantCulture)" type="number" name="du5"  />
-								</div>
-					
-								<div class="form-group">
-									<label for="ChiTietThuHoi_Du6">@L("Du6")</label>
-									<input class="form-control m-input" id="ChiTietThuHoi_Du6" value="@Model.ChiTietThuHoi.Du6.ToString(CultureInfo.InvariantCulture)" type="number" name="du6"  />
-								</div>
-					
-								<div class="form-group">
-									<label for="ChiTietThuHoi_Du7">@L("Du7")</label>
-									<input class="form-control m-input" id="ChiTietThuHoi_Du7" value="@Model.ChiTietThuHoi.Du7.ToString(CultureInfo.InvariantCulture)" type="number" name="du7"  />
-								</div>
-					
-								<div class="form-group">
-									<label for="ChiTietThuHoi_Du8">@L("Du8")</label>
-									<input class="form-control m-input" id="ChiTietThuHoi_Du8" value="@Model.ChiTietThuHoi.Du8.ToString(CultureInfo.InvariantCulture)" type="number" name="du8"  />
-								</div>
-					
-								<div class="form-group">
-									<label for="ChiTietThuHoi_Du9">@L("Du9")</label>
-									<input class="form-control m-input" id="ChiTietThuHoi_Du9" value="@Model.ChiTietThuHoi.Du9.ToString(CultureInfo.InvariantCulture)" type="number" name="du9"  />
-								</div>
-					
-								<div class="form-group">
-									<label for="ChiTietThuHoi_Du10">@L("Du10")</label>
-									<input class="form-control m-input" id="ChiTietThuHoi_Du10" value="@Model.ChiTietThuHoi.Du10.ToString(CultureInfo.InvariantCulture)" type="number" name="du10"  />
-								</div>
-					
-								<div class="form-group">
-									<label for="ChiTietThuHoi_Du11">@L("Du11")</label>
-									<input class="form-control m-input" id="ChiTietThuHoi_Du11" value="@Model.ChiTietThuHoi.Du11.ToString(CultureInfo.InvariantCulture)" type="number" name="du11"  />
-								</div>
-					
-								<div class="form-group">
-									<label for="ChiTietThuHoi_Du12">@L("Du12")</label>
-									<input class="form-control m-input" id="ChiTietThuHoi_Du12" value="@Model.ChiTietThuHoi.Du12.ToString(CultureInfo.InvariantCulture)" type="number" name="du12"  />
-								</div>
-					
-								<div class="form-group">
-									<label for="ChiTietThuHoi_Thu1">@L("Thu1")</label>
-									<input class="form-control m-input" id="ChiTietThuHoi_Thu1" value="@Model.ChiTietThuHoi.Thu1.ToString(CultureInfo.InvariantCulture)" type="number" name="thu1"  />
-								</div>
-					
-								<div class="form-group">
-									<label for="ChiTietThuHoi_Thu2">@L("Thu2")</label>
-									<input class="form-control m-input" id="ChiTietThuHoi_Thu2" value="@Model.ChiTietThuHoi.Thu2.ToString(CultureInfo.InvariantCulture)" type="number" name="thu2"  />
-								</div>
-					
-								<div class="form-group">
-									<label for="ChiTietThuHoi_Thu3">@L("Thu3")</label>
-									<input class="form-control m-input" id="ChiTietThuHoi_Thu3" value="@Model.ChiTietThuHoi.Thu3.ToString(CultureInfo.InvariantCulture)" type="number" name="thu3"  />
-								</div>
-					
-								<div class="form-group">
-									<label for="ChiTietThuHoi_Thu4">@L("Thu4")</label>
-									<input class="form-control m-input" id="ChiTietThuHoi_Thu4" value="@Model.ChiTietThuHoi.Thu4.ToString(CultureInfo.InvariantCulture)" type="number" name="thu4"  />
-								</div>
-					
-								<div class="form-group">
-									<label for="ChiTietThuHoi_Thu5">@L("Thu5")</label>
-									<input class="form-control m-input" id="ChiTietThuHoi_Thu5" value="@Model.ChiTietThuHoi.Thu5.ToString(CultureInfo.InvariantCulture)" type="number" name="thu5"  />
-								</div>
-					
-								<div class="form-group">
-									<label for="ChiTietThuHoi_Thu6">@L("Thu6")</label>
-									<input class="form-control m-input" id="ChiTietThuHoi_Thu6" value="@Model.ChiTietThuHoi.Thu6.ToString(CultureInfo.InvariantCulture)" type="number" name="thu6"  />
-								</div>
-					
-								<div class="form-group">
-									<label for="ChiTietThuHoi_Thu7">@L("Thu7")</label>
-									<input class="form-control m-input" id="ChiTietThuHoi_Thu7" value="@Model.ChiTietThuHoi.Thu7.ToString(CultureInfo.InvariantCulture)" type="number" name="thu7"  />
-								</div>
-					
-								<div class="form-group">
-									<label for="ChiTietThuHoi_Thu8">@L("Thu8")</label>
-									<input class="form-control m-input date-picker" id="ChiTietThuHoi_Thu8" type="text" name="thu8" value="@Model.ChiTietThuHoi.Thu8"/>
-								</div>
-					
-								<div class="form-group">
-									<label for="ChiTietThuHoi_Thu9">@L("Thu9")</label>
-									<input class="form-control m-input" id="ChiTietThuHoi_Thu9" value="@Model.ChiTietThuHoi.Thu9.ToString(CultureInfo.InvariantCulture)" type="number" name="thu9"  />
-								</div>
-					
-								<div class="form-group">
-									<label for="ChiTietThuHoi_Thu10">@L("Thu10")</label>
-									<input class="form-control m-input" id="ChiTietThuHoi_Thu10" value="@Model.ChiTietThuHoi.Thu10.ToString(CultureInfo.InvariantCulture)" type="number" name="thu10"  />
-								</div>
-					
-								<div class="form-group">
-									<label for="ChiTietThuHoi_Thu11">@L("Thu11")</label>
-									<input class="form-control m-input" id="ChiTietThuHoi_Thu11" value="@Model.ChiTietThuHoi.Thu11.ToString(CultureInfo.InvariantCulture)" type="number" name="thu11"  />
-								</div>
-					
-								<div class="form-group">
-									<label for="ChiTietThuHoi_Thu12">@L("Thu12")</label>
-									<input class="form-control m-input" id="ChiTietThuHoi_Thu12" value="@Model.ChiTietThuHoi.Thu12.ToString(CultureInfo.InvariantCulture)" type="number" name="thu12"  />
-								</div>
-					
-								<div class="form-group">
-									<label for="ChiTietThuHoi_GhiChu">@L("GhiChu")</label>
-									<input class="form-control" id="ChiTietThuHoi_GhiChu" value="@Model.ChiTietThuHoi.GhiChu" type="text" name="ghiChu"     />
-								</div>
-					
+            @if (Model.IsEditMode)
+            {
+                <input class="form-control" id="ChiTietThuHoi_DanhMucThuHoiId" value="@Model.ChiTietThuHoi.DanhMucThuHoiId" type="text" name="danhMucThuHoiId" hidden/>
+            }
+            else
+            {
+                <input class="form-control" id="ChiTietThuHoi_DanhMucThuHoiId" value="" type="text" name="danhMucThuHoiId" hidden/>
+            }
 
-            </form>
-        </div>
+
+            <div class="form-group">
+                <label for="ChiTietThuHoi_Du1">@L("Du1")</label>
+                <input class="form-control m-input" id="ChiTietThuHoi_Du1" value="@Model.ChiTietThuHoi.Du1.ToString(CultureInfo.InvariantCulture)" type="number" name="du1"/>
+            </div>
+
+            <div class="form-group">
+                <label for="ChiTietThuHoi_Du2">@L("Du2")</label>
+                <input class="form-control m-input" id="ChiTietThuHoi_Du2" value="@Model.ChiTietThuHoi.Du2.ToString(CultureInfo.InvariantCulture)" type="number" name="du2"/>
+            </div>
+
+            <div class="form-group">
+                <label for="ChiTietThuHoi_Du3">@L("Du3")</label>
+                <input class="form-control m-input" id="ChiTietThuHoi_Du3" value="@Model.ChiTietThuHoi.Du3.ToString(CultureInfo.InvariantCulture)" type="number" name="du3"/>
+            </div>
+
+            <div class="form-group">
+                <label for="ChiTietThuHoi_Du4">@L("Du4")</label>
+                <input class="form-control m-input" id="ChiTietThuHoi_Du4" value="@Model.ChiTietThuHoi.Du4.ToString(CultureInfo.InvariantCulture)" type="number" name="du4"/>
+            </div>
+
+            <div class="form-group">
+                <label for="ChiTietThuHoi_Du5">@L("Du5")</label>
+                <input class="form-control m-input" id="ChiTietThuHoi_Du5" value="@Model.ChiTietThuHoi.Du5.ToString(CultureInfo.InvariantCulture)" type="number" name="du5"/>
+            </div>
+
+            <div class="form-group">
+                <label for="ChiTietThuHoi_Du6">@L("Du6")</label>
+                <input class="form-control m-input" id="ChiTietThuHoi_Du6" value="@Model.ChiTietThuHoi.Du6.ToString(CultureInfo.InvariantCulture)" type="number" name="du6"/>
+            </div>
+
+            <div class="form-group">
+                <label for="ChiTietThuHoi_Du7">@L("Du7")</label>
+                <input class="form-control m-input" id="ChiTietThuHoi_Du7" value="@Model.ChiTietThuHoi.Du7.ToString(CultureInfo.InvariantCulture)" type="number" name="du7"/>
+            </div>
+
+            <div class="form-group">
+                <label for="ChiTietThuHoi_Du8">@L("Du8")</label>
+                <input class="form-control m-input" id="ChiTietThuHoi_Du8" value="@Model.ChiTietThuHoi.Du8.ToString(CultureInfo.InvariantCulture)" type="number" name="du8"/>
+            </div>
+
+            <div class="form-group">
+                <label for="ChiTietThuHoi_Du9">@L("Du9")</label>
+                <input class="form-control m-input" id="ChiTietThuHoi_Du9" value="@Model.ChiTietThuHoi.Du9.ToString(CultureInfo.InvariantCulture)" type="number" name="du9"/>
+            </div>
+
+            <div class="form-group">
+                <label for="ChiTietThuHoi_Du10">@L("Du10")</label>
+                <input class="form-control m-input" id="ChiTietThuHoi_Du10" value="@Model.ChiTietThuHoi.Du10.ToString(CultureInfo.InvariantCulture)" type="number" name="du10"/>
+            </div>
+
+            <div class="form-group">
+                <label for="ChiTietThuHoi_Du11">@L("Du11")</label>
+                <input class="form-control m-input" id="ChiTietThuHoi_Du11" value="@Model.ChiTietThuHoi.Du11.ToString(CultureInfo.InvariantCulture)" type="number" name="du11"/>
+            </div>
+
+            <div class="form-group">
+                <label for="ChiTietThuHoi_Du12">@L("Du12")</label>
+                <input class="form-control m-input" id="ChiTietThuHoi_Du12" value="@Model.ChiTietThuHoi.Du12.ToString(CultureInfo.InvariantCulture)" type="number" name="du12"/>
+            </div>
+
+            <div class="form-group">
+                <label for="ChiTietThuHoi_Thu1">@L("Thu1")</label>
+                <input class="form-control m-input" id="ChiTietThuHoi_Thu1" value="@Model.ChiTietThuHoi.Thu1.ToString(CultureInfo.InvariantCulture)" type="number" name="thu1"/>
+            </div>
+
+            <div class="form-group">
+                <label for="ChiTietThuHoi_Thu2">@L("Thu2")</label>
+                <input class="form-control m-input" id="ChiTietThuHoi_Thu2" value="@Model.ChiTietThuHoi.Thu2.ToString(CultureInfo.InvariantCulture)" type="number" name="thu2"/>
+            </div>
+
+            <div class="form-group">
+                <label for="ChiTietThuHoi_Thu3">@L("Thu3")</label>
+                <input class="form-control m-input" id="ChiTietThuHoi_Thu3" value="@Model.ChiTietThuHoi.Thu3.ToString(CultureInfo.InvariantCulture)" type="number" name="thu3"/>
+            </div>
+
+            <div class="form-group">
+                <label for="ChiTietThuHoi_Thu4">@L("Thu4")</label>
+                <input class="form-control m-input" id="ChiTietThuHoi_Thu4" value="@Model.ChiTietThuHoi.Thu4.ToString(CultureInfo.InvariantCulture)" type="number" name="thu4"/>
+            </div>
+
+            <div class="form-group">
+                <label for="ChiTietThuHoi_Thu5">@L("Thu5")</label>
+                <input class="form-control m-input" id="ChiTietThuHoi_Thu5" value="@Model.ChiTietThuHoi.Thu5.ToString(CultureInfo.InvariantCulture)" type="number" name="thu5"/>
+            </div>
+
+            <div class="form-group">
+                <label for="ChiTietThuHoi_Thu6">@L("Thu6")</label>
+                <input class="form-control m-input" id="ChiTietThuHoi_Thu6" value="@Model.ChiTietThuHoi.Thu6.ToString(CultureInfo.InvariantCulture)" type="number" name="thu6"/>
+            </div>
+
+            <div class="form-group">
+                <label for="ChiTietThuHoi_Thu7">@L("Thu7")</label>
+                <input class="form-control m-input" id="ChiTietThuHoi_Thu7" value="@Model.ChiTietThuHoi.Thu7.ToString(CultureInfo.InvariantCulture)" type="number" name="thu7"/>
+            </div>
+
+            <div class="form-group">
+                <label for="ChiTietThuHoi_Thu8">@L("Thu8")</label>
+                <input class="form-control m-input date-picker" id="ChiTietThuHoi_Thu8" type="text" name="thu8" value="@Model.ChiTietThuHoi.Thu8"/>
+            </div>
+
+            <div class="form-group">
+                <label for="ChiTietThuHoi_Thu9">@L("Thu9")</label>
+                <input class="form-control m-input" id="ChiTietThuHoi_Thu9" value="@Model.ChiTietThuHoi.Thu9.ToString(CultureInfo.InvariantCulture)" type="number" name="thu9"/>
+            </div>
+
+            <div class="form-group">
+                <label for="ChiTietThuHoi_Thu10">@L("Thu10")</label>
+                <input class="form-control m-input" id="ChiTietThuHoi_Thu10" value="@Model.ChiTietThuHoi.Thu10.ToString(CultureInfo.InvariantCulture)" type="number" name="thu10"/>
+            </div>
+
+            <div class="form-group">
+                <label for="ChiTietThuHoi_Thu11">@L("Thu11")</label>
+                <input class="form-control m-input" id="ChiTietThuHoi_Thu11" value="@Model.ChiTietThuHoi.Thu11.ToString(CultureInfo.InvariantCulture)" type="number" name="thu11"/>
+            </div>
+
+            <div class="form-group">
+                <label for="ChiTietThuHoi_Thu12">@L("Thu12")</label>
+                <input class="form-control m-input" id="ChiTietThuHoi_Thu12" value="@Model.ChiTietThuHoi.Thu12.ToString(CultureInfo.InvariantCulture)" type="number" name="thu12"/>
+            </div>
+
+            <div class="form-group">
+                <label for="ChiTietThuHoi_GhiChu">@L("GhiChu")</label>
+                <input class="form-control" id="ChiTietThuHoi_GhiChu" value="@Model.ChiTietThuHoi.GhiChu" type="text" name="ghiChu"/>
+            </div>
+
+
+        </form>
+    </div>
 </div>
 
 @await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

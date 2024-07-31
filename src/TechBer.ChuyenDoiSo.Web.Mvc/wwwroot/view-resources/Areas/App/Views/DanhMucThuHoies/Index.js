@@ -27,6 +27,12 @@
             modalClass: 'ViewDanhMucThuHoiModal'
         });
 
+        var _chitietThuHoiModal = new app.ModalManager({
+            viewUrl: abp.appPath + 'App/DanhMucThuHoies/ChiTietThuHoiModal',
+            modalClass: 'ChiTietThuHoiModal',
+            modalSize: 'modal-full-90 modal-dialog-scrollable'
+        });
+
         var _entityTypeHistoryModal = app.modals.EntityTypeHistoryModal.create();
 
         function entityHistoryIsEnabled() {
@@ -77,6 +83,12 @@
                                 text: app.localize('View'),
                                 action: function (data) {
                                     _viewDanhMucThuHoiModal.open({id: data.record.danhMucThuHoi.id});
+                                }
+                            },
+                            {
+                                text: app.localize('ChiTiet'),
+                                action: function (data) {
+                                    _chitietThuHoiModal.open({id: data.record.danhMucThuHoi.id});
                                 }
                             },
                             {

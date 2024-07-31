@@ -47,7 +47,8 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
             if (input.id.HasValue)
             {
                 getDanhMucThuHoiForEditOutput =
-                    await _danhMucThuHoiesAppService.GetDanhMucThuHoiForEdit(new EntityDto<long> {Id = (long) input.id});
+                    await _danhMucThuHoiesAppService.GetDanhMucThuHoiForEdit(new EntityDto<long>
+                        {Id = (long) input.id});
             }
             else
             {
@@ -92,6 +93,19 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
             };
 
             return PartialView("_DanhMucThuHoiDuAnThuHoiLookupTableModal", viewModel);
+        }
+
+        public async Task<PartialViewResult> ChiTietThuHoiModal(long id)
+        {
+            var getDanhMucThuHoiForViewDto = await _danhMucThuHoiesAppService.GetDanhMucThuHoiForView(id);
+
+            var model = new DanhMucThuHoiViewModel()
+            {
+                DanhMucThuHoi = getDanhMucThuHoiForViewDto.DanhMucThuHoi,
+                DuAnThuHoiMaDATH = getDanhMucThuHoiForViewDto.DuAnThuHoiMaDATH
+            };
+
+            return PartialView("_ChiTietThuHoiModal", model);
         }
     }
 }

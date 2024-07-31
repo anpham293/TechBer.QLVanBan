@@ -24,9 +24,6 @@
     background-color: #00bb7742!important;
 }
 
-.modal-full{
-    min-width:98%
-}
 
 body {
     height: 100%;
@@ -41,4 +38,8 @@ body {
 }
 .modal-full{
     min-width:95%
+}
+
+.modal-full-90{
+    min-width:90%
 }
