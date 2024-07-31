@@ -102,7 +102,8 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
             var model = new DanhMucThuHoiViewModel()
             {
                 DanhMucThuHoi = getDanhMucThuHoiForViewDto.DanhMucThuHoi,
-                DuAnThuHoiMaDATH = getDanhMucThuHoiForViewDto.DuAnThuHoiMaDATH
+                DuAnThuHoiMaDATH = getDanhMucThuHoiForViewDto.DuAnThuHoiMaDATH,
+                DanhMucThuHoiId = id
             };
 
             return PartialView("_ChiTietThuHoiModal", model);

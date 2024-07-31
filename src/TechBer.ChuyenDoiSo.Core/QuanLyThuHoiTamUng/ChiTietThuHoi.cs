@@ -71,5 +71,8 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
         [ForeignKey("DanhMucThuHoiId")]
 		public DanhMucThuHoi DanhMucThuHoiFk { get; set; }
 		
+		public virtual decimal TongDu { get; set; }
+		public virtual decimal TongThu { get; set; }
+		
     }
 }

@@ -36,62 +36,12 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
 		  }
 
 		 public async Task<PagedResultDto<GetChiTietThuHoiForViewDto>> GetAll(GetAllChiTietThuHoiesInput input)
-         {
-			
-			var filteredChiTietThuHoies = _chiTietThuHoiRepository.GetAll()
-						.Include( e => e.DanhMucThuHoiFk)
-						.WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false  || e.GhiChu.Contains(input.Filter) || e.Ten.Contains(input.Filter))
-						.WhereIf(input.MinDu1Filter != null, e => e.Du1 >= input.MinDu1Filter)
-						.WhereIf(input.MaxDu1Filter != null, e => e.Du1 <= input.MaxDu1Filter)
-						.WhereIf(input.MinDu2Filter != null, e => e.Du2 >= input.MinDu2Filter)
-						.WhereIf(input.MaxDu2Filter != null, e => e.Du2 <= input.MaxDu2Filter)
-						.WhereIf(input.MinDu3Filter != null, e => e.Du3 >= input.MinDu3Filter)
-						.WhereIf(input.MaxDu3Filter != null, e => e.Du3 <= input.MaxDu3Filter)
-						.WhereIf(input.MinDu4Filter != null, e => e.Du4 >= input.MinDu4Filter)
-						.WhereIf(input.MaxDu4Filter != null, e => e.Du4 <= input.MaxDu4Filter)
-						.WhereIf(input.MinDu5Filter != null, e => e.Du5 >= input.MinDu5Filter)
-						.WhereIf(input.MaxDu5Filter != null, e => e.Du5 <= input.MaxDu5Filter)
-						.WhereIf(input.MinDu6Filter != null, e => e.Du6 >= input.MinDu6Filter)
-						.WhereIf(input.MaxDu6Filter != null, e => e.Du6 <= input.MaxDu6Filter)
-						.WhereIf(input.MinDu7Filter != null, e => e.Du7 >= input.MinDu7Filter)
-						.WhereIf(input.MaxDu7Filter != null, e => e.Du7 <= input.MaxDu7Filter)
-						.WhereIf(input.MinDu8Filter != null, e => e.Du8 >= input.MinDu8Filter)
-						.WhereIf(input.MaxDu8Filter != null, e => e.Du8 <= input.MaxDu8Filter)
-						.WhereIf(input.MinDu9Filter != null, e => e.Du9 >= input.MinDu9Filter)
-						.WhereIf(input.MaxDu9Filter != null, e => e.Du9 <= input.MaxDu9Filter)
-						.WhereIf(input.MinDu10Filter != null, e => e.Du10 >= input.MinDu10Filter)
-						.WhereIf(input.MaxDu10Filter != null, e => e.Du10 <= input.MaxDu10Filter)
-						.WhereIf(input.MinDu11Filter != null, e => e.Du11 >= input.MinDu11Filter)
-						.WhereIf(input.MaxDu11Filter != null, e => e.Du11 <= input.MaxDu11Filter)
-						.WhereIf(input.MinDu12Filter != null, e => e.Du12 >= input.MinDu12Filter)
-						.WhereIf(input.MaxDu12Filter != null, e => e.Du12 <= input.MaxDu12Filter)
-						.WhereIf(input.MinThu1Filter != null, e => e.Thu1 >= input.MinThu1Filter)
-						.WhereIf(input.MaxThu1Filter != null, e => e.Thu1 <= input.MaxThu1Filter)
-						.WhereIf(input.MinThu2Filter != null, e => e.Thu2 >= input.MinThu2Filter)
-						.WhereIf(input.MaxThu2Filter != null, e => e.Thu2 <= input.MaxThu2Filter)
-						.WhereIf(input.MinThu3Filter != null, e => e.Thu3 >= input.MinThu3Filter)
-						.WhereIf(input.MaxThu3Filter != null, e => e.Thu3 <= input.MaxThu3Filter)
-						.WhereIf(input.MinThu4Filter != null, e => e.Thu4 >= input.MinThu4Filter)
-						.WhereIf(input.MaxThu4Filter != null, e => e.Thu4 <= input.MaxThu4Filter)
-						.WhereIf(input.MinThu5Filter != null, e => e.Thu5 >= input.MinThu5Filter)
-						.WhereIf(input.MaxThu5Filter != null, e => e.Thu5 <= input.MaxThu5Filter)
-						.WhereIf(input.MinThu6Filter != null, e => e.Thu6 >= input.MinThu6Filter)
-						.WhereIf(input.MaxThu6Filter != null, e => e.Thu6 <= input.MaxThu6Filter)
-						.WhereIf(input.MinThu7Filter != null, e => e.Thu7 >= input.MinThu7Filter)
-						.WhereIf(input.MaxThu7Filter != null, e => e.Thu7 <= input.MaxThu7Filter)
-						.WhereIf(input.MinThu8Filter != null, e => e.Thu8 >= input.MinThu8Filter)
-						.WhereIf(input.MaxThu8Filter != null, e => e.Thu8 <= input.MaxThu8Filter)
-						.WhereIf(input.MinThu9Filter != null, e => e.Thu9 >= input.MinThu9Filter)
-						.WhereIf(input.MaxThu9Filter != null, e => e.Thu9 <= input.MaxThu9Filter)
-						.WhereIf(input.MinThu10Filter != null, e => e.Thu10 >= input.MinThu10Filter)
-						.WhereIf(input.MaxThu10Filter != null, e => e.Thu10 <= input.MaxThu10Filter)
-						.WhereIf(input.MinThu11Filter != null, e => e.Thu11 >= input.MinThu11Filter)
-						.WhereIf(input.MaxThu11Filter != null, e => e.Thu11 <= input.MaxThu11Filter)
-						.WhereIf(input.MinThu12Filter != null, e => e.Thu12 >= input.MinThu12Filter)
-						.WhereIf(input.MaxThu12Filter != null, e => e.Thu12 <= input.MaxThu12Filter)
-						.WhereIf(!string.IsNullOrWhiteSpace(input.GhiChuFilter),  e => e.GhiChu == input.GhiChuFilter)
-						.WhereIf(!string.IsNullOrWhiteSpace(input.TenFilter),  e => e.Ten == input.TenFilter)
-						.WhereIf(!string.IsNullOrWhiteSpace(input.DanhMucThuHoiTenFilter), e => e.DanhMucThuHoiFk != null && e.DanhMucThuHoiFk.Ten == input.DanhMucThuHoiTenFilter);
+		 {
+
+			 var filteredChiTietThuHoies = _chiTietThuHoiRepository.GetAll()
+					 .Include(e => e.DanhMucThuHoiFk)
+					 .WhereIf(true, e => e.DanhMucThuHoiId == long.Parse(input.DanhMucThuHoiTenFilter))
+				 ;
 
 			var pagedAndFilteredChiTietThuHoies = filteredChiTietThuHoies
                 .OrderBy(input.Sorting ?? "id asc")
@@ -130,7 +80,9 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
                                 Thu12 = o.Thu12,
                                 GhiChu = o.GhiChu,
                                 Ten = o.Ten,
-                                Id = o.Id
+                                Id = o.Id,
+                                TongDu = o.TongDu,
+                                TongThu = o.TongThu
 							},
                          	DanhMucThuHoiTen = s1 == null || s1.Ten == null ? "" : s1.Ten.ToString()
 						};

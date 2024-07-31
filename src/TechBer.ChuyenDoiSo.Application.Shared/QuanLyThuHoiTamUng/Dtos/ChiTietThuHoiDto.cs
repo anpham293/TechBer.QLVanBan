@@ -61,6 +61,8 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng.Dtos
 
 		 public long? DanhMucThuHoiId { get; set; }
 
+		 public decimal TongThu { get; set; }
+		 public decimal TongDu { get; set; }
 		 
     }
 }

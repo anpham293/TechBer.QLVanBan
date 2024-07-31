@@ -29,6 +29,7 @@
 
         var _chitietThuHoiModal = new app.ModalManager({
             viewUrl: abp.appPath + 'App/DanhMucThuHoies/ChiTietThuHoiModal',
+            scriptUrl: abp.appPath + 'view-resources/Areas/App/Views/ChiTietThuHoies/Index.js',
             modalClass: 'ChiTietThuHoiModal',
             modalSize: 'modal-full-90 modal-dialog-scrollable'
         });

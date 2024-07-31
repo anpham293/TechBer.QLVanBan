@@ -4,6 +4,6 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Models.DanhMucThuHoies
 {
     public class DanhMucThuHoiViewModel : GetDanhMucThuHoiForViewDto
     {
-
+        public long DanhMucThuHoiId { get; set; }
     }
 }
