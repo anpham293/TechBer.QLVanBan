@@ -1,0 +1,73 @@
+﻿using TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Abp.Domain.Entities.Auditing;
+using Abp.Domain.Entities;
+using Abp.Auditing;
+
+namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
+{
+	[Table("ChiTietThuHoies")]
+    [Audited]
+    public class ChiTietThuHoi : FullAuditedEntity<long> 
+    {
+
+		public virtual decimal Du1 { get; set; }
+		
+		public virtual decimal Du2 { get; set; }
+		
+		public virtual decimal Du3 { get; set; }
+		
+		public virtual decimal Du4 { get; set; }
+		
+		public virtual decimal Du5 { get; set; }
+		
+		public virtual decimal Du6 { get; set; }
+		
+		public virtual decimal Du7 { get; set; }
+		
+		public virtual decimal Du8 { get; set; }
+		
+		public virtual decimal Du9 { get; set; }
+		
+		public virtual decimal Du10 { get; set; }
+		
+		public virtual decimal Du11 { get; set; }
+		
+		public virtual decimal Du12 { get; set; }
+		
+		public virtual decimal Thu1 { get; set; }
+		
+		public virtual decimal Thu2 { get; set; }
+		
+		public virtual decimal Thu3 { get; set; }
+		
+		public virtual decimal Thu4 { get; set; }
+		
+		public virtual decimal Thu5 { get; set; }
+		
+		public virtual decimal Thu6 { get; set; }
+		
+		public virtual decimal Thu7 { get; set; }
+		
+		public virtual DateTime Thu8 { get; set; }
+		
+		public virtual decimal Thu9 { get; set; }
+		
+		public virtual decimal Thu10 { get; set; }
+		
+		public virtual decimal Thu11 { get; set; }
+		
+		public virtual decimal Thu12 { get; set; }
+		
+		public virtual string GhiChu { get; set; }
+		
+
+		public virtual long? DanhMucThuHoiId { get; set; }
+		
+        [ForeignKey("DanhMucThuHoiId")]
+		public DanhMucThuHoi DanhMucThuHoiFk { get; set; }
+		
+    }
+}

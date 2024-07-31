@@ -1,6 +1,40 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en"> 
-  <texts>    <text name="DanhMucThuHoi">Danh muc thu hoi</text>
+  <texts>    <text name="ChiTietThuHoi">Chi tiet thu hoi</text>
+    <text name="TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng.ChiTietThuHoi">ChiTietThuHoi</text>
+    <text name="Du1">Du 1</text>
+    <text name="Du2">Du 2</text>
+    <text name="Du3">Du 3</text>
+    <text name="Du4">Du 4</text>
+    <text name="Du5">Du 5</text>
+    <text name="Du6">Du 6</text>
+    <text name="Du7">Du 7</text>
+    <text name="Du8">Du 8</text>
+    <text name="Du9">Du 9</text>
+    <text name="Du10">Du 1 0</text>
+    <text name="Du11">Du 1 1</text>
+    <text name="Du12">Du 1 2</text>
+    <text name="Thu1">Thu 1</text>
+    <text name="Thu2">Thu 2</text>
+    <text name="Thu3">Thu 3</text>
+    <text name="Thu4">Thu 4</text>
+    <text name="Thu5">Thu 5</text>
+    <text name="Thu6">Thu 6</text>
+    <text name="Thu7">Thu 7</text>
+    <text name="Thu8">Thu 8</text>
+    <text name="Thu9">Thu 9</text>
+    <text name="Thu10">Thu 1 0</text>
+    <text name="Thu11">Thu 1 1</text>
+    <text name="Thu12">Thu 1 2</text>
+    <text name="ChiTietThuHoiesHeaderInfo">Chi tiet thu hoies header info</text>
+    <text name="CreateNewChiTietThuHoi">Create new chi tiet thu hoi</text>
+    <text name="EditChiTietThuHoi">Edit chi tiet thu hoi</text>
+    <text name="DeleteChiTietThuHoi">Delete chi tiet thu hoi</text>
+    <text name="ChiTietThuHoies">Chi tiet thu hoies</text>
+    <text name="DanhMucThuHoiTen">Danh muc thu hoi ten</text>
+    <text name="PickDanhMucThuHoi">Pick danh muc thu hoi</text>
+    <text name="Thu8Range">Thu 8 range</text>
+    <text name="DanhMucThuHoi">Danh muc thu hoi</text>
     <text name="TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng.DanhMucThuHoi">DanhMucThuHoi</text>
     <text name="Stt">Stt</text>
     <text name="DanhMucThuHoiesHeaderInfo">Danh muc thu hoies header info</text>

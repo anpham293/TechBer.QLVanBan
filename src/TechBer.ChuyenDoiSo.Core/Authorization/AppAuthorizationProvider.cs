@@ -30,6 +30,13 @@ namespace TechBer.ChuyenDoiSo.Authorization
 
             var pages = context.GetPermissionOrNull(AppPermissions.Pages) ?? context.CreatePermission(AppPermissions.Pages, L("Pages"));
 
+            var chiTietThuHoies = pages.CreateChildPermission(AppPermissions.Pages_ChiTietThuHoies, L("ChiTietThuHoies"), multiTenancySides: MultiTenancySides.Host);
+            chiTietThuHoies.CreateChildPermission(AppPermissions.Pages_ChiTietThuHoies_Create, L("CreateNewChiTietThuHoi"), multiTenancySides: MultiTenancySides.Host);
+            chiTietThuHoies.CreateChildPermission(AppPermissions.Pages_ChiTietThuHoies_Edit, L("EditChiTietThuHoi"), multiTenancySides: MultiTenancySides.Host);
+            chiTietThuHoies.CreateChildPermission(AppPermissions.Pages_ChiTietThuHoies_Delete, L("DeleteChiTietThuHoi"), multiTenancySides: MultiTenancySides.Host);
+
+
+
             var danhMucThuHoies = pages.CreateChildPermission(AppPermissions.Pages_DanhMucThuHoies, L("DanhMucThuHoies"), multiTenancySides: MultiTenancySides.Host);
             danhMucThuHoies.CreateChildPermission(AppPermissions.Pages_DanhMucThuHoies_Create, L("CreateNewDanhMucThuHoi"), multiTenancySides: MultiTenancySides.Host);
             danhMucThuHoies.CreateChildPermission(AppPermissions.Pages_DanhMucThuHoies_Edit, L("EditDanhMucThuHoi"), multiTenancySides: MultiTenancySides.Host);

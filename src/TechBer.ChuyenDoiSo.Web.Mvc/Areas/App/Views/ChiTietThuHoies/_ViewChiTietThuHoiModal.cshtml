@@ -1,0 +1,124 @@
+﻿
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.Common.Modals
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.ChiTietThuHoies
+@model ChiTietThuHoiViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("Details")))
+
+<div class="modal-body">
+    <div id="ChiTietThuHoiInformationsTab">
+        
+        <div class="row">
+            <div class="col-6 mb-3">
+                <h6>@L("Du1") :</h6>
+                @Model.ChiTietThuHoi.Du1
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Du2") :</h6>
+                @Model.ChiTietThuHoi.Du2
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Du3") :</h6>
+                @Model.ChiTietThuHoi.Du3
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Du4") :</h6>
+                @Model.ChiTietThuHoi.Du4
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Du5") :</h6>
+                @Model.ChiTietThuHoi.Du5
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Du6") :</h6>
+                @Model.ChiTietThuHoi.Du6
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Du7") :</h6>
+                @Model.ChiTietThuHoi.Du7
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Du8") :</h6>
+                @Model.ChiTietThuHoi.Du8
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Du9") :</h6>
+                @Model.ChiTietThuHoi.Du9
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Du10") :</h6>
+                @Model.ChiTietThuHoi.Du10
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Du11") :</h6>
+                @Model.ChiTietThuHoi.Du11
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Du12") :</h6>
+                @Model.ChiTietThuHoi.Du12
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Thu1") :</h6>
+                @Model.ChiTietThuHoi.Thu1
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Thu2") :</h6>
+                @Model.ChiTietThuHoi.Thu2
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Thu3") :</h6>
+                @Model.ChiTietThuHoi.Thu3
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Thu4") :</h6>
+                @Model.ChiTietThuHoi.Thu4
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Thu5") :</h6>
+                @Model.ChiTietThuHoi.Thu5
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Thu6") :</h6>
+                @Model.ChiTietThuHoi.Thu6
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Thu7") :</h6>
+                @Model.ChiTietThuHoi.Thu7
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Thu8") :</h6>
+                @Model.ChiTietThuHoi.Thu8
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Thu9") :</h6>
+                @Model.ChiTietThuHoi.Thu9
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Thu10") :</h6>
+                @Model.ChiTietThuHoi.Thu10
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Thu11") :</h6>
+                @Model.ChiTietThuHoi.Thu11
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Thu12") :</h6>
+                @Model.ChiTietThuHoi.Thu12
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("GhiChu") :</h6>
+                @Model.ChiTietThuHoi.GhiChu
+            </div>
+
+            <div class="col-6 mb-3">
+                <h6>(@L("DanhMucThuHoi")) @L("Ten") :</h6>
+                @Model.DanhMucThuHoiTen
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithClose.cshtml")
+

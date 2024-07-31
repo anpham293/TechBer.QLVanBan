@@ -22,6 +22,8 @@ namespace TechBer.ChuyenDoiSo.EntityFrameworkCore
 {
     public class ChuyenDoiSoDbContext : AbpZeroDbContext<Tenant, Role, User, ChuyenDoiSoDbContext>, IAbpPersistedGrantDbContext
     {
+        public virtual DbSet<ChiTietThuHoi> ChiTietThuHoies { get; set; }
+
         public virtual DbSet<DanhMucThuHoi> DanhMucThuHoies { get; set; }
 
         public virtual DbSet<DuAnThuHoi> DuAnThuHoies { get; set; }

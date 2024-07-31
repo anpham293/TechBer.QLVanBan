@@ -17,6 +17,7 @@ namespace TechBer.ChuyenDoiSo.EntityHistory
 
         public static readonly Type[] HostSideTrackedTypes =
         {
+            typeof(ChiTietThuHoi),
             typeof(DanhMucThuHoi),
             typeof(UserDuAn),
             typeof(BaoCaoVanBanDuAn),
