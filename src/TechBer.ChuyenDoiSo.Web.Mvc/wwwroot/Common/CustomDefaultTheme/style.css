@@ -39,3 +39,6 @@ body {
 .dataTables_wrapper{
     font-family: Roboto!important;
 }
+.modal-full{
+    min-width:95%
+}

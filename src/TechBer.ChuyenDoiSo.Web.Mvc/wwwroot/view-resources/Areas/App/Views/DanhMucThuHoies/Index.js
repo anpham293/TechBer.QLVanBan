@@ -1,10 +1,10 @@
-﻿(function () {
-    $(function () {
+﻿(function ($) {
+    app.modals.DanhMucThuHoiModal = function () {
 
         var _$danhMucThuHoiesTable = $('#DanhMucThuHoiesTable');
         var _danhMucThuHoiesService = abp.services.app.danhMucThuHoies;
-		var _entityTypeFullName = 'TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng.DanhMucThuHoi';
-        
+        var _entityTypeFullName = 'TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng.DanhMucThuHoi';
+
         $('.date-picker').datetimepicker({
             locale: abp.localization.currentLanguage.name,
             format: 'L'
@@ -16,19 +16,20 @@
             'delete': abp.auth.hasPermission('Pages.DanhMucThuHoies.Delete')
         };
 
-         var _createOrEditModal = new app.ModalManager({
+        var _createOrEditModal = new app.ModalManager({
             viewUrl: abp.appPath + 'App/DanhMucThuHoies/CreateOrEditModal',
             scriptUrl: abp.appPath + 'view-resources/Areas/App/Views/DanhMucThuHoies/_CreateOrEditModal.js',
             modalClass: 'CreateOrEditDanhMucThuHoiModal'
-        });       
+        });
 
-		 var _viewDanhMucThuHoiModal = new app.ModalManager({
+        var _viewDanhMucThuHoiModal = new app.ModalManager({
             viewUrl: abp.appPath + 'App/DanhMucThuHoies/ViewdanhMucThuHoiModal',
             modalClass: 'ViewDanhMucThuHoiModal'
         });
 
-		        var _entityTypeHistoryModal = app.modals.EntityTypeHistoryModal.create();
-		        function entityHistoryIsEnabled() {
+        var _entityTypeHistoryModal = app.modals.EntityTypeHistoryModal.create();
+
+        function entityHistoryIsEnabled() {
             return abp.auth.hasPermission('Pages.Administration.AuditLogs') &&
                 abp.custom.EntityHistory &&
                 abp.custom.EntityHistory.IsEnabled &&
@@ -39,7 +40,7 @@
             if (element.data("DateTimePicker").date() == null) {
                 return null;
             }
-            return element.data("DateTimePicker").date().format("YYYY-MM-DDT00:00:00Z"); 
+            return element.data("DateTimePicker").date().format("YYYY-MM-DDT00:00:00Z");
         }
 
         var dataTable = _$danhMucThuHoiesTable.DataTable({
@@ -50,13 +51,13 @@
                 ajaxFunction: _danhMucThuHoiesService.getAll,
                 inputFilter: function () {
                     return {
-					filter: $('#DanhMucThuHoiesTableFilter').val(),
-					sttFilter: $('#SttFilterId').val(),
-					tenFilter: $('#TenFilterId').val(),
-					ghiChuFilter: $('#GhiChuFilterId').val(),
-					minTypeFilter: $('#MinTypeFilterId').val(),
-					maxTypeFilter: $('#MaxTypeFilterId').val(),
-					duAnThuHoiMaDATHFilter: $('#DuAnThuHoiMaDATHFilterId').val()
+                        filter: $('#DanhMucThuHoiesTableFilter').val(),
+                        sttFilter: $('#SttFilterId').val(),
+                        tenFilter: $('#TenFilterId').val(),
+                        ghiChuFilter: $('#GhiChuFilterId').val(),
+                        minTypeFilter: $('#MinTypeFilterId').val(),
+                        maxTypeFilter: $('#MaxTypeFilterId').val(),
+                        duAnThuHoiMaDATHFilter: $("#DuAnThuHoiId").val()
                     };
                 }
             },
@@ -72,69 +73,69 @@
                         cssClass: 'btn btn-brand dropdown-toggle',
                         text: '<i class="fa fa-cog"></i> ' + app.localize('Actions') + ' <span class="caret"></span>',
                         items: [
-						{
+                            {
                                 text: app.localize('View'),
                                 action: function (data) {
-                                    _viewDanhMucThuHoiModal.open({ id: data.record.danhMucThuHoi.id });
+                                    _viewDanhMucThuHoiModal.open({id: data.record.danhMucThuHoi.id});
                                 }
-                        },
-						{
-                            text: app.localize('Edit'),
-                            visible: function () {
-                                return _permissions.edit;
                             },
-                            action: function (data) {
-                            _createOrEditModal.open({ id: data.record.danhMucThuHoi.id });                                
-                            }
-                        },
-                        {
-                            text: app.localize('History'),
-                            visible: function () {
-                                return entityHistoryIsEnabled();
+                            {
+                                text: app.localize('Edit'),
+                                visible: function () {
+                                    return _permissions.edit;
+                                },
+                                action: function (data) {
+                                    _createOrEditModal.open({id: data.record.danhMucThuHoi.id});
+                                }
                             },
-                            action: function (data) {
-                                _entityTypeHistoryModal.open({
-                                    entityTypeFullName: _entityTypeFullName,
-                                    entityId: data.record.danhMucThuHoi.id
-                                });
-                            }
-						}, 
-						{
-                            text: app.localize('Delete'),
-                            visible: function () {
-                                return _permissions.delete;
+                            {
+                                text: app.localize('History'),
+                                visible: function () {
+                                    return entityHistoryIsEnabled();
+                                },
+                                action: function (data) {
+                                    _entityTypeHistoryModal.open({
+                                        entityTypeFullName: _entityTypeFullName,
+                                        entityId: data.record.danhMucThuHoi.id
+                                    });
+                                }
                             },
-                            action: function (data) {
-                                deleteDanhMucThuHoi(data.record.danhMucThuHoi);
-                            }
-                        }]
+                            {
+                                text: app.localize('Delete'),
+                                visible: function () {
+                                    return _permissions.delete;
+                                },
+                                action: function (data) {
+                                    deleteDanhMucThuHoi(data.record.danhMucThuHoi);
+                                }
+                            }]
                     }
                 },
-					{
-						targets: 1,
-						 data: "danhMucThuHoi.stt",
-						 name: "stt"   
-					},
-					{
-						targets: 2,
-						 data: "danhMucThuHoi.ten",
-						 name: "ten"   
-					},
-					{
-						targets: 3,
-						 data: "danhMucThuHoi.ghiChu",
-						 name: "ghiChu"   
-					},
-					{
-						targets: 4,
-						 data: "danhMucThuHoi.type",
-						 name: "type"   
-					},
-					{
-						targets: 5,
-						 data: "duAnThuHoiMaDATH" ,
-						 name: "duAnThuHoiFk.maDATH" 
-					}
+                {
+                    targets: 1,
+                    data: "danhMucThuHoi.stt",
+                    name: "stt"
+                },
+                {
+                    targets: 2,
+                    data: "danhMucThuHoi.ten",
+                    name: "ten"
+                },
+                {
+                    targets: 3,
+                    data: "danhMucThuHoi.ghiChu",
+                    name: "ghiChu"
+                },
+                {
+                    targets: 4,
+                    data: "danhMucThuHoi.type",
+                    name: "type"
+                },
+                {
+                    targets: 5,
+                    data: "duAnThuHoiMaDATH",
+                    name: "duAnThuHoiFk.maDATH"
+                }
             ]
         });
 
@@ -159,7 +160,7 @@
             );
         }
 
-		$('#ShowAdvancedFiltersSpan').click(function () {
+        $('#ShowAdvancedFiltersSpan').click(function () {
             $('#ShowAdvancedFiltersSpan').hide();
             $('#HideAdvancedFiltersSpan').show();
             $('#AdvacedAuditFiltersArea').slideDown();
@@ -172,20 +173,20 @@
         });
 
         $('#CreateNewDanhMucThuHoiButton').click(function () {
-            _createOrEditModal.open();
-        });        
+            _createOrEditModal.open({duAnThuHoiId: $("#DuAnThuHoiId").val()});
+        });
 
-		$('#ExportToExcelButton').click(function () {
+        $('#ExportToExcelButton').click(function () {
             _danhMucThuHoiesService
                 .getDanhMucThuHoiesToExcel({
-				filter : $('#DanhMucThuHoiesTableFilter').val(),
-					sttFilter: $('#SttFilterId').val(),
-					tenFilter: $('#TenFilterId').val(),
-					ghiChuFilter: $('#GhiChuFilterId').val(),
-					minTypeFilter: $('#MinTypeFilterId').val(),
-					maxTypeFilter: $('#MaxTypeFilterId').val(),
-					duAnThuHoiMaDATHFilter: $('#DuAnThuHoiMaDATHFilterId').val()
-				})
+                    filter: $('#DanhMucThuHoiesTableFilter').val(),
+                    sttFilter: $('#SttFilterId').val(),
+                    tenFilter: $('#TenFilterId').val(),
+                    ghiChuFilter: $('#GhiChuFilterId').val(),
+                    minTypeFilter: $('#MinTypeFilterId').val(),
+                    maxTypeFilter: $('#MaxTypeFilterId').val(),
+                    duAnThuHoiMaDATHFilter: $("#DuAnThuHoiId").val()
+                })
                 .done(function (result) {
                     app.downloadTempFile(result);
                 });
@@ -195,15 +196,15 @@
             getDanhMucThuHoies();
         });
 
-		$('#GetDanhMucThuHoiesButton').click(function (e) {
+        $('#GetDanhMucThuHoiesButton').click(function (e) {
             e.preventDefault();
             getDanhMucThuHoies();
         });
 
-		$(document).keypress(function(e) {
-		  if(e.which === 13) {
-			getDanhMucThuHoies();
-		  }
-		});
-    });
-})();
+        $(document).keypress(function (e) {
+            if (e.which === 13) {
+                getDanhMucThuHoies();
+            }
+        });
+    }
+})(jQuery);

@@ -26,47 +26,56 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
         public ActionResult Index()
         {
             var model = new DanhMucThuHoiesViewModel
-			{
-				FilterText = ""
-			};
+            {
+                FilterText = ""
+            };
 
             return View(model);
-        } 
-       
+        }
 
-			 [AbpMvcAuthorize(AppPermissions.Pages_DanhMucThuHoies_Create, AppPermissions.Pages_DanhMucThuHoies_Edit)]
-			public async Task<PartialViewResult> CreateOrEditModal(long? id)
-			{
-				GetDanhMucThuHoiForEditOutput getDanhMucThuHoiForEditOutput;
+        public class DanhMucThuHoiInput
+        {
+            public long? id { get; set; }
+            public long? duAnThuHoiId { get; set; }
+        }
 
-				if (id.HasValue){
-					getDanhMucThuHoiForEditOutput = await _danhMucThuHoiesAppService.GetDanhMucThuHoiForEdit(new EntityDto<long> { Id = (long) id });
-				}
-				else {
-					getDanhMucThuHoiForEditOutput = new GetDanhMucThuHoiForEditOutput{
-						DanhMucThuHoi = new CreateOrEditDanhMucThuHoiDto()
-					};
-				}
+        [AbpMvcAuthorize(AppPermissions.Pages_DanhMucThuHoies_Create, AppPermissions.Pages_DanhMucThuHoies_Edit)]
+        public async Task<PartialViewResult> CreateOrEditModal(DanhMucThuHoiInput input)
+        {
+            GetDanhMucThuHoiForEditOutput getDanhMucThuHoiForEditOutput;
 
-				var viewModel = new CreateOrEditDanhMucThuHoiModalViewModel()
-				{
-					DanhMucThuHoi = getDanhMucThuHoiForEditOutput.DanhMucThuHoi,
-					DuAnThuHoiMaDATH = getDanhMucThuHoiForEditOutput.DuAnThuHoiMaDATH,                
-				};
+            if (input.id.HasValue)
+            {
+                getDanhMucThuHoiForEditOutput =
+                    await _danhMucThuHoiesAppService.GetDanhMucThuHoiForEdit(new EntityDto<long> {Id = (long) input.id});
+            }
+            else
+            {
+                getDanhMucThuHoiForEditOutput = new GetDanhMucThuHoiForEditOutput
+                {
+                    DanhMucThuHoi = new CreateOrEditDanhMucThuHoiDto()
+                };
+                getDanhMucThuHoiForEditOutput.DanhMucThuHoi.DuAnThuHoiId = input.duAnThuHoiId;
+            }
 
-				return PartialView("_CreateOrEditModal", viewModel);
-			}
-			
+            var viewModel = new CreateOrEditDanhMucThuHoiModalViewModel()
+            {
+                DanhMucThuHoi = getDanhMucThuHoiForEditOutput.DanhMucThuHoi,
+                DuAnThuHoiMaDATH = getDanhMucThuHoiForEditOutput.DuAnThuHoiMaDATH,
+            };
+
+            return PartialView("_CreateOrEditModal", viewModel);
+        }
+
 
         public async Task<PartialViewResult> ViewDanhMucThuHoiModal(long id)
         {
-			var getDanhMucThuHoiForViewDto = await _danhMucThuHoiesAppService.GetDanhMucThuHoiForView(id);
+            var getDanhMucThuHoiForViewDto = await _danhMucThuHoiesAppService.GetDanhMucThuHoiForView(id);
 
             var model = new DanhMucThuHoiViewModel()
             {
-                DanhMucThuHoi = getDanhMucThuHoiForViewDto.DanhMucThuHoi
-                , DuAnThuHoiMaDATH = getDanhMucThuHoiForViewDto.DuAnThuHoiMaDATH 
-
+                DanhMucThuHoi = getDanhMucThuHoiForViewDto.DanhMucThuHoi,
+                DuAnThuHoiMaDATH = getDanhMucThuHoiForViewDto.DuAnThuHoiMaDATH
             };
 
             return PartialView("_ViewDanhMucThuHoiModal", model);
@@ -84,6 +93,5 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
 
             return PartialView("_DanhMucThuHoiDuAnThuHoiLookupTableModal", viewModel);
         }
-
     }
 }

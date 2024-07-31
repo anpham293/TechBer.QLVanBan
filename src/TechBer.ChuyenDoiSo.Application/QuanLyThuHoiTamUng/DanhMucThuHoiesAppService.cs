@@ -40,16 +40,18 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
 			
 			var filteredDanhMucThuHoies = _danhMucThuHoiRepository.GetAll()
 						.Include( e => e.DuAnThuHoiFk)
-						.WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false  || e.Stt.Contains(input.Filter) || e.Ten.Contains(input.Filter) || e.GhiChu.Contains(input.Filter))
-						.WhereIf(!string.IsNullOrWhiteSpace(input.SttFilter),  e => e.Stt == input.SttFilter)
-						.WhereIf(!string.IsNullOrWhiteSpace(input.TenFilter),  e => e.Ten == input.TenFilter)
-						.WhereIf(!string.IsNullOrWhiteSpace(input.GhiChuFilter),  e => e.GhiChu == input.GhiChuFilter)
-						.WhereIf(input.MinTypeFilter != null, e => e.Type >= input.MinTypeFilter)
-						.WhereIf(input.MaxTypeFilter != null, e => e.Type <= input.MaxTypeFilter)
-						.WhereIf(!string.IsNullOrWhiteSpace(input.DuAnThuHoiMaDATHFilter), e => e.DuAnThuHoiFk != null && e.DuAnThuHoiFk.MaDATH == input.DuAnThuHoiMaDATHFilter);
+						// .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false  || e.Stt.Contains(input.Filter) || e.Ten.Contains(input.Filter) || e.GhiChu.Contains(input.Filter))
+						// .WhereIf(!string.IsNullOrWhiteSpace(input.SttFilter),  e => e.Stt == input.SttFilter)
+						// .WhereIf(!string.IsNullOrWhiteSpace(input.TenFilter),  e => e.Ten == input.TenFilter)
+						// .WhereIf(!string.IsNullOrWhiteSpace(input.GhiChuFilter),  e => e.GhiChu == input.GhiChuFilter)
+						// .WhereIf(input.MinTypeFilter != null, e => e.Type >= input.MinTypeFilter)
+						// .WhereIf(input.MaxTypeFilter != null, e => e.Type <= input.MaxTypeFilter)
+						//.WhereIf(!string.IsNullOrWhiteSpace(input.DuAnThuHoiMaDATHFilter), e => e.DuAnThuHoiFk != null && e.DuAnThuHoiFk.MaDATH == input.DuAnThuHoiMaDATHFilter)
+						.WhereIf(true, e => e.DuAnThuHoiId == long.Parse(input.DuAnThuHoiMaDATHFilter))
+				;
 
 			var pagedAndFilteredDanhMucThuHoies = filteredDanhMucThuHoies
-                .OrderBy(input.Sorting ?? "id asc")
+                .OrderBy(input.Sorting ?? "stt asc")
                 .PageBy(input);
 
 			var danhMucThuHoies = from o in pagedAndFilteredDanhMucThuHoies

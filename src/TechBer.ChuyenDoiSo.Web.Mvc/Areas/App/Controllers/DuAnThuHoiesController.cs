@@ -71,6 +71,19 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
 
             return PartialView("_ViewDuAnThuHoiModal", model);
         }
+        
+        public async Task<PartialViewResult> DanhMucThuHoiModal(long id)
+        {
+			var getDuAnThuHoiForViewDto = await _duAnThuHoiesAppService.GetDuAnThuHoiForView(id);
+
+            var model = new DuAnThuHoiViewModel()
+            {
+                DuAnThuHoi = getDuAnThuHoiForViewDto.DuAnThuHoi,
+                DuAnThuHoiId = id
+            };
+
+            return PartialView("_DanhMucThuHoiModal", model);
+        }
 
 
     }
