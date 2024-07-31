@@ -46,8 +46,9 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Controllers
 					getDuAnThuHoiForEditOutput = new GetDuAnThuHoiForEditOutput{
 						DuAnThuHoi = new CreateOrEditDuAnThuHoiDto()
 					};
-				getDuAnThuHoiForEditOutput.DuAnThuHoi.ThoiHanBaoLanhHopDong = DateTime.Now;
-				getDuAnThuHoiForEditOutput.DuAnThuHoi.ThoiHanBaoLanhTamUng = DateTime.Now;
+				// getDuAnThuHoiForEditOutput.DuAnThuHoi.ThoiHanBaoLanhHopDong = DateTime.Now;
+				// getDuAnThuHoiForEditOutput.DuAnThuHoi.ThoiHanBaoLanhTamUng = DateTime.Now;// getDuAnThuHoiForEditOutput.DuAnThuHoi.ThoiHanBaoLanhHopDong = DateTime.Now;
+				getDuAnThuHoiForEditOutput.DuAnThuHoi.NamQuanLy = DateTime.Now.Year;
 				}
 
 				var viewModel = new CreateOrEditDuAnThuHoiModalViewModel()

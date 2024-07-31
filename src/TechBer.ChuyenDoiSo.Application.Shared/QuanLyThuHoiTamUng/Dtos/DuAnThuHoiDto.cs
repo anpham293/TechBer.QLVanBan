@@ -19,8 +19,7 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng.Dtos
 		public string GhiChu { get; set; }
 
 		public int TrangThai { get; set; }
-
-
-
+		public int SoDuAn { get; set; }
+		
     }
 }

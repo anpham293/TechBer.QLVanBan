@@ -27,6 +27,7 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng.Dtos
 		
 		
 		public int TrangThai { get; set; }
+		public int SoDuAn { get; set; }
 		
 		
 

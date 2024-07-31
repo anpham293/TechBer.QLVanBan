@@ -52,5 +52,12 @@ namespace TechBer.ChuyenDoiSo
         public const string DateTimeOffsetFormat = "yyyy-MM-ddTHH:mm:sszzz";
 
         public const int MaxFileBytesUserFriendlyValue = 5;
+        
+    }
+
+    public class DuAnThuHoiConst
+    {
+        public const int TrangThaiDangXuLi = 0;
+        public const int TrangThaiHoanThanh = 1;
     }
 }

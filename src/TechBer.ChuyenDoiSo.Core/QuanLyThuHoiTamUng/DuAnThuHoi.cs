@@ -23,6 +23,7 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
 		public virtual string GhiChu { get; set; }
 		
 		public virtual int TrangThai { get; set; }
+		public virtual int SoDuAn { get; set; }
 		
 
     }
