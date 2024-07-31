@@ -37,6 +37,7 @@
             _$vanBanDuAnInformationForm = _modalManager.getModal().find('form[name=VanBanDuAnInformationsForm]');
             _$vanBanDuAnInformationForm.validate();
         };
+        
         $('#VanBanDuAnInformationsForm input[name=fileMau]').change(function (e) {
             if (e.target.files[0]) {
                 fileName = e.target.files[0].name;
