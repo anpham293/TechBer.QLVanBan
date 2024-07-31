@@ -1,0 +1,61 @@
+﻿
+@using System.Globalization
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.Common.Modals
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.DuAnThuHoies
+@model CreateOrEditDuAnThuHoiModalViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditDuAnThuHoi")) : L("CreateNewDuAnThuHoi")))
+
+<div class="modal-body">
+        <div id="DuAnThuHoiInformationsTab">
+            <form name="DuAnThuHoiInformationsForm" role="form" novalidate class="form-validation">
+
+                @if (Model.IsEditMode)
+                {
+                    <input type="hidden" name="id" value="@Model.DuAnThuHoi.Id" />
+                }
+
+				
+
+				
+								<div class="form-group">
+									<label for="DuAnThuHoi_MaDATH">@L("MaDATH")</label>
+									<input class="form-control" id="DuAnThuHoi_MaDATH" value="@Model.DuAnThuHoi.MaDATH" type="text" name="maDATH"     />
+								</div>
+					
+								<div class="form-group">
+									<label for="DuAnThuHoi_Ten">@L("Ten")</label>
+									<input class="form-control" id="DuAnThuHoi_Ten" value="@Model.DuAnThuHoi.Ten" type="text" name="ten"     />
+								</div>
+					
+								<div class="form-group">
+									<label for="DuAnThuHoi_NamQuanLy">@L("NamQuanLy")</label>
+									<input class="form-control m-input" id="DuAnThuHoi_NamQuanLy" value="@Model.DuAnThuHoi.NamQuanLy.ToString(CultureInfo.InvariantCulture)" type="number" name="namQuanLy"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="DuAnThuHoi_ThoiHanBaoLanhHopDong">@L("ThoiHanBaoLanhHopDong")</label>
+									<input class="form-control m-input date-picker" id="DuAnThuHoi_ThoiHanBaoLanhHopDong" type="text" name="thoiHanBaoLanhHopDong" value="@Model.DuAnThuHoi.ThoiHanBaoLanhHopDong"/>
+								</div>
+					
+								<div class="form-group">
+									<label for="DuAnThuHoi_ThoiHanBaoLanhTamUng">@L("ThoiHanBaoLanhTamUng")</label>
+									<input class="form-control m-input date-picker" id="DuAnThuHoi_ThoiHanBaoLanhTamUng" type="text" name="thoiHanBaoLanhTamUng" value="@Model.DuAnThuHoi.ThoiHanBaoLanhTamUng"/>
+								</div>
+					
+								<div class="form-group">
+									<label for="DuAnThuHoi_GhiChu">@L("GhiChu")</label>
+									<input class="form-control" id="DuAnThuHoi_GhiChu" value="@Model.DuAnThuHoi.GhiChu" type="text" name="ghiChu"     />
+								</div>
+					
+								<div class="form-group">
+									<label for="DuAnThuHoi_TrangThai">@L("TrangThai")</label>
+									<input class="form-control m-input" id="DuAnThuHoi_TrangThai" value="@Model.DuAnThuHoi.TrangThai.ToString(CultureInfo.InvariantCulture)" type="number" name="trangThai"  />
+								</div>
+					
+
+            </form>
+        </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

@@ -1,0 +1,48 @@
+﻿
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.Common.Modals
+@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.DuAnThuHoies
+@model DuAnThuHoiViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("Details")))
+
+<div class="modal-body">
+    <div id="DuAnThuHoiInformationsTab">
+        
+        <div class="row">
+            <div class="col-6 mb-3">
+                <h6>@L("MaDATH") :</h6>
+                @Model.DuAnThuHoi.MaDATH
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Ten") :</h6>
+                @Model.DuAnThuHoi.Ten
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("NamQuanLy") :</h6>
+                @Model.DuAnThuHoi.NamQuanLy
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("ThoiHanBaoLanhHopDong") :</h6>
+                @Model.DuAnThuHoi.ThoiHanBaoLanhHopDong
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("ThoiHanBaoLanhTamUng") :</h6>
+                @Model.DuAnThuHoi.ThoiHanBaoLanhTamUng
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("GhiChu") :</h6>
+                @Model.DuAnThuHoi.GhiChu
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("TrangThai") :</h6>
+                @Model.DuAnThuHoi.TrangThai
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithClose.cshtml")
+

@@ -1,6 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en"> 
-  <texts>    <text name="UserDuAn">User du an</text>
+  <texts>    <text name="QuanLyThuHoiTamUng">Quan ly thu hoi tam ung</text>
+    <text name="DuAnThuHoi">Du an thu hoi</text>
+    <text name="TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng.DuAnThuHoi">DuAnThuHoi</text>
+    <text name="MaDATH">Ma d a t h</text>
+    <text name="NamQuanLy">Nam quan ly</text>
+    <text name="ThoiHanBaoLanhHopDong">Thoi han bao lanh hop dong</text>
+    <text name="ThoiHanBaoLanhTamUng">Thoi han bao lanh tam ung</text>
+    <text name="DuAnThuHoiesHeaderInfo">Du an thu hoies header info</text>
+    <text name="CreateNewDuAnThuHoi">Create new du an thu hoi</text>
+    <text name="EditDuAnThuHoi">Edit du an thu hoi</text>
+    <text name="DeleteDuAnThuHoi">Delete du an thu hoi</text>
+    <text name="DuAnThuHoies">Du an thu hoies</text>
+    <text name="ThoiHanBaoLanhHopDongRange">Thoi han bao lanh hop dong range</text>
+    <text name="ThoiHanBaoLanhTamUngRange">Thoi han bao lanh tam ung range</text>
+    <text name="UserDuAn">User du an</text>
     <text name="TechBer.ChuyenDoiSo.QLVB.UserDuAn">UserDuAn</text>
     <text name="UserDuAnsHeaderInfo">User du ans header info</text>
     <text name="CreateNewUserDuAn">Create new user du an</text>

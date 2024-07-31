@@ -1,4 +1,5 @@
-﻿using TechBer.ChuyenDoiSo.QuanLyKhoHoSo;
+﻿using TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng;
+using TechBer.ChuyenDoiSo.QuanLyKhoHoSo;
 using TechBer.ChuyenDoiSo.QLVB;
 using TechBer.ChuyenDoiSo.QuanLyDanhMuc;
 using TechBer.ChuyenDoiSo.QuanLyChuyenDoiSo;
@@ -21,6 +22,8 @@ namespace TechBer.ChuyenDoiSo.EntityFrameworkCore
 {
     public class ChuyenDoiSoDbContext : AbpZeroDbContext<Tenant, Role, User, ChuyenDoiSoDbContext>, IAbpPersistedGrantDbContext
     {
+        public virtual DbSet<DuAnThuHoi> DuAnThuHoies { get; set; }
+
         public virtual DbSet<UserDuAn> UserDuAns { get; set; }
 
         public virtual DbSet<BaoCaoVanBanDuAn> BaoCaoVanBanDuAns { get; set; }

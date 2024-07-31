@@ -1,5 +1,4 @@
-﻿
-using Abp.Application.Navigation;
+﻿using Abp.Application.Navigation;
 using Abp.Authorization;
 using Abp.Localization;
 using TechBer.ChuyenDoiSo.Authorization;
@@ -47,6 +46,14 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Startup
                         url: "App/ChuyenHoSoGiaies",
                         icon: "fas fa-dolly",
                         permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_ChuyenHoSoGiaies)
+                    )
+                )
+                .AddItem(new MenuItemDefinition(
+                        AppPageNames.Host.DuAnThuHoies,
+                        L("DuAnThuHoies"),
+                        url: "App/DuAnThuHoies",
+                        icon: "flaticon-more",
+                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_DuAnThuHoies)
                     )
                 )
                 .AddItem(new MenuItemDefinition(
