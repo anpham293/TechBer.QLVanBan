@@ -37,6 +37,7 @@
 
         public static class Host
         {
+            public const string DanhMucThuHoies = "QuanLyThuHoiTamUng.DanhMucThuHoies";
             public const string DuAnThuHoies = "QuanLyThuHoiTamUng.DuAnThuHoies";
             public const string QuanHuyens = "QuanLyDanhMuc.QuanHuyens";
             public const string TinhThanhs = "QuanLyDanhMuc.TinhThanhs";

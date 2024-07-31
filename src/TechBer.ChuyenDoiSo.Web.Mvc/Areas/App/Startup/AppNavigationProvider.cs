@@ -57,6 +57,14 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Startup
                     )
                 )
                 .AddItem(new MenuItemDefinition(
+                        AppPageNames.Host.DanhMucThuHoies,
+                        L("DanhMucThuHoies"),
+                        url: "App/DanhMucThuHoies",
+                        icon: "flaticon-more",
+                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_DanhMucThuHoies)
+                    )
+                )
+                .AddItem(new MenuItemDefinition(
                         "",
                         L("LuuTruHoSo"),
                         icon: "fas fa-box-open"

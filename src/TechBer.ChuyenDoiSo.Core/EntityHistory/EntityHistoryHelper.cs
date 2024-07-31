@@ -1,4 +1,5 @@
-﻿using TechBer.ChuyenDoiSo.QuanLyKhoHoSo;
+﻿using TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng;
+using TechBer.ChuyenDoiSo.QuanLyKhoHoSo;
 using TechBer.ChuyenDoiSo.QLVB;
 using TechBer.ChuyenDoiSo.QuanLyDanhMuc;
 using TechBer.ChuyenDoiSo.QuanLyChuyenDoiSo;
@@ -16,6 +17,7 @@ namespace TechBer.ChuyenDoiSo.EntityHistory
 
         public static readonly Type[] HostSideTrackedTypes =
         {
+            typeof(DanhMucThuHoi),
             typeof(UserDuAn),
             typeof(BaoCaoVanBanDuAn),
             typeof(TraoDoiVanBanDuAn),

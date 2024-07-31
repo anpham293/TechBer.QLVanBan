@@ -1,6 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en"> 
-  <texts>    <text name="QuanLyThuHoiTamUng">Quan ly thu hoi tam ung</text>
+  <texts>    <text name="DanhMucThuHoi">Danh muc thu hoi</text>
+    <text name="TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng.DanhMucThuHoi">DanhMucThuHoi</text>
+    <text name="Stt">Stt</text>
+    <text name="DanhMucThuHoiesHeaderInfo">Danh muc thu hoies header info</text>
+    <text name="CreateNewDanhMucThuHoi">Create new danh muc thu hoi</text>
+    <text name="EditDanhMucThuHoi">Edit danh muc thu hoi</text>
+    <text name="DeleteDanhMucThuHoi">Delete danh muc thu hoi</text>
+    <text name="DanhMucThuHoies">Danh muc thu hoies</text>
+    <text name="DuAnThuHoiMaDATH">Du an thu hoi ma d a t h</text>
+    <text name="PickDuAnThuHoi">Pick du an thu hoi</text>
+    <text name="QuanLyThuHoiTamUng">Quan ly thu hoi tam ung</text>
     <text name="DuAnThuHoi">Du an thu hoi</text>
     <text name="TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng.DuAnThuHoi">DuAnThuHoi</text>
     <text name="MaDATH">Ma d a t h</text>
