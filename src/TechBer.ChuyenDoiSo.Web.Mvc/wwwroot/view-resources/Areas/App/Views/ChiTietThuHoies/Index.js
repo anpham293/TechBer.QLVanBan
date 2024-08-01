@@ -108,53 +108,66 @@
                 }
             },
             columnDefs: [
+                // {
+                //     width: 120,
+                //     targets: 0,
+                //     data: null,
+                //     orderable: false,
+                //     autoWidth: false,
+                //     defaultContent: '',
+                //     rowAction: {
+                //         cssClass: 'btn btn-brand dropdown-toggle',
+                //         text: '<i class="fa fa-cog"></i> ' + app.localize('Actions') + ' <span class="caret"></span>',
+                //         items: [
+                //             {
+                //                 text: app.localize('View'),
+                //                 action: function (data) {
+                //                     _viewChiTietThuHoiModal.open({id: data.record.chiTietThuHoi.id});
+                //                 }
+                //             },
+                //             {
+                //                 text: app.localize('Edit'),
+                //                 visible: function () {
+                //                     return _permissions.edit;
+                //                 },
+                //                 action: function (data) {
+                //                     _createOrEditModal.open({id: data.record.chiTietThuHoi.id});
+                //                 }
+                //             },
+                //             {
+                //                 text: app.localize('History'),
+                //                 visible: function () {
+                //                     return entityHistoryIsEnabled();
+                //                 },
+                //                 action: function (data) {
+                //                     _entityTypeHistoryModal.open({
+                //                         entityTypeFullName: _entityTypeFullName,
+                //                         entityId: data.record.chiTietThuHoi.id
+                //                     });
+                //                 }
+                //             },
+                //             {
+                //                 text: app.localize('Delete'),
+                //                 visible: function () {
+                //                     return _permissions.delete;
+                //                 },
+                //                 action: function (data) {
+                //                     deleteChiTietThuHoi(data.record.chiTietThuHoi);
+                //                 }
+                //             }]
+                //     }
+                // },
                 {
-                    width: 120,
+                    // width: 200,
                     targets: 0,
-                    data: null,
-                    orderable: false,
-                    autoWidth: false,
-                    defaultContent: '',
-                    rowAction: {
-                        cssClass: 'btn btn-brand dropdown-toggle',
-                        text: '<i class="fa fa-cog"></i> ' + app.localize('Actions') + ' <span class="caret"></span>',
-                        items: [
-                            {
-                                text: app.localize('View'),
-                                action: function (data) {
-                                    _viewChiTietThuHoiModal.open({id: data.record.chiTietThuHoi.id});
-                                }
-                            },
-                            {
-                                text: app.localize('Edit'),
-                                visible: function () {
-                                    return _permissions.edit;
-                                },
-                                action: function (data) {
-                                    _createOrEditModal.open({id: data.record.chiTietThuHoi.id});
-                                }
-                            },
-                            {
-                                text: app.localize('History'),
-                                visible: function () {
-                                    return entityHistoryIsEnabled();
-                                },
-                                action: function (data) {
-                                    _entityTypeHistoryModal.open({
-                                        entityTypeFullName: _entityTypeFullName,
-                                        entityId: data.record.chiTietThuHoi.id
-                                    });
-                                }
-                            },
-                            {
-                                text: app.localize('Delete'),
-                                visible: function () {
-                                    return _permissions.delete;
-                                },
-                                action: function (data) {
-                                    deleteChiTietThuHoi(data.record.chiTietThuHoi);
-                                }
-                            }]
+                    data: "chiTietThuHoi.id",
+                    name: "id",
+                    className: "text-center",
+                    render: function (data) {
+                        let chinhSuaChiTietThuHoi = '<label class="badge badge-info chinhSuaChiTietThuHoi" data-rowId="'+ data +'"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">\n' +
+                            '  <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>\n' +
+                            '</svg> Chỉnh sửa</label>';
+                        return chinhSuaChiTietThuHoi;
                     }
                 },
                 {
@@ -166,6 +179,7 @@
                     targets: 2,
                     data: "chiTietThuHoi.tongDu",
                     name: "tongDu",
+                    className: "text-right",
                     render: function (data, type, row, meta) {
                         return addCommas(data) + " VNĐ"
                     }
@@ -174,6 +188,7 @@
                     targets: 3,
                     data: "chiTietThuHoi.tongThu",
                     name: "tongThu",
+                    className: "text-right",
                     render: function (data, type, row, meta) {
                         return addCommas(data) + " VNĐ"
                     }
@@ -182,6 +197,7 @@
                     targets: 4,
                     data: "chiTietThuHoi.tongThu",
                     name: "tongThu",
+                    className: "text-right",
                     render: function (data, type, row, meta) {
                         var kinhPhiChuyen = parseFloat(row.chiTietThuHoi.tongDu) - parseFloat(row.chiTietThuHoi.tongThu)
                         return addCommas(kinhPhiChuyen) + " VNĐ"
@@ -306,6 +322,12 @@
             if (e.which === 13) {
                 getChiTietThuHoies();
             }
+        });
+
+        $(document).off('click', '.chinhSuaChiTietThuHoi').on('click', '.chinhSuaChiTietThuHoi', function () {
+            var self = $(this);
+            var id = self.attr('data-rowId');
+            _createOrEditModal.open({id: id});
         });
     }
 })(jQuery);

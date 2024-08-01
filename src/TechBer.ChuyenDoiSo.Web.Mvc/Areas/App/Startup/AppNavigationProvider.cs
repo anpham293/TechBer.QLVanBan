@@ -52,26 +52,26 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Startup
                         AppPageNames.Host.DuAnThuHoies,
                         L("DuAnThuHoies"),
                         url: "App/DuAnThuHoies",
-                        icon: "flaticon-more",
+                        icon: "fas fa-business-time",
                         permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_DuAnThuHoies)
                     )
                 )
-                .AddItem(new MenuItemDefinition(
-                        AppPageNames.Host.DanhMucThuHoies,
-                        L("DanhMucThuHoies"),
-                        url: "App/DanhMucThuHoies",
-                        icon: "flaticon-more",
-                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_DanhMucThuHoies)
-                    )
-                )
-                .AddItem(new MenuItemDefinition(
-                        AppPageNames.Host.ChiTietThuHoies,
-                        L("ChiTietThuHoies"),
-                        url: "App/ChiTietThuHoies",
-                        icon: "flaticon-more",
-                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_ChiTietThuHoies)
-                    )
-                )
+                // .AddItem(new MenuItemDefinition(
+                //         AppPageNames.Host.DanhMucThuHoies,
+                //         L("DanhMucThuHoies"),
+                //         url: "App/DanhMucThuHoies",
+                //         icon: "flaticon-more",
+                //         permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_DanhMucThuHoies)
+                //     )
+                // )
+                // .AddItem(new MenuItemDefinition(
+                //         AppPageNames.Host.ChiTietThuHoies,
+                //         L("ChiTietThuHoies"),
+                //         url: "App/ChiTietThuHoies",
+                //         icon: "flaticon-more",
+                //         permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_ChiTietThuHoies)
+                //     )
+                // )
                 .AddItem(new MenuItemDefinition(
                         "",
                         L("LuuTruHoSo"),

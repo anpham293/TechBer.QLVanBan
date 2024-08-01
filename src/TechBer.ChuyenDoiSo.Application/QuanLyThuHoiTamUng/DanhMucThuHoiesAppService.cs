@@ -15,6 +15,7 @@ using Abp.Application.Services.Dto;
 using TechBer.ChuyenDoiSo.Authorization;
 using Abp.Extensions;
 using Abp.Authorization;
+using Castle.Core.Internal;
 using Microsoft.EntityFrameworkCore;
 
 namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
@@ -25,14 +26,19 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
 		 private readonly IRepository<DanhMucThuHoi, long> _danhMucThuHoiRepository;
 		 private readonly IDanhMucThuHoiesExcelExporter _danhMucThuHoiesExcelExporter;
 		 private readonly IRepository<DuAnThuHoi,long> _lookup_duAnThuHoiRepository;
+		 private readonly IRepository<ChiTietThuHoi,long> _chiTietThuHoiRepository;
 		 
 
-		  public DanhMucThuHoiesAppService(IRepository<DanhMucThuHoi, long> danhMucThuHoiRepository, IDanhMucThuHoiesExcelExporter danhMucThuHoiesExcelExporter , IRepository<DuAnThuHoi, long> lookup_duAnThuHoiRepository) 
+		  public DanhMucThuHoiesAppService(IRepository<DanhMucThuHoi, long> danhMucThuHoiRepository, 
+										   IDanhMucThuHoiesExcelExporter danhMucThuHoiesExcelExporter,
+										   IRepository<DuAnThuHoi, long> lookup_duAnThuHoiRepository,
+										   IRepository<ChiTietThuHoi,long> chiTietThuHoiRepository
+										   ) 
 		  {
 			_danhMucThuHoiRepository = danhMucThuHoiRepository;
 			_danhMucThuHoiesExcelExporter = danhMucThuHoiesExcelExporter;
 			_lookup_duAnThuHoiRepository = lookup_duAnThuHoiRepository;
-		
+			_chiTietThuHoiRepository = chiTietThuHoiRepository;
 		  }
 
 		 public async Task<PagedResultDto<GetDanhMucThuHoiForViewDto>> GetAll(GetAllDanhMucThuHoiesInput input)
@@ -54,7 +60,7 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
                 .OrderBy(input.Sorting ?? "stt asc")
                 .PageBy(input);
 
-			var danhMucThuHoies = from o in pagedAndFilteredDanhMucThuHoies
+			var danhMucThuHoies = await (from o in pagedAndFilteredDanhMucThuHoies
                          join o1 in _lookup_duAnThuHoiRepository.GetAll() on o.DuAnThuHoiId equals o1.Id into j1
                          from s1 in j1.DefaultIfEmpty()
                          
@@ -68,13 +74,30 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
                                 Id = o.Id
 							},
                          	DuAnThuHoiMaDATH = s1 == null || s1.MaDATH == null ? "" : s1.MaDATH.ToString()
-						};
+						}).ToListAsync();
 
+				foreach (var dm in danhMucThuHoies)
+				{
+					var listChiTiet = _chiTietThuHoiRepository.GetAll()
+						.WhereIf(true, p => p.DanhMucThuHoiId == dm.DanhMucThuHoi.Id).ToList();
+					decimal tongDu = 0;
+					decimal tongThu = 0;
+					if (!listChiTiet.IsNullOrEmpty())
+					{
+						tongDu = listChiTiet.Sum(p => p.TongDu);
+						tongThu = listChiTiet.Sum(p => p.TongThu);
+					}
+					
+					dm.TongDuDanhMuc = tongDu;
+					dm.TongThuDanhMuc = tongThu;
+				}
+			
+	         
             var totalCount = await filteredDanhMucThuHoies.CountAsync();
 
             return new PagedResultDto<GetDanhMucThuHoiForViewDto>(
                 totalCount,
-                await danhMucThuHoies.ToListAsync()
+	            danhMucThuHoies
             );
          }
 		 

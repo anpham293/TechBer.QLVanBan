@@ -1,26 +1,25 @@
-﻿
-@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.Common.Modals
+﻿@using TechBer.ChuyenDoiSo.Web.Areas.App.Models.Common.Modals
 @using TechBer.ChuyenDoiSo.Web.Areas.App.Models.DanhMucThuHoies
 @model DanhMucThuHoiViewModel
 
 @await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("Details")))
 
 <div class="modal-body">
-    <button id="CreateNewChiTietThuHoiButton" class="btn btn-primary blue"><i class="fa fa-plus"></i> @L("CreateNewChiTietThuHoi")</button>
+    <button id="CreateNewChiTietThuHoiButton" class="btn btn-primary blue">
+        <i class="fa fa-plus"></i> @L("CreateNewChiTietThuHoi")</button>
     <input hidden id="DanhMucThuHoiId" value="@Model.DanhMucThuHoiId" type="number"/>
     <table id="ChiTietThuHoiesTable" class="display table table-striped table-bordered table-hover dt-responsive nowrap">
-                        <thead>
-                            <tr>
-                                <th>@L("Actions")</th>    								    							
-    								<th>@L("Ten")</th>    							
-    								<th>@L("TongDuTamUng")</th>
-    								<th>@L("TongThuTamUng")</th>
-    								<th>@L("KinhPhiTamUngChuyenNamSau")</th>
-    								<th>@L("GhiChu")</th>
-                            </tr>
-                        </thead>
-                    </table>
+        <thead>
+        <tr>
+            <th>@L("Actions")</th>
+            <th>@L("Ten")</th>
+            <th>@L("TongDuTamUng")</th>
+            <th>@L("TongThuTamUng")</th>
+            <th>@L("KinhPhiTamUngChuyenNamSau")</th>
+            <th>@L("GhiChu")</th>
+        </tr>
+        </thead>
+    </table>
 </div>
 
 @await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithClose.cshtml")
-

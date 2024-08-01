@@ -1,6 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en"> 
-  <texts>    <text name="ChiTietThuHoi">Chi tiet thu hoi</text>
+  <texts>
+    <text name="TongDuTamUng">Tong du tam ung</text>
+    <text name="TongThuTamUng">Tong thu tam ung</text>
+    <text name="KinhPhiTamUngChuyenNamSau">Kinh phi tam ung chuyen nam sau</text>
+    <text name="ChiTietThuHoi">Chi tiet thu hoi</text>
     <text name="TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng.ChiTietThuHoi">ChiTietThuHoi</text>
     <text name="Du1">Du 1</text>
     <text name="Du2">Du 2</text>

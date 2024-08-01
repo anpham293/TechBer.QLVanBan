@@ -69,59 +69,76 @@
                 }
             },
             columnDefs: [
+                // {
+                //     width: 120,
+                //     targets: 0,
+                //     data: null,
+                //     orderable: false,
+                //     autoWidth: false,
+                //     defaultContent: '',
+                //     rowAction: {
+                //         cssClass: 'btn btn-brand dropdown-toggle',
+                //         text: '<i class="fa fa-cog"></i> ' + app.localize('Actions') + ' <span class="caret"></span>',
+                //         items: [
+                //             {
+                //                 text: app.localize('View'),
+                //                 action: function (data) {
+                //                     _viewDanhMucThuHoiModal.open({id: data.record.danhMucThuHoi.id});
+                //                 }
+                //             },
+                //             {
+                //                 text: app.localize('ChiTiet'),
+                //                 action: function (data) {
+                //                     _chitietThuHoiModal.open({id: data.record.danhMucThuHoi.id});
+                //                 }
+                //             },
+                //             {
+                //                 text: app.localize('Edit'),
+                //                 visible: function () {
+                //                     return _permissions.edit;
+                //                 },
+                //                 action: function (data) {
+                //                     _createOrEditModal.open({id: data.record.danhMucThuHoi.id});
+                //                 }
+                //             },
+                //             {
+                //                 text: app.localize('History'),
+                //                 visible: function () {
+                //                     return entityHistoryIsEnabled();
+                //                 },
+                //                 action: function (data) {
+                //                     _entityTypeHistoryModal.open({
+                //                         entityTypeFullName: _entityTypeFullName,
+                //                         entityId: data.record.danhMucThuHoi.id
+                //                     });
+                //                 }
+                //             },
+                //             {
+                //                 text: app.localize('Delete'),
+                //                 visible: function () {
+                //                     return _permissions.delete;
+                //                 },
+                //                 action: function (data) {
+                //                     deleteDanhMucThuHoi(data.record.danhMucThuHoi);
+                //                 }
+                //             }]
+                //     }
+                // },
                 {
-                    width: 120,
+                    // width: 200,
                     targets: 0,
-                    data: null,
-                    orderable: false,
-                    autoWidth: false,
-                    defaultContent: '',
-                    rowAction: {
-                        cssClass: 'btn btn-brand dropdown-toggle',
-                        text: '<i class="fa fa-cog"></i> ' + app.localize('Actions') + ' <span class="caret"></span>',
-                        items: [
-                            {
-                                text: app.localize('View'),
-                                action: function (data) {
-                                    _viewDanhMucThuHoiModal.open({id: data.record.danhMucThuHoi.id});
-                                }
-                            },
-                            {
-                                text: app.localize('ChiTiet'),
-                                action: function (data) {
-                                    _chitietThuHoiModal.open({id: data.record.danhMucThuHoi.id});
-                                }
-                            },
-                            {
-                                text: app.localize('Edit'),
-                                visible: function () {
-                                    return _permissions.edit;
-                                },
-                                action: function (data) {
-                                    _createOrEditModal.open({id: data.record.danhMucThuHoi.id});
-                                }
-                            },
-                            {
-                                text: app.localize('History'),
-                                visible: function () {
-                                    return entityHistoryIsEnabled();
-                                },
-                                action: function (data) {
-                                    _entityTypeHistoryModal.open({
-                                        entityTypeFullName: _entityTypeFullName,
-                                        entityId: data.record.danhMucThuHoi.id
-                                    });
-                                }
-                            },
-                            {
-                                text: app.localize('Delete'),
-                                visible: function () {
-                                    return _permissions.delete;
-                                },
-                                action: function (data) {
-                                    deleteDanhMucThuHoi(data.record.danhMucThuHoi);
-                                }
-                            }]
+                    data: "danhMucThuHoi.id",
+                    name: "id",
+                    className: "text-center",
+                    render: function (data) {
+                        let chinhSuaDanhMucThuHoi = '<label class="badge badge-info chinhSuaDanhMucThuHoi" data-rowId="'+ data +'"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">\n' +
+                            '  <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>\n' +
+                            '</svg> Chỉnh sửa</label>';
+                        
+                        let chiTietDanhMucThuHoi = '<label class="badge badge-info chiTietDanhMucThuHoi" data-rowId="'+ data +'"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-inboxes-fill" viewBox="0 0 16 16">\n' +
+                            '  <path d="M4.98 1a.5.5 0 0 0-.39.188L1.54 5H6a.5.5 0 0 1 .5.5 1.5 1.5 0 0 0 3 0A.5.5 0 0 1 10 5h4.46l-3.05-3.812A.5.5 0 0 0 11.02 1zM3.81.563A1.5 1.5 0 0 1 4.98 0h6.04a1.5 1.5 0 0 1 1.17.563l3.7 4.625a.5.5 0 0 1 .106.374l-.39 3.124A1.5 1.5 0 0 1 14.117 10H1.883A1.5 1.5 0 0 1 .394 8.686l-.39-3.124a.5.5 0 0 1 .106-.374zM.125 11.17A.5.5 0 0 1 .5 11H6a.5.5 0 0 1 .5.5 1.5 1.5 0 0 0 3 0 .5.5 0 0 1 .5-.5h5.5a.5.5 0 0 1 .496.562l-.39 3.124A1.5 1.5 0 0 1 14.117 16H1.883a1.5 1.5 0 0 1-1.489-1.314l-.39-3.124a.5.5 0 0 1 .121-.393z"/>\n' +
+                            '</svg> Danh sách</label>';
+                        return chinhSuaDanhMucThuHoi + ' ' + chiTietDanhMucThuHoi;
                     }
                 },
                 {
@@ -136,18 +153,36 @@
                 },
                 {
                     targets: 3,
-                    data: "danhMucThuHoi.ghiChu",
-                    name: "ghiChu"
+                    data: "tongDuDanhMuc",
+                    name: "tongDuDanhMuc",
+                    className: "text-right",
+                    render: function (data, type, row, meta) {
+                        return addCommas(data) + " VNĐ"
+                    }
                 },
                 {
                     targets: 4,
-                    data: "danhMucThuHoi.type",
-                    name: "type"
+                    data: "tongThuDanhMuc",
+                    name: "tongThuDanhMuc",
+                    className: "text-right",
+                    render: function (data, type, row, meta) {
+                        return addCommas(data) + " VNĐ"
+                    }
                 },
+                    {
+                        targets: 5,
+                        data: "tongThuDanhMuc",
+                        name: "kinhPhiDanhMuc",
+                        className: "text-right",
+                        render: function (data, type, row, meta) {
+                            var kinhPhiChuyen = parseFloat(row.tongDuDanhMuc) - parseFloat(row.tongThuDanhMuc);
+                            return addCommas(kinhPhiChuyen) + " VNĐ"
+                        }
+                    },
                 {
-                    targets: 5,
-                    data: "duAnThuHoiMaDATH",
-                    name: "duAnThuHoiFk.maDATH"
+                    targets: 6,
+                    data: "danhMucThuHoi.ghiChu",
+                    name: "ghiChu"
                 }
             ]
         });
@@ -218,6 +253,17 @@
             if (e.which === 13) {
                 getDanhMucThuHoies();
             }
+        });
+
+        $(document).off('click', '.chinhSuaDanhMucThuHoi').on('click', '.chinhSuaDanhMucThuHoi', function () {
+            var self = $(this);
+            var id = self.attr('data-rowId');
+            _createOrEditModal.open({id: id});
+        });
+        $(document).off('click', '.chiTietDanhMucThuHoi').on('click', '.chiTietDanhMucThuHoi', function () {
+            var self = $(this);
+            var id = self.attr('data-rowId');
+            _chitietThuHoiModal.open({id: id});
         });
     }
 })(jQuery);

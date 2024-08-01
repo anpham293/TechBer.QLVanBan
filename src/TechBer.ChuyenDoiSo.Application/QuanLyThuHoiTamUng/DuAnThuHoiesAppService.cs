@@ -4,6 +4,7 @@ using System.Linq.Dynamic.Core;
 using Abp.Linq.Extensions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Xml;
 using Abp.Domain.Repositories;
 using TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng.Exporting;
 using TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng.Dtos;
@@ -12,8 +13,12 @@ using Abp.Application.Services.Dto;
 using TechBer.ChuyenDoiSo.Authorization;
 using Abp.Extensions;
 using Abp.Authorization;
+using Abp.Collections.Extensions;
 using Abp.Domain.Entities;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
+using TechBer.ChuyenDoiSo.Common;
 
 namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
 {
@@ -22,13 +27,18 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
     {
         private readonly IRepository<DuAnThuHoi, long> _duAnThuHoiRepository;
         private readonly IDuAnThuHoiesExcelExporter _duAnThuHoiesExcelExporter;
-
+        private readonly IRepository<ChiTietThuHoi, long> _chiTietThuHoiRepository;
+        private readonly IRepository<DanhMucThuHoi, long> _danhMucThuHoiRepository;
 
         public DuAnThuHoiesAppService(IRepository<DuAnThuHoi, long> duAnThuHoiRepository,
-            IDuAnThuHoiesExcelExporter duAnThuHoiesExcelExporter)
+                                      IDuAnThuHoiesExcelExporter duAnThuHoiesExcelExporter,
+                                      IRepository<ChiTietThuHoi, long> chiTietThuHoiRepository,
+                                      IRepository<DanhMucThuHoi, long> danhMucThuHoiRepository)
         {
             _duAnThuHoiRepository = duAnThuHoiRepository;
             _duAnThuHoiesExcelExporter = duAnThuHoiesExcelExporter;
+            _chiTietThuHoiRepository = chiTietThuHoiRepository;
+            _danhMucThuHoiRepository = danhMucThuHoiRepository;
         }
 
         public async Task<PagedResultDto<GetDuAnThuHoiForViewDto>> GetAll(GetAllDuAnThuHoiesInput input)
@@ -57,7 +67,7 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
                 .OrderBy(input.Sorting ?? "id asc")
                 .PageBy(input);
 
-            var duAnThuHoies = from o in pagedAndFilteredDuAnThuHoies
+            var duAnThuHoies = await (from o in pagedAndFilteredDuAnThuHoies
                 select new GetDuAnThuHoiForViewDto()
                 {
                     DuAnThuHoi = new DuAnThuHoiDto
@@ -71,13 +81,45 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
                         TrangThai = o.TrangThai,
                         Id = o.Id
                     }
-                };
+                }).ToListAsync();
+            
+            foreach (var da in duAnThuHoies)
+            {
+                decimal tongDuDuAn = 0;
+                decimal tongThuDuAn = 0;
+                
+                var listDanhMuc = _danhMucThuHoiRepository.GetAll()
+                    .WhereIf(true, p => p.DuAnThuHoiId == da.DuAnThuHoi.Id).ToList();
+                
+                if (!listDanhMuc.IsNullOrEmpty())
+                {
+                    foreach (var dm in listDanhMuc)
+                    {
+                        var listChiTiet = _chiTietThuHoiRepository.GetAll()
+                            .WhereIf(true, p => p.DanhMucThuHoiId == dm.Id).ToList();
+                        decimal tongDu = 0;
+                        decimal tongThu = 0;
+                        if (!listChiTiet.IsNullOrEmpty())
+                        {
+                            tongDu = listChiTiet.Sum(p => p.TongDu);
+                            tongThu = listChiTiet.Sum(p => p.TongThu);
+                        }
+
+                        tongDuDuAn += tongDu;
+                        tongThuDuAn += tongThu;
+                    }
+                }
+
+                da.TongDuDuAn = tongDuDuAn;
+                da.TongThuDuAn = tongThuDuAn;
+
+            }
 
             var totalCount = await filteredDuAnThuHoies.CountAsync();
 
             return new PagedResultDto<GetDuAnThuHoiForViewDto>(
                 totalCount,
-                await duAnThuHoies.ToListAsync()
+                duAnThuHoies
             );
         }
 
@@ -206,6 +248,114 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
             var duAnThuHoiListDtos = await query.ToListAsync();
 
             return _duAnThuHoiesExcelExporter.ExportToFile(duAnThuHoiListDtos);
+        }
+        
+        [HttpPost]
+        public async Task<string> SendZalo()
+        {
+            // try
+            // {
+            //     try
+            //     {
+            //         string contentType = "application/json;charset=utf-8";
+            //
+            //        
+            //
+            //             string phone = "0949646698";
+            //                 
+            //                 string accessToken =
+            //                     "ATwL5per0niltf8NCJuD42RLcHyoA7P7NgAq73eQIszPauvZAm9WCbxfZZyAUsj6G_Vr4YTk71KsuiDWNMHJ61U4WtPo5XqE7hE2N71INpmJoC0oP2qYNJkyvofn6taW1lofQLPhIMCstgSHM49gIKhN-X8vTMblM-wZCKHKJLbIohqq9tTSQ5V9lW0fUN96MURd8mjIEdKVx_e8O6XaM3VBYW5UIrj4DQ6-76WOG5KElO4pVW5_GY6ZWHLJ9cSOHvk9NJOvG0HTajK2AIe8QIEUp1zn13va8OxN4cnh5HbX9zEdFpqZ0Hq";
+            //                 List<string> data = new List<string>();
+            //                 data.Add("access_token=" + accessToken);
+            //                 data.Add("data=%7B%22user_id%22%3A%22" + phone + "%22%2C%7D");
+            //
+            //
+            //                 string result =
+            //                     CreateRequest.karionGetZaloGetApi("https://openapi.zalo.me/v2.0/oa/getprofile", data);
+            //
+            //                 var ketquaTraVe = JObject.Parse(result);
+            //                 bool hasErrors = (int) ketquaTraVe["error"] != 0;
+            //                 if (!hasErrors)
+            //                 {
+            //                     string user_id = (string) ketquaTraVe["data"]["user_id"];
+            //                     var message = "";
+            //                     if (type == 1)
+            //                     {
+            //                         message +=
+            //                             "THÔNG TIN HÓA ĐƠN \\n" +
+            //                             "Kỳ thu: " + kythu + ".\\n" +
+            //                             "Tên khách hàng: " + tenkhachhangs + ".\\n" +
+            //                             "Địa chỉ: " + diachi + ".\\n" +
+            //                             "Mã khách hàng: " + maHopDong + ".\\n" +
+            //                             "Số cũ: " + chisocu + ".\\n" +
+            //                             "Số mới: " + chisomoi + ".\\n" +
+            //                             "Tiêu thụ: " + tieuthu + " m3.\\n" +
+            //                             "Số tiền: " + String.Format("{0:n0}", thanhtien) + " VNĐ";
+            //                     }
+            //
+            //                     if (type == 2)
+            //                     {
+            //                         message = messThongBao.Replace("\n", "\\n");
+            //                     }
+            //
+            //                     string dataMessage = @"{ ""recipient"": { ""user_id"": """ + user_id +
+            //                                          @""" }, ""message"": { ""text"": """ + message + @""" } }";
+            //                     string resultMes = CreateRequest.karionGetZaloAPI(
+            //                         "https://openapi.zalo.me/v2.0/oa/message?access_token=" + accessToken, dataMessage,
+            //                         "POST", contentType);
+            //                     var ketquaTraVeMes = JObject.Parse(resultMes);
+            //                     bool hasErrorsMes = (int) ketquaTraVeMes["error"] != 0;
+            //
+            //                     if (!hasErrorsMes)
+            //                     {
+            //                         exporterDtos.Add(new CreateInvoiceResultForExcelExporterDto()
+            //                         {
+            //                             Stt = maHopDong,
+            //                             Status = "Thành công",
+            //                             MauHoaDon = phone,
+            //                             ErrorCode = "",
+            //                             TenKhach = tenkhachhangs,
+            //                             MaBiMat = "Zalo"
+            //                         });
+            //                     }
+            //                     else
+            //                     {
+            //                         string loiMes = (string) ketquaTraVeMes["message"];
+            //                         exporterDtos.Add(new CreateInvoiceResultForExcelExporterDto()
+            //                         {
+            //                             Stt = maHopDong,
+            //                             Status = "Thất bại",
+            //                             MauHoaDon = phone,
+            //                             ErrorCode = loiMes,
+            //                             TenKhach = tenkhachhangs,
+            //                             MaBiMat = "Gửi zalo thất bại"
+            //                         });
+            //                     }
+            //                 }
+            //             
+            //     }
+            //     catch (Exception ex)
+            //     {
+            //         exporterDtos.Add(new CreateInvoiceResultForExcelExporterDto()
+            //         {
+            //             Status = "Lỗi hệ thống",
+            //             Stt = "",
+            //             ErrorCode = ex.Message,
+            //             TenKhach = "",
+            //             SoThuTenSo = ""
+            //         });
+            //     }
+            //
+            //
+            //     return _chiTietThanhToansExcelExporter.SendZaloResult(exporterDtos);
+            // }
+            // catch (Exception e)
+            // {
+            //     Console.WriteLine(e);
+            //     throw;
+            // }
+
+            return "";
         }
     }
 }

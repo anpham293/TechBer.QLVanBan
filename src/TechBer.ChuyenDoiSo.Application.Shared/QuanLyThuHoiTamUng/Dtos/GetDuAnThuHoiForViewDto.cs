@@ -4,6 +4,7 @@
     {
 		public DuAnThuHoiDto DuAnThuHoi { get; set; }
 
-
+        public decimal TongDuDuAn { get; set; }
+        public decimal TongThuDuAn { get; set; }
     }
 }
