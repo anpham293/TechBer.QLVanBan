@@ -74,5 +74,29 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
 		public virtual decimal TongDu { get; set; }
 		public virtual decimal TongThu { get; set; }
 		
+		public virtual decimal ThucTe1 { get; set; }
+		
+		public virtual decimal ThucTe2 { get; set; }
+		
+		public virtual decimal ThucTe3 { get; set; }
+		
+		public virtual decimal ThucTe4 { get; set; }
+		
+		public virtual decimal ThucTe5 { get; set; }
+		
+		public virtual decimal ThucTe6 { get; set; }
+		
+		public virtual decimal ThucTe7 { get; set; }
+		
+		public virtual decimal ThucTe8 { get; set; }
+		
+		public virtual decimal ThucTe9 { get; set; }
+		
+		public virtual decimal ThucTe10 { get; set; }
+		
+		public virtual decimal ThucTe11 { get; set; }
+		
+		public virtual decimal ThucTe12 { get; set; }
+		public virtual decimal TongThuTe { get; set; }
     }
 }
