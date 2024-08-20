@@ -3,7 +3,9 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using Abp.Linq.Extensions;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using Abp.Domain.Repositories;
@@ -16,12 +18,15 @@ using Abp.Extensions;
 using Abp.Authorization;
 using Abp.Collections.Extensions;
 using Abp.Domain.Entities;
+using iTextSharp.text.pdf;
+using iTextSharp.text.pdf.parser;
 using Karion.BusinessSolution.EinvoiceExtension;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using TechBer.ChuyenDoiSo.Common;
+using TechBer.ChuyenDoiSo.Storage;
 
 namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
 {
@@ -32,16 +37,19 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
         private readonly IDuAnThuHoiesExcelExporter _duAnThuHoiesExcelExporter;
         private readonly IRepository<ChiTietThuHoi, long> _chiTietThuHoiRepository;
         private readonly IRepository<DanhMucThuHoi, long> _danhMucThuHoiRepository;
+        private readonly IBinaryObjectManager _binaryObjectManager;
 
         public DuAnThuHoiesAppService(IRepository<DuAnThuHoi, long> duAnThuHoiRepository,
                                       IDuAnThuHoiesExcelExporter duAnThuHoiesExcelExporter,
                                       IRepository<ChiTietThuHoi, long> chiTietThuHoiRepository,
-                                      IRepository<DanhMucThuHoi, long> danhMucThuHoiRepository)
+                                      IRepository<DanhMucThuHoi, long> danhMucThuHoiRepository,
+                                      IBinaryObjectManager binaryObjectManager)
         {
             _duAnThuHoiRepository = duAnThuHoiRepository;
             _duAnThuHoiesExcelExporter = duAnThuHoiesExcelExporter;
             _chiTietThuHoiRepository = chiTietThuHoiRepository;
             _danhMucThuHoiRepository = danhMucThuHoiRepository;
+            _binaryObjectManager = binaryObjectManager;
         }
 
         public async Task<PagedResultDto<GetDuAnThuHoiForViewDto>> GetAll(GetAllDuAnThuHoiesInput input)
@@ -312,6 +320,50 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
             }
 
             return "";
+        }
+
+        public async Task<string> DocPDF()
+        {
+            var binObj = await _binaryObjectManager.GetOrNullAsync(Guid.Parse("e9b9b47a-de16-6776-ec58-3a14625ec987"));
+            var content = binObj.Bytes;
+           
+            // var File(content, "application/pdf");
+
+            var abc = "";
+            try
+            {
+                using (MemoryStream ms = new MemoryStream(content))
+                {
+                    // Sử dụng PdfReader để đọc từ MemoryStream
+                    using (PdfReader reader = new PdfReader(ms))
+                    {
+                        StringBuilder textBuilder = new StringBuilder();
+
+                        // Lặp qua từng trang của tệp PDF
+                        for (int i = 1; i <= reader.NumberOfPages; i++)
+                        {
+                            // Trích xuất văn bản từ mỗi trang
+                            string text = PdfTextExtractor.GetTextFromPage(reader, i);
+
+                            // Thêm văn bản vào StringBuilder để xử lý tiếp
+                            textBuilder.Append(text);
+                        }
+
+                        // Lấy văn bản cuối cùng
+                        string extractedText = textBuilder.ToString();
+
+                        abc = extractedText;
+                        // Hiển thị văn bản ra console (hoặc xử lý theo nhu cầu của bạn)
+                        Console.WriteLine(extractedText); //luu vao taexxt => hien view textvieea 
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            return abc;
         }
     }
 }

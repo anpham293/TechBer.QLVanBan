@@ -23,5 +23,6 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
 		Task<FileDto> GetDuAnThuHoiesToExcel(GetAllDuAnThuHoiesForExcelInput input);
 
 		Task<string> SendZalo();
+		Task<string> DocPDF();
     }
 }

@@ -229,6 +229,25 @@
             );
 
         });
+        
+        $("#docPDF").on('click', function () {
+            abp.ui.setBusy($("body"));
+            abp.message.confirm(
+                '',
+                app.localize('AreYouSure'),
+                function (isConfirmed) {
+                    if (isConfirmed) {
+                        _duAnThuHoiesService.docPDF().done(function (result) {
+                            console.log(result);
+                            abp.ui.clearBusy($("body"));
+                        });
+                    } else {
+                        abp.ui.clearBusy($("body"));
+                    }
+                }
+            );
+
+        });
 
         function deleteDuAnThuHoi(duAnThuHoi) {
             abp.message.confirm(
