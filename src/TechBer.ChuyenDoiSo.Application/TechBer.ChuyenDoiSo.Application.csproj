@@ -18,7 +18,11 @@
   <ItemGroup>
     <PackageReference Include="Abp.EntityFrameworkCore.EFPlus" Version="5.7.0" />
     <PackageReference Include="BouncyCastle.Cryptography" Version="2.0.0" />
+    <PackageReference Include="EPPlus" Version="5.1.0" />
+    <PackageReference Include="itext.html2pdf.core" Version="1.0.4" />
+    <PackageReference Include="itext7" Version="7.1.10" />
     <PackageReference Include="iTextSharp" Version="5.5.13.4" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="3.1.19" />
     <PackageReference Include="NPOI" Version="2.4.1" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.2.7" />
   </ItemGroup>
@@ -27,6 +31,10 @@
     <ProjectReference Include="..\TechBer.ChuyenDoiSo.Application.Shared\TechBer.ChuyenDoiSo.Application.Shared.csproj" />
     <ProjectReference Include="..\TechBer.ChuyenDoiSo.Core\TechBer.ChuyenDoiSo.Core.csproj" />
     <ProjectReference Include="..\TechBer.ChuyenDoiSo.EntityFrameworkCore\TechBer.ChuyenDoiSo.EntityFrameworkCore.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Excel" />
   </ItemGroup>
 
 </Project>

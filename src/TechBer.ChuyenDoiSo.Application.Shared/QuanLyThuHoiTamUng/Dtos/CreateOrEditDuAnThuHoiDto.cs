@@ -32,4 +32,8 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng.Dtos
 		
 
     }
+    public class BaoCaoDuAnThuHoiToExcelInput
+    {
+	    public long id { get; set; }
+    }
 }

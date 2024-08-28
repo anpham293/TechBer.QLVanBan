@@ -91,6 +91,30 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng.Dtos
 		 public decimal TongDu { get; set; }
 		 
 		 public decimal TongThu { get; set; }
-		 
+
+		 public decimal ThucTe1 { get; set; }
+		
+		 public decimal ThucTe2 { get; set; }
+		
+		 public decimal ThucTe3 { get; set; }
+		
+		 public decimal ThucTe4 { get; set; }
+		
+		 public decimal ThucTe5 { get; set; }
+		
+		 public decimal ThucTe6 { get; set; }
+		
+		 public decimal ThucTe7 { get; set; }
+		
+		 public decimal ThucTe8 { get; set; }
+		
+		 public decimal ThucTe9 { get; set; }
+		
+		 public decimal ThucTe10 { get; set; }
+		
+		 public decimal ThucTe11 { get; set; }
+		
+		 public decimal ThucTe12 { get; set; }
+		 public decimal TongThucTe { get; set; }
     }
 }

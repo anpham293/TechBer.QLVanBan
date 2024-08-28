@@ -18,6 +18,7 @@ using Abp.Extensions;
 using Abp.Authorization;
 using Abp.Collections.Extensions;
 using Abp.Domain.Entities;
+using iText.Html2pdf;
 using iTextSharp.text.pdf;
 using iTextSharp.text.pdf.parser;
 using Karion.BusinessSolution.EinvoiceExtension;
@@ -40,10 +41,10 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
         private readonly IBinaryObjectManager _binaryObjectManager;
 
         public DuAnThuHoiesAppService(IRepository<DuAnThuHoi, long> duAnThuHoiRepository,
-                                      IDuAnThuHoiesExcelExporter duAnThuHoiesExcelExporter,
-                                      IRepository<ChiTietThuHoi, long> chiTietThuHoiRepository,
-                                      IRepository<DanhMucThuHoi, long> danhMucThuHoiRepository,
-                                      IBinaryObjectManager binaryObjectManager)
+            IDuAnThuHoiesExcelExporter duAnThuHoiesExcelExporter,
+            IRepository<ChiTietThuHoi, long> chiTietThuHoiRepository,
+            IRepository<DanhMucThuHoi, long> danhMucThuHoiRepository,
+            IBinaryObjectManager binaryObjectManager)
         {
             _duAnThuHoiRepository = duAnThuHoiRepository;
             _duAnThuHoiesExcelExporter = duAnThuHoiesExcelExporter;
@@ -93,15 +94,15 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
                         Id = o.Id
                     }
                 }).ToListAsync();
-            
+
             foreach (var da in duAnThuHoies)
             {
                 decimal tongDuDuAn = 0;
                 decimal tongThuDuAn = 0;
-                
+
                 var listDanhMuc = _danhMucThuHoiRepository.GetAll()
                     .WhereIf(true, p => p.DuAnThuHoiId == da.DuAnThuHoi.Id).ToList();
-                
+
                 if (!listDanhMuc.IsNullOrEmpty())
                 {
                     foreach (var dm in listDanhMuc)
@@ -123,7 +124,6 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
 
                 da.TongDuDuAn = tongDuDuAn;
                 da.TongThuDuAn = tongThuDuAn;
-
             }
 
             var totalCount = await filteredDuAnThuHoies.CountAsync();
@@ -182,7 +182,7 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
                 GhiChu = input.GhiChu,
                 TrangThai = DuAnThuHoiConst.TrangThaiDangXuLi
             };
-            
+
             var soDuAn = 0;
             string fmt = "000";
 
@@ -199,7 +199,7 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
             }
 
             duAnThuHoi.SoDuAn = soDuAn;
-            duAnThuHoi.MaDATH = "TH" +input.NamQuanLy + "-" + soDuAn.ToString(fmt);
+            duAnThuHoi.MaDATH = "TH" + input.NamQuanLy + "-" + soDuAn.ToString(fmt);
 
             await _duAnThuHoiRepository.InsertAsync(duAnThuHoi);
         }
@@ -260,22 +260,25 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
 
             return _duAnThuHoiesExcelExporter.ExportToFile(duAnThuHoiListDtos);
         }
-        
+
         public class TestDto
         {
             public string token { get; set; }
             public string refreshToken { get; set; }
         }
-        
+
         [HttpPost]
         public async Task<string> SendZalo()
         {
             try
             {
                 var client = new HttpClient();
+                client.DefaultRequestHeaders.Add("User-Agent", "ASP.Net Core" + AbpSession.UserId + "");
                 var request = new HttpRequestMessage(HttpMethod.Post, "https://techber.vn/jwt-login.html");
-                client.DefaultRequestHeaders.Add("User-Agent", "ASP.Net Core"+ AbpSession.UserId +"");
-                var content = new StringContent("{\r\n    \"username\":\"zalointegrated\",\r\n    \"password\":\"Techber@123\"\r\n}\r\n", null, "application/json");
+                var content =
+                    new StringContent(
+                        "{\r\n    \"username\":\"zalointegrated\",\r\n    \"password\":\"Techber@123\"\r\n}\r\n", null,
+                        "application/json");
                 request.Content = content;
                 var response = await client.SendAsync(request);
                 response.EnsureSuccessStatusCode();
@@ -285,33 +288,22 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
 
                 var token = ketquaConvert.token;
 
-                //string contentType = "application/json;charset=utf-8";
-                // string phone = "0949646698";
-                //
-                // string accessToken =
-                //     "ATwL5per0niltf8NCJuD42RLcHyoA7P7NgAq73eQIszPauvZAm9WCbxfZZyAUsj6G_Vr4YTk71KsuiDWNMHJ61U4WtPo5XqE7hE2N71INpmJoC0oP2qYNJkyvofn6taW1lofQLPhIMCstgSHM49gIKhN-X8vTMblM-wZCKHKJLbIohqq9tTSQ5V9lW0fUN96MURd8mjIEdKVx_e8O6XaM3VBYW5UIrj4DQ6-76WOG5KElO4pVW5_GY6ZWHLJ9cSOHvk9NJOvG0HTajK2AIe8QIEUp1zn13va8OxN4cnh5HbX9zEdFpqZ0Hq";
-                // List<string> data = new List<string>();
-                // data.Add("access_token=" + accessToken);
-                // data.Add("data=%7B%22user_id%22%3A%22" + phone + "%22%2C%7D");
-                //
-                // string result =
-                //     CreateRequest.karionGetZaloGetApi("https://openapi.zalo.me/v2.0/oa/getprofile", data);
-                //
-                // var ketquaTraVe = JObject.Parse(result);
-                // bool hasErrors = (int) ketquaTraVe["error"] != 0;
-                // if (!hasErrors)
-                // {
-                //     string user_id = (string) ketquaTraVe["data"]["user_id"];
-                //     var message = "test";
-                //
-                //     string dataMessage = @"{ ""recipient"": { ""user_id"": """ + user_id +
-                //                          @""" }, ""message"": { ""text"": """ + message + @""" } }";
-                //     string resultMes = CreateRequest.karionGetZaloAPI(
-                //         "https://openapi.zalo.me/v2.0/oa/message?access_token=" + accessToken, dataMessage,
-                //         "POST", contentType);
-                //     var ketquaTraVeMes = JObject.Parse(resultMes);
-                //     bool hasErrorsMes = (int) ketquaTraVeMes["error"] != 0;
-                // }
+                var listSDT = "84949646698";
+                var message = "Thong bao ";
+
+                var requestZaloMessage =
+                    new HttpRequestMessage(HttpMethod.Post, "https://techber.vn/appservices/sendzalo.html");
+                requestZaloMessage.Headers.Add("Authorization", "Bearer " + token + "");
+                var contentZaloMessage =
+                    new StringContent(
+                        "{\"listsdt\": [\"" + listSDT + "\"],\r\n    \"message\" : \"" + message + "\"}\r\n", null,
+                        "application/json");
+                requestZaloMessage.Content = contentZaloMessage;
+                var responseZaloMessage = await client.SendAsync(requestZaloMessage);
+                responseZaloMessage.EnsureSuccessStatusCode();
+                var ketquaZaloMessage = await responseZaloMessage.Content.ReadAsStringAsync();
+
+                var ketquaZaloMessageConvert = JsonConvert.DeserializeObject<TestDto>(ketquaZaloMessage);
             }
             catch (Exception e)
             {
@@ -326,11 +318,11 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
         {
             var binObj = await _binaryObjectManager.GetOrNullAsync(Guid.Parse("e9b9b47a-de16-6776-ec58-3a14625ec987"));
             var content = binObj.Bytes;
-           
+
             // var File(content, "application/pdf");
 
             var abc = "";
-            try
+                try
             {
                 using (MemoryStream ms = new MemoryStream(content))
                 {
@@ -338,32 +330,62 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
                     using (PdfReader reader = new PdfReader(ms))
                     {
                         StringBuilder textBuilder = new StringBuilder();
-
+            
                         // Lặp qua từng trang của tệp PDF
                         for (int i = 1; i <= reader.NumberOfPages; i++)
                         {
                             // Trích xuất văn bản từ mỗi trang
                             string text = PdfTextExtractor.GetTextFromPage(reader, i);
-
+            
                             // Thêm văn bản vào StringBuilder để xử lý tiếp
                             textBuilder.Append(text);
                         }
-
+            
                         // Lấy văn bản cuối cùng
                         string extractedText = textBuilder.ToString();
-
+            
                         abc = extractedText;
-                        // Hiển thị văn bản ra console (hoặc xử lý theo nhu cầu của bạn)
-                        Console.WriteLine(extractedText); //luu vao taexxt => hien view textvieea 
                     }
                 }
+                
+              
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 throw;
             }
+
             return abc;
+        }
+        
+        public async Task<FileDto> BaoCaoDuAnThuHoiToExcel(BaoCaoDuAnThuHoiToExcelInput input)
+        {
+            BaoCaoDuAnThuHoi_ExportToFileDto dataTrans = new BaoCaoDuAnThuHoi_ExportToFileDto();
+            List<Data_DanhMuc_ListChiTietThuHoiDto> listData = new List<Data_DanhMuc_ListChiTietThuHoiDto>();
+            
+            var duAnThuHoi = await _duAnThuHoiRepository.FirstOrDefaultAsync(input.id);
+
+            var queryListDanhMuc = await _danhMucThuHoiRepository.GetAllListAsync(p => p.DuAnThuHoiId == duAnThuHoi.Id);
+
+            if (!queryListDanhMuc.IsNullOrEmpty())
+            {
+                foreach (var ct in queryListDanhMuc)
+                {
+                    Data_DanhMuc_ListChiTietThuHoiDto data = new Data_DanhMuc_ListChiTietThuHoiDto();
+                    var listChiTiet =
+                        await _chiTietThuHoiRepository.GetAllListAsync(p => p.DanhMucThuHoiId == ct.Id);
+                    data.ListChiTietThuHoi = ObjectMapper.Map<List<ChiTietThuHoiDto>>(listChiTiet);
+                    data.DanhMucThuHoi = ObjectMapper.Map<DanhMucThuHoiDto>(ct);
+                    
+                    listData.Add(data);
+                }
+            }
+
+            dataTrans.DuAnThuHoi = ObjectMapper.Map<DuAnThuHoiDto>(duAnThuHoi);
+            dataTrans.ListData = listData;
+            
+            return _duAnThuHoiesExcelExporter.BaoCaoDuAnThuHoi_ExportToFile(dataTrans);
         }
     }
 }

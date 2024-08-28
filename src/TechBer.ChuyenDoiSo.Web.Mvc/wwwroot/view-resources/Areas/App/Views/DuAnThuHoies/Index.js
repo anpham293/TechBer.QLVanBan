@@ -122,7 +122,12 @@
                         let danhMucThuHoiModal = '<label class="badge badge-info danhMucThuHoiModal" data-rowId="'+ data +'"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-inboxes-fill" viewBox="0 0 16 16">\n' +
                             '  <path d="M4.98 1a.5.5 0 0 0-.39.188L1.54 5H6a.5.5 0 0 1 .5.5 1.5 1.5 0 0 0 3 0A.5.5 0 0 1 10 5h4.46l-3.05-3.812A.5.5 0 0 0 11.02 1zM3.81.563A1.5 1.5 0 0 1 4.98 0h6.04a1.5 1.5 0 0 1 1.17.563l3.7 4.625a.5.5 0 0 1 .106.374l-.39 3.124A1.5 1.5 0 0 1 14.117 10H1.883A1.5 1.5 0 0 1 .394 8.686l-.39-3.124a.5.5 0 0 1 .106-.374zM.125 11.17A.5.5 0 0 1 .5 11H6a.5.5 0 0 1 .5.5 1.5 1.5 0 0 0 3 0 .5.5 0 0 1 .5-.5h5.5a.5.5 0 0 1 .496.562l-.39 3.124A1.5 1.5 0 0 1 14.117 16H1.883a1.5 1.5 0 0 1-1.489-1.314l-.39-3.124a.5.5 0 0 1 .121-.393z"/>\n' +
                             '</svg> Danh sách</label>';
-                        return chinhSuaDuAnThuHoi + ' ' + danhMucThuHoiModal;
+                        
+                        let ketXuatExcel = '<label class="badge badge-info ketXuatExcel" data-rowId="'+ data +'"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel" viewBox="0 0 16 16">\n' +
+                            '  <path d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z"/>\n' +
+                            '  <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>\n' +
+                            '</svg> Báo cáo</label>';
+                        return chinhSuaDuAnThuHoi + ' ' + danhMucThuHoiModal + ' ' + ketXuatExcel;
                     }
                 },
                 {
@@ -327,6 +332,17 @@
             var self = $(this);
             var id = self.attr('data-rowId');
             _danhMucThuHoiModal.open({id: id});
+        });
+        $(document).off('click', '.ketXuatExcel').on('click', '.ketXuatExcel', function () {
+            var self = $(this);
+            var id = self.attr('data-rowId');
+            _duAnThuHoiesService
+                .baoCaoDuAnThuHoiToExcel({
+                    id: id,
+                })
+                .done(function (result) {
+                    app.downloadTempFile(result);
+                });
         });
         
     });

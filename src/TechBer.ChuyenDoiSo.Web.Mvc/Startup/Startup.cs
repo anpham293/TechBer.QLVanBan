@@ -39,6 +39,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using OfficeOpenXml;
 using TechBer.ChuyenDoiSo.Web.HealthCheck;
 using Owl.reCAPTCHA;
 using HealthChecksUISettings = HealthChecks.UI.Configuration.Settings;
@@ -276,6 +277,8 @@ namespace TechBer.ChuyenDoiSo.Web.Startup
                 }); //URL: /swagger
             }
 
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            
         }
     }
 }

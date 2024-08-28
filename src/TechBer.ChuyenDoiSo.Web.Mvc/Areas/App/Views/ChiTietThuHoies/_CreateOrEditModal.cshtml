@@ -119,7 +119,7 @@
                 </thead>
             </table>
             <br/>
-            <h4>DỰ KIẾN THU HỒI</h4>
+            <h4>KẾ HOẠCH THU HỒI</h4>
             <table id="ThuHoiTamUngTable" class="table table-bordered table-striped table-hover">
                 <thead>
                 <tr bgcolor="#28a745">
@@ -182,7 +182,72 @@
                 </tr>
                 </thead>
             </table>
-
+            <br/>
+            <h4>THỰC TẾ THU HỒI</h4>
+            <table id="ThuHoiTamUngTable" class="table table-bordered table-striped table-hover">
+            <thead>
+            <tr bgcolor="#28a745">
+                <th style="text-align: center">Tổng cộng</th>
+                <th style="text-align: center">Tháng 1</th>
+                <th style="text-align: center">Tháng 2</th>
+                <th style="text-align: center">Tháng 3</th>
+                <th style="text-align: center">Tháng 4</th>
+                <th style="text-align: center">Tháng 5</th>
+                <th style="text-align: center">Tháng 6</th>
+            </tr>
+            <tr>
+                <td rowspan="3" style="text-align:center; vertical-align: middle;">
+                    <input disabled style="font-weight: bold" class="form-control m-input inputMask" id="ChiTietThuHoi_TongThucTe" value="@Model.ChiTietThuHoi.TongThucTe.ToString(CultureInfo.InvariantCulture)" type="text" name="tongThucTe" data-inputmask="'alias': 'decimal', 'groupSeparator': '.', 'autoGroup': true, 'digits': 0, 'digitsOptional': false, 'suffix': ' VNĐ', 'placeholder': '0'"/>
+                </td>
+                <td>
+                    <input class="form-control m-input inputMask" id="ChiTietThuHoi_ThucTe1" value="@Model.ChiTietThuHoi.ThucTe1.ToString(CultureInfo.InvariantCulture)" type="text" name="thucTe1" data-inputmask="'alias': 'decimal', 'groupSeparator': '.', 'autoGroup': true, 'digits': 0, 'digitsOptional': false, 'suffix': ' VNĐ', 'placeholder': '0'"/>
+                </td>
+                <td>
+                    <input class="form-control m-input inputMask" id="ChiTietThuHoi_ThucTe2" value="@Model.ChiTietThuHoi.ThucTe2.ToString(CultureInfo.InvariantCulture)" type="text" name="thucTe2" data-inputmask="'alias': 'decimal', 'groupSeparator': '.', 'autoGroup': true, 'digits': 0, 'digitsOptional': false, 'suffix': ' VNĐ', 'placeholder': '0'"/>
+                </td>
+                <td>
+                    <input class="form-control m-input inputMask" id="ChiTietThuHoi_ThucTe3" value="@Model.ChiTietThuHoi.ThucTe3.ToString(CultureInfo.InvariantCulture)" type="text" name="thucTe3" data-inputmask="'alias': 'decimal', 'groupSeparator': '.', 'autoGroup': true, 'digits': 0, 'digitsOptional': false, 'suffix': ' VNĐ', 'placeholder': '0'"/>
+                </td>
+                <td>
+                    <input class="form-control m-input inputMask" id="ChiTietThuHoi_ThucTe4" value="@Model.ChiTietThuHoi.ThucTe4.ToString(CultureInfo.InvariantCulture)" type="text" name="thucTe4" data-inputmask="'alias': 'decimal', 'groupSeparator': '.', 'autoGroup': true, 'digits': 0, 'digitsOptional': false, 'suffix': ' VNĐ', 'placeholder': '0'"/>
+                </td>
+                <td>
+                    <input class="form-control m-input inputMask" id="ChiTietThuHoi_ThucTe5" value="@Model.ChiTietThuHoi.ThucTe5.ToString(CultureInfo.InvariantCulture)" type="text" name="thucTe5" data-inputmask="'alias': 'decimal', 'groupSeparator': '.', 'autoGroup': true, 'digits': 0, 'digitsOptional': false, 'suffix': ' VNĐ', 'placeholder': '0'"/>
+                </td>
+                <td>
+                    <input class="form-control m-input inputMask" id="ChiTietThuHoi_ThucTe6" value="@Model.ChiTietThuHoi.ThucTe6.ToString(CultureInfo.InvariantCulture)" type="text" name="thucTe6" data-inputmask="'alias': 'decimal', 'groupSeparator': '.', 'autoGroup': true, 'digits': 0, 'digitsOptional': false, 'suffix': ' VNĐ', 'placeholder': '0'"/>
+                </td>
+            </tr>
+            <tr bgcolor="#28a745">
+                <th style="text-align: center">Tháng 7</th>
+                <th style="text-align: center">Tháng 8</th>
+                <th style="text-align: center">Tháng 9</th>
+                <th style="text-align: center">Tháng 10</th>
+                <th style="text-align: center">Tháng 11</th>
+                <th style="text-align: center">Tháng 12</th>
+            </tr>
+            <tr>
+                <td>
+                    <input class="form-control m-input inputMask" id="ChiTietThuHoi_ThucTe7" value="@Model.ChiTietThuHoi.ThucTe7.ToString(CultureInfo.InvariantCulture)" type="text" name="thucTe7" data-inputmask="'alias': 'decimal', 'groupSeparator': '.', 'autoGroup': true, 'digits': 0, 'digitsOptional': false, 'suffix': ' VNĐ', 'placeholder': '0'"/>
+                </td>
+                <td>
+                    <input class="form-control m-input inputMask" id="ChiTietThuHoi_ThucTe8" value="@Model.ChiTietThuHoi.ThucTe8.ToString(CultureInfo.InvariantCulture)" type="text" name="thucTe8" data-inputmask="'alias': 'decimal', 'groupSeparator': '.', 'autoGroup': true, 'digits': 0, 'digitsOptional': false, 'suffix': ' VNĐ', 'placeholder': '0'"/>
+                </td>
+                <td>
+                    <input class="form-control m-input inputMask" id="ChiTietThuHoi_ThucTe9" value="@Model.ChiTietThuHoi.ThucTe9.ToString(CultureInfo.InvariantCulture)" type="text" name="thucTe9" data-inputmask="'alias': 'decimal', 'groupSeparator': '.', 'autoGroup': true, 'digits': 0, 'digitsOptional': false, 'suffix': ' VNĐ', 'placeholder': '0'"/>
+                </td>
+                <td>
+                    <input class="form-control m-input inputMask" id="ChiTietThuHoi_ThucTe10" value="@Model.ChiTietThuHoi.ThucTe10.ToString(CultureInfo.InvariantCulture)" type="text" name="thucTe10" data-inputmask="'alias': 'decimal', 'groupSeparator': '.', 'autoGroup': true, 'digits': 0, 'digitsOptional': false, 'suffix': ' VNĐ', 'placeholder': '0'"/>
+                </td>
+                <td>
+                    <input class="form-control m-input inputMask" id="ChiTietThuHoi_ThucTe11" value="@Model.ChiTietThuHoi.ThucTe11.ToString(CultureInfo.InvariantCulture)" type="text" name="thucTe11" data-inputmask="'alias': 'decimal', 'groupSeparator': '.', 'autoGroup': true, 'digits': 0, 'digitsOptional': false, 'suffix': ' VNĐ', 'placeholder': '0'"/>
+                </td>
+                <td>
+                    <input class="form-control m-input inputMask" id="ChiTietThuHoi_ThucTe12" value="@Model.ChiTietThuHoi.ThucTe12.ToString(CultureInfo.InvariantCulture)" type="text" name="thucTe12" data-inputmask="'alias': 'decimal', 'groupSeparator': '.', 'autoGroup': true, 'digits': 0, 'digitsOptional': false, 'suffix': ' VNĐ', 'placeholder': '0'"/>
+                </td>
+            </tr>
+            </thead>
+        </table>
 
         </form>
     </div>

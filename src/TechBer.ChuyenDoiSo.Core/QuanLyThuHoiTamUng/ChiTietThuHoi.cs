@@ -97,6 +97,6 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
 		public virtual decimal ThucTe11 { get; set; }
 		
 		public virtual decimal ThucTe12 { get; set; }
-		public virtual decimal TongThuTe { get; set; }
+		public virtual decimal TongThucTe { get; set; }
     }
 }

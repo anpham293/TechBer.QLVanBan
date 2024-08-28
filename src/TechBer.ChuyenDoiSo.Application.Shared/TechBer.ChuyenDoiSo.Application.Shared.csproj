@@ -9,12 +9,17 @@
 
   <ItemGroup>
     <PackageReference Include="Abp.Web.Common" Version="5.7.0" />
+    <PackageReference Include="EPPlus" Version="5.1.0" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.2.7" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\TechBer.ChuyenDoiSo.Core.Shared\TechBer.ChuyenDoiSo.Core.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Excel" />
   </ItemGroup>
 
 </Project>

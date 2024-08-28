@@ -93,7 +93,30 @@
         $("#ChiTietThuHoi_Thu1, #ChiTietThuHoi_Thu2, #ChiTietThuHoi_Thu3, #ChiTietThuHoi_Thu4, #ChiTietThuHoi_Thu5, #ChiTietThuHoi_Thu6, #ChiTietThuHoi_Thu7, #ChiTietThuHoi_Thu8, #ChiTietThuHoi_Thu9, #ChiTietThuHoi_Thu10, #ChiTietThuHoi_Thu11, #ChiTietThuHoi_Thu12").on("input", function () {
             thayDoiThu();
         });
-        
+
+        var thayDoiThucTe = function(){
+            var thucTe1 = $("#ChiTietThuHoi_ThucTe1").inputmask('unmaskedvalue');
+            var thucTe2 = $("#ChiTietThuHoi_ThucTe2").inputmask('unmaskedvalue');
+            var thucTe3 = $("#ChiTietThuHoi_ThucTe3").inputmask('unmaskedvalue');
+            var thucTe4 = $("#ChiTietThuHoi_ThucTe4").inputmask('unmaskedvalue');
+            var thucTe5 = $("#ChiTietThuHoi_ThucTe5").inputmask('unmaskedvalue');
+            var thucTe6 = $("#ChiTietThuHoi_ThucTe6").inputmask('unmaskedvalue');
+            var thucTe7 = $("#ChiTietThuHoi_ThucTe7").inputmask('unmaskedvalue');
+            var thucTe8 = $("#ChiTietThuHoi_ThucTe8").inputmask('unmaskedvalue');
+            var thucTe9 = $("#ChiTietThuHoi_ThucTe9").inputmask('unmaskedvalue');
+            var thucTe10 = $("#ChiTietThuHoi_ThucTe10").inputmask('unmaskedvalue');
+            var thucTe11 = $("#ChiTietThuHoi_ThucTe11").inputmask('unmaskedvalue');
+            var thucTe12 = $("#ChiTietThuHoi_ThucTe12").inputmask('unmaskedvalue');
+
+            var tongThucTe = parseFloat(thucTe1) + parseFloat(thucTe2) + parseFloat(thucTe3) + parseFloat(thucTe4) + parseFloat(thucTe5) + parseFloat(thucTe6) +
+                parseFloat(thucTe7) + parseFloat(thucTe8) + parseFloat(thucTe9) + parseFloat(thucTe10) + parseFloat(thucTe11) + parseFloat(thucTe12);
+            $("#ChiTietThuHoi_TongThucTe").val(tongThucTe).trigger('input');
+        };
+
+        //Thay đổi tổng thực tế
+        $("#ChiTietThuHoi_ThucTe1, #ChiTietThuHoi_ThucTe2, #ChiTietThuHoi_ThucTe3, #ChiTietThuHoi_ThucTe4, #ChiTietThuHoi_ThucTe5, #ChiTietThuHoi_ThucTe6, #ChiTietThuHoi_ThucTe7, #ChiTietThuHoi_ThucTe8, #ChiTietThuHoi_ThucTe9, #ChiTietThuHoi_ThucTe10, #ChiTietThuHoi_ThucTe11, #ChiTietThuHoi_ThucTe12").on("input", function () {
+            thayDoiThucTe();
+        });
         
 
         this.save = function () {
@@ -133,6 +156,20 @@
             chiTietThuHoi.thu11 = $("#ChiTietThuHoi_Thu11").inputmask('unmaskedvalue');
             chiTietThuHoi.thu12 = $("#ChiTietThuHoi_Thu12").inputmask('unmaskedvalue');
             chiTietThuHoi.tongThu = $("#ChiTietThuHoi_TongThu").inputmask('unmaskedvalue');
+
+            chiTietThuHoi.thucTe1 = $("#ChiTietThuHoi_ThucTe1").inputmask('unmaskedvalue');
+            chiTietThuHoi.thucTe2 = $("#ChiTietThuHoi_ThucTe2").inputmask('unmaskedvalue');
+            chiTietThuHoi.thucTe3 = $("#ChiTietThuHoi_ThucTe3").inputmask('unmaskedvalue');
+            chiTietThuHoi.thucTe4 = $("#ChiTietThuHoi_ThucTe4").inputmask('unmaskedvalue');
+            chiTietThuHoi.thucTe5 = $("#ChiTietThuHoi_ThucTe5").inputmask('unmaskedvalue');
+            chiTietThuHoi.thucTe6 = $("#ChiTietThuHoi_ThucTe6").inputmask('unmaskedvalue');
+            chiTietThuHoi.thucTe7 = $("#ChiTietThuHoi_ThucTe7").inputmask('unmaskedvalue');
+            chiTietThuHoi.thucTe8 = $("#ChiTietThuHoi_ThucTe8").inputmask('unmaskedvalue');
+            chiTietThuHoi.thucTe9 = $("#ChiTietThuHoi_ThucTe9").inputmask('unmaskedvalue');
+            chiTietThuHoi.thucTe10 = $("#ChiTietThuHoi_ThucTe10").inputmask('unmaskedvalue');
+            chiTietThuHoi.thucTe11 = $("#ChiTietThuHoi_ThucTe11").inputmask('unmaskedvalue');
+            chiTietThuHoi.thucTe12 = $("#ChiTietThuHoi_ThucTe12").inputmask('unmaskedvalue');
+            chiTietThuHoi.tongThucTe = $("#ChiTietThuHoi_TongThucTe").inputmask('unmaskedvalue');
             
             _modalManager.setBusy(true);
             _chiTietThuHoiesService.createOrEdit(
