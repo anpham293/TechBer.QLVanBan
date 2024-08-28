@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.IO;
 using Abp.Runtime.Session;
 using Abp.Timing.Timezone;
@@ -10,6 +11,7 @@ using NPOI.SS.UserModel;
 using NPOI.SS.Util;
 using NPOI.XSSF.UserModel;
 using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using TechBer.ChuyenDoiSo.Common;
 using TechBer.ChuyenDoiSo.DataExporting.Excel.NPOI;
 using TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng.Dtos;
@@ -785,11 +787,11 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng.Exporting
             try
             {
                 return _exporter.CreateExcelPackage(
-                    "SoThu.xlsx",
+                    "BaoCaoThuHoi_"+ baoCao.DuAnThuHoi.MaDATH +"_"+(int) DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds + ".xlsx",
                     excelPackage =>
                     {
                         using (FileStream stream =
-                            new FileStream("wwwroot/TemplateFile/BangKeTheoThon.xlsx", FileMode.Open))
+                            new FileStream("wwwroot/TemplateFile/TempBaoCaoKeHoachThanhToan.xlsx", FileMode.Open))
                         {
                             using (ExcelPackage p = new ExcelPackage(stream))
                             {
@@ -799,99 +801,355 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng.Exporting
                                 }
                             }
                         }
-        
+
+                        decimal TongDuDA = 0;
+                        decimal TongDuDA_T1 = 0;
+                        decimal TongDuDA_T2 = 0;
+                        decimal TongDuDA_T3 = 0;
+                        decimal TongDuDA_T4 = 0;
+                        decimal TongDuDA_T5 = 0;
+                        decimal TongDuDA_T6 = 0;
+                        decimal TongDuDA_T7 = 0;
+                        decimal TongDuDA_T8 = 0;
+                        decimal TongDuDA_T9 = 0;
+                        decimal TongDuDA_T10 = 0;
+                        decimal TongDuDA_T11 = 0;
+                        decimal TongDuDA_T12 = 0;
+                        
+                        decimal TongKeHoachDA = 0;
+                        decimal TongKeHoachDA_T1 = 0;
+                        decimal TongKeHoachDA_T2 = 0;
+                        decimal TongKeHoachDA_T3 = 0;
+                        decimal TongKeHoachDA_T4 = 0;
+                        decimal TongKeHoachDA_T5 = 0;
+                        decimal TongKeHoachDA_T6 = 0;
+                        decimal TongKeHoachDA_T7 = 0;
+                        decimal TongKeHoachDA_T8 = 0;
+                        decimal TongKeHoachDA_T9 = 0;
+                        decimal TongKeHoachDA_T10 = 0;
+                        decimal TongKeHoachDA_T11 = 0;
+                        decimal TongKeHoachDA_T12 = 0;
+                        
+                        decimal TongThucTeDA = 0;
+                        decimal TongThucTeDA_T1 = 0;
+                        decimal TongThucTeDA_T2 = 0;
+                        decimal TongThucTeDA_T3 = 0;
+                        decimal TongThucTeDA_T4 = 0;
+                        decimal TongThucTeDA_T5 = 0;
+                        decimal TongThucTeDA_T6 = 0;
+                        decimal TongThucTeDA_T7 = 0;
+                        decimal TongThucTeDA_T8 = 0;
+                        decimal TongThucTeDA_T9 = 0;
+                        decimal TongThucTeDA_T10 = 0;
+                        decimal TongThucTeDA_T11 = 0;
+                        decimal TongThucTeDA_T12 = 0;
+                        
+                        
                         //sheet1
                         var sheet = excelPackage.Workbook.Worksheets[0];
                         sheet.OutLineApplyStyle = true;
-                        // sheet.Cells["F" + 1].Value = "BẢNG KÊ TIỀN ĐIỆN THÁNG " + Convert.ToDateTime(Rows[0][17]).Month + "/" + Convert.ToDateTime(Rows[0][17]).Year;
-                        // sheet.Cells["F" + 2].Value = "Kỳ từ ngày " + Convert.ToDateTime(Rows[0][16]).Day + "/" + Convert.ToDateTime(Rows[0][16]).Month + "/" + Convert.ToDateTime(Rows[0][16]).Year +
-                        // " đến ngày " + Convert.ToDateTime(Rows[0][17]).Day + "/" + Convert.ToDateTime(Rows[0][17]).Month + "/" + Convert.ToDateTime(Rows[0][17]).Year;
-                        // sheet.Cells["F" + 3].Value = "Trạm: " + Rows[0][3] + "";
-                        // //Bat Dau Bao Cao
-                        //
-                        // int row = 6;
-                        // int TongThanhTien = 0;
-                        // int PhuThu = 0;
-                        // int VAT = 0;
-                        // int ThanhTien = 0;
-                        // int TongTieuThu = 0;
-                        // int HieuChinh = 0;
-                        // int SoHo = 0;
-                        //
-                        // foreach (DataRow drw in ListBaoCao.Rows)
-                        // {
-                        //
-                        //     sheet.Cells["A" + row + ":M" + row].Style.Font.Bold = false;
-                        //     sheet.Cells["A" + row + ":C" + row].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Left;
-                        //     sheet.Cells["A" + row].Value = drw[0].ToString();   //Ma CT
-                        //     sheet.Cells["B" + row].Value = drw[1].ToString();   //So Ho
-                        //     sheet.Cells["C" + row].Value = drw[2].ToString();   //KH
-                        //     sheet.Cells["D" + row + ":M" + row].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Right;
-                        //     sheet.Cells["D" + row].Value = Int32.Parse(drw[5].ToString());   //CS Cu
-                        //     sheet.Cells["E" + row].Value = Int32.Parse(drw[6].ToString());  //CS Moi
-                        //     sheet.Cells["F" + row].Value = drw[7].ToString();  //He So Nhan
-                        //     sheet.Cells["G" + row].Value = Int32.Parse(drw[8].ToString());  //Hieu Chinh
-                        //     sheet.Cells["H" + row].Value = Int32.Parse(drw[9].ToString());  //Tong Tieu Thu
-                        //     sheet.Cells["I" + row].Value = Int32.Parse(drw[10].ToString());   //Thanh Tien
-                        //     sheet.Cells["J" + row].Value = Int32.Parse(drw[11].ToString());   //VAT
-                        //     sheet.Cells["K" + row].Value = Int32.Parse(drw[12].ToString());   //Phu Thu
-                        //     sheet.Cells["L" + row].Value = Int32.Parse(drw[13].ToString());   //Tong Thanh Tien
-                        //     sheet.Cells["M" + row].Value = drw[14].ToString();   //Ghi Chu
-                        //
-                        //
-                        //     //Tính tổng list
-                        //     SoHo += Int32.Parse(drw[1].ToString());
-                        //
-                        //     HieuChinh += Int32.Parse(drw[8].ToString());
-                        //     TongTieuThu += Int32.Parse(drw[9].ToString());
-                        //     ThanhTien += Int32.Parse(drw[10].ToString());
-                        //     VAT += Int32.Parse(drw[11].ToString());
-                        //     PhuThu += Int32.Parse(drw[12].ToString());
-                        //     TongThanhTien += Int32.Parse(drw[13].ToString());
-                        //
-                        //     row++;
-                        //
-                        // }
-                        // sheet.Cells["A" + row + ":M" + row].Style.Font.Bold = true;
-                        // sheet.Cells["A" + row + ":M" + row].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Left;
-                        // sheet.Cells["D" + row + ":M" + row].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Right;
-                        // sheet.Cells["A" + row].Value = "Tổng";
-                        // sheet.Cells["B" + row].Value = SoHo;   //So Ho                            
-                        // sheet.Cells["G" + row].Value = HieuChinh;  //Hieu Chinh
-                        // sheet.Cells["H" + row].Value = TongTieuThu;  //Tong Tieu Thu
-                        // sheet.Cells["I" + row].Value = ThanhTien;   //Thanh Tien
-                        // sheet.Cells["J" + row].Value = VAT;   //VAT
-                        // sheet.Cells["K" + row].Value = PhuThu;   //Phu Thu
-                        // sheet.Cells["L" + row].Value = TongThanhTien;   //Tong Thanh Tien
-                        // row++;
-                        // for (int i = 6; i <= sheet.Dimension.End.Row; i++)
-                        //     sheet.Row(i).Height = 20; //picel
-                        // string modelRange = "A6:M" + row;
-                        // var modelTable = sheet.Cells[modelRange];
-                        // // Assign borders
-                        // modelTable.Style.Border.Top.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
-                        // modelTable.Style.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
-                        // modelTable.Style.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
-                        // modelTable.Style.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
-                        //
-                        // //Chữ ký
-                        // row = row + 2;
-                        // sheet.Cells["F" + row + ":M" + row].Merge = true;f
-                        // sheet.Cells["F" + row].Value = "CÔNG TY CPDVTM MÔI TRƯỜNG THIÊN HƯƠNG";   //Ten LHTT
-                        // sheet.Cells["F" + row].Style.Font.Bold = true;
-                        // sheet.Cells["F" + row + ":M" + row].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
-                        // row++;
-                        // sheet.Cells["F" + row + ":M" + row].Merge = true;
-                        // sheet.Cells["F" + row].Value = "GIÁM ĐỐC";   //Ten LHTT
-                        // sheet.Cells["F" + row].Style.Font.Bold = true;
-                        // sheet.Cells["F" + row + ":M" + row].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
-                        // row = row + 5;
-                        // sheet.Cells["F" + row + ":M" + row].Merge = true;
-                        // sheet.Cells["F" + row].Value = "NGUYỄN BỈNH LỪNG";   //Ten LHTT
-                        // sheet.Cells["F" + row].Style.Font.Bold = true;
-                        // sheet.Cells["F" + row + ":M" + row].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
-                        //
-                        // modelTable.AutoFitColumns();
+                        sheet.Cells["A" + 1].Value = "KẾ HOẠCH THU HỒI TẠM ỨNG";
+                        int row = 5;
+                        var stt = 1;
+                        
+                        var rowOld_DA = row;
+                        
+                        sheet.Cells["A" + row + ":AS" + row].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        sheet.Cells["A" + row + ":AS" + row].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(211, 211, 211));
+                        sheet.Cells["A" + row + ":AS" + row].Style.Font.Bold = true;
+                        sheet.Cells["A" + row].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                        sheet.Cells["C" + row + ":AS" + row].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Right;
+                        
+                        sheet.Cells["A" + row].Value = stt;
+                        sheet.Cells["B" + row].Value = baoCao.DuAnThuHoi.Ten;
+                        // sheet.Cells["AP" + row].Value = baoCao.DuAnThuHoi.Ten;
+                        sheet.Cells["AQ" + row].Value = baoCao.DuAnThuHoi.ThoiHanBaoLanhHopDong?.ToString("dd/MM/yyyy");
+                        sheet.Cells["AR" + row].Value = baoCao.DuAnThuHoi.ThoiHanBaoLanhTamUng?.ToString("dd/MM/yyyy");
+
+                        row++;
+                        
+                        foreach (var data in baoCao.ListData)
+                        {
+                            decimal TongDuDM = 0;
+                            decimal TongDuDM_T1 = 0;
+                            decimal TongDuDM_T2 = 0;
+                            decimal TongDuDM_T3 = 0;
+                            decimal TongDuDM_T4 = 0;
+                            decimal TongDuDM_T5 = 0;
+                            decimal TongDuDM_T6 = 0;
+                            decimal TongDuDM_T7 = 0;
+                            decimal TongDuDM_T8 = 0;
+                            decimal TongDuDM_T9 = 0;
+                            decimal TongDuDM_T10 = 0;
+                            decimal TongDuDM_T11 = 0;
+                            decimal TongDuDM_T12 = 0;
+                        
+                            decimal TongKeHoachDM = 0;
+                            decimal TongKeHoachDM_T1 = 0;
+                            decimal TongKeHoachDM_T2 = 0;
+                            decimal TongKeHoachDM_T3 = 0;
+                            decimal TongKeHoachDM_T4 = 0;
+                            decimal TongKeHoachDM_T5 = 0;
+                            decimal TongKeHoachDM_T6 = 0;
+                            decimal TongKeHoachDM_T7 = 0;
+                            decimal TongKeHoachDM_T8 = 0;
+                            decimal TongKeHoachDM_T9 = 0;
+                            decimal TongKeHoachDM_T10 = 0;
+                            decimal TongKeHoachDM_T11 = 0;
+                            decimal TongKeHoachDM_T12 = 0;
+                        
+                            decimal TongThucTeDM = 0;
+                            decimal TongThucTeDM_T1 = 0;
+                            decimal TongThucTeDM_T2 = 0;
+                            decimal TongThucTeDM_T3 = 0;
+                            decimal TongThucTeDM_T4 = 0;
+                            decimal TongThucTeDM_T5 = 0;
+                            decimal TongThucTeDM_T6 = 0;
+                            decimal TongThucTeDM_T7 = 0;
+                            decimal TongThucTeDM_T8 = 0;
+                            decimal TongThucTeDM_T9 = 0;
+                            decimal TongThucTeDM_T10 = 0;
+                            decimal TongThucTeDM_T11 = 0;
+                            decimal TongThucTeDM_T12 = 0;
+
+                            var rowOld_DM = row;
+                            
+                            sheet.Cells["A" + row + ":AS" + row].Style.Font.Bold = true;
+                            sheet.Cells["A" + row].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                            sheet.Cells["C" + row + ":AS" + row].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Right;
+                            sheet.Cells["A" + row].Value = stt + "." + data.DanhMucThuHoi.Stt;
+                            sheet.Cells["B" + row].Value = data.DanhMucThuHoi.Ten;
+
+                            row++;
+                            foreach (var dtr in data.ListChiTietThuHoi)
+                            {
+                                sheet.Cells["A" + row + ":AS" + row].Style.Font.Italic = true;
+                                sheet.Cells["A" + row].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                                sheet.Cells["C" + row + ":AS" + row].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Right;
+                                sheet.Cells["A" + row].Value = "";
+                                sheet.Cells["B" + row].Value = dtr.Ten;
+                                sheet.Cells["C" + row].Value = dtr.TongDu.toCurrency().Replace(".",",");
+                                sheet.Cells["D" + row].Value = dtr.Du1.toCurrency().Replace(".",",");
+                                sheet.Cells["E" + row].Value = dtr.Du2.toCurrency().Replace(".",",");
+                                sheet.Cells["F" + row].Value = dtr.Du3.toCurrency().Replace(".",",");
+                                sheet.Cells["G" + row].Value = dtr.Du4.toCurrency().Replace(".",",");
+                                sheet.Cells["H" + row].Value = dtr.Du5.toCurrency().Replace(".",",");
+                                sheet.Cells["I" + row].Value = dtr.Du6.toCurrency().Replace(".",",");
+                                sheet.Cells["J" + row].Value = dtr.Du7.toCurrency().Replace(".",",");
+                                sheet.Cells["K" + row].Value = dtr.Du8.toCurrency().Replace(".",",");
+                                sheet.Cells["L" + row].Value = dtr.Du9.toCurrency().Replace(".",",");
+                                sheet.Cells["M" + row].Value = dtr.Du10.toCurrency().Replace(".",",");
+                                sheet.Cells["N" + row].Value = dtr.Du11.toCurrency().Replace(".",",");
+                                sheet.Cells["O" + row].Value = dtr.Du12.toCurrency().Replace(".",",");
+                                sheet.Cells["P" + row].Value = dtr.TongThu.toCurrency().Replace(".", ",");
+                                sheet.Cells["Q" + row].Value = dtr.Thu1.toCurrency().Replace(".",",");
+                                sheet.Cells["R" + row].Value = dtr.Thu2.toCurrency().Replace(".",",");
+                                sheet.Cells["S" + row].Value = dtr.Thu3.toCurrency().Replace(".",",");
+                                sheet.Cells["T" + row].Value = dtr.Thu4.toCurrency().Replace(".",",");
+                                sheet.Cells["U" + row].Value = dtr.Thu5.toCurrency().Replace(".",",");
+                                sheet.Cells["V" + row].Value = dtr.Thu6.toCurrency().Replace(".",",");
+                                sheet.Cells["W" + row].Value = dtr.Thu7.toCurrency().Replace(".",",");
+                                sheet.Cells["X" + row].Value = dtr.Thu8.toCurrency().Replace(".",",");
+                                sheet.Cells["Y" + row].Value = dtr.Thu9.toCurrency().Replace(".",",");
+                                sheet.Cells["Z" + row].Value = dtr.Thu10.toCurrency().Replace(".",",");
+                                sheet.Cells["AA" + row].Value = dtr.Thu11.toCurrency().Replace(".",",");
+                                sheet.Cells["AB" + row].Value = dtr.Thu12.toCurrency().Replace(".",",");
+                                sheet.Cells["AC" + row].Value = dtr.TongThucTe.toCurrency().Replace(".",",");
+                                sheet.Cells["AD" + row].Value = dtr.ThucTe1.toCurrency().Replace(".",",");
+                                sheet.Cells["AE" + row].Value = dtr.ThucTe2.toCurrency().Replace(".",",");
+                                sheet.Cells["AF" + row].Value = dtr.ThucTe3.toCurrency().Replace(".",",");
+                                sheet.Cells["AG" + row].Value = dtr.ThucTe4.toCurrency().Replace(".",",");
+                                sheet.Cells["AH" + row].Value = dtr.ThucTe5.toCurrency().Replace(".",",");
+                                sheet.Cells["AI" + row].Value = dtr.ThucTe6.toCurrency().Replace(".",",");
+                                sheet.Cells["AJ" + row].Value = dtr.ThucTe7.toCurrency().Replace(".",",");
+                                sheet.Cells["AK" + row].Value = dtr.ThucTe8.toCurrency().Replace(".",",");
+                                sheet.Cells["AL" + row].Value = dtr.ThucTe9.toCurrency().Replace(".",",");
+                                sheet.Cells["AM" + row].Value = dtr.ThucTe10.toCurrency().Replace(".",",");
+                                sheet.Cells["AN" + row].Value = dtr.ThucTe11.toCurrency().Replace(".",",");
+                                sheet.Cells["AO" + row].Value = dtr.ThucTe12.toCurrency().Replace(".",",");
+                                sheet.Cells["AP" + row].Value = "";
+                                sheet.Cells["AQ" + row].Value = "";
+                                sheet.Cells["AR" + row].Value = "";
+                                sheet.Cells["AS" + row].Value = "";
+
+                                TongDuDM += dtr.TongDu;
+                                TongDuDM_T1 += dtr.Du1;
+                                TongDuDM_T2 += dtr.Du2;
+                                TongDuDM_T3 += dtr.Du3;
+                                TongDuDM_T4 += dtr.Du4;
+                                TongDuDM_T5 += dtr.Du5;
+                                TongDuDM_T6 += dtr.Du6;
+                                TongDuDM_T7 += dtr.Du7;
+                                TongDuDM_T8 += dtr.Du8;
+                                TongDuDM_T9 += dtr.Du9;
+                                TongDuDM_T10 += dtr.Du10;
+                                TongDuDM_T11 += dtr.Du11;
+                                TongDuDM_T12 += dtr.Du12;
+                                TongKeHoachDM += dtr.TongThu;
+                                TongKeHoachDM_T1 += dtr.Thu1;
+                                TongKeHoachDM_T2 += dtr.Thu2;
+                                TongKeHoachDM_T3 += dtr.Thu3;
+                                TongKeHoachDM_T4 += dtr.Thu4;
+                                TongKeHoachDM_T5 += dtr.Thu5;
+                                TongKeHoachDM_T6 += dtr.Thu6;
+                                TongKeHoachDM_T7 += dtr.Thu7;
+                                TongKeHoachDM_T8 += dtr.Thu8;
+                                TongKeHoachDM_T9 += dtr.Thu9;
+                                TongKeHoachDM_T10 += dtr.Du10;
+                                TongKeHoachDM_T11 += dtr.Du11;
+                                TongKeHoachDM_T12 += dtr.Du12;
+                                TongThucTeDM += dtr.TongThucTe;
+                                TongThucTeDM_T1 += dtr.ThucTe1;
+                                TongThucTeDM_T2 += dtr.ThucTe2;
+                                TongThucTeDM_T3 += dtr.ThucTe3;
+                                TongThucTeDM_T4 += dtr.ThucTe4;
+                                TongThucTeDM_T5 += dtr.ThucTe5;
+                                TongThucTeDM_T6 += dtr.ThucTe6;
+                                TongThucTeDM_T7 += dtr.ThucTe7;
+                                TongThucTeDM_T8 += dtr.ThucTe8;
+                                TongThucTeDM_T9 += dtr.ThucTe9;
+                                TongThucTeDM_T10 += dtr.ThucTe10;
+                                TongThucTeDM_T11 += dtr.ThucTe11;
+                                TongThucTeDM_T12 += dtr.ThucTe12;
+                                
+                                row++;
+                            }
+
+                            sheet.Cells["C" + rowOld_DM].Value = TongDuDM.toCurrency().Replace(".", ",");
+                            sheet.Cells["D" + rowOld_DM].Value = TongDuDM_T1.toCurrency().Replace(".", ",");
+                            sheet.Cells["E" + rowOld_DM].Value = TongDuDM_T2.toCurrency().Replace(".", ",");
+                            sheet.Cells["F" + rowOld_DM].Value = TongDuDM_T3.toCurrency().Replace(".", ",");
+                            sheet.Cells["G" + rowOld_DM].Value = TongDuDM_T4.toCurrency().Replace(".", ",");
+                            sheet.Cells["H" + rowOld_DM].Value = TongDuDM_T5.toCurrency().Replace(".", ",");
+                            sheet.Cells["I" + rowOld_DM].Value = TongDuDM_T6.toCurrency().Replace(".", ",");
+                            sheet.Cells["J" + rowOld_DM].Value = TongDuDM_T7.toCurrency().Replace(".", ",");
+                            sheet.Cells["K" + rowOld_DM].Value = TongDuDM_T8.toCurrency().Replace(".", ",");
+                            sheet.Cells["L" + rowOld_DM].Value = TongDuDM_T9.toCurrency().Replace(".", ",");
+                            sheet.Cells["M" + rowOld_DM].Value = TongDuDM_T10.toCurrency().Replace(".", ",");
+                            sheet.Cells["N" + rowOld_DM].Value = TongDuDM_T11.toCurrency().Replace(".", ",");
+                            sheet.Cells["O" + rowOld_DM].Value = TongDuDM_T12.toCurrency().Replace(".", ",");
+                            sheet.Cells["P" + rowOld_DM].Value = TongKeHoachDM.toCurrency().Replace(".", ",");
+                            sheet.Cells["Q" + rowOld_DM].Value = TongKeHoachDM_T1.toCurrency().Replace(".", ",");
+                            sheet.Cells["R" + rowOld_DM].Value = TongKeHoachDM_T2.toCurrency().Replace(".", ",");
+                            sheet.Cells["S" + rowOld_DM].Value = TongKeHoachDM_T3.toCurrency().Replace(".", ",");
+                            sheet.Cells["T" + rowOld_DM].Value = TongKeHoachDM_T4.toCurrency().Replace(".", ",");
+                            sheet.Cells["U" + rowOld_DM].Value = TongKeHoachDM_T5.toCurrency().Replace(".", ",");
+                            sheet.Cells["V" + rowOld_DM].Value = TongKeHoachDM_T6.toCurrency().Replace(".", ",");
+                            sheet.Cells["W" + rowOld_DM].Value = TongKeHoachDM_T7.toCurrency().Replace(".", ",");
+                            sheet.Cells["X" + rowOld_DM].Value = TongKeHoachDM_T8.toCurrency().Replace(".", ",");
+                            sheet.Cells["Y" + rowOld_DM].Value = TongKeHoachDM_T9.toCurrency().Replace(".", ",");
+                            sheet.Cells["Z" + rowOld_DM].Value = TongKeHoachDM_T10.toCurrency().Replace(".", ",");
+                            sheet.Cells["AA" + rowOld_DM].Value = TongKeHoachDM_T11.toCurrency().Replace(".", ",");
+                            sheet.Cells["AB" + rowOld_DM].Value = TongKeHoachDM_T12.toCurrency().Replace(".", ",");
+                            sheet.Cells["AC" + rowOld_DM].Value = TongThucTeDM.toCurrency().Replace(".", ",");
+                            sheet.Cells["AD" + rowOld_DM].Value = TongThucTeDM_T1.toCurrency().Replace(".", ",");
+                            sheet.Cells["AE" + rowOld_DM].Value = TongThucTeDM_T2.toCurrency().Replace(".", ",");
+                            sheet.Cells["AF" + rowOld_DM].Value = TongThucTeDM_T3.toCurrency().Replace(".", ",");
+                            sheet.Cells["AG" + rowOld_DM].Value = TongThucTeDM_T4.toCurrency().Replace(".", ",");
+                            sheet.Cells["AH" + rowOld_DM].Value = TongThucTeDM_T5.toCurrency().Replace(".", ",");
+                            sheet.Cells["AI" + rowOld_DM].Value = TongThucTeDM_T6.toCurrency().Replace(".", ",");
+                            sheet.Cells["AJ" + rowOld_DM].Value = TongThucTeDM_T7.toCurrency().Replace(".", ",");
+                            sheet.Cells["AK" + rowOld_DM].Value = TongThucTeDM_T8.toCurrency().Replace(".", ",");
+                            sheet.Cells["AL" + rowOld_DM].Value = TongThucTeDM_T9.toCurrency().Replace(".", ",");
+                            sheet.Cells["AM" + rowOld_DM].Value = TongThucTeDM_T10.toCurrency().Replace(".", ",");
+                            sheet.Cells["AN" + rowOld_DM].Value = TongThucTeDM_T11.toCurrency().Replace(".", ",");
+                            sheet.Cells["AO" + rowOld_DM].Value = TongThucTeDM_T12.toCurrency().Replace(".", ",");
+                            sheet.Cells["AP" + rowOld_DM].Value = "";
+                            sheet.Cells["AQ" + rowOld_DM].Value = "";
+                            sheet.Cells["AR" + rowOld_DM].Value = "";
+                            sheet.Cells["AS" + rowOld_DM].Value = "";
+
+                            TongDuDA += TongDuDM;
+                            TongDuDA_T1 += TongDuDM_T1;
+                            TongDuDA_T2 += TongDuDM_T2;
+                            TongDuDA_T3 += TongDuDM_T3;
+                            TongDuDA_T4 += TongDuDM_T4;
+                            TongDuDA_T5 += TongDuDM_T5;
+                            TongDuDA_T6 += TongDuDM_T6;
+                            TongDuDA_T7 += TongDuDM_T7;
+                            TongDuDA_T8 += TongDuDM_T8;
+                            TongDuDA_T9 += TongDuDM_T9;
+                            TongDuDA_T10 += TongDuDM_T10;
+                            TongDuDA_T11 += TongDuDM_T11;
+                            TongDuDA_T12 += TongDuDM_T12;
+                            TongKeHoachDA += TongKeHoachDM;
+                            TongKeHoachDA_T1 += TongKeHoachDM_T1;
+                            TongKeHoachDA_T2 += TongKeHoachDM_T2;
+                            TongKeHoachDA_T3 += TongKeHoachDM_T3;
+                            TongKeHoachDA_T4 += TongKeHoachDM_T4;
+                            TongKeHoachDA_T5 += TongKeHoachDM_T5;
+                            TongKeHoachDA_T6 += TongKeHoachDM_T6;
+                            TongKeHoachDA_T7 += TongKeHoachDM_T7;
+                            TongKeHoachDA_T8 += TongKeHoachDM_T8;
+                            TongKeHoachDA_T9 += TongKeHoachDM_T9;
+                            TongKeHoachDA_T10 += TongKeHoachDM_T10;
+                            TongKeHoachDA_T11 += TongKeHoachDM_T11;
+                            TongKeHoachDA_T12 += TongKeHoachDM_T12;
+                            TongThucTeDA += TongThucTeDM;
+                            TongThucTeDA_T1 += TongThucTeDM_T1;
+                            TongThucTeDA_T2 += TongThucTeDM_T2;
+                            TongThucTeDA_T3 += TongThucTeDM_T3;
+                            TongThucTeDA_T4 += TongThucTeDM_T4;
+                            TongThucTeDA_T5 += TongThucTeDM_T5;
+                            TongThucTeDA_T6 += TongThucTeDM_T6;
+                            TongThucTeDA_T7 += TongThucTeDM_T7;
+                            TongThucTeDA_T8 += TongThucTeDM_T8;
+                            TongThucTeDA_T9 += TongThucTeDM_T9;
+                            TongThucTeDA_T10 += TongThucTeDM_T10;
+                            TongThucTeDA_T11 += TongThucTeDM_T11;
+                            TongThucTeDA_T12 += TongThucTeDM_T12;
+                        }
+
+                        sheet.Cells["C" + rowOld_DA].Value = TongDuDA.toCurrency().Replace(".", ",");
+                        sheet.Cells["D" + rowOld_DA].Value = TongDuDA_T1.toCurrency().Replace(".", ",");
+                        sheet.Cells["E" + rowOld_DA].Value = TongDuDA_T2.toCurrency().Replace(".", ",");
+                        sheet.Cells["F" + rowOld_DA].Value = TongDuDA_T3.toCurrency().Replace(".", ",");
+                        sheet.Cells["G" + rowOld_DA].Value = TongDuDA_T4.toCurrency().Replace(".", ",");
+                        sheet.Cells["H" + rowOld_DA].Value = TongDuDA_T5.toCurrency().Replace(".", ",");
+                        sheet.Cells["I" + rowOld_DA].Value = TongDuDA_T6.toCurrency().Replace(".", ",");
+                        sheet.Cells["J" + rowOld_DA].Value = TongDuDA_T7.toCurrency().Replace(".", ",");
+                        sheet.Cells["K" + rowOld_DA].Value = TongDuDA_T8.toCurrency().Replace(".", ",");
+                        sheet.Cells["L" + rowOld_DA].Value = TongDuDA_T9.toCurrency().Replace(".", ",");
+                        sheet.Cells["M" + rowOld_DA].Value = TongDuDA_T10.toCurrency().Replace(".", ",");
+                        sheet.Cells["N" + rowOld_DA].Value = TongDuDA_T11.toCurrency().Replace(".", ",");
+                        sheet.Cells["O" + rowOld_DA].Value = TongDuDA_T12.toCurrency().Replace(".", ",");
+                        sheet.Cells["P" + rowOld_DA].Value = TongKeHoachDA.toCurrency().Replace(".", ",");
+                        sheet.Cells["Q" + rowOld_DA].Value = TongKeHoachDA_T1.toCurrency().Replace(".", ",");
+                        sheet.Cells["R" + rowOld_DA].Value = TongKeHoachDA_T2.toCurrency().Replace(".", ",");
+                        sheet.Cells["S" + rowOld_DA].Value = TongKeHoachDA_T3.toCurrency().Replace(".", ",");
+                        sheet.Cells["T" + rowOld_DA].Value = TongKeHoachDA_T4.toCurrency().Replace(".", ",");
+                        sheet.Cells["U" + rowOld_DA].Value = TongKeHoachDA_T5.toCurrency().Replace(".", ",");
+                        sheet.Cells["V" + rowOld_DA].Value = TongKeHoachDA_T6.toCurrency().Replace(".", ",");
+                        sheet.Cells["W" + rowOld_DA].Value = TongKeHoachDA_T7.toCurrency().Replace(".", ",");
+                        sheet.Cells["X" + rowOld_DA].Value = TongKeHoachDA_T8.toCurrency().Replace(".", ",");
+                        sheet.Cells["Y" + rowOld_DA].Value = TongKeHoachDA_T9.toCurrency().Replace(".", ",");
+                        sheet.Cells["Z" + rowOld_DA].Value = TongKeHoachDA_T10.toCurrency().Replace(".", ",");
+                        sheet.Cells["AA" + rowOld_DA].Value = TongKeHoachDA_T11.toCurrency().Replace(".", ",");
+                        sheet.Cells["AB" + rowOld_DA].Value = TongKeHoachDA_T12.toCurrency().Replace(".", ",");
+                        sheet.Cells["AC" + rowOld_DA].Value = TongThucTeDA.toCurrency().Replace(".", ",");
+                        sheet.Cells["AD" + rowOld_DA].Value = TongThucTeDA_T1.toCurrency().Replace(".", ",");
+                        sheet.Cells["AE" + rowOld_DA].Value = TongThucTeDA_T2.toCurrency().Replace(".", ",");
+                        sheet.Cells["AF" + rowOld_DA].Value = TongThucTeDA_T3.toCurrency().Replace(".", ",");
+                        sheet.Cells["AG" + rowOld_DA].Value = TongThucTeDA_T4.toCurrency().Replace(".", ",");
+                        sheet.Cells["AH" + rowOld_DA].Value = TongThucTeDA_T5.toCurrency().Replace(".", ",");
+                        sheet.Cells["AI" + rowOld_DA].Value = TongThucTeDA_T6.toCurrency().Replace(".", ",");
+                        sheet.Cells["AJ" + rowOld_DA].Value = TongThucTeDA_T7.toCurrency().Replace(".", ",");
+                        sheet.Cells["AK" + rowOld_DA].Value = TongThucTeDA_T8.toCurrency().Replace(".", ",");
+                        sheet.Cells["AL" + rowOld_DA].Value = TongThucTeDA_T9.toCurrency().Replace(".", ",");
+                        sheet.Cells["AM" + rowOld_DA].Value = TongThucTeDA_T10.toCurrency().Replace(".", ",");
+                        sheet.Cells["AN" + rowOld_DA].Value = TongThucTeDA_T11.toCurrency().Replace(".", ",");
+                        sheet.Cells["AO" + rowOld_DA].Value = TongThucTeDA_T12.toCurrency().Replace(".", ",");
+                       
+                        
+                        string modelRange = "A5:AS" + row;
+                        var modelTable = sheet.Cells[modelRange];
+                        // Assign borders
+                        modelTable.Style.Border.Top.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                        modelTable.Style.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                        modelTable.Style.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                        modelTable.Style.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                        modelTable.AutoFitColumns();
+                        
                     });
             }
             catch (Exception e)
