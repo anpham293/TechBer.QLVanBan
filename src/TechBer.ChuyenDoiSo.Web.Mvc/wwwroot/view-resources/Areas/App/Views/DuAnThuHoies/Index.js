@@ -136,6 +136,7 @@
                     name: "maDATH"
                 },
                 {
+                    width: 250,
                     targets: 2,
                     data: "duAnThuHoi.ten",
                     name: "ten",

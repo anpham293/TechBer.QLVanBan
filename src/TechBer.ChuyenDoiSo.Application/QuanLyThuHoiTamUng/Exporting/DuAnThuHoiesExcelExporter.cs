@@ -995,9 +995,9 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng.Exporting
                                 TongKeHoachDM_T7 += dtr.Thu7;
                                 TongKeHoachDM_T8 += dtr.Thu8;
                                 TongKeHoachDM_T9 += dtr.Thu9;
-                                TongKeHoachDM_T10 += dtr.Du10;
-                                TongKeHoachDM_T11 += dtr.Du11;
-                                TongKeHoachDM_T12 += dtr.Du12;
+                                TongKeHoachDM_T10 += dtr.Thu10;
+                                TongKeHoachDM_T11 += dtr.Thu11;
+                                TongKeHoachDM_T12 += dtr.Thu12;
                                 TongThucTeDM += dtr.TongThucTe;
                                 TongThucTeDM_T1 += dtr.ThucTe1;
                                 TongThucTeDM_T2 += dtr.ThucTe2;
