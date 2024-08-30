@@ -1,4 +1,5 @@
-﻿using Abp.Application.Navigation;
+﻿
+using Abp.Application.Navigation;
 using Abp.Authorization;
 using Abp.Localization;
 using TechBer.ChuyenDoiSo.Authorization;
@@ -54,6 +55,14 @@ namespace TechBer.ChuyenDoiSo.Web.Areas.App.Startup
                         url: "App/DuAnThuHoies",
                         icon: "fas fa-business-time",
                         permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_DuAnThuHoies)
+                    )
+                )
+                .AddItem(new MenuItemDefinition(
+                        AppPageNames.Host.SdtZalos,
+                        L("SdtZalos"),
+                        url: "App/SdtZalos",
+                        icon: "flaticon-more",
+                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_SdtZalos)
                     )
                 )
                 // .AddItem(new MenuItemDefinition(

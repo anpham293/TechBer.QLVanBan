@@ -1,6 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en"> 
-  <texts>
+  <texts>    <text name="QuanLySdtZalo">Quan ly sdt zalo</text>
+    <text name="SdtZalo">Sdt zalo</text>
+    <text name="TechBer.ChuyenDoiSo.QuanLySdtZalo.SdtZalo">SdtZalo</text>
+    <text name="Sdt">Sdt</text>
+    <text name="SdtZalosHeaderInfo">Sdt zalos header info</text>
+    <text name="CreateNewSdtZalo">Create new sdt zalo</text>
+    <text name="EditSdtZalo">Edit sdt zalo</text>
+    <text name="DeleteSdtZalo">Delete sdt zalo</text>
+    <text name="SdtZalos">Sdt zalos</text>
+
     <text name="TongDuTamUng">Tong du tam ung</text>
     <text name="TongThuTamUng">Tong thu tam ung</text>
     <text name="KinhPhiTamUngChuyenNamSau">Kinh phi tam ung chuyen nam sau</text>

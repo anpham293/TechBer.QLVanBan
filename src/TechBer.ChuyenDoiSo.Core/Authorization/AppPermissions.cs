@@ -6,6 +6,11 @@
     /// </summary>
     public static class AppPermissions
     {
+        public const string Pages_SdtZalos = "Pages.SdtZalos";
+        public const string Pages_SdtZalos_Create = "Pages.SdtZalos.Create";
+        public const string Pages_SdtZalos_Edit = "Pages.SdtZalos.Edit";
+        public const string Pages_SdtZalos_Delete = "Pages.SdtZalos.Delete";
+
         public const string Pages_ChiTietThuHoies = "Pages.ChiTietThuHoies";
         public const string Pages_ChiTietThuHoies_Create = "Pages.ChiTietThuHoies.Create";
         public const string Pages_ChiTietThuHoies_Edit = "Pages.ChiTietThuHoies.Edit";
