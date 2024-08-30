@@ -21,4 +21,8 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng.Dtos
         public DuAnThuHoiDto DuAnThuHoi { get; set; }
         public List<Data_DanhMuc_ListChiTietThuHoiDto> ListData { get; set; }
     }
+    public class TongHop_BaoCaoDuAnThuHoi_ExportToFileDto
+    {
+        public List<BaoCaoDuAnThuHoi_ExportToFileDto> listDataDuAn { get; set; }
+    }
 }

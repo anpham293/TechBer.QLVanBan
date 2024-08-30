@@ -25,5 +25,6 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
 		Task<string> SendZalo();
 		Task<string> DocPDF();
 		Task<FileDto> BaoCaoDuAnThuHoiToExcel(BaoCaoDuAnThuHoiToExcelInput input);
+		Task<FileDto> TongHop_BaoCaoDuAnThuHoiToExcel(BaoCaoDuAnThuHoiToExcelInput input);
     }
 }

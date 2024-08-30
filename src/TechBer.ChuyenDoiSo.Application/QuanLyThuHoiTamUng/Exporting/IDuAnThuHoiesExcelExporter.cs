@@ -8,5 +8,6 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng.Exporting
     {
         FileDto ExportToFile(List<GetDuAnThuHoiForViewDto> duAnThuHoies);
         FileDto BaoCaoDuAnThuHoi_ExportToFile(BaoCaoDuAnThuHoi_ExportToFileDto baoCao);
+        FileDto TongHop_BaoCaoDuAnThuHoi_ExportToFile(List<BaoCaoDuAnThuHoi_ExportToFileDto> listBaoCao);
     }
 }

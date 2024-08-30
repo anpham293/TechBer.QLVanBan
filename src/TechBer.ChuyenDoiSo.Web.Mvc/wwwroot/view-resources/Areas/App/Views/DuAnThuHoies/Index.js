@@ -127,7 +127,12 @@
                             '  <path d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z"/>\n' +
                             '  <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>\n' +
                             '</svg> Báo cáo</label>';
-                        return chinhSuaDuAnThuHoi + ' ' + danhMucThuHoiModal + ' ' + ketXuatExcel;
+                        
+                        let xoa = '<label class="badge badge-info xoa" data-rowId="'+ data +'"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">\n' +
+                            '  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>\n' +
+                            '  <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>\n' +
+                            '</svg> Xóa</label>';
+                        return chinhSuaDuAnThuHoi + ' ' + danhMucThuHoiModal + ' ' + ketXuatExcel + ' ' + xoa;
                     }
                 },
                 {
@@ -136,7 +141,6 @@
                     name: "maDATH"
                 },
                 {
-                    width: 250,
                     targets: 2,
                     data: "duAnThuHoi.ten",
                     name: "ten",
@@ -262,7 +266,7 @@
                 function (isConfirmed) {
                     if (isConfirmed) {
                         _duAnThuHoiesService.delete({
-                            id: duAnThuHoi.id
+                            id: duAnThuHoi
                         }).done(function () {
                             getDuAnThuHoies(true);
                             abp.notify.success(app.localize('SuccessfullyDeleted'));
@@ -288,21 +292,29 @@
             _createOrEditModal.open();
         });
 
+        // $('#ExportToExcelButton').click(function () {
+        //     _duAnThuHoiesService
+        //         .getDuAnThuHoiesToExcel({
+        //             filter: $('#DuAnThuHoiesTableFilter').val(),
+        //             maDATHFilter: $('#MaDATHFilterId').val(),
+        //             tenFilter: $('#TenFilterId').val(),
+        //             minNamQuanLyFilter: $('#MinNamQuanLyFilterId').val(),
+        //             maxNamQuanLyFilter: $('#MaxNamQuanLyFilterId').val(),
+        //             minThoiHanBaoLanhHopDongFilter: getDateFilter($('#MinThoiHanBaoLanhHopDongFilterId')),
+        //             maxThoiHanBaoLanhHopDongFilter: getDateFilter($('#MaxThoiHanBaoLanhHopDongFilterId')),
+        //             minThoiHanBaoLanhTamUngFilter: getDateFilter($('#MinThoiHanBaoLanhTamUngFilterId')),
+        //             maxThoiHanBaoLanhTamUngFilter: getDateFilter($('#MaxThoiHanBaoLanhTamUngFilterId')),
+        //             ghiChuFilter: $('#GhiChuFilterId').val(),
+        //             minTrangThaiFilter: $('#MinTrangThaiFilterId').val(),
+        //             maxTrangThaiFilter: $('#MaxTrangThaiFilterId').val()
+        //         })
+        //         .done(function (result) {
+        //             app.downloadTempFile(result);
+        //         });
+        // });
         $('#ExportToExcelButton').click(function () {
             _duAnThuHoiesService
-                .getDuAnThuHoiesToExcel({
-                    filter: $('#DuAnThuHoiesTableFilter').val(),
-                    maDATHFilter: $('#MaDATHFilterId').val(),
-                    tenFilter: $('#TenFilterId').val(),
-                    minNamQuanLyFilter: $('#MinNamQuanLyFilterId').val(),
-                    maxNamQuanLyFilter: $('#MaxNamQuanLyFilterId').val(),
-                    minThoiHanBaoLanhHopDongFilter: getDateFilter($('#MinThoiHanBaoLanhHopDongFilterId')),
-                    maxThoiHanBaoLanhHopDongFilter: getDateFilter($('#MaxThoiHanBaoLanhHopDongFilterId')),
-                    minThoiHanBaoLanhTamUngFilter: getDateFilter($('#MinThoiHanBaoLanhTamUngFilterId')),
-                    maxThoiHanBaoLanhTamUngFilter: getDateFilter($('#MaxThoiHanBaoLanhTamUngFilterId')),
-                    ghiChuFilter: $('#GhiChuFilterId').val(),
-                    minTrangThaiFilter: $('#MinTrangThaiFilterId').val(),
-                    maxTrangThaiFilter: $('#MaxTrangThaiFilterId').val()
+                .tongHop_BaoCaoDuAnThuHoiToExcel({
                 })
                 .done(function (result) {
                     app.downloadTempFile(result);
@@ -345,6 +357,10 @@
                     app.downloadTempFile(result);
                 });
         });
-        
+        $(document).off('click', '.xoa').on('click', '.xoa', function () {
+            var self = $(this);
+            var id = self.attr('data-rowId');
+            deleteDuAnThuHoi(id);
+        });
     });
 })();

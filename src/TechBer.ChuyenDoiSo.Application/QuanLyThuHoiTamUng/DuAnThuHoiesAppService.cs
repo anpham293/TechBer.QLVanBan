@@ -289,7 +289,7 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
                 var token = ketquaConvert.token;
 
                 var listSDT = "84949646698";
-                var message = "Thong bao ";
+                var message = "Thông báo dự án quá thời hạn thu hồi ";
 
                 var requestZaloMessage =
                     new HttpRequestMessage(HttpMethod.Post, "https://techber.vn/appservices/sendzalo.html");
@@ -386,6 +386,40 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
             dataTrans.ListData = listData;
             
             return _duAnThuHoiesExcelExporter.BaoCaoDuAnThuHoi_ExportToFile(dataTrans);
+        }
+        public async Task<FileDto> TongHop_BaoCaoDuAnThuHoiToExcel(BaoCaoDuAnThuHoiToExcelInput input)
+        {
+            List<BaoCaoDuAnThuHoi_ExportToFileDto> listDataDuAn = new List<BaoCaoDuAnThuHoi_ExportToFileDto>();
+
+            var listDuAnThuHoi = await _duAnThuHoiRepository.GetAllListAsync();
+            foreach (var duAnThuHoi in listDuAnThuHoi)
+            {
+                BaoCaoDuAnThuHoi_ExportToFileDto dataTrans = new BaoCaoDuAnThuHoi_ExportToFileDto();
+                List<Data_DanhMuc_ListChiTietThuHoiDto> listData = new List<Data_DanhMuc_ListChiTietThuHoiDto>();
+                
+                var queryListDanhMuc = await _danhMucThuHoiRepository.GetAllListAsync(p => p.DuAnThuHoiId == duAnThuHoi.Id);
+
+                if (!queryListDanhMuc.IsNullOrEmpty())
+                {
+                    foreach (var ct in queryListDanhMuc)
+                    {
+                        Data_DanhMuc_ListChiTietThuHoiDto data = new Data_DanhMuc_ListChiTietThuHoiDto();
+                        var listChiTiet =
+                            await _chiTietThuHoiRepository.GetAllListAsync(p => p.DanhMucThuHoiId == ct.Id);
+                        data.ListChiTietThuHoi = ObjectMapper.Map<List<ChiTietThuHoiDto>>(listChiTiet);
+                        data.DanhMucThuHoi = ObjectMapper.Map<DanhMucThuHoiDto>(ct);
+                    
+                        listData.Add(data);
+                    }
+                }
+
+                dataTrans.DuAnThuHoi = ObjectMapper.Map<DuAnThuHoiDto>(duAnThuHoi);
+                dataTrans.ListData = listData;
+
+                listDataDuAn.Add(dataTrans);
+            }
+            
+            return _duAnThuHoiesExcelExporter.TongHop_BaoCaoDuAnThuHoi_ExportToFile(listDataDuAn);
         }
     }
 }
