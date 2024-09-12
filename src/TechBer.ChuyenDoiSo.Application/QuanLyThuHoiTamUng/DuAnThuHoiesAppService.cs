@@ -27,6 +27,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using TechBer.ChuyenDoiSo.Common;
+using TechBer.ChuyenDoiSo.QuanLySdtZalo;
 using TechBer.ChuyenDoiSo.Storage;
 
 namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
@@ -38,12 +39,14 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
         private readonly IDuAnThuHoiesExcelExporter _duAnThuHoiesExcelExporter;
         private readonly IRepository<ChiTietThuHoi, long> _chiTietThuHoiRepository;
         private readonly IRepository<DanhMucThuHoi, long> _danhMucThuHoiRepository;
+        private readonly IRepository<SdtZalo, long> _sdtZaloRepository;
         private readonly IBinaryObjectManager _binaryObjectManager;
 
         public DuAnThuHoiesAppService(IRepository<DuAnThuHoi, long> duAnThuHoiRepository,
             IDuAnThuHoiesExcelExporter duAnThuHoiesExcelExporter,
             IRepository<ChiTietThuHoi, long> chiTietThuHoiRepository,
             IRepository<DanhMucThuHoi, long> danhMucThuHoiRepository,
+            IRepository<SdtZalo, long> sdtZaloRepository,
             IBinaryObjectManager binaryObjectManager)
         {
             _duAnThuHoiRepository = duAnThuHoiRepository;
@@ -51,6 +54,7 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
             _chiTietThuHoiRepository = chiTietThuHoiRepository;
             _danhMucThuHoiRepository = danhMucThuHoiRepository;
             _binaryObjectManager = binaryObjectManager;
+            _sdtZaloRepository = sdtZaloRepository;
         }
 
         public async Task<PagedResultDto<GetDuAnThuHoiForViewDto>> GetAll(GetAllDuAnThuHoiesInput input)
@@ -288,7 +292,14 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
 
                 var token = ketquaConvert.token;
 
-                var listSDT = "84949646698";
+                var listSDT = new List<string>();
+                var sdtZalo = await _sdtZaloRepository.GetAllListAsync();
+                foreach (var sdt in sdtZalo)
+                {
+                    listSDT.Add(sdt.Sdt);
+                }
+                var stringJoin = string.Join(", ", listSDT);
+                
                 var message = "Thông báo dự án quá thời hạn thu hồi ";
 
                 var requestZaloMessage =
@@ -296,7 +307,7 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
                 requestZaloMessage.Headers.Add("Authorization", "Bearer " + token + "");
                 var contentZaloMessage =
                     new StringContent(
-                        "{\"listsdt\": [\"" + listSDT + "\"],\r\n    \"message\" : \"" + message + "\"}\r\n", null,
+                        "{\"listsdt\": [" + stringJoin + "],\r\n    \"message\" : \"" + message + "\"}\r\n", null,
                         "application/json");
                 requestZaloMessage.Content = contentZaloMessage;
                 var responseZaloMessage = await client.SendAsync(requestZaloMessage);
