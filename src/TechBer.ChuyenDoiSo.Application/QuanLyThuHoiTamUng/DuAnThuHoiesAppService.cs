@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using Abp.Domain.Repositories;
@@ -24,8 +25,10 @@ using iTextSharp.text.pdf.parser;
 using Karion.BusinessSolution.EinvoiceExtension;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Quartz;
 using TechBer.ChuyenDoiSo.Common;
 using TechBer.ChuyenDoiSo.QuanLySdtZalo;
 using TechBer.ChuyenDoiSo.Storage;
@@ -265,19 +268,150 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
             return _duAnThuHoiesExcelExporter.ExportToFile(duAnThuHoiListDtos);
         }
 
-        public class TestDto
+      
+
+
+        public async Task<string> DocPDF()
+        {
+            var binObj = await _binaryObjectManager.GetOrNullAsync(Guid.Parse("e9b9b47a-de16-6776-ec58-3a14625ec987"));
+            var content = binObj.Bytes;
+
+            // var File(content, "application/pdf");
+
+            var abc = "";
+            try
+            {
+                using (MemoryStream ms = new MemoryStream(content))
+                {
+                    // Sử dụng PdfReader để đọc từ MemoryStream
+                    using (PdfReader reader = new PdfReader(ms))
+                    {
+                        StringBuilder textBuilder = new StringBuilder();
+
+                        // Lặp qua từng trang của tệp PDF
+                        for (int i = 1; i <= reader.NumberOfPages; i++)
+                        {
+                            // Trích xuất văn bản từ mỗi trang
+                            string text = PdfTextExtractor.GetTextFromPage(reader, i);
+
+                            // Thêm văn bản vào StringBuilder để xử lý tiếp
+                            textBuilder.Append(text);
+                        }
+
+                        // Lấy văn bản cuối cùng
+                        string extractedText = textBuilder.ToString();
+
+                        abc = extractedText;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+            return abc;
+        }
+
+        public async Task<FileDto> BaoCaoDuAnThuHoiToExcel(BaoCaoDuAnThuHoiToExcelInput input)
+        {
+            BaoCaoDuAnThuHoi_ExportToFileDto dataTrans = new BaoCaoDuAnThuHoi_ExportToFileDto();
+            List<Data_DanhMuc_ListChiTietThuHoiDto> listData = new List<Data_DanhMuc_ListChiTietThuHoiDto>();
+
+            var duAnThuHoi = await _duAnThuHoiRepository.FirstOrDefaultAsync(input.id);
+
+            var queryListDanhMuc = await _danhMucThuHoiRepository.GetAllListAsync(p => p.DuAnThuHoiId == duAnThuHoi.Id);
+
+            if (!queryListDanhMuc.IsNullOrEmpty())
+            {
+                foreach (var ct in queryListDanhMuc)
+                {
+                    Data_DanhMuc_ListChiTietThuHoiDto data = new Data_DanhMuc_ListChiTietThuHoiDto();
+                    var listChiTiet =
+                        await _chiTietThuHoiRepository.GetAllListAsync(p => p.DanhMucThuHoiId == ct.Id);
+                    data.ListChiTietThuHoi = ObjectMapper.Map<List<ChiTietThuHoiDto>>(listChiTiet);
+                    data.DanhMucThuHoi = ObjectMapper.Map<DanhMucThuHoiDto>(ct);
+
+                    listData.Add(data);
+                }
+            }
+
+            dataTrans.DuAnThuHoi = ObjectMapper.Map<DuAnThuHoiDto>(duAnThuHoi);
+            dataTrans.ListData = listData;
+
+            return _duAnThuHoiesExcelExporter.BaoCaoDuAnThuHoi_ExportToFile(dataTrans);
+        }
+
+        public async Task<FileDto> TongHop_BaoCaoDuAnThuHoiToExcel(BaoCaoDuAnThuHoiToExcelInput input)
+        {
+            List<BaoCaoDuAnThuHoi_ExportToFileDto> listDataDuAn = new List<BaoCaoDuAnThuHoi_ExportToFileDto>();
+
+            var listDuAnThuHoi = await _duAnThuHoiRepository.GetAllListAsync();
+            foreach (var duAnThuHoi in listDuAnThuHoi)
+            {
+                BaoCaoDuAnThuHoi_ExportToFileDto dataTrans = new BaoCaoDuAnThuHoi_ExportToFileDto();
+                List<Data_DanhMuc_ListChiTietThuHoiDto> listData = new List<Data_DanhMuc_ListChiTietThuHoiDto>();
+
+                var queryListDanhMuc =
+                    await _danhMucThuHoiRepository.GetAllListAsync(p => p.DuAnThuHoiId == duAnThuHoi.Id);
+
+                if (!queryListDanhMuc.IsNullOrEmpty())
+                {
+                    foreach (var ct in queryListDanhMuc)
+                    {
+                        Data_DanhMuc_ListChiTietThuHoiDto data = new Data_DanhMuc_ListChiTietThuHoiDto();
+                        var listChiTiet =
+                            await _chiTietThuHoiRepository.GetAllListAsync(p => p.DanhMucThuHoiId == ct.Id);
+                        data.ListChiTietThuHoi = ObjectMapper.Map<List<ChiTietThuHoiDto>>(listChiTiet);
+                        data.DanhMucThuHoi = ObjectMapper.Map<DanhMucThuHoiDto>(ct);
+
+                        listData.Add(data);
+                    }
+                }
+
+                dataTrans.DuAnThuHoi = ObjectMapper.Map<DuAnThuHoiDto>(duAnThuHoi);
+                dataTrans.ListData = listData;
+
+                listDataDuAn.Add(dataTrans);
+            }
+
+            return _duAnThuHoiesExcelExporter.TongHop_BaoCaoDuAnThuHoi_ExportToFile(listDataDuAn);
+        }
+    }
+
+    public class SendZaloTuDong : IJob
+    {
+        private readonly IDuAnThuHoiesAppService _duAnThuHoiesAppService;
+        private readonly IRepository<SdtZalo, long> _sdtZaloRepository;
+
+        public SendZaloTuDong(IDuAnThuHoiesAppService duAnThuHoiesAppService,
+            IRepository<SdtZalo, long> sdtZaloRepository
+            )
+        {
+            _duAnThuHoiesAppService = duAnThuHoiesAppService;
+            _sdtZaloRepository = sdtZaloRepository;
+        }
+        public async Task Execute(IJobExecutionContext context)
+        {
+           
+             var t = await SendZalo();
+             Console.WriteLine(t);
+             await Task.CompletedTask;
+        }
+          public class TestDto
         {
             public string token { get; set; }
             public string refreshToken { get; set; }
         }
 
-        [HttpPost]
-        public async Task<string> SendZalo()
+       
+        protected async Task<string> SendZalo()
         {
             try
             {
                 var client = new HttpClient();
-                client.DefaultRequestHeaders.Add("User-Agent", "ASP.Net Core" + AbpSession.UserId + "");
+                client.DefaultRequestHeaders.Add("User-Agent", "ASP.Net Core "+DateTime.Now.Millisecond);
                 var request = new HttpRequestMessage(HttpMethod.Post, "https://techber.vn/jwt-login.html");
                 var content =
                     new StringContent(
@@ -298,8 +432,9 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
                 {
                     listSDT.Add(sdt.Sdt);
                 }
+
                 var stringJoin = string.Join(", ", listSDT);
-                
+
                 var message = "Thông báo dự án quá thời hạn thu hồi ";
 
                 var requestZaloMessage =
@@ -315,6 +450,7 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
                 var ketquaZaloMessage = await responseZaloMessage.Content.ReadAsStringAsync();
 
                 var ketquaZaloMessageConvert = JsonConvert.DeserializeObject<TestDto>(ketquaZaloMessage);
+                return ketquaZaloMessage;
             }
             catch (Exception e)
             {
@@ -323,114 +459,6 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
             }
 
             return "";
-        }
-
-        public async Task<string> DocPDF()
-        {
-            var binObj = await _binaryObjectManager.GetOrNullAsync(Guid.Parse("e9b9b47a-de16-6776-ec58-3a14625ec987"));
-            var content = binObj.Bytes;
-
-            // var File(content, "application/pdf");
-
-            var abc = "";
-                try
-            {
-                using (MemoryStream ms = new MemoryStream(content))
-                {
-                    // Sử dụng PdfReader để đọc từ MemoryStream
-                    using (PdfReader reader = new PdfReader(ms))
-                    {
-                        StringBuilder textBuilder = new StringBuilder();
-            
-                        // Lặp qua từng trang của tệp PDF
-                        for (int i = 1; i <= reader.NumberOfPages; i++)
-                        {
-                            // Trích xuất văn bản từ mỗi trang
-                            string text = PdfTextExtractor.GetTextFromPage(reader, i);
-            
-                            // Thêm văn bản vào StringBuilder để xử lý tiếp
-                            textBuilder.Append(text);
-                        }
-            
-                        // Lấy văn bản cuối cùng
-                        string extractedText = textBuilder.ToString();
-            
-                        abc = extractedText;
-                    }
-                }
-                
-              
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-
-            return abc;
-        }
-        
-        public async Task<FileDto> BaoCaoDuAnThuHoiToExcel(BaoCaoDuAnThuHoiToExcelInput input)
-        {
-            BaoCaoDuAnThuHoi_ExportToFileDto dataTrans = new BaoCaoDuAnThuHoi_ExportToFileDto();
-            List<Data_DanhMuc_ListChiTietThuHoiDto> listData = new List<Data_DanhMuc_ListChiTietThuHoiDto>();
-            
-            var duAnThuHoi = await _duAnThuHoiRepository.FirstOrDefaultAsync(input.id);
-
-            var queryListDanhMuc = await _danhMucThuHoiRepository.GetAllListAsync(p => p.DuAnThuHoiId == duAnThuHoi.Id);
-
-            if (!queryListDanhMuc.IsNullOrEmpty())
-            {
-                foreach (var ct in queryListDanhMuc)
-                {
-                    Data_DanhMuc_ListChiTietThuHoiDto data = new Data_DanhMuc_ListChiTietThuHoiDto();
-                    var listChiTiet =
-                        await _chiTietThuHoiRepository.GetAllListAsync(p => p.DanhMucThuHoiId == ct.Id);
-                    data.ListChiTietThuHoi = ObjectMapper.Map<List<ChiTietThuHoiDto>>(listChiTiet);
-                    data.DanhMucThuHoi = ObjectMapper.Map<DanhMucThuHoiDto>(ct);
-                    
-                    listData.Add(data);
-                }
-            }
-
-            dataTrans.DuAnThuHoi = ObjectMapper.Map<DuAnThuHoiDto>(duAnThuHoi);
-            dataTrans.ListData = listData;
-            
-            return _duAnThuHoiesExcelExporter.BaoCaoDuAnThuHoi_ExportToFile(dataTrans);
-        }
-        public async Task<FileDto> TongHop_BaoCaoDuAnThuHoiToExcel(BaoCaoDuAnThuHoiToExcelInput input)
-        {
-            List<BaoCaoDuAnThuHoi_ExportToFileDto> listDataDuAn = new List<BaoCaoDuAnThuHoi_ExportToFileDto>();
-
-            var listDuAnThuHoi = await _duAnThuHoiRepository.GetAllListAsync();
-            foreach (var duAnThuHoi in listDuAnThuHoi)
-            {
-                BaoCaoDuAnThuHoi_ExportToFileDto dataTrans = new BaoCaoDuAnThuHoi_ExportToFileDto();
-                List<Data_DanhMuc_ListChiTietThuHoiDto> listData = new List<Data_DanhMuc_ListChiTietThuHoiDto>();
-                
-                var queryListDanhMuc = await _danhMucThuHoiRepository.GetAllListAsync(p => p.DuAnThuHoiId == duAnThuHoi.Id);
-
-                if (!queryListDanhMuc.IsNullOrEmpty())
-                {
-                    foreach (var ct in queryListDanhMuc)
-                    {
-                        Data_DanhMuc_ListChiTietThuHoiDto data = new Data_DanhMuc_ListChiTietThuHoiDto();
-                        var listChiTiet =
-                            await _chiTietThuHoiRepository.GetAllListAsync(p => p.DanhMucThuHoiId == ct.Id);
-                        data.ListChiTietThuHoi = ObjectMapper.Map<List<ChiTietThuHoiDto>>(listChiTiet);
-                        data.DanhMucThuHoi = ObjectMapper.Map<DanhMucThuHoiDto>(ct);
-                    
-                        listData.Add(data);
-                    }
-                }
-
-                dataTrans.DuAnThuHoi = ObjectMapper.Map<DuAnThuHoiDto>(duAnThuHoi);
-                dataTrans.ListData = listData;
-
-                listDataDuAn.Add(dataTrans);
-            }
-            
-            return _duAnThuHoiesExcelExporter.TongHop_BaoCaoDuAnThuHoi_ExportToFile(listDataDuAn);
         }
     }
 }

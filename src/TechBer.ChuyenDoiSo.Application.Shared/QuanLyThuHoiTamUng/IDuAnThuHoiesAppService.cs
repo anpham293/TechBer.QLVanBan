@@ -21,8 +21,7 @@ namespace TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng
 		Task Delete(EntityDto<long> input);
 
 		Task<FileDto> GetDuAnThuHoiesToExcel(GetAllDuAnThuHoiesForExcelInput input);
-
-		Task<string> SendZalo();
+		
 		Task<string> DocPDF();
 		Task<FileDto> BaoCaoDuAnThuHoiToExcel(BaoCaoDuAnThuHoiToExcelInput input);
 		Task<FileDto> TongHop_BaoCaoDuAnThuHoiToExcel(BaoCaoDuAnThuHoiToExcelInput input);

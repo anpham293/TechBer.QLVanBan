@@ -42,6 +42,8 @@ using Microsoft.OpenApi.Models;
 using OfficeOpenXml;
 using TechBer.ChuyenDoiSo.Web.HealthCheck;
 using Owl.reCAPTCHA;
+using Quartz;
+using TechBer.ChuyenDoiSo.QuanLyThuHoiTamUng;
 using HealthChecksUISettings = HealthChecks.UI.Configuration.Settings;
 
 namespace TechBer.ChuyenDoiSo.Web.Startup
@@ -150,6 +152,26 @@ namespace TechBer.ChuyenDoiSo.Web.Startup
             {
                 options.ViewLocationExpanders.Add(new RazorViewLocationExpander());
             });
+            
+            //Cấu hình dịch vụ và lịch trình
+            services.AddQuartz(q =>
+            {
+                var jobKey = new JobKey("SendZaloTuDong");
+                q.AddJob<SendZaloTuDong>(opts => opts.WithIdentity(jobKey));
+    
+                q.AddTrigger(opts => opts
+                    .ForJob(jobKey)
+                    .WithIdentity("SendZaloTuDong-trigger")
+                    // .WithCronSchedule("0 0 0 25 * ?").StartNow()
+                    .WithCronSchedule("0 0 0 25 * ?")
+                    .StartNow()
+                    // .WithSimpleSchedule(x => x
+                    //     .WithIntervalInSeconds(60) // Chạy job mỗi 60 giây
+                    //     .RepeatForever())
+                );
+            });
+            services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
+            //End cấu hình dịch vụ và lịch trình
 
             //Configure Abp and Dependency Injection
             return services.AddAbp<ChuyenDoiSoWebMvcModule>(options =>
@@ -163,6 +185,7 @@ namespace TechBer.ChuyenDoiSo.Web.Startup
 
                 options.PlugInSources.AddFolder(Path.Combine(_hostingEnvironment.WebRootPath, "Plugins"), SearchOption.AllDirectories);
             });
+            
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
